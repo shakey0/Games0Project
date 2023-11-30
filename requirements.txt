@@ -1,0 +1,17 @@
+python-dotenv
+psycopg2-binary
+sqlalchemy
+flask
+Flask-Migrate
+flask_sqlalchemy
+flask-wtf
+flask-login
+flask-migrate
+flask-bcrypt
+flask-cors
+flask-restful
+flask-jwt-extended
+flask-mail
+pytest
+pytest-xprocess
+playwright

@@ -1,0 +1,5 @@
+[
+  "tests/test_database.py::test_database_connection",
+  "tests/test_homepage.py::test_homepage_navbar",
+  "tests/test_user.py::test_user_creation"
+]
