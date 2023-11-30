@@ -13,8 +13,9 @@ def index():
     class Game:
         def __init__(self, name):
             self.name = name
-            self.image = '/static/images/' + name + '.png'
-            self.link = '/games/' + name.lower().replace(' ', '').replace('-', '').replace('&', '')
+            lower_name = name.lower().replace(' ', '').replace('-', '').replace('&', '')
+            self.image = lower_name + '.png'
+            self.link = '/games/' + lower_name
             self.route = name.title().replace(' ', '').replace('-', '').replace('&', '')
             print(self.route)
     

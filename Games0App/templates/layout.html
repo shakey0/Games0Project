@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_header.css') }}">
     <title>GamesZero</title>
 </head>
 <body>
      <!-- Nav bar with website title, game title, and options menu -->
+     <div class="top-space"></div>
     {% block content %}{% endblock %}
 </body>
 </html>

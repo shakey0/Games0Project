@@ -1,13 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>What game do you want to play?</h1>
+<h1 class="question-title">What game do you want to play?</h1>
 <div class="all-games">
     {% for game in games %}
     <div class="game">
-        <a href="{{ url_for('main.' + game.route) }}">
-            <img src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }}">
-            <h2>{{ game.name }}</h2>
-        </a>        
+        <div class="game-content">
+            <a href="{{ url_for('main.' + game.route) }}">
+                <img class="game-image" src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }}">
+                <h2 class="game-name">{{ game.name }}</h2>
+            </a>
+        </div>
     </div>
     {% endfor %}
 </div>
