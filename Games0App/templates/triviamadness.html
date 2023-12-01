@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1 class="question-title">Choose a category.</h1>
+{% if in_game == False %}
+    <div class="all-categories">
+        {% for category in categories %}
+            <div class="category">
+                <form method="GET" action="/games/triviamadnesschooseyourcategory">
+                    <input type="hidden" name="category" value="{{ category }}">
+                    <input class="category-name" type="submit" value="{{ category }}">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+
+{% endif %}
+{% endblock %}

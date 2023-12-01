@@ -35,7 +35,11 @@ def FillInTheBlankJokes():
 
 @main.route('/games/triviamadnesschooseyourcategory')
 def TriviaMadnessChooseYourCategory():
-    return render_template('triviamadness.html')
+    in_game = False
+    categories = ["Art & Literature", "Language", "Science & Nature", "General", "Food & Drink",
+                "People & Places", "Geography", "History & Holidays", "Entertainment", "Toys & Games",
+                "Music", "Mathematics", "Religion & Mythology", "Sports & Leisure"]
+    return render_template('triviamadness.html', in_game=in_game, categories=categories)
 
 @main.route('/games/countriesculturesmultiplechoice')
 def CountriesCulturesMultipleChoice():
@@ -48,3 +52,21 @@ def CountriesCulturesTrueOrFalse():
 @main.route('/games/numbertoreach')
 def NumberToReach():
     return render_template('numbertoreach.html')
+
+
+
+
+"""
+[
+  {
+    "category": "historyholidays",
+    "question": "Three of the names of Santa's reindeer begin with the letter 'D'', name two of them ",
+    "answer": "Dancer, Dasher, Donner"
+  },
+    {
+    "category": "historyholidays",
+    "question": "What pope died 33 days after his election ",
+    "answer": "John Paul i"
+  }
+]
+"""
