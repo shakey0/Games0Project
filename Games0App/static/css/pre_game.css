@@ -43,7 +43,7 @@
 }
 
 .level-radio {
-    transform: scale(1.5);
+    transform: scale(2);
     cursor: pointer;
 }
 
@@ -56,21 +56,4 @@
         flex-direction: column;
         gap: 20px;
     }
-}
-
-.start-game {
-    margin-top: 20px;
-    border: none;
-    font-size: 32px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background-color: rgb(139, 194, 196);
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.start-game:hover {
-    transform: scale(1.05);
 }

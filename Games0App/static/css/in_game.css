@@ -1,0 +1,127 @@
+.game-box {
+    margin: 60px auto;
+    max-width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .game-box {
+        max-width: 95%;
+    }
+}
+
+.game-box form, .time-up form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.answer-input {
+    width: 400px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.helper-box {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.helper-buttons {
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 300px;
+}
+
+.helper-buttons button {
+    margin: 0px 10px;
+    width: 120px;
+    border: none;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: rgb(187, 197, 198);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    transform: translateY(-74px);
+}
+
+.helper-buttons button:hover {
+    background-color: rgb(200, 167, 159);
+}
+
+.helper-button-tags {
+    margin-top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.2;
+    gap: 318px;
+}
+
+.helper-button-tags p {
+    margin: 0px 10px;
+    font-size: 20px;
+    font-weight: bold;
+    transform: translateY(-74px);
+}
+
+@media (max-width: 654px) {
+    .helper-buttons {
+        gap: 0px;
+    }
+
+    .helper-buttons button {
+        transform: translateY(0px);
+    }
+
+    .helper-button-tags {
+        gap: 18px;
+    }
+    
+    .helper-button-tags p {
+        transform: translateY(0px);
+    }
+
+    .helper-box {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 448px) {
+    .answer-input {
+        width: 382px;
+    }
+}
+
+@media (max-width: 418px) {
+    .answer-input {
+        width: 352px;
+    }
+}
+
+@media (max-width: 388px) {
+    .answer-input {
+        width: 322px;
+    }
+}
+
+@media (max-width: 388px) {
+    .answer-input {
+        width: 292px;
+    }
+}

@@ -16,8 +16,8 @@
 {% elif in_game == "intro" %}
     <h1 class="question-title">Trivia Madness - {{ game_category.name }}</h1>
     <div class="pre-game">
-        <p class="instruction-text">You will be given 10 questions from the category you chose. You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
-        <form method="GET" action="/games/triviamadness">
+        <p class="instruction-text">You will be given 10 questions from the {{ game_category.name }} category. You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
+        <form method="GET" action="/games/triviamadnesschooseyourcategory">
             <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
@@ -34,12 +34,40 @@
                 </div>
             </div>
             <input type="hidden" name="in_game" value="yes">
-            <input class="start-game" type="submit" value="Start Game">
+            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input class="submit-game" type="submit" value="Start Game">
         </form>
     </div>
 {% else %}
-    <div>
-
+    <h1 class="question-title-opening">Your {{ game_category.question_number }} question will be revealed in <b class="before-countdown">5</b> seconds.</h1>
+    <h1 class="question-in-game" style="display: none;">{{ game_category.get_question() }} <b class="in-countdown">10</b></h1>
+    <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
+    <div class="game-box" style="display: none;">
+        <form method="POST" action="/games/triviamadnesschooseyourcategory">
+            <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
+            <input type="hidden" name="in_game" value="after">
+            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input type="submit" class="submit-game" value="Submit Answer">
+        </form>
+        <div class="helper-box">
+            <div class="helper-buttons">
+                <button class="reveal-letter" onclick="revealLetter()">Reveal a letter</button>
+                <button class="reveal-length" onclick="revealLength()">Reveal length</button>
+            </div>
+            <div class="helper-button-tags">
+                <p class="reveal-letter-tag">-10 points</p>
+                <p class="reveal-length-tag">-20 points</p>
+            </div>
+        </div>
+    </div>
+    <div class="time-up" style="display: none;">
+        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game_category.get_answer() }}</b>.</h2>
+        <h2 class="current-score-text">Your current score is <b class="score">10</b> points.</h2>
+        <form method="GET" action="/games/triviamadnesschooseyourcategory">
+            <input type="hidden" name="in_game" value="yes">
+            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input class="submit-game" type="submit" value="Next Question">
+        </form>
     </div>
 {% endif %}
 {% endblock %}
