@@ -1,18 +1,45 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1 class="question-title">Choose a category.</h1>
-{% if in_game == False %}
+{% if in_game == "no" %}
+    <h1 class="question-title">Welcome to Trivia Madness!</h1>
+    <h2 class="question-title-2">Choose a category:</h2>
     <div class="all-categories">
         {% for category in categories %}
             <div class="category">
                 <form method="GET" action="/games/triviamadnesschooseyourcategory">
-                    <input type="hidden" name="category" value="{{ category }}">
-                    <input class="category-name" type="submit" value="{{ category }}">
+                    <input type="hidden" name="category" value="{{ category.variable }}">
+                    <input class="category-name" type="submit" value="{{ category.name }}">
                 </form>
             </div>
         {% endfor %}
     </div>
+{% elif in_game == "intro" %}
+    <h1 class="question-title">Trivia Madness - {{ game_category.name }}</h1>
+    <div class="pre-game">
+        <p class="instruction-text">You will be given 10 questions from the category you chose. You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
+        <form method="GET" action="/games/triviamadness">
+            <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
+            <div class="level-selection">
+                <div class="level">
+                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="easy" checked>
+                    <label for="easy"><b style="color:cornflowerblue;">Easy</b> (30 seconds)</label>
+                </div>
+                <div class="level">
+                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="medium">
+                    <label for="medium"><b style="color:cornflowerblue;">Medium</b> (20 seconds)</label>
+                </div>
+                <div class="level">
+                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="hard">
+                    <label for="hard"><b style="color:cornflowerblue;">Hard</b> (10 seconds)</label>
+                </div>
+            </div>
+            <input type="hidden" name="in_game" value="yes">
+            <input class="start-game" type="submit" value="Start Game">
+        </form>
+    </div>
 {% else %}
+    <div>
 
+    </div>
 {% endif %}
 {% endblock %}

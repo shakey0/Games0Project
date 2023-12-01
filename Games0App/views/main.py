@@ -1,7 +1,7 @@
 from flask import Blueprint
 from Games0App.extensions import db
 from Games0App.models.user import User
-from flask import render_template
+from flask import render_template, request
 import random
 import string
 
@@ -35,11 +35,47 @@ def FillInTheBlankJokes():
 
 @main.route('/games/triviamadnesschooseyourcategory')
 def TriviaMadnessChooseYourCategory():
-    in_game = False
-    categories = ["Art & Literature", "Language", "Science & Nature", "General", "Food & Drink",
-                "People & Places", "Geography", "History & Holidays", "Entertainment", "Toys & Games",
-                "Music", "Mathematics", "Religion & Mythology", "Sports & Leisure"]
-    return render_template('triviamadness.html', in_game=in_game, categories=categories)
+
+    class Category:
+        def __init__(self, name):
+            self.name = name
+            self.variable = name.title().replace(' ', '').replace('-', '').replace('&', '')
+            # self.api = ""
+    
+    categories = [Category("Art & Literature"), Category("Language"), Category("Science & Nature"),
+                Category("General"), Category("Food & Drink"), Category("People & Places"),
+                Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
+                Category("Toys & Games"), Category("Music"), Category("Mathematics"),
+                Category("Religion & Mythology"), Category("Sports & Leisure")]
+
+    in_game = "no"
+
+    category = request.args.get('category')
+    if category:
+        for item in categories:
+            if item.variable == category:
+                game_category = item
+                in_game = "intro"
+                break
+    else:
+        game_category = None
+
+        # class Question:
+        #     def __init__(self, category, question, answer):
+        #         self.category = category
+        #         self.question = question
+        #         self.answer = answer
+
+        # questions = []
+        # with open('Games0App/static/trivia.json') as f:
+        #     data = json.load(f)
+        #     for item in data:
+        #         if item['category'] == category:
+        #             questions.append(Question(item['category'], item['question'], item['answer']))
+        # questions = random.sample(questions, 10)
+        # return render_template('triviamadness.html', in_game=in_game, questions=questions)
+
+    return render_template('triviamadness.html', in_game=in_game, game_category=game_category, categories=categories)
 
 @main.route('/games/countriesculturesmultiplechoice')
 def CountriesCulturesMultipleChoice():

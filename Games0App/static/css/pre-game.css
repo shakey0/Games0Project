@@ -1,0 +1,76 @@
+.pre-game {
+    margin: 60px auto;
+    max-width: 80%;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .pre-game {
+        max-width: 95%;
+    }
+}
+
+.pre-game form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.instruction-text {
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.level-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 24px 0px;
+    font-size: 20px;
+    gap: 40px;
+}
+
+.level {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.level:hover {
+    transform: scale(1.08);
+}
+
+.level-radio {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+.level label {
+    cursor: pointer;
+}
+
+@media (max-width: 890px) {
+    .level-selection {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.start-game {
+    margin-top: 20px;
+    border: none;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background-color: rgb(139, 194, 196);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.start-game:hover {
+    transform: scale(1.05);
+}
