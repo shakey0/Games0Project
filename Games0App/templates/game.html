@@ -1,52 +1,55 @@
 {% extends 'layout.html' %}
 {% block content %}
-{% if in_game == "no" %}
+{% if in_game == "before" %}
     <h1 class="question-title">Welcome to Trivia Madness!</h1>
     <h2 class="question-title-2">Choose a category:</h2>
     <div class="all-categories">
         {% for category in categories %}
             <div class="category">
-                <form method="GET" action="/games/triviamadnesschooseyourcategory">
-                    <input type="hidden" name="category" value="{{ category.variable }}">
+                <form method="GET" action="/game">
+                    <input type="hidden" name="in_game" value="intro">
+                    <input type="hidden" name="category" value="{{ category.name }}">
+                    <input type="hidden" name="game_type" value="{{ game_type }}">
                     <input class="category-name" type="submit" value="{{ category.name }}">
                 </form>
             </div>
         {% endfor %}
     </div>
 {% elif in_game == "intro" %}
-    <h1 class="question-title">Trivia Madness - {{ game_category.name }}</h1>
+    <h1 class="question-title">{{ game_name }}</h1>
     <div class="pre-game">
-        <p class="instruction-text">You will be given 10 questions from the {{ game_category.name }} category. You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
-        <form method="GET" action="/games/triviamadnesschooseyourcategory">
+        <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
+        <form method="GET" action="/game">
             <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
-                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="easy" checked>
+                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="30" checked>
                     <label for="easy"><b style="color:cornflowerblue;">Easy</b> (30 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="medium">
+                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="20">
                     <label for="medium"><b style="color:cornflowerblue;">Medium</b> (20 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="hard">
+                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="10">
                     <label for="hard"><b style="color:cornflowerblue;">Hard</b> (10 seconds)</label>
                 </div>
             </div>
             <input type="hidden" name="in_game" value="yes">
-            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input type="hidden" name="game_type" value="{{ game_type }}">
+            <input type="hidden" name="category" value="{{ category }}">
             <input class="submit-game" type="submit" value="Start Game">
         </form>
     </div>
 {% else %}
-    <h1 class="question-title-opening">Your {{ game_category.question_number }} question will be revealed in <b class="before-countdown">5</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ game_category.get_question() }} <b class="in-countdown">10</b></h1>
+    <h1 class="question-title-opening">Your {{ game.question_number }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
+    <h1 class="question-in-game" style="display: none;">{{ game.get_question() }} <b class="in-countdown">{{ timer }}</b></h1>
     <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
     <div class="game-box" style="display: none;">
-        <form method="POST" action="/games/triviamadnesschooseyourcategory">
+        <form method="POST" action="/game">
             <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
             <input type="hidden" name="in_game" value="after">
-            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input type="hidden" name="category" value="{{ category }}">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
         <div class="helper-box">
@@ -61,11 +64,13 @@
         </div>
     </div>
     <div class="time-up" style="display: none;">
-        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game_category.get_answer() }}</b>.</h2>
+        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game.get_answer() }}</b>.</h2>
         <h2 class="current-score-text">Your current score is <b class="score">10</b> points.</h2>
-        <form method="GET" action="/games/triviamadnesschooseyourcategory">
+        <form method="GET" action="/game">
             <input type="hidden" name="in_game" value="yes">
-            <input type="hidden" name="category" value="{{ game_category.variable }}">
+            <input type="hidden" name="game_type" value="{{ game_type }}">
+            <input type="hidden" name="category" value="{{ category }}">
+            <input type="hidden" name="difficulty" value="{{ timer }}">
             <input class="submit-game" type="submit" value="Next Question">
         </form>
     </div>

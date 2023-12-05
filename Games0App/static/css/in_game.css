@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+@media (max-width: 912px) {
+    .game-box {
+        max-width: 90%;
+    }
+}
+
 @media (max-width: 768px) {
     .game-box {
         max-width: 95%;
@@ -45,7 +51,7 @@
 }
 
 .helper-buttons button {
-    margin: 0px 10px;
+    margin: 0px 35px;
     width: 120px;
     border: none;
     border-radius: 10px;
@@ -69,31 +75,32 @@
     justify-content: center;
     align-items: center;
     line-height: 1.2;
-    gap: 318px;
+    gap: 368px;
 }
 
 .helper-button-tags p {
     margin: 0px 10px;
     font-size: 20px;
     font-weight: bold;
-    transform: translateY(-74px);
+    transform: translateY(-68px);
 }
 
-@media (max-width: 654px) {
+@media (max-width: 714px) {
     .helper-buttons {
-        gap: 0px;
+        gap: 20px;
     }
 
     .helper-buttons button {
-        transform: translateY(0px);
+        transform: translateY(40px);
+        margin: 0px 10px;
     }
 
     .helper-button-tags {
-        gap: 18px;
+        gap: 38px;
     }
     
     .helper-button-tags p {
-        transform: translateY(0px);
+        transform: translateY(46px);
     }
 
     .helper-box {

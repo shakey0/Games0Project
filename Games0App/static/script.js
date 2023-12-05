@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function startFirstCountdown() {
-    let countdownValue = 5; // Adjust this value as needed
     const countdownElement = document.querySelector('.before-countdown');
+    let countdownValue = parseInt(countdownElement.textContent, 10);
     const questionTitleOpening = document.querySelector('.question-title-opening');
     const questionInGame = document.querySelector('.question-in-game');
     const gameBox = document.querySelector('.game-box');
@@ -35,8 +35,8 @@ function startFirstCountdown() {
 }
 
 function startSecondCountdown() {
-    let countdownValue = 10; // Value from the backend
     const countdownElement = document.querySelector('.in-countdown');
+    let countdownValue = parseInt(countdownElement.textContent, 10);
     const questionInGame = document.querySelector('.question-in-game');
     const questionOver = document.querySelector('.question-over');
     const gameBox = document.querySelector('.game-box');
