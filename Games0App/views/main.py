@@ -1,45 +1,17 @@
 from flask import Blueprint
 from Games0App.extensions import db
 from Games0App.models.user import User
+from Games0App.classes import GamePlay, Category
+from Games0App.utils import format_answer
 from flask import render_template, request
 import requests
 import os
 import random
 import string
 
+
 main = Blueprint('main', __name__)
 
-class GamePlay:
-    def __init__(self, name, intro_message, param="", api_variable=""):
-        self.name = name
-        lower_name = name.lower().replace(' ', '').replace('-', '').replace('&', '')
-        self.image = lower_name + '.png'
-        self.intro_message = intro_message
-        self.param = param
-        if api_variable == "trivia":
-            self.api_url = 'https://api.api-ninjas.com/v1/trivia?category={}&limit=30'
-        elif api_variable == "facts" or api_variable == "jokes":
-            self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'.format(api_variable)
-        else:
-            self.api_url = ""
-        # self.api_url = 'https://api.api-ninjas.com/v1/trivia?category={}&limit=30'.format(self.variable.lower())
-        self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
-
-
-
-    def update_stored_questions(self):
-        pass # CONTACT API AND STORE IN REDIS
-
-    def get_question(self, last_question_no):
-        # LOGIC TO GET QUESTION (+ANSWER) FROM REDIS
-        self.current_question = "Question from Redis"
-        self.current_answer = "Answer from Redis"
-        return (1, self.current_question)  # NEED TO RETURN TRACKER AND QUESTION IN TUPLE
-    
-    def get_answer(self, tracker):
-        return "Answer from Redis"
-    
-        
 
 games = [
     GamePlay("Fill in the Blank - Facts",
@@ -63,14 +35,6 @@ games = [
 ]
 
 
-def format_answer(answer):
-    replace_chars = [' ', '-', '&', "'", '"', '(', ')', ',', '.', '?', '!', ':', ';', '$', '£', '€',
-                    '%', '+', '=', '/', '\'', '*', '@', '#', '~', '<', '>']
-    for char in replace_chars:
-        answer = answer.replace(char, '')
-    return answer.lower()
-
-
 @main.route('/')
 def index():
     return render_template('index.html', games=games)
@@ -86,17 +50,11 @@ def game():
 
     if game_type == 'trivia_madness' and not in_game:
         in_game = "before"
-
-        class Category:
-            def __init__(self, name):
-                self.name = name
-        
         categories = [Category("Art & Literature"), Category("Language"), Category("Science & Nature"),
-                    Category("General"), Category("Food & Drink"), Category("People & Places"),
-                    Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
-                    Category("Toys & Games"), Category("Music"), Category("Mathematics"),
-                    Category("Religion & Mythology"), Category("Sports & Leisure")]
-        
+            Category("General"), Category("Food & Drink"), Category("People & Places"),
+            Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
+            Category("Toys & Games"), Category("Music"), Category("Mathematics"),
+            Category("Religion & Mythology"), Category("Sports & Leisure")]
         return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type)
     else:
         categories = []
@@ -114,7 +72,6 @@ def game():
                                 game=game_play, game_name=game_name, score=0)
 
     score = 0
-
     timer = 0
     question_no = 0
     next_question = ()
