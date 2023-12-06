@@ -38,18 +38,22 @@
             <input type="hidden" name="in_game" value="yes">
             <input type="hidden" name="game_type" value="{{ game_type }}">
             <input type="hidden" name="category" value="{{ category }}">
+            <input type="hidden" name="question_no" value="0">
             <input class="submit-game" type="submit" value="Start Game">
         </form>
     </div>
 {% else %}
-    <h1 class="question-title-opening">Your {{ game.question_number }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
+    <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
     <h1 class="question-in-game" style="display: none;">{{ game.get_question() }} <b class="in-countdown">{{ timer }}</b></h1>
     <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
     <div class="game-box" style="display: none;">
-        <form method="POST" action="/game">
+        <form method="GET" action="/game">
             <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
             <input type="hidden" name="in_game" value="after">
+            <input type="hidden" name="game_type" value="{{ game_type }}">
             <input type="hidden" name="category" value="{{ category }}">
+            <input type="hidden" name="difficulty" value="{{ timer }}">
+            <input type="hidden" name="question_no" value="{{ question_no }}">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
         <div class="helper-box">
@@ -71,6 +75,7 @@
             <input type="hidden" name="game_type" value="{{ game_type }}">
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="difficulty" value="{{ timer }}">
+            <input type="hidden" name="question_no" value="{{ question_no }}">
             <input class="submit-game" type="submit" value="Next Question">
         </form>
     </div>

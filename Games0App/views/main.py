@@ -24,15 +24,8 @@ class GamePlay:
             self.api_url = ""
         # self.api_url = 'https://api.api-ninjas.com/v1/trivia?category={}&limit=30'.format(self.variable.lower())
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
-        self.question_number = 1
-        self.current_question = ""
-        self.current_answer = ""
 
-    def update_question_number(self, number):
-        self.question_number = self.question_numbers[number]
 
-    def update_current_category(self, category):
-        self.current_category = category
 
     def update_stored_questions(self):
         pass # CONTACT API AND STORE IN REDIS
@@ -78,6 +71,9 @@ def index():
 @main.route('/game', methods=['GET', 'POST'])
 def game():
 
+    if request.method == 'POST':
+        pass
+
     game_type = request.args.get('game_type')
     game_play = next(game for game in games if game.param == game_type)
 
@@ -99,9 +95,6 @@ def game():
     else:
         categories = []
 
-    if request.method == 'POST':
-        pass
-
     category = ""
     game_name = ""
     if game_type == "trivia_madness" and in_game == "intro":
@@ -116,11 +109,15 @@ def game():
         category = request.args.get('category')
 
     timer = 0
+    question_no = 0
     if in_game == "yes":
         timer = int(request.args.get('difficulty'))
+        question_no = int(request.args.get('question_no'))
+        question_no += 1
         
     return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
-                            game=game_play, timer=timer, category=category, game_name=game_name)
+                            game=game_play, timer=timer, category=category, game_name=game_name,
+                            question_no=question_no)
 
 
 
