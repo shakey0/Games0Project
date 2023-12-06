@@ -41,9 +41,11 @@ function startSecondCountdown() {
     const questionOver = document.querySelector('.question-over');
     const gameBox = document.querySelector('.game-box');
     const timeUp = document.querySelector('.time-up');
+    const hiddenTimerInput = document.getElementById('countdown-timer');
 
     const intervalId = setInterval(() => {
         countdownElement.innerText = countdownValue;
+        hiddenTimerInput.value = countdownValue;
         countdownValue--;
 
         if (countdownValue < 0) {

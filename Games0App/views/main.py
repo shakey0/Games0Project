@@ -34,10 +34,10 @@ class GamePlay:
         # LOGIC TO GET QUESTION (+ANSWER) FROM REDIS
         self.current_question = "Question from Redis"
         self.current_answer = "Answer from Redis"
-        return self.current_question  # NEED TO RETURN TRACKER AND QUESTION IN TUPLE
+        return (1, self.current_question)  # NEED TO RETURN TRACKER AND QUESTION IN TUPLE
     
-    def get_answer(self):
-        return self.current_answer
+    def get_answer(self, tracker):
+        return "Answer from Redis"
     
         
 
@@ -63,6 +63,14 @@ games = [
 ]
 
 
+def format_answer(answer):
+    replace_chars = [' ', '-', '&', "'", '"', '(', ')', ',', '.', '?', '!', ':', ';', '$', '£', '€',
+                    '%', '+', '=', '/', '\'', '*', '@', '#', '~', '<', '>']
+    for char in replace_chars:
+        answer = answer.replace(char, '')
+    return answer.lower()
+
+
 @main.route('/')
 def index():
     return render_template('index.html', games=games)
@@ -71,13 +79,11 @@ def index():
 @main.route('/game', methods=['GET', 'POST'])
 def game():
 
-    if request.method == 'POST':
-        pass
-
     game_type = request.args.get('game_type')
     game_play = next(game for game in games if game.param == game_type)
 
     in_game = request.args.get('in_game')
+
     if game_type == 'trivia_madness' and not in_game:
         in_game = "before"
 
@@ -96,31 +102,72 @@ def game():
         categories = []
 
     category = ""
-    game_name = ""
-    if game_type == "trivia_madness" and in_game == "intro":
+    game_name = game_play.name
+
+    if game_type == "trivia_madness":
         category = request.args.get('category')
         game_name = "Trivia Madness - " + category
+
     elif not in_game:
         in_game = "intro"
-        game_name = game_play.name
         return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
-                                game=game_play, game_name=game_name)
-    elif game_type == "trivia_madness":
-        category = request.args.get('category')
+                                game=game_play, game_name=game_name, score=0)
+
+    score = 0
 
     timer = 0
     question_no = 0
     next_question = ()
+
     if in_game == "yes":
+
         timer = int(request.args.get('difficulty'))
+
         question_no = int(request.args.get('question_no'))
         question_no += 1
+
         question_tracker = request.args.get('question_tracker')
         next_question = game_play.get_question(question_tracker)
+
+        score = int(request.args.get('score'))
+    
+    seconds = 0
+    new_points = 0
+    correct = False
+
+    if in_game == "after":
+
+        timer = int(request.args.get('difficulty'))
         
+        question_no = int(request.args.get('question_no'))
+
+        question_tracker = request.args.get('question_tracker')
+        answer = request.args.get('answer')
+        real_answer = game_play.get_answer(question_tracker)
+        correct = True if format_answer(answer) == format_answer(real_answer) else False
+
+        score = int(request.args.get('score'))
+        seconds_to_answer_left = int(request.args.get('countdown_timer'))
+        if correct:
+            new_points = 100
+            new_points += (30 - seconds_to_answer_left) * 10
+            score += new_points
+            seconds = timer - seconds_to_answer_left
+
+    if in_game == "finish":
+
+        timer = int(request.args.get('difficulty'))
+
+        score = int(request.args.get('score'))
+
+        return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
+                                game_type=game_type, category=category, game=game_play)
+
+
     return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
                             game=game_play, timer=timer, category=category, game_name=game_name,
-                            question_no=question_no, next_question=next_question)
+                            question_no=question_no, next_question=next_question, correct=correct,
+                            score=score, seconds=seconds, new_points=new_points)
 
 
 

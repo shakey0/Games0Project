@@ -39,10 +39,11 @@
             <input type="hidden" name="game_type" value="{{ game_type }}">
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="question_no" value="0">
+            <input type="hidden" name="score" id="score" value="{{ score }}">
             <input class="submit-game" type="submit" value="Start Game">
         </form>
     </div>
-{% else %}
+{% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
     <h1 class="question-in-game" style="display: none;">{{ next_question[1] }} <b class="in-countdown">{{ timer }}</b></h1>
     <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
@@ -55,6 +56,8 @@
             <input type="hidden" name="difficulty" value="{{ timer }}">
             <input type="hidden" name="question_no" value="{{ question_no }}">
             <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
+            <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
+            <input type="hidden" name="score" id="score" value="{{ score }}">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
         <div class="helper-box">
@@ -69,15 +72,63 @@
         </div>
     </div>
     <div class="time-up" style="display: none;">
-        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game.get_answer() }}</b>.</h2>
-        <h2 class="current-score-text">Your current score is <b class="score">10</b> points.</h2>
+        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game.get_answer(1) }}</b>.</h2>
+        {% if question_no == 10 %}
+            <h2 class="current-score-text">Your final score is <b class="score">{{ score }}</b> points.</h2>
+        {% else %}
+            <h2 class="current-score-text">Your current score is <b class="score">{{ score }}</b> points.</h2>
+        {% endif %}
         <form method="GET" action="/game">
-            <input type="hidden" name="in_game" value="yes">
             <input type="hidden" name="game_type" value="{{ game_type }}">
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="difficulty" value="{{ timer }}">
             <input type="hidden" name="question_no" value="{{ question_no }}">
-            <input class="submit-game" type="submit" value="Next Question">
+            <input type="hidden" name="score" id="score" value="{{ score }}">
+            {% if question_no == 10 %}
+                <input type="hidden" name="in_game" value="finish">
+                <input class="submit-game" type="submit" value="Scoreboard">
+            {% else %}
+                <input type="hidden" name="in_game" value="yes">
+                <input class="submit-game" type="submit" value="Next Question">
+            {% endif %}
+        </form>
+    </div>
+{% else %}
+    {% if correct %}
+    <div class="after-answer">
+        <h2 class="correct-answer-text"><b class="correct-answer">'{{ game.get_answer(1) }}'</b> is the correct answer!</h2>
+        <h2 class="current-score-text">You answered in <b class="score">{{ seconds }}</b> seconds.</h2>
+        <h2 class="current-score-text">+ <b class="score">{{ new_points }}</b> points</h2>
+        {% if question_no == 10 %}
+            <h2 class="current-score-text">Your final score: <b class="score">{{ score }}</b> points!</h2>
+        {% else %}
+            <h2 class="current-score-text">Your score: <b class="score">{{ score }}</b> points</h2>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="after-answer">
+        <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ game.get_answer(1) }}'</b>.</h2>
+        {% if question_no == 10 %}
+            <h2 class="current-score-text">Your final score is <b class="score">{{ score }}</b> points.</h2>
+        {% else %}
+            <h2 class="current-score-text">Your current score is <b class="score">{{ score }}</b> points.</h2>
+        {% endif %}
+    </div>
+    {% endif %}
+    <div class="after-answer">
+        <form method="GET" action="/game">
+            <input type="hidden" name="game_type" value="{{ game_type }}">
+            <input type="hidden" name="category" value="{{ category }}">
+            <input type="hidden" name="difficulty" value="{{ timer }}">
+            <input type="hidden" name="question_no" value="{{ question_no }}">
+            <input type="hidden" name="score" id="score" value="{{ score }}">
+            {% if question_no == 10 %}
+                <input type="hidden" name="in_game" value="finish">
+                <input class="submit-game" type="submit" value="Scoreboard">
+            {% else %}
+                <input type="hidden" name="in_game" value="yes">
+                <input class="submit-game" type="submit" value="Next Question">
+            {% endif %}
         </form>
     </div>
 {% endif %}

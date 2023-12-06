@@ -17,7 +17,7 @@
     }
 }
 
-.game-box form, .time-up form {
+.game-box form, .time-up form, .after-answer form {
     display: flex;
     flex-direction: column;
     justify-content: center;
