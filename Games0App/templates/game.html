@@ -83,6 +83,7 @@
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="difficulty" value="{{ timer }}">
             <input type="hidden" name="question_no" value="{{ question_no }}">
+            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
             <input type="hidden" name="score" id="score" value="{{ score }}">
             {% if question_no == 10 %}
                 <input type="hidden" name="in_game" value="finish">
@@ -121,6 +122,7 @@
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="difficulty" value="{{ timer }}">
             <input type="hidden" name="question_no" value="{{ question_no }}">
+            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
             <input type="hidden" name="score" id="score" value="{{ score }}">
             {% if question_no == 10 %}
                 <input type="hidden" name="in_game" value="finish">

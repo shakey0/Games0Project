@@ -84,7 +84,9 @@ def game():
         question_no += 1
 
         question_tracker = request.args.get('question_tracker')
-        next_question = game_play.get_question(question_tracker)
+        if not question_tracker:
+            question_tracker = 0
+        next_question = game_play.get_question(question_tracker, category)
 
         score = int(request.args.get('score'))
     
