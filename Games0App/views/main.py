@@ -30,11 +30,11 @@ class GamePlay:
     def update_stored_questions(self):
         pass # CONTACT API AND STORE IN REDIS
 
-    def get_question(self):
+    def get_question(self, last_question_no):
         # LOGIC TO GET QUESTION (+ANSWER) FROM REDIS
         self.current_question = "Question from Redis"
         self.current_answer = "Answer from Redis"
-        return self.current_question
+        return self.current_question  # NEED TO RETURN TRACKER AND QUESTION IN TUPLE
     
     def get_answer(self):
         return self.current_answer
@@ -62,9 +62,9 @@ games = [
             param="number_to_reach")
 ]
 
+
 @main.route('/')
 def index():
-    
     return render_template('index.html', games=games)
 
 
@@ -110,48 +110,19 @@ def game():
 
     timer = 0
     question_no = 0
+    next_question = ()
     if in_game == "yes":
         timer = int(request.args.get('difficulty'))
         question_no = int(request.args.get('question_no'))
         question_no += 1
+        question_tracker = request.args.get('question_tracker')
+        next_question = game_play.get_question(question_tracker)
         
     return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
                             game=game_play, timer=timer, category=category, game_name=game_name,
-                            question_no=question_no)
+                            question_no=question_no, next_question=next_question)
 
 
-
-
-    # class Game:
-
-        # def __init__(self, name):
-        #     self.name = name
-        #     self.variable = name.title().replace(' ', '').replace('-', '').replace('&', '')
-        #     self.api_url = 'https://api.api-ninjas.com/v1/trivia?category={}&limit=30'.format(self.variable.lower())
-        #     # self.api_response = requests.get(self.api_url, headers={'X-Api-Key': os.getenv('API_KEY')})
-        #     # self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
-        #     self.question_number = 1
-        #     self.current_category = ""
-        #     self.current_question = ""
-        #     self.current_answer = ""
-
-        # def update_question_number(self, number):
-        #     self.question_number = self.question_numbers[number]
-
-        # def update_current_category(self, category):
-        #     self.current_category = category
-
-        # def update_stored_questions(self):
-        #     pass # CONTACT API AND STORE IN REDIS
-
-        # def get_question(self):
-        #     # LOGIC TO GET QUESTION (+ANSWER) FROM REDIS
-        #     self.current_question = "Question from Redis"
-        #     self.current_answer = "Answer from Redis"
-        #     return "Question"
-        
-        # def get_answer(self):
-        #     return self.current_answer
 
 
 

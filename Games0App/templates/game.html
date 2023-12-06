@@ -44,7 +44,7 @@
     </div>
 {% else %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ game.get_question() }} <b class="in-countdown">{{ timer }}</b></h1>
+    <h1 class="question-in-game" style="display: none;">{{ next_question[1] }} <b class="in-countdown">{{ timer }}</b></h1>
     <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
     <div class="game-box" style="display: none;">
         <form method="GET" action="/game">
@@ -54,6 +54,7 @@
             <input type="hidden" name="category" value="{{ category }}">
             <input type="hidden" name="difficulty" value="{{ timer }}">
             <input type="hidden" name="question_no" value="{{ question_no }}">
+            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
         <div class="helper-box">
