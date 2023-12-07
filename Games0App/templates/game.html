@@ -6,7 +6,7 @@
     <div class="all-categories">
         {% for category in categories %}
             <div class="category">
-                <form method="GET" action="/game">
+                <form method="GET" action="/game_setup">
                     <input type="hidden" name="in_game" value="intro">
                     <input type="hidden" name="category" value="{{ category.name }}">
                     <input type="hidden" name="game_type" value="{{ game_type }}">
@@ -19,7 +19,7 @@
     <h1 class="question-title">{{ game_name }}</h1>
     <div class="pre-game">
         <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
-        <form method="GET" action="/game">
+        <form method="POST" action="/game_play">
             <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
@@ -35,29 +35,19 @@
                     <label for="hard"><b style="color:cornflowerblue;">Hard</b> (10 seconds)</label>
                 </div>
             </div>
-            <input type="hidden" name="in_game" value="yes">
-            <input type="hidden" name="game_type" value="{{ game_type }}">
-            <input type="hidden" name="category" value="{{ category }}">
-            <input type="hidden" name="question_no" value="0">
-            <input type="hidden" name="score" id="score" value="{{ score }}">
+            <input type="hidden" name="in_game" value="start">
+            <input type="hidden" name="token" value="{{ token }}">
             <input class="submit-game" type="submit" value="Start Game">
         </form>
     </div>
 {% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
     <h1 class="question-in-game" style="display: none;">{{ next_question[1] }} <b class="in-countdown">{{ timer }}</b></h1>
-    <h1 class="question-over" style="display: none;"><b class="in-countdown">Time up!</b></h1>
     <div class="game-box" style="display: none;">
-        <form method="GET" action="/game">
+        <form method="POST" action="/game_answer">
             <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
-            <input type="hidden" name="in_game" value="after">
-            <input type="hidden" name="game_type" value="{{ game_type }}">
-            <input type="hidden" name="category" value="{{ category }}">
-            <input type="hidden" name="difficulty" value="{{ timer }}">
-            <input type="hidden" name="question_no" value="{{ question_no }}">
-            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
+            <input type="hidden" name="token" value="{{ token }}">
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
-            <input type="hidden" name="score" id="score" value="{{ score }}">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
         <div class="helper-box">
@@ -70,29 +60,6 @@
                 <p class="reveal-length-tag">-20 points</p>
             </div>
         </div>
-    </div>
-    <div class="time-up" style="display: none;">
-        <h2 class="correct-answer-text">The correct answer was <b class="correct-answer">{{ game.get_answer(1) }}</b>.</h2>
-        {% if question_no == 10 %}
-            <h2 class="current-score-text">Your final score is <b class="score">{{ score }}</b> points.</h2>
-        {% else %}
-            <h2 class="current-score-text">Your current score is <b class="score">{{ score }}</b> points.</h2>
-        {% endif %}
-        <form method="GET" action="/game">
-            <input type="hidden" name="game_type" value="{{ game_type }}">
-            <input type="hidden" name="category" value="{{ category }}">
-            <input type="hidden" name="difficulty" value="{{ timer }}">
-            <input type="hidden" name="question_no" value="{{ question_no }}">
-            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
-            <input type="hidden" name="score" id="score" value="{{ score }}">
-            {% if question_no == 10 %}
-                <input type="hidden" name="in_game" value="finish">
-                <input class="submit-game" type="submit" value="Scoreboard">
-            {% else %}
-                <input type="hidden" name="in_game" value="yes">
-                <input class="submit-game" type="submit" value="Next Question">
-            {% endif %}
-        </form>
     </div>
 {% else %}
     {% if correct %}
@@ -107,6 +74,9 @@
         {% endif %}
     </div>
     {% else %}
+        {% if seconds == 0 %}
+            <h1 class="question-over"><b>Time up!</b></h1>
+        {% endif %}
     <div class="after-answer">
         <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ game.get_answer(1) }}'</b>.</h2>
         {% if question_no == 10 %}
@@ -117,21 +87,17 @@
     </div>
     {% endif %}
     <div class="after-answer">
-        <form method="GET" action="/game">
-            <input type="hidden" name="game_type" value="{{ game_type }}">
-            <input type="hidden" name="category" value="{{ category }}">
-            <input type="hidden" name="difficulty" value="{{ timer }}">
-            <input type="hidden" name="question_no" value="{{ question_no }}">
-            <input type="hidden" name="question_tracker" value="{{ next_question[0] }}">
-            <input type="hidden" name="score" id="score" value="{{ score }}">
-            {% if question_no == 10 %}
-                <input type="hidden" name="in_game" value="finish">
+        {% if question_no == 10 %}
+            <form method="POST" action="/scoreboard">
+                <input type="hidden" name="token" value="{{ token }}">
                 <input class="submit-game" type="submit" value="Scoreboard">
-            {% else %}
-                <input type="hidden" name="in_game" value="yes">
+            </form>
+        {% else %}
+            <form method="POST" action="/game_play">
+                <input type="hidden" name="token" value="{{ token }}">
                 <input class="submit-game" type="submit" value="Next Question">
-            {% endif %}
-        </form>
+            </form>
+        {% endif %}
     </div>
 {% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@
     {% for game in games %}
     <div class="game">
         <div class="game-content">
-            <a href="{{ url_for('main.game', game_type=game.param) }}">
+            <a href="{{ url_for('main.game_setup', game_type=game.param) }}">
                 <img class="game-image" src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }}">
                 <h2 class="game-name">{{ game.name }}</h2>
             </a>

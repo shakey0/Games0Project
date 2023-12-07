@@ -38,10 +38,10 @@ function startSecondCountdown() {
     const countdownElement = document.querySelector('.in-countdown');
     let countdownValue = parseInt(countdownElement.textContent, 10);
     const questionInGame = document.querySelector('.question-in-game');
-    const questionOver = document.querySelector('.question-over');
     const gameBox = document.querySelector('.game-box');
-    const timeUp = document.querySelector('.time-up');
+    const helperBox = document.querySelector('.helper-box');
     const hiddenTimerInput = document.getElementById('countdown-timer');
+    const gameForm = document.querySelector('.game-box form');
 
     const intervalId = setInterval(() => {
         countdownElement.innerText = countdownValue;
@@ -52,12 +52,10 @@ function startSecondCountdown() {
             clearInterval(intervalId);
             if (questionInGame) {
                 questionInGame.style.display = 'none';
-            }
-            if (questionOver) {
-                questionOver.style.display = 'block';
-                timeUp.style.display = 'block';
                 gameBox.style.display = 'none';
+                helperBox.style.display = 'block';
             }
+            gameForm.submit();
         }
     }, 1000);
 }

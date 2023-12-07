@@ -62,7 +62,7 @@
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
     cursor: pointer;
     transition: background-color 0.3s ease;
-    transform: translateY(-74px);
+    transform: translateY(-94px);
 }
 
 .helper-buttons button:hover {
@@ -82,7 +82,7 @@
     margin: 0px 10px;
     font-size: 20px;
     font-weight: bold;
-    transform: translateY(-68px);
+    transform: translateY(-88px);
 }
 
 @media (max-width: 714px) {
