@@ -5,7 +5,125 @@ body {
 }
 
 .top-space {
+    height: 140px;
+}
+
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9;
+    background-color: #191c27;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
     height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.nav-bar-left, .nav-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-bar-left a {
+    font-size: 18px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin: 0;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    margin-bottom: 4px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-bar-left a:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
+}
+
+.nav-bar-left h2 {
+    font-size: 26px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin: 0;
+    color: rgb(232, 213, 203);
+    border-left: solid 1px rgb(232, 213, 203);
+    padding-left: 20px;
+}
+
+.nav-bar-right a {
+    font-size: 18px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    margin-bottom: 4px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.nav-bar-right a:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
+}
+
+.nav-bar-right button {
+    font-size: 26px;
+    font-weight: bold;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    margin-bottom: 4px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-left: solid 1px rgb(232, 213, 203);
+    padding-left: 20px;
+}
+
+@media (max-width: 815px) {
+    .top-space {
+        height: 170px;
+    }
+    .nav-bar {
+        height: 100px;
+        padding: 10px 20px;
+    }
+    .nav-bar-left, .nav-bar-right {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .nav-bar-right {
+        align-items: flex-end;
+    }
+    .home-title-link, .username-link {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    .nav-bar-left h2 {
+        border-left: none;
+        padding-left: 0px;
+        border-top: solid 1px rgb(232, 213, 203);
+        padding-top: 10px;
+    }
+    .nav-bar-right button {
+        border-left: none;
+        padding-left: 0px;
+        padding-right: 0px;
+        border-top: solid 1px rgb(232, 213, 203);
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 605px) {
+    .top-space {
+        height: 150px;
+    }
 }
 
 .question-title, .question-title-opening, .question-in-game, .question-over {
@@ -32,6 +150,12 @@ body {
 }
 
 @media (max-width: 448px) {
+    .question-title, .question-title-opening, .question-in-game, .question-over {
+        font-size: 32px;
+    }
+    .question-title-2 {
+        font-size: 28px;
+    }
     .correct-answer-text, .current-score-text {
         padding: 0 10px;
     }

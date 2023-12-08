@@ -1,9 +1,8 @@
-from flask import Blueprint
+from flask import Blueprint, render_template, request, flash
 from Games0App.extensions import db
 from Games0App.models.user import User
 from Games0App.classes import GamePlay, Category
 from Games0App.utils import format_answer
-from flask import render_template, request
 import secrets
 import os
 import redis
@@ -42,13 +41,17 @@ games = [
 
 @main.route('/')
 def index():
-    return render_template('index.html', games=games)
+    user = User.query.filter_by(username="person").first()
+    return render_template('index.html', games=games, user=user)
 
 
 @main.route('/game_setup')
 def game_setup():
 
     game_type = request.args.get('game_type')
+    if not game_type:
+        return render_template('index.html', games=games)
+
     game = next(item for item in games if item.param == game_type)
 
     in_game = request.args.get('in_game')
@@ -81,13 +84,17 @@ def game_setup():
         return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name)
 
 
-@main.route('/game_play', methods=['POST'])
+@main.route('/game_play', methods=['GET', 'POST'])
 def game_play():
+
+    if request.method == 'GET':
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return render_template('index.html', games=games)
 
     token = request.form.get('token')
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
-        # FLASH A MESSAGE HERE TO SAY THE GAME HAS EXPIRED
+        flash("Sorry, your game has expired. Please start again.")
         return render_template('index.html', games=games)
     game = next(item for item in games if item.param == game_type)
 
@@ -135,15 +142,19 @@ def game_play():
                             score=score)
 
 
-@main.route('/game_answer', methods=['POST'])
+@main.route('/game_answer', methods=['GET', 'POST'])
 def game_answer():
+
+    if request.method == 'GET':
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return render_template('index.html', games=games)
 
     in_game = "after"
 
     token = request.form.get('token')
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
-        # FLASH A MESSAGE HERE TO SAY THE GAME HAS EXPIRED
+        flash("Sorry, your game has expired. Please start again.")
         return render_template('index.html', games=games)
     game = next(item for item in games if item.param == game_type)
 
@@ -180,13 +191,17 @@ def game_answer():
                             new_points=new_points, question_no=question_no)
 
 
-@main.route('/game_finish', methods=['POST'])
+@main.route('/game_finish', methods=['GET', 'POST'])
 def game_finish():
+
+    if request.method == 'GET':
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return render_template('index.html', games=games)
 
     token = request.form.get('token')
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
-        # FLASH A MESSAGE HERE TO SAY THE GAME HAS EXPIRED
+        flash("Sorry, your game has expired. Please start again.")
         return render_template('index.html', games=games)
     game = next(item for item in games if item.param == game_type)
 

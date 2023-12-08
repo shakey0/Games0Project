@@ -68,59 +68,125 @@
     color: rgb(232, 213, 203);
 }
 
+@media (max-width: 1395px) {
+    .game-name {
+        font-size: 27px;
+    }
+    .all-games {
+        margin-left: 160px;
+        margin-right: 160px;
+    }
+}
+
+@media (max-width: 1235px) {
+    .game-name {
+        font-size: 30px;
+    }
+    .all-games {
+        margin-left: 80px;
+        margin-right: 80px;
+    }
+}
+
+@media (max-width: 1155px) {
+    .game-name {
+        font-size: 27px;
+    }
+}
+
 @media (max-width: 1075px) {
-    .game-name {
-        font-size: 36px;
+    .all-games {
+        margin-left: 200px;
+        margin-right: 200px;
     }
 }
-@media (max-width: 982px) {
+@media (max-width: 995px) {
     .game-name {
-        font-size: 32px;
+        font-size: 30px;
+    }
+    .all-games {
+        margin-left: 140px;
+        margin-right: 140px;
     }
 }
-@media (max-width: 902px) {
+@media (max-width: 925px) {
     .game-name {
-        font-size: 28px;
+        font-size: 27px;
     }
 }
-@media (max-width: 812px) {
+@media (max-width: 875px) {
     .game-name {
-        font-size: 25px;
+        font-size: 30px;
+    }
+    .all-games {
+        margin-left: 80px;
+        margin-right: 80px;
     }
 }
-@media (max-width: 755px) {
+@media (max-width: 815px) {
     .game-name {
-        font-size: 40px;
+        font-size: 30px;
+    }
+    .all-games {
+        margin-top: 60px;
+        margin-left: 40px;
+        margin-right: 40px;
     }
 }
-@media (max-width: 584px) {
+@media (max-width: 735px) {
     .game-name {
-        font-size: 32px;
+        font-size: 27px;
     }
 }
-@media (max-width: 518px) {
-    .game-name {
-        font-size: 28px;
-    }
-}
-@media (max-width: 468px) {
-    .game-name {
-        font-size: 25px;
-    }
-}
-@media (max-width: 438px) {
+@media (max-width: 675px) {
     .all-games {
         gap: 30px;
-        margin: 40px;
-    }
-    .game-name {
-        font-size: 28px;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
-@media (max-width: 358px) {
+@media (max-width: 605px) {
     .all-games {
-        gap: 20px;
-        margin: 20px;
+        gap: 40px;
+        margin-top: 40px;
+        margin-left: 140px;
+        margin-right: 140px;
+    }
+}
+@media (max-width: 565px) {
+    .all-games {
+        margin-left: 120px;
+        margin-right: 120px;
+    }
+}
+@media (max-width: 525px) {
+    .all-games {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+}
+@media (max-width: 485px) {
+    .all-games {
+        margin-left: 80px;
+        margin-right: 80px;
+    }
+}
+@media (max-width: 445px) {
+    .all-games {
+        margin-left: 60px;
+        margin-right: 60px;
+    }
+}
+@media (max-width: 405px) {
+    .all-games {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+}
+@media (max-width: 365px) {
+    .all-games {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 }
 @media (max-width: 340px) {

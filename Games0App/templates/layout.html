@@ -12,6 +12,16 @@
 </head>
 <body>
     <!-- Nav bar with website title, game title, and options menu -->
+    <div class="nav-bar">
+        <div class="nav-bar-left">
+            <a href="{{ url_for('main.index') }}"><h1 class="home-title-link">GamesZero</h1></a>
+            <h2>{% block game_title %}{% endblock %}</h2>
+        </div>
+        <div class="nav-bar-right">
+            <a href="{{ url_for('user_profile.user_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
+            <button class="menu-button" onclick="toggleOptions()">Menu</button>
+        </div>
+    </div>
     <div class="top-space"></div>
     {% block content %}{% endblock %}
     <script src="{{ url_for('static', filename='script.js') }}"></script>
