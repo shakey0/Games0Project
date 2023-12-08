@@ -60,7 +60,7 @@ def game_setup():
             Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
             Category("Toys & Games"), Category("Music"), Category("Mathematics"),
             Category("Religion & Mythology"), Category("Sports & Leisure")]
-        return render_template('game_setup.html', in_game=in_game, categories=categories, game_type=game_type)
+        return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type)
     else:
         in_game = "intro"
 
@@ -178,6 +178,29 @@ def game_answer():
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, seconds=seconds,
                             new_points=new_points, question_no=question_no)
+
+
+@main.route('/game_finish', methods=['POST'])
+def game_finish():
+
+    token = request.form.get('token')
+    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
+    if not game_type:
+        # FLASH A MESSAGE HERE TO SAY THE GAME HAS EXPIRED
+        return render_template('index.html', games=games)
+    game = next(item for item in games if item.param == game_type)
+
+    if game_type == "trivia_madness":
+        category = redis_client.hget(token, 'category').decode('utf-8')
+        game_name = "Trivia Madness - " + category
+    else:
+        game_name = game.name
+
+    timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
+    score = int(redis_client.hget(token, 'score').decode('utf-8'))
+
+    return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
+                            game_type=game_type, category=category, game=game)
 
 
 # @main.route('/game', methods=['GET', 'POST'])

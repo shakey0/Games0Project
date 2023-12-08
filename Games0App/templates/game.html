@@ -88,7 +88,7 @@
     {% endif %}
     <div class="after-answer">
         {% if question_no == 10 %}
-            <form method="POST" action="/scoreboard">
+            <form method="POST" action="/game_finish">
                 <input type="hidden" name="token" value="{{ token }}">
                 <input class="submit-game" type="submit" value="Scoreboard">
             </form>
