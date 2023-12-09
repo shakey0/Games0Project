@@ -22,8 +22,22 @@
             <button class="menu-button" onclick="toggleOptions()">Menu</button>
         </div>
     </div>
+    <!-- Options menu -->
+    <div class="options-menu" id="options-menu" style="display: none;">
+        {% if 1 == 1 %} <!-- if not user.is_authenticated -->
+        <button class="options-button">Log in</button>
+        <button class="options-button">Sign up</button>
+        {% endif %}
+        <a href=""><button class="options-button">Leaderboards</button></a>
+        <button class="options-button">About</button>
+        <a href=""><button class="options-button">Contact</button></a>
+        {% if 1 == 1 %} <!-- if user.is_authenticated -->
+        <button class="options-button">Log out</button>
+        {% endif %}
+    </div>
     <div class="top-space"></div>
     {% block content %}{% endblock %}
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+<!-- url_for('scores.leaderboard') url_for('auth.logout')-->

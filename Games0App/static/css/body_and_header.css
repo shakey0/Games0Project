@@ -85,6 +85,38 @@ body {
     padding-left: 20px;
 }
 
+.options-menu {
+    position: fixed;
+    top: 81px;
+    right: 0;
+    z-index: 9;
+    background-color: #191c27;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    gap: 10px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.options-button {
+    font-size: 18px;
+    background: none;
+    border: none;
+    outline: inherit;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.options-button:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
+}
+
 @media (max-width: 815px) {
     .top-space {
         height: 170px;
@@ -118,11 +150,23 @@ body {
         border-top: solid 1px rgb(232, 213, 203);
         padding-top: 10px;
     }
+    .options-menu {
+        top: 121px;
+    }
 }
 
 @media (max-width: 605px) {
     .top-space {
         height: 150px;
+    }
+    .options-menu {
+        flex-direction: column;
+        height: auto;
+        padding: 20px 15px;
+        gap: 20px;
+    }
+    .options-button {
+        font-size: 20px;
     }
 }
 

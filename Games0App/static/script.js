@@ -1,3 +1,25 @@
+document.addEventListener('DOMContentLoaded', function() {
+    var menuButton = document.querySelector('.menu-button');
+    var optionsMenu = document.getElementById('options-menu');
+    var timeoutId;
+
+    function showMenu() {
+        clearTimeout(timeoutId);
+        optionsMenu.style.display = 'flex';
+    }
+
+    function hideMenu() {
+        timeoutId = setTimeout(function() {
+            optionsMenu.style.display = 'none';
+        }, 250);
+    }
+
+    menuButton.addEventListener('mouseenter', showMenu);
+    optionsMenu.addEventListener('mouseenter', showMenu);
+    menuButton.addEventListener('mouseleave', hideMenu);
+    optionsMenu.addEventListener('mouseleave', hideMenu);
+});
+
 document.addEventListener('DOMContentLoaded', (event) => {
     // Start the first countdown as the page loads
     if (document.querySelector('.before-countdown')) {
