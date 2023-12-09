@@ -1,4 +1,5 @@
 body {
+    box-sizing: border-box;
     background-color: #202124;
     color: rgb(232, 213, 203);
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

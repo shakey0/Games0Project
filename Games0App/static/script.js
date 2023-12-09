@@ -23,34 +23,35 @@ document.addEventListener('DOMContentLoaded', function() {
         if (box == null) return;
         box.classList.add('active');
         overlay.classList.add('active');
-        toggleScrollLock(true);
+        // toggleScrollLock(true);
     }
 
     function closeBoxOver(box) {
         if (box == null) return;
         box.classList.remove('active');
         overlay.classList.remove('active');
-        toggleScrollLock(false);
+        // toggleScrollLock(false);
     }
 
-    function toggleScrollLock(isLocked) {
-        const body = document.body;
+    // function toggleScrollLock(isLocked) {
+    //     const body = document.body;
     
-        if (isLocked) {
-            const scrollY = window.scrollY;
-            body.style.position = 'fixed';
-            body.style.top = `-${scrollY}px`;
-            body.style.width = '100%';
-        } else {
-            const scrollY = body.style.top;
-            body.style.position = '';
-            body.style.top = '';
-            window.scrollTo(0, parseInt(scrollY || '0') * -1);
-        }
-    }
+    //     if (isLocked) {
+    //         const scrollY = window.scrollY;
+    //         body.style.position = 'fixed';
+    //         body.style.top = `-${scrollY}px`;
+    //         body.style.width = '100%';
+    //     } else {
+    //         const scrollY = body.style.top;
+    //         body.style.position = '';
+    //         body.style.top = '';
+    //         window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    //     }
+    // }
 
     var menuButton = document.querySelector('.menu-button');
     var optionsMenu = document.getElementById('options-menu');
+    var optionsButtons = document.querySelectorAll('.options-button');
     var isMenuVisible = false;
 
     function toggleMenu() {
@@ -63,9 +64,17 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleMenu();
         }
     }
+    function handleOptionButtonClick() {
+        if (isMenuVisible) {
+            toggleMenu();
+        }
+    }
 
     menuButton.addEventListener('click', toggleMenu);
     document.addEventListener('click', handleClickOutside);
+    optionsButtons.forEach(function(button) {
+        button.addEventListener('click', handleOptionButtonClick);
+    });
 
 });
 

@@ -6,7 +6,7 @@
     opacity: 0;
     visibility: hidden;
     z-index: 20;
-    max-width: 90%;
+    max-width: 80%;
 }
 
 .pop-up-box.active {
@@ -24,7 +24,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: rgba(63, 63, 63, 0.6);
     pointer-events: none;
 }
 
