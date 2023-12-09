@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="login-box-footer">
-                <input type="submit" value="Login">
+                <input class="log-in-button" type="submit" value="Login">
             </div>
         </form>
     </div>
@@ -72,34 +72,33 @@
             </div>
             <div class="register-box-content">
                 <div class="register-box-item">
-                    <div id="username_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <div id="register-username-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="text" name="username" placeholder="Username" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="email_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <div id="register-email-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="text" name="email" placeholder="Email" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="password_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <div id="passwordError" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="register-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="confirm_password_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <div id="confirmPasswordError" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="register-confirm_password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
+                </div>
+                <div class="register-box-item">
+                    <div id="register-error-message" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
                 </div>
             </div>
             <div class="register-box-footer">
-                <input type="submit" value="Register">
+                <input class="sign-up-button" type="submit" value="Register">
             </div>
         </form>
     </div>
     <div id="overlay"></div>
 
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

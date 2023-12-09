@@ -5,6 +5,10 @@ body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
 .top-space {
     height: 140px;
 }
@@ -84,10 +88,11 @@ body {
     cursor: pointer;
     border-left: solid 1px rgb(232, 213, 203);
     padding-left: 20px;
+    transition: text-shadow 0.3s ease;
 }
 
 .nav-bar-right button:hover {
-    color: rgb(251, 223, 158);
+    text-shadow: 2px 2px 4px rgba(191, 191, 0, 0.6);
 }
 
 .options-menu {
