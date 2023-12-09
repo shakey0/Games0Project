@@ -85,11 +85,15 @@ body {
     padding-left: 20px;
 }
 
+.nav-bar-right button:hover {
+    color: rgb(251, 223, 158);
+}
+
 .options-menu {
     position: fixed;
     top: 81px;
     right: 0;
-    z-index: 9;
+    z-index: 8;
     background-color: #191c27;
     border: 1px solid rgb(142, 114, 99);
     border-radius: 10px;

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pop_ups.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pre_game.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/in_game.css') }}">
@@ -19,24 +20,86 @@
         </div>
         <div class="nav-bar-right">
             <a href="{{ url_for('user_profile.user_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
-            <button class="menu-button" onclick="toggleOptions()">Menu</button>
+            <button class="menu-button">Menu</button>
         </div>
     </div>
     <!-- Options menu -->
     <div class="options-menu" id="options-menu" style="display: none;">
         {% if 1 == 1 %} <!-- if not user.is_authenticated -->
-        <button class="options-button">Log in</button>
-        <button class="options-button">Sign up</button>
+            <button class="options-button" data-login-button-target="#login-box">Log in</button>
+            <button class="options-button" data-register-button-target="#register-box">Sign up</button>
         {% endif %}
         <a href=""><button class="options-button">Leaderboards</button></a>
         <button class="options-button">About</button>
         <a href=""><button class="options-button">Contact</button></a>
         {% if 1 == 1 %} <!-- if user.is_authenticated -->
-        <button class="options-button">Log out</button>
+            <button class="options-button">Log out</button>
         {% endif %}
     </div>
     <div class="top-space"></div>
     {% block content %}{% endblock %}
+
+
+    <div class="login-box pop-up-box" id="login-box">
+        <button data-cancel-button-over class="cancel-button">&times;</button>
+        <form method="POST" action="/login">
+            <!-- PUT CSRF TOKEN HERE -->
+            <div class="login-box-header">
+                <h2>Login</h2>
+            </div>
+            <div class="login-box-content">
+                <div class="login-box-item">
+                    <input type="text" name="username" placeholder="Username or email" autofocus>
+                </div>
+                <div class="login-box-item">
+                    <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                </div>
+                <div class="login-box-item">
+                    <div id="login-error-message" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
+                </div>
+            </div>
+            <div class="login-box-footer">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+    </div>
+    <div class="register-box pop-up-box" id="register-box">
+        <button data-cancel-button-over class="cancel-button">&times;</button>
+        <form id="registrationForm" method="POST" action="/register">
+            <!-- PUT CSRF TOKEN HERE -->
+            <div class="register-box-header">
+                <h2>Register</h2>
+            </div>
+            <div class="register-box-content">
+                <div class="register-box-item">
+                    <div id="username_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="register-username-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <input type="text" name="username" placeholder="Username" autofocus>
+                </div>
+                <div class="register-box-item">
+                    <div id="email_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="register-email-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <input type="text" name="email" placeholder="Email" autofocus>
+                </div>
+                <div class="register-box-item">
+                    <div id="password_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="passwordError" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                </div>
+                <div class="register-box-item">
+                    <div id="confirm_password_validation_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div id="confirmPasswordError" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
+                </div>
+            </div>
+            <div class="register-box-footer">
+                <input type="submit" value="Register">
+            </div>
+        </form>
+    </div>
+    <div id="overlay"></div>
+
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

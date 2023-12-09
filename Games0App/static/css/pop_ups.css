@@ -1,0 +1,159 @@
+.pop-up-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 20;
+    max-width: 90%;
+}
+
+.pop-up-box.active {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+    transition: transform 200ms ease-in-out, opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transition: opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+    z-index: 11;
+}
+
+/* &times; button for pop up boxes */
+.cancel-button {
+    position: absolute;
+    display: block;
+    font-weight: 900;
+    background: none;
+    border: none;
+    padding: 0;
+    outline: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.cancel-button {
+    font-size: 2.4em;
+    font-family: cursive;
+    color: rgb(232, 213, 203);
+    top: -9px;
+    right: 15px;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.cancel-button:hover {
+    transform: scale(1.1);
+    color: rgb(255, 255, 255);
+}
+
+.login-box, .register-box {
+    border: 1px solid rgb(142, 114, 99);
+    background-color: #191c27;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.login-box {
+    width: 300px;
+    padding: 25px 30px;
+}
+
+.register-box {
+    width: 300px;
+    padding: 25px 30px;
+}
+
+.login-box-header, .register-box-header {
+    text-align: center;
+    font-size: 1.3em;
+    padding-bottom: 10px;
+}
+
+.login-box-header h2, .register-box-header h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.login-box-content, .register-box-content {
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+
+.login-box-content input, .register-box-content input {
+    width: 100%;
+    box-sizing: border-box;
+    color: rgb(232, 213, 203);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
+    padding: 1px 6px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 5px;
+    font-size: 16px;
+    height: 36px;
+    outline: none;
+    background-color: #202124;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-box-content input:hover, .register-box-content input:hover {
+    border: 1px solid rgb(232, 213, 203);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.login-box-content input[type="text"]:-webkit-autofill,
+.login-box-content input[type="text"]:-webkit-autofill:hover, 
+.login-box-content input[type="text"]:-webkit-autofill:focus, 
+.login-box-content input[type="text"]:-webkit-autofill:active,
+.register-box-content input[type="text"]:-webkit-autofill,
+.register-box-content input[type="text"]:-webkit-autofill:hover, 
+.register-box-content input[type="text"]:-webkit-autofill:focus, 
+.register-box-content input[type="text"]:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #202124 inset !important;
+    -webkit-text-fill-color: white !important;
+}
+
+input::placeholder {
+    color: white;
+    opacity: 0.6;
+}
+
+.login-box-footer input, .register-box-footer input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    color: rgb(232, 213, 203);
+    background-color: #202124;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    white-space: nowrap;
+}
+
+.register-box-footer input {
+    margin-top: 5px;
+}
+
+.login-box-footer input:hover, .register-box-footer input:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
