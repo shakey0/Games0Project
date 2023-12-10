@@ -72,23 +72,24 @@
             </div>
             <div class="register-box-content">
                 <div class="register-box-item">
-                    <div id="register-username-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div class="register-username-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="text" name="username" placeholder="Username" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="register-email-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div class="register-email-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="text" name="email" placeholder="Email" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="register-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                    <div class="register-password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <input type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password" autocomplete="off" autofocus>
+                    <div id="password-strength" style="color: rgb(0, 149, 255); transform: translateY(-17px);"></div> <!-- password strength meter -->
                 </div>
                 <div class="register-box-item">
-                    <div id="register-confirm_password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                    <div class="register-confirm_password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
                 </div>
                 <div class="register-box-item">
-                    <div id="register-error-message" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
+                    <div class="register-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
                 </div>
             </div>
             <div class="register-box-footer">

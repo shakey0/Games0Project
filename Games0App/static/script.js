@@ -140,6 +140,50 @@ function startSecondCountdown() {
     }, 1000);
 }
 
+
+function checkPasswordStrength() {
+    const password = document.getElementById('password').value;
+    const strengthElement = document.getElementById('password-strength');
+
+    // Define regular expressions to check for character types
+    const lowercaseRegex = /[a-z]/;
+    const uppercaseRegex = /[A-Z]/;
+    const digitRegex = /[0-9]/;
+    const symbolRegex = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/;
+
+    // Initialize strength level and message
+    let strengthLevel = 0;
+    let message = '';
+    let strength_ = 'Strength: ';
+
+    if (password.length === 0) {
+        strengthLevel = 0;
+        strength_ = '';
+    } else if (password.length < 8) {
+        strengthLevel = 1;
+    } else if (password.length >= 8) {
+        strengthLevel = 0;
+        // Check for character types
+        if (lowercaseRegex.test(password)) strengthLevel++;
+        if (uppercaseRegex.test(password)) strengthLevel++;
+        if (digitRegex.test(password)) strengthLevel++;
+        if (symbolRegex.test(password)) strengthLevel++;
+    }
+    if (password.length >= 12) {
+        strengthLevel++;
+    }
+
+    // Define strength levels and corresponding messages
+    const strengthLevels = ['', 'Very Weak', 'Weak', 'Medium', 'Strong', 'Very Strong'];
+
+    // Update the message based on the calculated strength level
+    message = strength_ + strengthLevels[strengthLevel];
+
+    // Update the password strength element
+    strengthElement.textContent = message;
+}
+
+
 $(document).ready(function(){
 
     $('.log-in-button').on('click', function(event) {
@@ -190,11 +234,12 @@ $(document).ready(function(){
                     localStorage.setItem('loginSuccessMessage', response.message);
                     window.location.reload();
                 } else {
+                    $('.register-box-item .clear_error').html('');
                     const errorsArray = Object.entries(response.errors).map(([key, value]) => ({ field: key, message: value }));
                     errorsArray.sort((a, b) => a.field.localeCompare(b.field));
                     errorsArray.forEach(error => {
                         const errorField = `register-${error.field}-error-message`;
-                        $(`#${errorField}`).text(error.message);
+                        $(`.${errorField}`).text(error.message);
                     });
                 }
                 $button.prop('disabled', false);

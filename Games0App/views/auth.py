@@ -17,6 +17,8 @@ def register():
         errors['username'] = 'Please enter a username.'
     elif len(username) < 3:
         errors['username'] = 'Username must be at least 4 characters.'
+    elif len(username) > 20:
+        errors['username'] = 'Username must be max 20 characters.'
     email = request.form.get('email')
     if not email:
         errors['email'] = 'Please enter an email.'
@@ -28,6 +30,8 @@ def register():
     elif len(password) < 8:
         errors['password'] = 'Password must be at least 8 characters.'
     confirm_password = request.form.get('confirm_password')
+    if not confirm_password:
+        errors['confirm_password'] = 'Please confirm your password.'
     if not password == confirm_password:
         errors['confirm_password'] = 'Passwords do not match.'
     if errors:
