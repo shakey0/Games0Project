@@ -33,7 +33,10 @@
         <button class="options-button">About</button>
         <a href=""><button class="options-button">Contact</button></a>
         {% if 1 == 1 %} <!-- if user.is_authenticated -->
-            <button class="options-button">Log out</button>
+            <form method="POST" action="/logout">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="submit" value="Log out" class="log-out-button options-button">
+            </form>
         {% endif %}
     </div>
     <div class="top-space"></div>

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, flash
+from flask_login import current_user
 from Games0App.extensions import db
 from Games0App.models.user import User
 from Games0App.classes import GamePlay, Category
@@ -41,7 +42,7 @@ games = [
 
 @main.route('/')
 def index():
-    user = User.query.filter_by(username="person").first()
+    user = current_user
     return render_template('index.html', games=games, user=user)
 
 

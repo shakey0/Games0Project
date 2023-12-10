@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, redirect, request, jsonify
 from flask_login import login_user, logout_user
 from Games0App.extensions import db
 from Games0App.models.user import User
@@ -65,7 +65,7 @@ def login():
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
     if user:
         print('USER FOUND')
-        if bcrypt.checkpw(password.data.encode('utf-8'), user.password):
+        if bcrypt.checkpw(password.encode('utf-8'), user.password_hashed):
             print('PASSWORD MATCHED')
             login_user(user)
             return jsonify(success=True, message=f'Welcome, {user.username}!')
@@ -78,4 +78,4 @@ def login():
 @auth.route('/logout', methods=['POST'])
 def logout():
     logout_user()
-    return render_template('index.html')
+    return redirect('/')
