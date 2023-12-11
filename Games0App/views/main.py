@@ -83,6 +83,7 @@ def game_setup():
         redis_client.expire(token, 3600)
 
         if game_type == "trivia_madness":
+            redis_client.hset(token, 'category_name', category)
             redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
 
         return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
@@ -104,8 +105,9 @@ def game_play():
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
+        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
         category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name = "Trivia Madness - " + category
+        game_name = "Trivia Madness - " + category_name
     else:
         game_name = game.name
 
@@ -176,8 +178,8 @@ def game_answer():
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
-        category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name = "Trivia Madness - " + category
+        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
+        game_name = "Trivia Madness - " + category_name
     else:
         game_name = game.name
 
@@ -223,8 +225,8 @@ def game_finish():
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
-        category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name = "Trivia Madness - " + category
+        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
+        game_name = "Trivia Madness - " + category_name
     else:
         game_name = game.name
 
