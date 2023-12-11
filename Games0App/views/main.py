@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, redirect, request, flash
 from flask_login import current_user
 from Games0App.extensions import db
 from Games0App.models.user import User
@@ -42,8 +42,7 @@ games = [
 
 @main.route('/')
 def index():
-    user = current_user
-    return render_template('index.html', games=games, user=user)
+    return render_template('index.html', games=games, user=current_user)
 
 
 @main.route('/game_setup')
@@ -51,11 +50,17 @@ def game_setup():
 
     game_type = request.args.get('game_type')
     if not game_type:
-        return render_template('index.html', games=games)
+        return redirect('/')
 
     game = next(item for item in games if item.param == game_type)
 
     in_game = request.args.get('in_game')
+
+    if game_type == "trivia_madness":
+        category = request.args.get('category')
+        game_name = "Trivia Madness - " + category if category else "Trivia Madness"
+    else:
+        game_name = game.name
 
     if game_type == 'trivia_madness' and not in_game:
         in_game = "before"
@@ -64,7 +69,8 @@ def game_setup():
             Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
             Category("Toys & Games"), Category("Music"), Category("Mathematics"),
             Category("Religion & Mythology"), Category("Sports & Leisure")]
-        return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type)
+        return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
+                                game_name=game_name, user=current_user)
     else:
         in_game = "intro"
 
@@ -77,12 +83,10 @@ def game_setup():
         redis_client.expire(token, 3600)
 
         if game_type == "trivia_madness":
-            category = request.args.get('category')
             redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
-            game_name = "Trivia Madness - " + category
-        else:
-            game_name = game.name
-        return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name)
+
+        return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
+                                user=current_user)
 
 
 @main.route('/game_play', methods=['GET', 'POST'])
@@ -90,13 +94,13 @@ def game_play():
 
     if request.method == 'GET':
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
-        return render_template('index.html', games=games)
+        return redirect('/')
 
     token = request.form.get('token')
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
         flash("Sorry, your game has expired. Please start again.")
-        return render_template('index.html', games=games)
+        return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
@@ -119,7 +123,8 @@ def game_play():
         redis_client.hset(token, 'score', 0)
 
         return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                                next_question=next_question, question_no=1, timer=timer, score=0)
+                                next_question=next_question, question_no=1, timer=timer, score=0,
+                                user=current_user)
 
     in_game = "yes"
 
@@ -140,7 +145,7 @@ def game_play():
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             next_question=next_question, question_no=question_no+1, timer=timer,
-                            score=score)
+                            score=score, user=current_user)
 
 
 @main.route('/game_answer', methods=['GET', 'POST'])
@@ -148,7 +153,7 @@ def game_answer():
 
     if request.method == 'GET':
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
-        return render_template('index.html', games=games)
+        return redirect('/')
 
     in_game = "after"
 
@@ -156,7 +161,7 @@ def game_answer():
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
         flash("Sorry, your game has expired. Please start again.")
-        return render_template('index.html', games=games)
+        return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
@@ -189,7 +194,7 @@ def game_answer():
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, seconds=seconds,
-                            new_points=new_points, question_no=question_no)
+                            new_points=new_points, question_no=question_no, user=current_user)
 
 
 @main.route('/game_finish', methods=['GET', 'POST'])
@@ -197,13 +202,13 @@ def game_finish():
 
     if request.method == 'GET':
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
-        return render_template('index.html', games=games)
+        return redirect('/')
 
     token = request.form.get('token')
     game_type = redis_client.hget(token, 'game_type').decode('utf-8')
     if not game_type:
         flash("Sorry, your game has expired. Please start again.")
-        return render_template('index.html', games=games)
+        return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
     if game_type == "trivia_madness":
@@ -216,101 +221,7 @@ def game_finish():
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
     return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
-                            game_type=game_type, category=category, game=game)
-
-
-# @main.route('/game', methods=['GET', 'POST'])
-# def game():
-
-#     game_type = request.args.get('game_type')
-#     game_play = next(game for game in games if game.param == game_type)
-
-#     in_game = request.args.get('in_game')
-
-#     if game_type == 'trivia_madness' and not in_game:
-#         in_game = "before"
-#         categories = [Category("Art & Literature"), Category("Language"), Category("Science & Nature"),
-#             Category("General"), Category("Food & Drink"), Category("People & Places"),
-#             Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
-#             Category("Toys & Games"), Category("Music"), Category("Mathematics"),
-#             Category("Religion & Mythology"), Category("Sports & Leisure")]
-#         return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type)
-#     else:
-#         categories = []
-
-#     category = ""
-#     game_name = game_play.name
-
-#     if game_type == "trivia_madness":
-#         category = request.args.get('category')
-#         game_name = "Trivia Madness - " + category
-
-#     elif not in_game:
-#         in_game = "intro"
-#         return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
-#                                 game=game_play, game_name=game_name, score=0)
-
-#     score = 0
-#     timer = 0
-#     question_no = 0
-#     next_question = ()
-
-#     if in_game == "yes":
-
-#         timer = int(request.args.get('difficulty'))
-
-#         question_no = int(request.args.get('question_no'))
-#         question_no += 1
-
-#         question_tracker = request.args.get('question_tracker')
-#         if not question_tracker:
-#             question_tracker = 0
-#         next_question = game_play.get_question(question_tracker, category)
-
-#         score = int(request.args.get('score'))
-    
-#     seconds = 0
-#     new_points = 0
-#     correct = False
-
-#     if in_game == "after":
-
-#         timer = int(request.args.get('difficulty'))
-        
-#         question_no = int(request.args.get('question_no'))
-
-#         question_tracker = request.args.get('question_tracker')
-#         answer = request.args.get('answer')
-#         real_answer = game_play.get_answer(question_tracker)
-#         correct = True if format_answer(answer) == format_answer(real_answer) else False
-
-#         score = int(request.args.get('score'))
-#         seconds_to_answer_left = int(request.args.get('countdown_timer'))
-#         if correct:
-#             new_points = 100
-#             new_points += (30 - seconds_to_answer_left) * 10
-#             score += new_points
-#             seconds = timer - seconds_to_answer_left
-#         else:
-#             seconds = seconds_to_answer_left
-
-#     if in_game == "finish":
-
-#         timer = int(request.args.get('difficulty'))
-
-#         score = int(request.args.get('score'))
-
-#         return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
-#                                 game_type=game_type, category=category, game=game_play)
-
-
-#     return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
-#                             game=game_play, timer=timer, category=category, game_name=game_name,
-#                             question_no=question_no, next_question=next_question, correct=correct,
-#                             score=score, seconds=seconds, new_points=new_points)
-
-
-
+                            game_type=game_type, category=category, game=game, user=current_user)
 
 
 

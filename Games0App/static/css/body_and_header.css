@@ -13,6 +13,19 @@ body {
     height: 140px;
 }
 
+.game-title-top-small {
+    display: none;
+}
+
+@media (max-width: 1120px) {
+    .game-title-top {
+        display: none;
+    }
+    .game-title-top-small {
+        display: block;
+    }
+}
+
 .nav-bar {
     position: fixed;
     top: 0;

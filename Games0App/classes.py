@@ -6,6 +6,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+from flask_login import current_user
 import json
 import random
 

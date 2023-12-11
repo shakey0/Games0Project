@@ -1,4 +1,18 @@
 {% extends 'layout.html' %}
+{% block game_title %}{{game_name}}{% endblock %}
+{% block game_title_small %}
+  {% for word in game_name.split() %}
+    {% if word == 'Facts' or word == 'Jokes' or word == 'General' or word == 'Music' or word == 'to' or word == 'Reach' %}
+    {{ word }}
+    {% elif word == 'Geography' or word == 'Entertainment' or word == 'Number' %}
+    {{ word[0:3] }}
+    {% elif word == 'Language' or word == 'Mathematics' %}
+    {{ word[0:4] }}
+    {% else %}
+    {{ word[0] }}
+    {% endif %}
+  {% endfor %}
+{% endblock %}
 {% block content %}
 
 <div>Hello! {{ category }}, {{ game_name }}, {{ game_type }}, {{ score }}, {{ timer }} </div>
