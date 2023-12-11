@@ -43,7 +43,9 @@ class GamePlay:
                 continue
             if len(random_word) < 5 or len(random_word) > 10:
                 continue
-            return (sentence.replace(random_word, '__________'), random_word.lower())
+            if not sentence[-1] in ['.', '!', '?']:
+                sentence += '.'
+            return [sentence.replace(random_word, '__________'), random_word.lower()]
         return None
 
     def validate_trivia_answer(self, answer):
@@ -71,13 +73,14 @@ class GamePlay:
                     if self.validate_trivia_answer(answer.strip().lower()):
                         valid_questions.append([question, answer])
                 else:
-                    sentence = item['fact']
+                    sentence = item['fact'] if 'fact' in item else item['joke']
                     fill_in_the_blank = self.create_fill_blank_answer(sentence)
                     if fill_in_the_blank:
                         valid_questions.append(fill_in_the_blank)
             
             if valid_questions:
-                redis_client.sadd(redis_group, *valid_questions)
+                serialized_questions = [json.dumps(question) for question in valid_questions]
+                redis_client.sadd(redis_group, *serialized_questions)
                 print('Added questions to Redis set')
                 return True
             return False
@@ -85,29 +88,38 @@ class GamePlay:
 
 
     def get_question_from_redis_set(self, redis_group, category):
-        question = redis_client.spop(redis_group)  # NAME FOR SET IN REDIS
+        question = redis_client.spop(redis_group)
         if question is not None:
             print('Got question from Redis set')
+            print(self.lower_name)
             if category:
                 incremented_question_no = redis_client.incr("{}_{}_last_question_no".format(self.lower_name, category))
-                redis_client.set("{}_{}_{}".format(self.lower_name, category, incremented_question_no), question)
+                field = "{}_{}_{}".format(self.lower_name, category, incremented_question_no)
+                hash_name = "{}_{}_hash".format(self.lower_name, category)
             else:
                 incremented_question_no = redis_client.incr("{}_last_question_no".format(self.lower_name))
-                redis_client.set("{}_{}".format(self.lower_name, incremented_question_no), question)
-            return (incremented_question_no, question.decode('utf-8'))
-        
+                field = "{}_{}".format(self.lower_name, incremented_question_no)
+                hash_name = "{}_hash".format(self.lower_name)
 
-    def get_question_from_redis(self, last_question_no, redis_string):
-        question = redis_client.get(redis_string)
+            redis_client.hset(hash_name, field, question)
+            if redis_client.ttl(hash_name) == -1:
+                redis_client.expire(hash_name, 3600)
+                redis_client.expire(incremented_question_no, 3600)
+
+            return (incremented_question_no, json.loads(question.decode('utf-8')))
+
+
+    def get_question_from_redis(self, last_question_no, redis_string, category):
+        hash_name = "{}_{}_hash".format(self.lower_name, category) if category else "{}_hash".format(self.lower_name)
+        question = redis_client.hget(hash_name, redis_string)
         if question is not None:
             print('Got question from Redis')
-            return (last_question_no+1, question.decode('utf-8'))
+            return (last_question_no+1, json.loads(question.decode('utf-8')))
 
 
     def get_question(self, last_question_no, category=""):
         # return "ANSWER FROM REDIS"
         if self.api_url:
-
             if category:
                 category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
                 redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
@@ -117,7 +129,7 @@ class GamePlay:
                 redis_group = self.lower_name + "_collection"
             
             print('Trying to get question from Redis')
-            question = self.get_question_from_redis(last_question_no, redis_string)
+            question = self.get_question_from_redis(last_question_no, redis_string, category)
             if question is not None:
                 return question
             
@@ -131,7 +143,8 @@ class GamePlay:
             while count < 3:
                 count += 1
                 if category:
-                    result = self.update_stored_questions(self.api_url.format(category.lower()), redis_group, category.lower())
+                    print("CATEGORY: ", category)
+                    result = self.update_stored_questions(self.api_url.format(category), redis_group, category)
                 else:
                     result = self.update_stored_questions(self.api_url, redis_group)
                 if result:

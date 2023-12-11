@@ -56,7 +56,7 @@
     </div>
 {% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ next_question[1] }} <b class="in-countdown">{{ timer }}</b></h1>
+    <h1 class="question-in-game" style="display: none;">{{ next_question[1][0] }} <br><br><b class="in-countdown" style="font-size: 2em;">{{ timer }}</b></h1>
     <div class="game-box" style="display: none;">
         <form method="POST" action="/game_answer">
             <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
@@ -78,7 +78,7 @@
 {% else %}
     {% if correct %}
     <div class="after-answer">
-        <h2 class="correct-answer-text"><b class="correct-answer">'{{ game.get_answer(1) }}'</b> is the correct answer!</h2>
+        <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
         <h2 class="current-score-text">You answered in <b class="score">{{ seconds }}</b> seconds.</h2>
         <h2 class="current-score-text">+ <b class="score">{{ new_points }}</b> points</h2>
         {% if question_no == 10 %}
@@ -92,7 +92,7 @@
             <h1 class="question-over"><b>Time up!</b></h1>
         {% endif %}
     <div class="after-answer">
-        <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ game.get_answer(1) }}'</b>.</h2>
+        <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
         {% if question_no == 10 %}
             <h2 class="current-score-text">Your final score is <b class="score">{{ score }}</b> points.</h2>
         {% else %}

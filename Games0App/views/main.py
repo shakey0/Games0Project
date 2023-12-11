@@ -115,11 +115,17 @@ def game_play():
 
         timer = int(request.form.get('difficulty'))
         redis_client.hset(token, 'timer', timer)
-        # GET QUESTION FROM CLASS
-        next_question = (55, "Question from Redis")  # game.get_question(0)
+        # GET QUESTION FROM CLASS - ALMOST DONE
+        if game_type == "trivia_madness":
+            next_question = game.get_question(0, category)
+        else:
+            next_question = game.get_question(0)
+        
         redis_client.hset(token, 'question_no', 1)
         redis_client.hset(token, 'question_tracker', next_question[0])
-        redis_client.hset(token, 'question', next_question[1])
+        redis_client.hset(token, 'question', next_question[1][0])
+        redis_client.hset(token, 'answer', next_question[1][1])
+
         redis_client.hset(token, 'score', 0)
 
         return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
@@ -137,9 +143,14 @@ def game_play():
     last_question = redis_client.hget(token, 'question').decode('utf-8')
 
     # GET QUESTION FROM CLASS
-    next_question = (55, "Question from Redis")
+    if game_type == "trivia_madness":
+        next_question = game.get_question(question_tracker, category)
+    else:
+        next_question = game.get_question(question_tracker)
+    
     redis_client.hset(token, 'question_tracker', next_question[0])
-    redis_client.hset(token, 'question', next_question[1])
+    redis_client.hset(token, 'question', next_question[1][0])
+    redis_client.hset(token, 'answer', next_question[1][1])
 
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
@@ -171,9 +182,8 @@ def game_answer():
         game_name = game.name
 
     answer = request.form.get('answer')
-    question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
-    # real_answer = game_play.get_answer(question_tracker, AND......(if category:))
-    real_answer = "Answer from Redis"
+    # question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
+    real_answer = redis_client.hget(token, 'answer').decode('utf-8')
     correct = True if format_answer(answer) == format_answer(real_answer) else False
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))
@@ -194,7 +204,8 @@ def game_answer():
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, seconds=seconds,
-                            new_points=new_points, question_no=question_no, user=current_user)
+                            new_points=new_points, question_no=question_no, real_answer=real_answer,
+                            user=current_user)
 
 
 @main.route('/game_finish', methods=['GET', 'POST'])
@@ -221,7 +232,7 @@ def game_finish():
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
     return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
-                            game_type=game_type, category=category, game=game, user=current_user)
+                            game_type=game_type, game=game, user=current_user)
 
 
 
