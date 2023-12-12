@@ -75,9 +75,10 @@ class GamePlay:
             valid_questions = []
             for item in response:
                 if category:
-                    question = item['question']
-                    answer = item['answer']
-                    if self.validate_trivia_question(question.strip(), answer.strip()):
+                    question = item['question'].strip()
+                    answer = item['answer'].strip()
+                    if self.validate_trivia_question(question, answer):
+                        # NEED TO AMEND THE ANSWER TO CUT OUT WORDS LIKE 'THE' AND 'A' AND 'AN'
                         if not question[-1] in ['.', '!', '?']:
                             question += '?'
                         valid_questions.append([question, answer])

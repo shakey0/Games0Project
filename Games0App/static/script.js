@@ -125,6 +125,55 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    var lengthButton = document.querySelector('.reveal-length');
+
+    if (lengthButton) {
+        lengthButton.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var form = this.closest('.reveal-length-form');
+
+            if (form) {
+                var formData = new FormData(form);
+
+                fetch('/reveal_length', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json(); // Parse the JSON response
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .then(function(data) {
+                    var lengthButton = document.querySelector('.reveal-length');
+                    lengthButton.disabled = true;
+                    if (data.success) {
+                        // Handle success here
+                        // Update the UI with the score and message
+                        // var scoreElement = document.getElementById('score');
+                        var messageElement = document.getElementById('hint-message');
+
+                        // Assuming you have HTML elements with the IDs 'score' and 'message' to display the score and message
+                        // scoreElement.textContent = 'Score: ' + data.score;
+                        messageElement.innerHTML += '<br>' + data.message;
+                    } else {
+                        // Handle errors here
+                        // You can display an error message or perform any other error handling
+                        var messageElement = document.getElementById('hint-message');
+                        messageElement.innerHTML += '<br>' + data.message;
+                    }
+                })
+                .catch(function(error) {
+                    // Handle network errors or other exceptions here
+                    console.error('Fetch error:', error);
+                });
+            }
+        });
+    }
+
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {

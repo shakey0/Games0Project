@@ -57,3 +57,27 @@ def reveal_letter():
     redis_client.hset(token, 'score', score)
 
     return jsonify(success=True, score=score, message=message)
+
+
+@api.route('/reveal_length', methods=['POST'])
+def reveal_length():
+
+    token = request.form.get('token')
+
+    score = int(redis_client.hget(token, 'score').decode('utf-8'))
+    if score < 80:
+        return jsonify(success=False, message='You need at least 80 points to reveal the length of the answer!')
+
+    answer = redis_client.hget(token, 'answer').decode('utf-8')
+
+    answer = answer.lower().replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+
+    no_of_words = len(answer.split())
+    no_of_words_part = "a single word" if no_of_words == 1 else f"{no_of_words} words"
+
+    message = f"The answer is {no_of_words_part} totalling {len(answer)} characters."
+
+    score -= 100
+    redis_client.hset(token, 'score', score)
+
+    return jsonify(success=True, score=score, message=message)

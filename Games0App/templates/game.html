@@ -71,7 +71,10 @@
                     <input type="hidden" name="token" value="{{ token }}">
                     <button class="reveal-letter">Reveal a letter</button>
                 </form>
-                <button class="reveal-length" onclick="revealLength()">Reveal length</button>
+                <form class="reveal-length-form" method="POST" action="/reveal_length">
+                    <input type="hidden" name="token" value="{{ token }}">
+                    <button class="reveal-length">Reveal length</button>
+                </form>
             </div>
             <div class="helper-button-tags">
                 <p class="reveal-letter-tag">-60 points</p>
