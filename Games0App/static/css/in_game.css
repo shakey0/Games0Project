@@ -50,7 +50,7 @@
     gap: 300px;
 }
 
-.helper-buttons button {
+.reveal-letter, .reveal-length {
     margin: 0px 35px;
     width: 120px;
     border: none;
@@ -65,7 +65,7 @@
     transform: translateY(-94px);
 }
 
-.helper-buttons button:hover {
+.reveal-letter:hover, .reveal-length:hover {
     background-color: rgb(200, 167, 159);
 }
 

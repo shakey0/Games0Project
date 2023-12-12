@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, flash
+from flask import Blueprint, render_template, redirect, request, make_response, flash
 from flask_login import current_user
 from Games0App.extensions import db
 from Games0App.models.user import User
@@ -74,9 +74,6 @@ def game_setup():
     else:
         in_game = "intro"
 
-        # LOGIC FOR IF USER IS AUTHENTICATED
-        # if current_user.is_authenticated:
-
         random_token = secrets.token_hex(16)
         token = f"{random_token}_{game_type}"
         redis_client.hset(token, 'game_type', game_type)
@@ -111,28 +108,42 @@ def game_play():
     else:
         game_name = game.name
 
+    redis_client.hset(token, 'revealed_string', '')
+
     if request.form.get('in_game') == "start":
 
         in_game = "yes"
 
         timer = int(request.form.get('difficulty'))
         redis_client.hset(token, 'timer', timer)
-        # GET QUESTION FROM CLASS - ALMOST DONE
-        if game_type == "trivia_madness":
-            next_question = game.get_question(0, category)
+        
+        cookied_question_number = request.cookies.get(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'))
+        if cookied_question_number:
+            cookied_question_number = int(cookied_question_number)
         else:
-            next_question = game.get_question(0)
+            cookied_question_number = 0
+        print('COOKIED QUESTION NUMBER: ', cookied_question_number)
+
+        if game_type == "trivia_madness":
+            next_question = game.get_question(cookied_question_number, category)
+        else:
+            next_question = game.get_question(cookied_question_number)
+        print('NEXT QUESTION: ', next_question)
         
         redis_client.hset(token, 'question_no', 1)
         redis_client.hset(token, 'question_tracker', next_question[0])
         redis_client.hset(token, 'question', next_question[1][0])
         redis_client.hset(token, 'answer', next_question[1][1])
 
-        redis_client.hset(token, 'score', 0)
+        redis_client.hset(token, 'score', 200)
 
-        return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                                next_question=next_question, question_no=1, timer=timer, score=0,
-                                user=current_user)
+        response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
+                                                game_name=game_name, next_question=next_question,
+                                                question_no=1, timer=timer, score=0, user=current_user))
+        response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
+                            str(next_question[0]))
+        
+        return response if response else redirect('/')
 
     in_game = "yes"
 
@@ -142,9 +153,7 @@ def game_play():
     redis_client.hset(token, 'question_no', question_no+1)
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
-    last_question = redis_client.hget(token, 'question').decode('utf-8')
 
-    # GET QUESTION FROM CLASS
     if game_type == "trivia_madness":
         next_question = game.get_question(question_tracker, category)
     else:
@@ -156,9 +165,14 @@ def game_play():
 
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
-    return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                            next_question=next_question, question_no=question_no+1, timer=timer,
-                            score=score, user=current_user)
+    response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
+                                            game_name=game_name, next_question=next_question,
+                                            question_no=question_no+1, timer=timer, score=score,
+                                            user=current_user))
+    response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
+                        str(next_question[0]))
+        
+    return response if response else redirect('/')
 
 
 @main.route('/game_answer', methods=['GET', 'POST'])
@@ -184,8 +198,9 @@ def game_answer():
         game_name = game.name
 
     answer = request.form.get('answer')
-    # question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
+    
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
+    # NEED TO ADD MORE CHECKS FOR CLOSE ANSWERS !!!!!!!!!!!!!!!!!!!!!!!
     correct = True if format_answer(answer) == format_answer(real_answer) else False
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))

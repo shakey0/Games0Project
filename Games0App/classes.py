@@ -6,7 +6,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
-from flask_login import current_user
+from Games0App.utils import spell_check_sentence
 import json
 import random
 
@@ -24,7 +24,6 @@ class GamePlay:
             self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'.format(api_variable)
         else:
             self.api_url = ""
-        # self.api_url = 'https://api.api-ninjas.com/v1/trivia?category={}&limit=30'.format(self.variable.lower())
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 
@@ -33,6 +32,8 @@ class GamePlay:
         split_sentence = sentence.split()
         count = 0
         while count < 100:
+            if not spell_check_sentence(sentence):
+                return None
             count += 1
             random_word = random.choice(split_sentence)
             if not random_word[1:-1].isalpha():
@@ -45,18 +46,24 @@ class GamePlay:
                 continue
             if not sentence[-1] in ['.', '!', '?']:
                 sentence += '.'
-            return [sentence.replace(random_word, '__________'), random_word.lower()]
+            return [sentence.replace(random_word, '__________'), random_word]
         return None
 
-    def validate_trivia_answer(self, answer):
-        if ',' in answer or len(answer.split()) > 2:
+    def validate_trivia_question(self, question, answer):
+        if not spell_check_sentence(question):
+            return False
+        if not spell_check_sentence(answer):
+            return False
+        if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 2:
+            return False
+        if any(c.isalpha() for c in answer) and any(c.isdigit() for c in answer):
             return False
         return True
 
     def update_stored_questions(self, url, redis_group, category=""):
         print(category)
         print(url)
-        from Games0App.api import get_api_questions
+        from Games0App.foreign_api import get_api_questions
 
         try:
             response = get_api_questions(url)
@@ -70,7 +77,9 @@ class GamePlay:
                 if category:
                     question = item['question']
                     answer = item['answer']
-                    if self.validate_trivia_answer(answer.strip().lower()):
+                    if self.validate_trivia_question(question.strip(), answer.strip()):
+                        if not question[-1] in ['.', '!', '?']:
+                            question += '?'
                         valid_questions.append([question, answer])
                 else:
                     sentence = item['fact'] if 'fact' in item else item['joke']
@@ -93,18 +102,20 @@ class GamePlay:
             print('Got question from Redis set')
             print(self.lower_name)
             if category:
-                incremented_question_no = redis_client.incr("{}_{}_last_question_no".format(self.lower_name, category))
+                redis_question_no_string = "{}_{}_last_question_no".format(self.lower_name, category)
+                incremented_question_no = redis_client.incr(redis_question_no_string)
                 field = "{}_{}_{}".format(self.lower_name, category, incremented_question_no)
                 hash_name = "{}_{}_hash".format(self.lower_name, category)
             else:
-                incremented_question_no = redis_client.incr("{}_last_question_no".format(self.lower_name))
+                redis_question_no_string = "{}_last_question_no".format(self.lower_name)
+                incremented_question_no = redis_client.incr(redis_question_no_string)
                 field = "{}_{}".format(self.lower_name, incremented_question_no)
                 hash_name = "{}_hash".format(self.lower_name)
 
             redis_client.hset(hash_name, field, question)
             if redis_client.ttl(hash_name) == -1:
                 redis_client.expire(hash_name, 3600)
-                redis_client.expire(incremented_question_no, 3600)
+                redis_client.expire(redis_question_no_string, 3600)
 
             return (incremented_question_no, json.loads(question.decode('utf-8')))
 
@@ -154,14 +165,6 @@ class GamePlay:
                         return question
             print('Failed to get question from API')
             return None
-
-        # LOGIC TO GET QUESTION (+ANSWER) FROM REDIS
-        # self.current_question = "Question from Redis"
-        # self.current_answer = "Answer from Redis"
-        # return (1, self.current_question)  # NEED TO RETURN TRACKER AND QUESTION IN TUPLE
-    
-    def get_answer(self, tracker):
-        return "Answer from Redis"
     
 
 class Category:

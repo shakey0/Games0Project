@@ -1,0 +1,59 @@
+from flask import Blueprint, request, jsonify
+import os
+import redis
+production = os.environ.get('PRODUCTION', False)
+if production:
+    redis_client = redis.Redis(host='localhost', port=6379, db=0)
+else:
+    REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
+    redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+import random
+
+
+api = Blueprint('api', __name__)
+
+
+def ordinal(n):
+    if 10 <= n % 100 <= 20:
+        suffix = 'th'
+    else:
+        suffix = {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')
+    return str(n) + suffix
+
+
+@api.route('/reveal_letter', methods=['POST'])
+def reveal_letter():
+
+    token = request.form.get('token')
+
+    score = int(redis_client.hget(token, 'score').decode('utf-8'))
+    if score < 60:
+        return jsonify(success=False, message='You need at least 60 points to reveal a letter!')
+    
+    revealed_string = redis_client.hget(token, 'revealed_string').decode('utf-8')
+
+    answer = redis_client.hget(token, 'answer').decode('utf-8')
+
+    answer = answer.lower().replace(' ', '').replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+
+    alphanumeric_positions = [i for i, char in enumerate(answer) if char.isalnum()]
+    count = 0
+    random_position = -1
+    while count < 100:
+        count += 1
+        random_position = random.choice(alphanumeric_positions)
+        if not str(random_position) in revealed_string:
+            revealed_string += str(random_position)
+            redis_client.hset(token, 'revealed_string', revealed_string)
+            break
+        random_position = -1
+    if random_position == -1:
+        return jsonify(success=False, message='No more letters to reveal!')
+    random_char = answer[random_position]
+
+    message =  f"The {ordinal(random_position + 1)} character is {random_char}"
+
+    score -= 60
+    redis_client.hset(token, 'score', score)
+
+    return jsonify(success=True, score=score, message=message)

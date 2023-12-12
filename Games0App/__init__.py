@@ -25,9 +25,11 @@ def create_app():
     from .views.main import main as main_blueprint
     from .views.user_profile import user_profile as user_blueprint
     from .views.auth import auth as auth_blueprint
+    from .views.api import api as api_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(user_blueprint)
     app.register_blueprint(auth_blueprint)
+    app.register_blueprint(api_blueprint)
 
     return app

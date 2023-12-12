@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, jsonify
+from flask import Blueprint, redirect, request, jsonify
 from flask_login import login_user, logout_user
 from Games0App.extensions import db
 from Games0App.models.user import User

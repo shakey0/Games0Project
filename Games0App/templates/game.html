@@ -57,6 +57,7 @@
 {% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
     <h1 class="question-in-game" style="display: none;">{{ next_question[1][0] }} <br><br><b class="in-countdown" style="font-size: 2em;">{{ timer }}</b></h1>
+    <h3 id="hint-message" style="text-align: center; font-size: 2em; margin: 0px;"></h3>
     <div class="game-box" style="display: none;">
         <form method="POST" action="/game_answer">
             <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
@@ -66,12 +67,15 @@
         </form>
         <div class="helper-box">
             <div class="helper-buttons">
-                <button class="reveal-letter" onclick="revealLetter()">Reveal a letter</button>
+                <form class="reveal-letter-form" method="POST" action="/reveal_letter">
+                    <input type="hidden" name="token" value="{{ token }}">
+                    <button class="reveal-letter">Reveal a letter</button>
+                </form>
                 <button class="reveal-length" onclick="revealLength()">Reveal length</button>
             </div>
             <div class="helper-button-tags">
-                <p class="reveal-letter-tag">-10 points</p>
-                <p class="reveal-length-tag">-20 points</p>
+                <p class="reveal-letter-tag">-60 points</p>
+                <p class="reveal-length-tag">-80 points</p>
             </div>
         </div>
     </div>
