@@ -34,7 +34,13 @@ def reveal_letter():
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
-    answer = answer.lower().replace(' ', '').replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+    answer = answer.lower().strip()
+    for article in ['the ', 'a ', 'an ']:
+        if answer.startswith(article):
+            answer = answer[len(article):]
+            break
+
+    answer = answer.replace(' ', '').replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
     alphanumeric_positions = [i for i, char in enumerate(answer) if char.isalnum()]
     count = 0
@@ -70,14 +76,28 @@ def reveal_length():
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
-    answer = answer.lower().replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+    answer = answer.lower().strip()
+    for article in ['the ', 'a ', 'an ']:
+        if answer.startswith(article):
+            answer = answer[len(article):]
+            break
+
+    answer = answer.replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+
+    if answer.isnumeric() and len(answer) == 1:
+        digit_to_word = {
+            '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
+            '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
+            '8': 'eight', '9': 'nine'
+        }
+        answer = digit_to_word[answer]
 
     no_of_words = len(answer.split())
     no_of_words_part = "a single word" if no_of_words == 1 else f"{no_of_words} words"
 
-    message = f"The answer is {no_of_words_part} totalling {len(answer)} characters."
+    message = f"The answer is {no_of_words_part} totalling {len(answer.replace(' ', ''))} characters."
 
-    score -= 100
+    score -= 80
     redis_client.hset(token, 'score', score)
 
     return jsonify(success=True, score=score, message=message)

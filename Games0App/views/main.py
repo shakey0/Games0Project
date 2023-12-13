@@ -3,7 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db
 from Games0App.models.user import User
 from Games0App.classes import GamePlay, Category
-from Games0App.utils import format_answer
+from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers
 import secrets
 import os
 import redis
@@ -198,10 +198,34 @@ def game_answer():
         game_name = game.name
 
     answer = request.form.get('answer')
+    answer = find_and_convert_numbers(answer)
+    # TESTS FOR CONVERTING NUMBERS
+    # - 1000000
+    # - 48300894
+    # - 1,000,000
+    # - 32,059,320
+    # - 100000
+    # - 100,000
+    # - 10000
+    # - 10,000
+    # - 1000
+    # - 7,000
+    # - 8,900
+    # - 8900
+    # - 1,000
+    # - 100
+    # - 10
+    # - 1
+    # - 5 million
+    # - 96 thousand
+    # - 2 hundred
+    # - 1940
+    # - 1800
+    # - 1458
+    # - and more...
     
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
-    # NEED TO ADD MORE CHECKS FOR CLOSE ANSWERS !!!!!!!!!!!!!!!!!!!!!!!
-    correct = True if format_answer(answer) == format_answer(real_answer) else False
+    correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
@@ -250,21 +274,3 @@ def game_finish():
 
     return render_template('scoreboard.html', timer=timer, score=score, game_name=game_name,
                             game_type=game_type, game=game, user=current_user)
-
-
-
-
-"""
-[
-  {
-    "category": "historyholidays",
-    "question": "Three of the names of Santa's reindeer begin with the letter 'D'', name two of them ",
-    "answer": "Dancer, Dasher, Donner"
-  },
-    {
-    "category": "historyholidays",
-    "question": "What pope died 33 days after his election ",
-    "answer": "John Paul i"
-  }
-]
-"""

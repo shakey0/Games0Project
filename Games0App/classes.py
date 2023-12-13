@@ -6,7 +6,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
-from Games0App.utils import spell_check_sentence
+from Games0App.utils import spell_check_sentence, find_and_convert_numbers
 import json
 import random
 
@@ -42,7 +42,7 @@ class GamePlay:
                 random_word = random_word.replace(punct, '')
             if not random_word.isalpha():
                 continue
-            if len(random_word) < 5 or len(random_word) > 10:
+            if len(random_word) < 5 or len(random_word) > 8:
                 continue
             if not sentence[-1] in ['.', '!', '?']:
                 sentence += '.'
@@ -50,11 +50,11 @@ class GamePlay:
         return None
 
     def validate_trivia_question(self, question, answer):
+        if len(answer.split()) > 3:
+            return False
         if not spell_check_sentence(question):
             return False
         if not spell_check_sentence(answer):
-            return False
-        if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 2:
             return False
         if any(c.isalpha() for c in answer) and any(c.isdigit() for c in answer):
             return False
@@ -77,8 +77,10 @@ class GamePlay:
                 if category:
                     question = item['question'].strip()
                     answer = item['answer'].strip()
+                    if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 3:
+                        continue
+                    answer = find_and_convert_numbers(answer)
                     if self.validate_trivia_question(question, answer):
-                        # NEED TO AMEND THE ANSWER TO CUT OUT WORDS LIKE 'THE' AND 'A' AND 'AN'
                         if not question[-1] in ['.', '!', '?']:
                             question += '?'
                         valid_questions.append([question, answer])
@@ -130,7 +132,6 @@ class GamePlay:
 
 
     def get_question(self, last_question_no, category=""):
-        # return "ANSWER FROM REDIS"
         if self.api_url:
             if category:
                 category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
