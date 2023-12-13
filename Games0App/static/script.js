@@ -70,7 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    menuButton.addEventListener('click', toggleMenu);
+    if (menuButton) {
+        menuButton.addEventListener('click', toggleMenu);
+    }
     document.addEventListener('click', handleClickOutside);
     optionsButtons.forEach(function(button) {
         button.addEventListener('click', handleOptionButtonClick);
@@ -93,24 +95,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(function(response) {
                     if (response.ok) {
-                        return response.json(); // Parse the JSON response
+                        return response.json();
                     } else {
                         throw new Error('Network response was not ok');
                     }
                 })
                 .then(function(data) {
                     if (data.success) {
-                        // Handle success here
-                        // Update the UI with the score and message
-                        // var scoreElement = document.getElementById('score');
+                        var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
-
-                        // Assuming you have HTML elements with the IDs 'score' and 'message' to display the score and message
-                        // scoreElement.textContent = 'Score: ' + data.score;
+                        scoreElement.textContent = data.score;
                         messageElement.innerHTML += '<br>' + data.message;
                     } else {
-                        // Handle errors here
-                        // You can display an error message or perform any other error handling
                         var messageElement = document.getElementById('hint-message');
                         messageElement.innerHTML += '<br>' + data.message;
                         var revealButton = document.querySelector('.reveal-letter');
@@ -151,17 +147,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     var lengthButton = document.querySelector('.reveal-length');
                     lengthButton.disabled = true;
                     if (data.success) {
-                        // Handle success here
-                        // Update the UI with the score and message
-                        // var scoreElement = document.getElementById('score');
+                        var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
-
-                        // Assuming you have HTML elements with the IDs 'score' and 'message' to display the score and message
-                        // scoreElement.textContent = 'Score: ' + data.score;
+                        scoreElement.textContent = data.score;
                         messageElement.innerHTML += '<br>' + data.message;
                     } else {
-                        // Handle errors here
-                        // You can display an error message or perform any other error handling
                         var messageElement = document.getElementById('hint-message');
                         messageElement.innerHTML += '<br>' + data.message;
                     }

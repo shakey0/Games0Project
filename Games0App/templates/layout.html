@@ -21,7 +21,13 @@
         </div>
         <div class="nav-bar-right">
             <a href="{{ url_for('user_profile.user_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
-            <button class="menu-button">Menu</button>
+            {% if in_game == "yes" or in_game == "after" %}
+                <div class="menu-score">
+                    <p>Score:</p><h2 id="score">{{ score }}</h2>
+                </div>
+            {% else %}
+                <button class="menu-button">Menu</button>
+            {% endif %}
         </div>
     </div>
     <!-- Options menu -->

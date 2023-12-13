@@ -139,7 +139,7 @@ def game_play():
 
         response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
                                                 game_name=game_name, next_question=next_question,
-                                                question_no=1, timer=timer, score=0, user=current_user))
+                                                question_no=1, timer=timer, score=200, user=current_user))
         response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
                             str(next_question[0]))
         

@@ -86,12 +86,12 @@
     {% if correct %}
     <div class="after-answer">
         <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
-        <h2 class="current-score-text">You answered in <b class="score">{{ seconds }}</b> seconds.</h2>
-        <h2 class="current-score-text">+ <b class="score">{{ new_points }}</b> points</h2>
+        <h2 class="current-score-text">You answered in <b class="score">{{ seconds }} seconds.</b></h2>
+        <h2 class="current-score-text"><b class="score">+{{ new_points }} points</b></h2>
         {% if question_no == 10 %}
-            <h2 class="current-score-text">Your final score: <b class="score">{{ score }}</b> points!</h2>
+            <h2 class="current-score-text">Your final score: <b class="score">{{ score }} points!</b></h2>
         {% else %}
-            <h2 class="current-score-text">Your score: <b class="score">{{ score }}</b> points</h2>
+            <h2 class="current-score-text">Your score: <b class="score">{{ score }} points</b></h2>
         {% endif %}
     </div>
     {% else %}
@@ -101,9 +101,9 @@
     <div class="after-answer">
         <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
         {% if question_no == 10 %}
-            <h2 class="current-score-text">Your final score is <b class="score">{{ score }}</b> points.</h2>
+            <h2 class="current-score-text">Your final score is <b class="score">{{ score }} points</b>.</h2>
         {% else %}
-            <h2 class="current-score-text">Your current score is <b class="score">{{ score }}</b> points.</h2>
+            <h2 class="current-score-text">Your current score is <b class="score">{{ score }} points</b>.</h2>
         {% endif %}
     </div>
     {% endif %}
