@@ -135,11 +135,15 @@ def game_play():
         redis_client.hset(token, 'question', next_question[1][0])
         redis_client.hset(token, 'answer', next_question[1][1])
 
-        redis_client.hset(token, 'score', 200)
+        redis_client.hset(token, 'reveal_card', 5)
+        redis_client.hset(token, 'length_card', 3)
+
+        redis_client.hset(token, 'score', 0)
 
         response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
                                                 game_name=game_name, next_question=next_question,
-                                                question_no=1, timer=timer, score=200, user=current_user))
+                                                question_no=1, timer=timer, score=0, user=current_user,
+                                                helpers={'reveal_card': "5 coupons", 'length_card': "3 coupons"}))
         response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
                             str(next_question[0]))
         
@@ -163,12 +167,18 @@ def game_play():
     redis_client.hset(token, 'question', next_question[1][0])
     redis_client.hset(token, 'answer', next_question[1][1])
 
+    helpers = {}
+    reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
+    helpers['reveal_card'] = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
+    length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
+    helpers['length_card'] = f"{length_card} coupons" if length_card > 0 else "-90 points"
+
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
     response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
                                             game_name=game_name, next_question=next_question,
                                             question_no=question_no+1, timer=timer, score=score,
-                                            user=current_user))
+                                            user=current_user, helpers=helpers))
     response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
                         str(next_question[0]))
         
@@ -233,7 +243,7 @@ def game_answer():
 
     if correct:
         new_points = 100
-        new_points += (seconds_to_answer_left + (30-timer)) * 10
+        new_points += (seconds_to_answer_left + (60-timer)) * 5
         score += new_points
         redis_client.hset(token, 'score', score)
         seconds = timer - seconds_to_answer_left

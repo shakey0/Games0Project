@@ -42,7 +42,7 @@ class GamePlay:
                 random_word = random_word.replace(punct, '')
             if not random_word.isalpha():
                 continue
-            if len(random_word) < 5 or len(random_word) > 8:
+            if len(random_word) < 4 or len(random_word) > 8:
                 continue
             if not sentence[-1] in ['.', '!', '?']:
                 sentence += '.'
@@ -53,8 +53,10 @@ class GamePlay:
         if len(answer.split()) > 3:
             return False
         if not spell_check_sentence(question):
+            print('QUESTION SPELLING ERROR\n', question)
             return False
         if not spell_check_sentence(answer):
+            print('ANSWER SPELLING ERROR\n', answer)
             return False
         if any(c.isalpha() for c in answer) and any(c.isdigit() for c in answer):
             return False
@@ -63,16 +65,17 @@ class GamePlay:
     def update_stored_questions(self, url, redis_group, category=""):
         print(category)
         print(url)
-        from Games0App.foreign_api import get_api_questions
+        from Games0App.foreign_api import get_api_questions_from_ninja
 
         try:
-            response = get_api_questions(url)
+            response = get_api_questions_from_ninja(url)
             response = json.loads(response)
         except json.JSONDecodeError as e:
             print(f"JSON decoding error: {e}")
 
         if response:
             valid_questions = []
+            answers = []
             for item in response:
                 if category:
                     question = item['question'].strip()
@@ -83,6 +86,9 @@ class GamePlay:
                     if self.validate_trivia_question(question, answer):
                         if not question[-1] in ['.', '!', '?']:
                             question += '?'
+                        if answer.lower().replace(' ', '').replace('-', '').replace('&', '') in answers:
+                            continue
+                        answers.append(answer.lower().replace(' ', '').replace('-', '').replace('&', ''))
                         valid_questions.append([question, answer])
                 else:
                     sentence = item['fact'] if 'fact' in item else item['joke']
@@ -91,6 +97,7 @@ class GamePlay:
                         valid_questions.append(fill_in_the_blank)
             
             if valid_questions:
+                print('VALID QUESTIONS:\n', valid_questions)
                 serialized_questions = [json.dumps(question) for question in valid_questions]
                 redis_client.sadd(redis_group, *serialized_questions)
                 print('Added questions to Redis set')

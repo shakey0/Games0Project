@@ -26,9 +26,12 @@ def reveal_letter():
 
     token = request.form.get('token')
 
+    reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
-    if score < 60:
-        return jsonify(success=False, message='You need at least 60 points to reveal a letter!')
+
+    if reveal_card == 0:
+        if score < 60:
+            return jsonify(success=False, message='You need at least 60 points to reveal a letter!')
     
     revealed_string = redis_client.hget(token, 'revealed_string').decode('utf-8')
 
@@ -59,10 +62,16 @@ def reveal_letter():
 
     message =  f"The {ordinal(random_position + 1)} character is {random_char}"
 
-    score -= 60
-    redis_client.hset(token, 'score', score)
+    if reveal_card > 0:
+        reveal_card -= 1
+        redis_client.hset(token, 'reveal_card', reveal_card)
+        reveal_card_text = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
+    else:
+        score -= 60
+        redis_client.hset(token, 'score', score)
+        reveal_card_text = "-60 points"
 
-    return jsonify(success=True, score=score, message=message)
+    return jsonify(success=True, score=score, message=message, reveal_card_text=reveal_card_text)
 
 
 @api.route('/reveal_length', methods=['POST'])
@@ -70,9 +79,12 @@ def reveal_length():
 
     token = request.form.get('token')
 
+    length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
-    if score < 80:
-        return jsonify(success=False, message='You need at least 80 points to reveal the length of the answer!')
+
+    if length_card == 0:
+        if score < 90:
+            return jsonify(success=False, message='You need at least 90 points to reveal the length of the answer!')
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
@@ -97,7 +109,13 @@ def reveal_length():
 
     message = f"The answer is {no_of_words_part} totalling {len(answer.replace(' ', ''))} characters."
 
-    score -= 80
-    redis_client.hset(token, 'score', score)
+    if length_card > 0:
+        length_card -= 1
+        redis_client.hset(token, 'length_card', length_card)
+        length_card_text = f"{length_card} coupons" if length_card > 0 else "-90 points"
+    else:
+        score -= 90
+        redis_client.hset(token, 'score', score)
+        length_card_text = "-90 points"
 
-    return jsonify(success=True, score=score, message=message)
+    return jsonify(success=True, score=score, message=message, length_card_text=length_card_text)

@@ -79,10 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     var revealButton = document.querySelector('.reveal-letter');
+    var clickCount = 0;
     
     if (revealButton) {
         revealButton.addEventListener('click', function (event) {
             event.preventDefault();
+
+            clickCount++;
 
             var form = this.closest('.reveal-letter-form');
 
@@ -101,15 +104,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(function(data) {
+                    var revealButton = document.querySelector('.reveal-letter');
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
+                        var textElement = document.getElementById('reveal-letter-text');
                         scoreElement.textContent = data.score;
                         messageElement.innerHTML += '<br>' + data.message;
+                        textElement.textContent = data.reveal_card_text;
                     } else {
                         var messageElement = document.getElementById('hint-message');
                         messageElement.innerHTML += '<br>' + data.message;
-                        var revealButton = document.querySelector('.reveal-letter');
+                        revealButton.disabled = true;
+                    }
+                    if (clickCount >= 2) {
                         revealButton.disabled = true;
                     }
                 })
@@ -149,8 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
+                        var textElement = document.getElementById('reveal-length-text');
                         scoreElement.textContent = data.score;
                         messageElement.innerHTML += '<br>' + data.message;
+                        textElement.textContent = data.length_card_text;
                     } else {
                         var messageElement = document.getElementById('hint-message');
                         messageElement.innerHTML += '<br>' + data.message;

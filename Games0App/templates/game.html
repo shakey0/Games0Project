@@ -32,21 +32,21 @@
 {% elif in_game == "intro" %}
     <h1 class="question-title">{{ game_name }}</h1>
     <div class="pre-game">
-        <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get. You can also use random letter reveals for a penalty.<br>Good luck!</p>
+        <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
             <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
-                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="30" checked>
-                    <label for="easy"><b style="color:cornflowerblue;">Easy</b> (30 seconds)</label>
+                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="60" checked>
+                    <label for="easy"><b style="color:cornflowerblue;">Easy</b> (60 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="20">
-                    <label for="medium"><b style="color:cornflowerblue;">Medium</b> (20 seconds)</label>
+                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="30">
+                    <label for="medium"><b style="color:cornflowerblue;">Medium</b> (30 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="10">
-                    <label for="hard"><b style="color:cornflowerblue;">Hard</b> (10 seconds)</label>
+                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="15">
+                    <label for="hard"><b style="color:cornflowerblue;">Hard</b> (15 seconds)</label>
                 </div>
             </div>
             <input type="hidden" name="in_game" value="start">
@@ -77,8 +77,8 @@
                 </form>
             </div>
             <div class="helper-button-tags">
-                <p class="reveal-letter-tag">-60 points</p>
-                <p class="reveal-length-tag">-80 points</p>
+                <p class="reveal-letter-tag" id="reveal-letter-text">{{ helpers['reveal_card'] }}</p>
+                <p class="reveal-length-tag" id="reveal-length-text">{{ helpers['length_card'] }}</p>
             </div>
         </div>
     </div>

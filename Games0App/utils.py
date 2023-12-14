@@ -5,7 +5,9 @@ import re
 
 def spell_check_sentence(sentence):
     spell_check_sentence = sentence.replace('?', '').replace('!', '').replace('.', '').replace(',', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
-    wrong_words = spell.unknown(spell_check_sentence.split())
+    split_sentence = spell_check_sentence.split()
+    split_sentence = [word for word in split_sentence if not word[0].isupper()]
+    wrong_words = spell.unknown(split_sentence)
     if wrong_words:
         if all('.' in word for word in wrong_words):
             return True
@@ -29,6 +31,11 @@ def normalise_answer(answer):
     }
     answer = answer.lower().strip()
     answer = ''.join(digit_to_word.get(char, char) for char in answer)
+
+    if '&' in answer:
+        answer = answer.replace('&', '')
+    if 'and' in answer:
+        answer = answer.replace('and', '')
 
     for article in ['the ', 'a ', 'an ']:
         if answer.startswith(article):
