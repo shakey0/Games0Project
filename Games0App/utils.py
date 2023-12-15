@@ -9,8 +9,9 @@ def spell_check_sentence(sentence):
     split_sentence = [word for word in split_sentence if not word[0].isupper()]
     wrong_words = spell.unknown(split_sentence)
     if wrong_words:
-        if all('.' in word for word in wrong_words):
+        if all('.' in word or '_' in word or 'like' in word for word in wrong_words):
             return True
+        print('WRONG WORDS: ', wrong_words)
         return False
     return True
 
@@ -24,20 +25,15 @@ def format_answer(answer):
 
 
 def normalise_answer(answer):
-    digit_to_word = {
-        '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
-        '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
-        '8': 'eight', '9': 'nine'
-    }
     answer = answer.lower().strip()
-    answer = ''.join(digit_to_word.get(char, char) for char in answer)
+    answer = find_and_convert_numbers(answer)
 
     if '&' in answer:
         answer = answer.replace('&', '')
     if 'and' in answer:
         answer = answer.replace('and', '')
 
-    for article in ['the ', 'a ', 'an ']:
+    for article in ['the ', 'a ', 'an ', 'my ', 'your ', 'his ', 'her ', 'its ', 'our ', 'their ', 'it\'s ', 'they\'re', 'he\'s', 'she\'s']:
         if answer.startswith(article):
             answer = answer[len(article):]
             break

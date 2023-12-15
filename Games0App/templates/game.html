@@ -22,12 +22,20 @@
             <div class="category">
                 <form method="GET" action="/game_setup">
                     <input type="hidden" name="in_game" value="intro">
-                    <input type="hidden" name="category" value="{{ category.name }}">
+                    <input type="hidden" name="category" value="{{ category }}">
                     <input type="hidden" name="game_type" value="{{ game_type }}">
-                    <input class="category-name" type="submit" value="{{ category.name }}">
+                    <input class="category-name" type="submit" value="{{ category }}">
                 </form>
             </div>
         {% endfor %}
+    </div>
+    <div class="all-categories-button-container">
+        <form method="GET" action="/game_setup">
+            <input type="hidden" name="in_game" value="intro">
+            <input type="hidden" name="category" value="All">
+            <input type="hidden" name="game_type" value="{{ game_type }}">
+            <input class="all-categories-button" type="submit" value="Play All Categories">
+        </form>
     </div>
 {% elif in_game == "intro" %}
     <h1 class="question-title">{{ game_name }}</h1>
@@ -56,7 +64,7 @@
     </div>
 {% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ next_question[1][0] }} <br><br><b class="in-countdown" style="font-size: 2em;">{{ timer }}</b></h1>
+    <h1 class="question-in-game" style="display: none;">{{ next_question["question"] }} <br><br><b class="in-countdown" style="font-size: 2em;">{{ timer }}</b></h1>
     <h3 id="hint-message" style="text-align: center; font-size: 2em; margin: 0px;"></h3>
     <div class="game-box" style="display: none;">
         <form method="POST" action="/game_answer">

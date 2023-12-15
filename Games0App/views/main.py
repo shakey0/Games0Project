@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, request, make_response, 
 from flask_login import current_user
 from Games0App.extensions import db
 from Games0App.models.user import User
-from Games0App.classes import GamePlay, Category
+from Games0App.classes import GamePlay
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers
 import secrets
 import os
@@ -21,19 +21,31 @@ main = Blueprint('main', __name__)
 games = [
     GamePlay("Fill in the Blank - Facts",
             "You will be given 10 facts and need to fill in the blank word for each one.",
-            param="fill_blank_facts", api_variable="facts"),
+            param="fill_blank_facts", api_source="ninjas", api_variable="facts"),
     GamePlay("Fill in the Blank - Jokes",
             "You will be given 10 jokes and need to fill in the blank word for each one.",
-            param="fill_blank_jokes", api_variable="jokes"),
-    GamePlay("Trivia Madness - Choose Your Category",
+            param="fill_blank_jokes", api_source="ninjas", api_variable="jokes"),
+    GamePlay("Trivia Madness",
             "You will be given 10 questions from your chosen category.",
-            param="trivia_madness", api_variable="trivia"),
-    GamePlay("Countries & Cultures - Multiple Choice",
-            "You will be given 10 questions about countries and cultures and need to select the correct answer for each one.",
-            param="countries_cultures_mc"),
-    GamePlay("Countries & Cultures - True or False",
-            "You will be given 10 questions about countries and cultures and need to select whether each statement is true or false.",
-            param="countries_cultures_tf"),
+            categories = ["Art & Literature", "Language", "Science & Nature", "General", "Food & Drink", 
+                        "People & Places", "Geography", "History & Holidays", "Entertainment",
+                        "Toys & Games", "Music", "Mathematics", "Religion & Mythology", "Sports & Leisure"],
+            param="trivia_madness_categories", api_source="ninjas", api_variable="trivia"),
+    GamePlay("Trivia Madness",
+            "You will be given 10 questions.",
+            default=False, param="trivia_madness", api_source="ninjas", api_variable="trivia"),
+    GamePlay("Trivia - Multiple Choice",
+            "You will be given 10 multiple choice questions from your chosen category.",
+            categories=["one"], param="trivia_mc_categories"),
+    GamePlay("Trivia - Multiple Choice",
+            "You will be given 10 multiple choice questions.",
+            default=False, param="trivia_mc"),
+    GamePlay("Trivia - True or False",
+            "You will be given 10 true or false questions from your chosen category.",
+            categories=["two"], param="trivia_tf_categories"),
+    GamePlay("Trivia - True or False",
+            "You will be given 10 true or false questions.",
+            default=False, param="trivia_tf"),
     GamePlay("Number to Reach",
             "DIFFERENT MESSAGE",
             param="number_to_reach")
@@ -51,40 +63,37 @@ def game_setup():
     game_type = request.args.get('game_type')
     if not game_type:
         return redirect('/')
+    if request.args.get('category') == "All":
+        game_type = game_type.replace('_categories', '')
 
     game = next(item for item in games if item.param == game_type)
 
     in_game = request.args.get('in_game')
 
-    if game_type == "trivia_madness":
+    if game.categories:
         category = request.args.get('category')
-        game_name = "Trivia Madness - " + category if category else "Trivia Madness"
+        game_name = game.name + " - " + category if category else game.name
     else:
         game_name = game.name
 
-    if game_type == 'trivia_madness' and not in_game:
+    if game.categories and not in_game:
         in_game = "before"
-        categories = [Category("Art & Literature"), Category("Language"), Category("Science & Nature"),
-            Category("General"), Category("Food & Drink"), Category("People & Places"),
-            Category("Geography"), Category("History & Holidays"), Category("Entertainment"),
-            Category("Toys & Games"), Category("Music"), Category("Mathematics"),
-            Category("Religion & Mythology"), Category("Sports & Leisure")]
-        return render_template('game.html', in_game=in_game, categories=categories, game_type=game_type,
+        return render_template('game.html', in_game=in_game, categories=game.categories, game_type=game_type,
                                 game_name=game_name, user=current_user)
-    else:
-        in_game = "intro"
 
-        random_token = secrets.token_hex(16)
-        token = f"{random_token}_{game_type}"
-        redis_client.hset(token, 'game_type', game_type)
-        redis_client.expire(token, 3600)
+    in_game = "intro"
 
-        if game_type == "trivia_madness":
-            redis_client.hset(token, 'category_name', category)
-            redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
+    random_token = secrets.token_hex(16)
+    token = f"{random_token}_{game_type}"
+    redis_client.hset(token, 'game_type', game_type)
+    redis_client.expire(token, 3600)
 
-        return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                                user=current_user)
+    if game.categories:
+        redis_client.hset(token, 'category_name', category)
+        redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
+
+    return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
+                            user=current_user)
 
 
 @main.route('/game_play', methods=['GET', 'POST'])
@@ -101,10 +110,10 @@ def game_play():
         return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
-    if game_type == "trivia_madness":
+    if game.categories:
         category_name = redis_client.hget(token, 'category_name').decode('utf-8')
         category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name = "Trivia Madness - " + category_name
+        game_name = game.name + " - " + category_name
     else:
         game_name = game.name
 
@@ -124,28 +133,31 @@ def game_play():
             cookied_question_number = 0
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
-        if game_type == "trivia_madness":
+        if game.categories:
             next_question = game.get_question(cookied_question_number, category)
         else:
             next_question = game.get_question(cookied_question_number)
         print('NEXT QUESTION: ', next_question)
         
         redis_client.hset(token, 'question_no', 1)
-        redis_client.hset(token, 'question_tracker', next_question[0])
-        redis_client.hset(token, 'question', next_question[1][0])
-        redis_client.hset(token, 'answer', next_question[1][1])
+        redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
+        redis_client.hset(token, 'question', next_question["question"])
+        redis_client.hset(token, 'answer', next_question["answer"])
 
-        redis_client.hset(token, 'reveal_card', 5)
-        redis_client.hset(token, 'length_card', 3)
+        reveal_card_starter = 9
+        length_card_starter = 3
+        redis_client.hset(token, 'reveal_card', reveal_card_starter)
+        redis_client.hset(token, 'length_card', length_card_starter)
 
         redis_client.hset(token, 'score', 0)
 
         response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
                                                 game_name=game_name, next_question=next_question,
                                                 question_no=1, timer=timer, score=0, user=current_user,
-                                                helpers={'reveal_card': "5 coupons", 'length_card': "3 coupons"}))
+                                                helpers={'reveal_card': f"{reveal_card_starter} coupons",
+                                                        'length_card': f"{length_card_starter} coupons"}))
         response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
-                            str(next_question[0]))
+                            str(next_question["last_question_no"]))
         
         return response if response else redirect('/')
 
@@ -158,14 +170,14 @@ def game_play():
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
-    if game_type == "trivia_madness":
+    if game.categories:
         next_question = game.get_question(question_tracker, category)
     else:
         next_question = game.get_question(question_tracker)
     
-    redis_client.hset(token, 'question_tracker', next_question[0])
-    redis_client.hset(token, 'question', next_question[1][0])
-    redis_client.hset(token, 'answer', next_question[1][1])
+    redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
+    redis_client.hset(token, 'question', next_question["question"])
+    redis_client.hset(token, 'answer', next_question["answer"])
 
     helpers = {}
     reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
@@ -180,7 +192,7 @@ def game_play():
                                             question_no=question_no+1, timer=timer, score=score,
                                             user=current_user, helpers=helpers))
     response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
-                        str(next_question[0]))
+                        str(next_question["last_question_no"]))
         
     return response if response else redirect('/')
 
@@ -201,9 +213,9 @@ def game_answer():
         return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
-    if game_type == "trivia_madness":
+    if game.categories:
         category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        game_name = "Trivia Madness - " + category_name
+        game_name = game.name + " - " + category_name
     else:
         game_name = game.name
 
@@ -273,9 +285,9 @@ def game_finish():
         return redirect('/')
     game = next(item for item in games if item.param == game_type)
 
-    if game_type == "trivia_madness":
+    if game.categories:
         category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        game_name = "Trivia Madness - " + category_name
+        game_name = game.name + " - " + category_name
     else:
         game_name = game.name
 

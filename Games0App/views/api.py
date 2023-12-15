@@ -96,13 +96,13 @@ def reveal_length():
 
     answer = answer.replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
-    if answer.isnumeric() and len(answer) == 1:
-        digit_to_word = {
-            '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
-            '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
-            '8': 'eight', '9': 'nine'
-        }
-        answer = digit_to_word[answer]
+    # if answer.isnumeric() and len(answer) == 1:
+    #     digit_to_word = {
+    #         '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
+    #         '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
+    #         '8': 'eight', '9': 'nine'
+    #     }
+    #     answer = digit_to_word[answer]
 
     no_of_words = len(answer.split())
     no_of_words_part = "a single word" if no_of_words == 1 else f"{no_of_words} words"

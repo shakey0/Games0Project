@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 30px;
-    margin: 80px;
+    margin: 40px 80px 30px;
 }
 
 .category {
@@ -34,8 +34,70 @@
     cursor: pointer;
 }
 
+.all-categories-button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+
+.all-categories-button {
+    padding: 0px 80px;
+    height: 80px;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 1px solid rgb(142, 114, 99);
+    background-color: black;
+    color: rgb(203, 194, 176);
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.all-categories-button:hover {
+    transform: scale(1.05);
+}
+
 @media (max-width: 768px) {
     .all-categories {
-        margin: 40px 20px;
+        margin: 40px 20px 30px;
+    }
+}
+@media (max-width: 565px) {
+    .all-categories {
+        margin: 40px 80px 30px;
+    }
+}
+@media (max-width: 525px) {
+    .all-categories {
+        margin: 40px 60px 30px;
+    }
+}
+@media (max-width: 485px) {
+    .all-categories {
+        margin: 40px 40px 30px;
+    }
+}
+@media (max-width: 445px) {
+    .all-categories {
+        margin: 40px 20px 30px;
+    }
+}
+@media (max-width: 425px) {
+    .all-categories {
+        margin: 40px 10px 30px;
+    }
+    .all-categories-button {
+        padding: 0px 60px;
+    }
+}
+@media (max-width: 385px) {
+    .all-categories-button {
+        padding: 0px 40px;
+    }
+}
+@media (max-width: 345px) {
+    .all-categories-button {
+        padding: 0px 20px;
     }
 }

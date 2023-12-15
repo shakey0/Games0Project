@@ -4,7 +4,7 @@
 {% block content %}
 <h1 class="question-title">What game do you want to play?</h1>
 <div class="all-games">
-    {% for game in games %}
+    {% for game in games if game.default %}
     <div class="game">
         <div class="game-content">
             <a href="{{ url_for('main.game_setup', game_type=game.param) }}">
