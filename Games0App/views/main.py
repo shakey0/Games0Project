@@ -13,6 +13,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+import random
 
 
 main = Blueprint('main', __name__)
@@ -36,10 +37,10 @@ games = [
             default=False, param="trivia_madness", api_source="ninjas", api_variable="trivia"),
     GamePlay("Trivia - Multiple Choice",
             "You will be given 10 multiple choice questions from your chosen category.",
-            categories=["one"], param="trivia_mc_categories"),
+            categories=["one"], param="trivia_mc_categories", api_source="trivia"),
     GamePlay("Trivia - Multiple Choice",
             "You will be given 10 multiple choice questions.",
-            default=False, param="trivia_mc"),
+            default=False, param="trivia_mc", api_source="trivia"),
     GamePlay("Trivia - True or False",
             "You will be given 10 true or false questions from your chosen category.",
             categories=["two"], param="trivia_tf_categories"),
@@ -144,6 +145,10 @@ def game_play():
         redis_client.hset(token, 'question', next_question["question"])
         redis_client.hset(token, 'answer', next_question["answer"])
 
+        if len(next_question) == 4:
+            next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
+            random.shuffle(next_question["all_answers"])
+
         reveal_card_starter = 9
         length_card_starter = 3
         redis_client.hset(token, 'reveal_card', reveal_card_starter)
@@ -178,6 +183,10 @@ def game_play():
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
     redis_client.hset(token, 'answer', next_question["answer"])
+
+    if len(next_question) == 4:
+        next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
+        random.shuffle(next_question["all_answers"])
 
     helpers = {}
     reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))

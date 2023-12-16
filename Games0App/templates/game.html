@@ -68,7 +68,16 @@
     <h3 id="hint-message" style="text-align: center; font-size: 2em; margin: 0px;"></h3>
     <div class="game-box" style="display: none;">
         <form method="POST" action="/game_answer">
-            <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
+            {% if "_mc" in game.param %}
+                {% for answer in next_question["all_answers"] %}
+                    <div class="mc_answer">
+                        <input class="mc_answer-radio" type="radio" id="{{ answer }}" name="answer" value="{{ answer }}">
+                        <label for="{{ answer }}">{{ answer }}</label>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
+            {% endif %}
             <input type="hidden" name="token" value="{{ token }}">
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
             <input type="submit" class="submit-game" value="Submit Answer">

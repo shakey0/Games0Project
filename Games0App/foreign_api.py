@@ -22,4 +22,4 @@ def get_api_questions_from_trivia(url):
         print("Error:", response.status_code, response.text)
         return None
     
-# get_api_questions_from_trivia('https://the-trivia-api.com/api/questions?limit=30&categories=society_and_culture&difficulty=medium')
+# get_api_questions_from_trivia('https://the-trivia-api.com/api/questions?limit=30&categories=society_and_culture&difficulty=easy')

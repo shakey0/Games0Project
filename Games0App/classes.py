@@ -27,8 +27,10 @@ class GamePlay:
             self.api_url = 'https://api.api-ninjas.com/v1/{}?category={}&limit=30'
         elif api_source == "ninjas":
             self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'
-        else:
-            self.api_url = ""
+        elif categories and api_source == "trivia":
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty=easy"
+        elif api_source == "trivia":
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty=easy"
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 
@@ -74,10 +76,15 @@ class GamePlay:
     def update_stored_questions(self, url, redis_group, category=""):
         print(category)
         print(url)
-        from Games0App.foreign_api import get_api_questions_from_ninjas
+        from Games0App.foreign_api import get_api_questions_from_ninjas, get_api_questions_from_trivia
 
         try:
-            response = get_api_questions_from_ninjas(url)
+            if self.api_source == "ninjas":
+                response = get_api_questions_from_ninjas(url)
+            elif self.api_source == "trivia":
+                response = get_api_questions_from_trivia(url)
+            else:
+                response = None
             response = json.loads(response)
         except json.JSONDecodeError as e:
             print(f"JSON decoding error: {e}")
@@ -106,6 +113,12 @@ class GamePlay:
                     fill_in_the_blank = self.create_fill_blank_answer(sentence)
                     if fill_in_the_blank:
                         valid_questions.append(fill_in_the_blank)
+
+                elif "trivia_mc" in self.param:
+                    question = item['question'].strip()
+                    answer = item['correctAnswer'].strip()
+                    wrong_answers = [wrong_answer.strip() for wrong_answer in item['incorrectAnswers']]
+                    valid_questions.append([question, answer, wrong_answers])
             
             if valid_questions:
                 print('VALID QUESTIONS:\n', valid_questions)
@@ -138,7 +151,12 @@ class GamePlay:
                 redis_client.expire(redis_question_no_string, 3600)
 
             question = json.loads(question.decode('utf-8'))
-            return {"last_question_no": incremented_question_no, "question": question[0], "answer": question[1]}
+            if len(question) == 2:
+                return {"last_question_no": incremented_question_no, "question": question[0], "answer": question[1]}
+            elif len(question) == 3:
+                return {"last_question_no": incremented_question_no, "question": question[0], "answer": question[1], "wrong_answers": question[2]}
+            else:
+                return None
 
 
     def get_question_from_redis(self, last_question_no, redis_string, category):
@@ -147,11 +165,16 @@ class GamePlay:
         if question is not None:
             print('Got question from Redis')
             question = json.loads(question.decode('utf-8'))
-            return {"last_question_no": last_question_no+1, "question": question[0], "answer": question[1]}
+            if len(question) == 2:
+                return {"last_question_no": last_question_no+1, "question": question[0], "answer": question[1]}
+            elif len(question) == 3:
+                return {"last_question_no": last_question_no+1, "question": question[0], "answer": question[1], "wrong_answers": question[2]}
+            else:
+                return None
 
 
     def get_question(self, last_question_no, category=""):
-        if self.api_url:
+        if self.api_source:
             if category:
                 category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
                 redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
@@ -174,11 +197,18 @@ class GamePlay:
             count = 0
             while count < 3:
                 count += 1
-                if category:
-                    print("CATEGORY: ", category)
-                    result = self.update_stored_questions(self.api_url.format(self.api_variable, category), redis_group, category)
+                if self.api_variable:
+                    if category:
+                        print("CATEGORY: ", category)
+                        result = self.update_stored_questions(self.api_url.format(self.api_variable, category), redis_group, category)
+                    else:
+                        result = self.update_stored_questions(self.api_url.format(self.api_variable), redis_group)
                 else:
-                    result = self.update_stored_questions(self.api_url.format(self.api_variable), redis_group)
+                    if category:
+                        print("CATEGORY: ", category)
+                        result = self.update_stored_questions(self.api_url.format(category), redis_group, category)
+                    else:
+                        result = self.update_stored_questions(self.api_url, redis_group)
                 if result:
                     print('Trying to get question from Redis set')
                     question = self.get_question_from_redis_set(redis_group, category)
