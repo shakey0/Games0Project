@@ -10,7 +10,7 @@ body {
 }
 
 .top-space {
-    height: 140px;
+    height: 110px;
 }
 
 .game-title-top-small {
@@ -180,17 +180,17 @@ body {
 }
 
 @media (max-width: 815px) {
-    .top-space {
-        height: 170px;
-    }
     .nav-bar {
-        height: 100px;
+        height: 70px;
         padding: 10px 20px;
     }
     .nav-bar-left, .nav-bar-right {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 1px;
+    }
+    .nav-bar-right {
+        margin-top: 5px;
     }
     .nav-bar-right {
         align-items: flex-end;
@@ -199,28 +199,34 @@ body {
         margin-top: 0px;
         margin-bottom: 0px;
     }
+    .home-title-link {
+        font-size: 28px;
+    }
     .nav-bar-left h2 {
         border-left: none;
         padding-left: 0px;
         border-top: solid 1px rgb(232, 213, 203);
-        padding-top: 10px;
+        padding-top: 5px;
+        font-size: 20px;
     }
     .nav-bar-right button, .menu-score {
         border-left: none;
         padding-left: 0px;
         padding-right: 0px;
         border-top: solid 1px rgb(232, 213, 203);
-        padding-top: 10px;
+        padding-top: 5px;
+        font-size: 24px;
+    }
+    .nav-bar-right a {
+        font-size: 16px;
+        margin-bottom: 5px;
     }
     .options-menu {
-        top: 121px;
+        top: 91px;
     }
 }
 
 @media (max-width: 605px) {
-    .top-space {
-        height: 150px;
-    }
     .options-menu {
         flex-direction: column;
         height: auto;
@@ -234,14 +240,14 @@ body {
 
 .question-title, .question-title-opening, .question-in-game, .question-over {
     text-align: center;
-    font-size: 40px;
+    font-size: 34px;
     font-weight: bold;
     margin: 0px 20px;
 }
 
 .question-title-2 {
     text-align: center;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     font-style: italic;
@@ -249,15 +255,36 @@ body {
 
 .correct-answer-text, .current-score-text {
     text-align: center;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     padding: 0 20px;
 }
 
-@media (max-width: 448px) {
+@media (max-width: 715px) {
     .question-title, .question-title-opening, .question-in-game, .question-over {
-        font-size: 32px;
+        font-size: 30px;
+    }
+    .question-title-2 {
+        font-size: 26px;
+    }
+    .correct-answer-text, .current-score-text {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 522px) {
+    .top-space {
+        height: 102px;
+    }
+}
+
+@media (max-width: 448px) {
+    .nav-bar {
+        padding: 10px 10px;
+    }
+    .question-title, .question-title-opening, .question-in-game, .question-over {
+        font-size: 28px;
     }
     .question-title-2 {
         font-size: 28px;
@@ -279,6 +306,19 @@ body {
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+@media (max-width: 890px) {
+    .submit-game {
+        margin-top: 20px;
+        height: 60px;
+    }
+}
+@media (max-width: 522px) {
+    .submit-game {
+        margin-top: 10px;
+        height: 60px;
+    }
 }
 
 .submit-game:hover {

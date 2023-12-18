@@ -73,19 +73,24 @@
         margin: 40px 60px 30px;
     }
 }
+@media (max-width: 522px) {
+    .all-categories {
+        margin: 30px 60px 30px;
+    }
+}
 @media (max-width: 485px) {
     .all-categories {
-        margin: 40px 40px 30px;
+        margin: 30px 40px 30px;
     }
 }
 @media (max-width: 445px) {
     .all-categories {
-        margin: 40px 20px 30px;
+        margin: 30px 20px 30px;
     }
 }
 @media (max-width: 425px) {
     .all-categories {
-        margin: 40px 10px 30px;
+        margin: 30px 10px 30px;
     }
     .all-categories-button {
         padding: 0px 60px;

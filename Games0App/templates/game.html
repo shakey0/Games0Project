@@ -42,7 +42,7 @@
     <div class="pre-game">
         <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
-            <h2 style="margin-top: 40px; text-align: center;">Difficulty level (time to answer):</h2>
+            <h2 class="level-selection-title">Difficulty level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
                     <input class="level-radio" type="radio" id="easy" name="difficulty" value="60" checked>
@@ -64,7 +64,8 @@
     </div>
 {% elif in_game == "yes" %}
     <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ next_question["question"] }} <br><br><b class="in-countdown">{{ timer }}</b></h1>
+    <h1 class="question-in-game" style="display: none;">{{ next_question["question"] }}</h1>
+    <h1 class="in-countdown" style="display: none;">{{ timer }}</h1>
     <h3 id="hint-message" style="text-align: center; font-size: 2em; margin: 0px;"></h3>
     <div class="game-box" style="display: none;">
         <form method="POST" action="/game_answer" data-multiple-choice="{% if "_mc" in game.param %}true{% else %}false{% endif %}">
@@ -100,7 +101,6 @@
                 <p class="reveal-length-tag" id="reveal-length-text">{{ helpers['length_card'] }}</p>
             </div>
         </div>
-        <div id="submit-answer-error" style="color: red;"></div> <!-- ERROR MESSAGE HERE -->
     </div>
 {% else %}
     {% if correct %}

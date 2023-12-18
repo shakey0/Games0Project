@@ -18,6 +18,11 @@
     align-items: center;
 }
 
+.level-selection-title {
+    margin-top: 40px;
+    text-align: center;
+}
+
 .instruction-text {
     text-align: center;
     font-size: 20px;
@@ -55,5 +60,11 @@
     .level-selection {
         flex-direction: column;
         gap: 20px;
+    }
+    .pre-game {
+        margin: 30px auto;
+    }
+    .level-selection-title {
+        margin-top: 20px;
     }
 }

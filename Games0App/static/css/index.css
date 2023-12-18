@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 60px;
-    margin: 80px;
+    margin: 40px 80px 80px;
 }
 
 .game {
@@ -126,7 +126,6 @@
         font-size: 20px;
     }
     .all-games {
-        margin-top: 60px;
         gap: 40px;
     }
 }
@@ -170,6 +169,11 @@
     }
     .all-games {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+@media (max-width: 522px) {
+    .all-games {
+        margin-top: 20px;
     }
 }
 @media (max-width: 485px) {

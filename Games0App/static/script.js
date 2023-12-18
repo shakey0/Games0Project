@@ -177,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var answerForm = document.querySelector('.game-box form');
     if (answerForm) {
         var isMultipleChoice = answerForm.getAttribute('data-multiple-choice') === 'true';
-        var errorDiv = document.getElementById('submit-answer-error');
 
         answerForm.addEventListener('submit', function(event) {
             var isValid = false;
@@ -208,9 +207,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show error message and prevent form submission if no valid input
             if (!isValid) {
                 event.preventDefault();
-                errorDiv.textContent = errorMessage;
-            } else {
-                errorDiv.textContent = '';
             }
         });
     }
@@ -229,6 +225,7 @@ function startFirstCountdown() {
     let countdownValue = parseInt(countdownElement.textContent, 10);
     const questionTitleOpening = document.querySelector('.question-title-opening');
     const questionInGame = document.querySelector('.question-in-game');
+    const inGameCountdown = document.querySelector('.in-countdown');
     const gameBox = document.querySelector('.game-box');
 
     const intervalId = setInterval(() => {
@@ -244,6 +241,7 @@ function startFirstCountdown() {
             }
             if (questionInGame) {
                 questionInGame.style.display = 'block';
+                inGameCountdown.style.display = 'block';
                 gameBox.style.display = 'block';
             }
 
