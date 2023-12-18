@@ -1,5 +1,5 @@
 .game-box {
-    margin: 60px auto;
+    margin: 40px auto;
     max-width: 80%;
     justify-content: center;
     align-items: center;
@@ -22,6 +22,42 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.in-countdown {
+    font-size: 1.6em;
+}
+
+.mc_answer-selection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 16px;
+    font-size: 28px;
+    gap: 24px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    color: sandybrown;
+}
+
+.mc_answer {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.mc_answer:hover {
+    transform: scale(1.08);
+}
+
+.mc_answer-radio {
+    transform: scale(2);
+    cursor: pointer;
+}
+
+.mc_answer label {
+    cursor: pointer;
+    margin-left: 5px;
 }
 
 .answer-input {

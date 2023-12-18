@@ -174,6 +174,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    var answerForm = document.querySelector('.game-box form');
+    if (answerForm) {
+        var isMultipleChoice = answerForm.getAttribute('data-multiple-choice') === 'true';
+        var errorDiv = document.getElementById('submit-answer-error');
+
+        answerForm.addEventListener('submit', function(event) {
+            var isValid = false;
+            var errorMessage = '';
+
+            if (isMultipleChoice) {
+                // Check if any radio button is selected
+                var radios = document.querySelectorAll('.mc_answer-radio');
+                for (var i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        isValid = true;
+                        break;
+                    }
+                }
+                if (!isValid) {
+                    errorMessage = 'Please select one of the options.';
+                }
+            } else {
+                // Check if text input is not empty
+                var textInput = document.querySelector('.answer-input');
+                if (textInput.value.trim() !== '') {
+                    isValid = true;
+                } else {
+                    errorMessage = 'Please type your answer in the box.';
+                }
+            }
+
+            // Show error message and prevent form submission if no valid input
+            if (!isValid) {
+                event.preventDefault();
+                errorDiv.textContent = errorMessage;
+            } else {
+                errorDiv.textContent = '';
+            }
+        });
+    }
+
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {

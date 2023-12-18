@@ -176,7 +176,10 @@ class GamePlay:
     def get_question(self, last_question_no, category=""):
         if self.api_source:
             if category:
-                category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
+                if self.api_source == "ninjas":
+                    category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
+                else:
+                    category = category.lower().replace(' ', '_').replace('&', 'and')
                 redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
                 redis_group = "{}_{}_collection".format(self.lower_name, category)
             else:

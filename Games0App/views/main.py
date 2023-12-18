@@ -37,7 +37,9 @@ games = [
             default=False, param="trivia_madness", api_source="ninjas", api_variable="trivia"),
     GamePlay("Trivia - Multiple Choice",
             "You will be given 10 multiple choice questions from your chosen category.",
-            categories=["one"], param="trivia_mc_categories", api_source="trivia"),
+            categories=["Music", "Sport & Leisure", "Film & TV", "Arts & Literature", "History",
+                        "Society & Culture", "Science", "Geography", "Food & Drink", "General Knowledge"],
+            param="trivia_mc_categories", api_source="trivia"),
     GamePlay("Trivia - Multiple Choice",
             "You will be given 10 multiple choice questions.",
             default=False, param="trivia_mc", api_source="trivia"),
@@ -229,34 +231,37 @@ def game_answer():
         game_name = game.name
 
     answer = request.form.get('answer')
-    answer = find_and_convert_numbers(answer)
-    # TESTS FOR CONVERTING NUMBERS
-    # - 1000000
-    # - 48300894
-    # - 1,000,000
-    # - 32,059,320
-    # - 100000
-    # - 100,000
-    # - 10000
-    # - 10,000
-    # - 1000
-    # - 7,000
-    # - 8,900
-    # - 8900
-    # - 1,000
-    # - 100
-    # - 10
-    # - 1
-    # - 5 million
-    # - 96 thousand
-    # - 2 hundred
-    # - 1940
-    # - 1800
-    # - 1458
-    # - and more...
-    
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
-    correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+    if answer:
+        answer = find_and_convert_numbers(answer)
+        # TESTS FOR CONVERTING NUMBERS
+        # - 1000000
+        # - 48300894
+        # - 1,000,000
+        # - 32,059,320
+        # - 100000
+        # - 100,000
+        # - 10000
+        # - 10,000
+        # - 1000
+        # - 7,000
+        # - 8,900
+        # - 8900
+        # - 1,000
+        # - 100
+        # - 10
+        # - 1
+        # - 5 million
+        # - 96 thousand
+        # - 2 hundred
+        # - 1940
+        # - 1800
+        # - 1458
+        # - and more...
+        correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+    else:
+        answer = "No answer given"
+        correct = False
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
