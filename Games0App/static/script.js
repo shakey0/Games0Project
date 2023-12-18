@@ -80,12 +80,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var revealButton = document.querySelector('.reveal-letter');
     var clickCount = 0;
+    var totalHints = 0;
     
     if (revealButton) {
         revealButton.addEventListener('click', function (event) {
             event.preventDefault();
 
             clickCount++;
+            totalHints++;
 
             var form = this.closest('.reveal-letter-form');
 
@@ -110,11 +112,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         var messageElement = document.getElementById('hint-message');
                         var textElement = document.getElementById('reveal-letter-text');
                         scoreElement.textContent = data.score;
-                        messageElement.innerHTML += '<br>' + data.message;
+                        if (totalHints === 1) {
+                            messageElement.textContent = data.message;
+                        } else {
+                            messageElement.innerHTML += '<br>' + data.message;
+                        }
                         textElement.textContent = data.reveal_card_text;
                     } else {
                         var messageElement = document.getElementById('hint-message');
-                        messageElement.innerHTML += '<br>' + data.message;
+                        if (totalHints === 1) {
+                            messageElement.textContent = data.message;
+                        } else {
+                            messageElement.innerHTML += '<br>' + data.message;
+                        }
                         revealButton.disabled = true;
                     }
                     if (clickCount >= 2) {
@@ -134,6 +144,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lengthButton) {
         lengthButton.addEventListener('click', function (event) {
             event.preventDefault();
+
+            totalHints++;
 
             var form = this.closest('.reveal-length-form');
 
@@ -159,11 +171,19 @@ document.addEventListener('DOMContentLoaded', function() {
                         var messageElement = document.getElementById('hint-message');
                         var textElement = document.getElementById('reveal-length-text');
                         scoreElement.textContent = data.score;
-                        messageElement.innerHTML += '<br>' + data.message;
+                        if (totalHints === 1) {
+                            messageElement.textContent = data.message;
+                        } else {
+                            messageElement.innerHTML += '<br>' + data.message;
+                        }
                         textElement.textContent = data.length_card_text;
                     } else {
                         var messageElement = document.getElementById('hint-message');
-                        messageElement.innerHTML += '<br>' + data.message;
+                        if (totalHints === 1) {
+                            messageElement.textContent = data.message;
+                        } else {
+                            messageElement.innerHTML += '<br>' + data.message;
+                        }
                     }
                 })
                 .catch(function(error) {

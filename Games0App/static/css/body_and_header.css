@@ -277,6 +277,12 @@ body {
     .top-space {
         height: 102px;
     }
+    .question-title, .question-title-opening, .question-in-game, .question-over {
+        font-size: 26px;
+    }
+    .question-title-2 {
+        font-size: 26px;
+    }
 }
 
 @media (max-width: 448px) {
@@ -284,13 +290,21 @@ body {
         padding: 10px 10px;
     }
     .question-title, .question-title-opening, .question-in-game, .question-over {
-        font-size: 28px;
+        font-size: 24px;
     }
     .question-title-2 {
-        font-size: 28px;
+        font-size: 24px;
     }
     .correct-answer-text, .current-score-text {
         padding: 0 10px;
+    }
+}
+@media (max-width: 392px) {
+    .question-title, .question-title-opening, .question-in-game, .question-over {
+        font-size: 22px;
+    }
+    .question-title-2 {
+        font-size: 22px;
     }
 }
 

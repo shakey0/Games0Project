@@ -145,6 +145,14 @@
     transform: translateY(-88px);
 }
 
+.hint-messages {
+    text-align: center;
+    font-size: 1.8em;
+    font-style: italic;
+    margin: 0px;
+    color: burlywood;
+}
+
 @media (max-width: 714px) {
     .helper-buttons {
         gap: 20px;
@@ -167,6 +175,9 @@
         margin-left: 0px;
         margin-right: 0px;
     }
+    .hint-messages {
+        font-size: 1.6em;
+    }
 }
 
 @media (max-width: 522px) {
@@ -188,11 +199,17 @@
     .helper-button-tags p {
         transform: translateY(16px);
     }
+    .hint-messages {
+        font-size: 1.4em;
+    }
 }
 
 @media (max-width: 448px) {
     .answer-input {
         width: 382px;
+    }
+    .hint-messages {
+        font-size: 1.2em;
     }
 }
 

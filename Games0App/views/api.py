@@ -60,7 +60,7 @@ def reveal_letter():
         return jsonify(success=False, message='No more letters to reveal!')
     random_char = answer[random_position]
 
-    message =  f"The {ordinal(random_position + 1)} character is {random_char}"
+    message =  f"The {ordinal(random_position + 1)} character is {random_char}."
 
     if reveal_card > 0:
         reveal_card -= 1

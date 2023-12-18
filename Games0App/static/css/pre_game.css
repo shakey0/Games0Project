@@ -68,3 +68,13 @@
         margin-top: 20px;
     }
 }
+
+@media (max-width: 522px) {
+    .level-selection-title {
+        font-size: 22px;
+        margin-bottom: 0px;
+    }
+    .instruction-text {
+        font-size: 18px;
+    }
+}
