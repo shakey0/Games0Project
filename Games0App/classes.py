@@ -28,9 +28,9 @@ class GamePlay:
         elif api_source == "ninjas":
             self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'
         elif categories and api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty=easy"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty=medium"
         elif api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty=easy"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty=medium"
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 

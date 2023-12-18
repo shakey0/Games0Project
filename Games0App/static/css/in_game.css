@@ -42,19 +42,20 @@
 }
 
 .mc_answer-selection {
-    display: flex;
+    display: inline-block;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0px 0px 16px;
     font-size: 28px;
-    gap: 24px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
     color: rgb(119, 210, 119);
 }
 
 .mc_answer {
+    margin: 16px 0px 0px;
+    display: block;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -76,7 +77,6 @@
 @media (max-width: 815px) {
     .mc_answer-selection {
         font-size: 24px;
-        gap: 16px;
     }
 
     .mc_answer-radio {
@@ -183,6 +183,10 @@
 @media (max-width: 522px) {
     .mc_answer-selection {
         gap: 10px;
+        font-size: 22px;
+    }
+    .mc_answer {
+        margin: 8px 0px 0px;
     }
     .in-countdown {
         font-size: 1.8em;
@@ -205,6 +209,9 @@
 }
 
 @media (max-width: 448px) {
+    .mc_answer-selection {
+        font-size: 20px;
+    }
     .answer-input {
         width: 382px;
     }
@@ -225,7 +232,10 @@
     }
 }
 
-@media (max-width: 388px) {
+@media (max-width: 358px) {
+    .mc_answer-selection {
+        font-size: 18px;
+    }
     .answer-input {
         width: 292px;
     }

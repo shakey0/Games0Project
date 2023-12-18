@@ -334,6 +334,14 @@ body {
         height: 60px;
     }
 }
+@media (max-width: 448px) {
+    .submit-game {
+        font-size: 28px;
+        border-radius: 10px;
+        margin-top: 10px;
+        height: 54px;
+    }
+}
 
 .submit-game:hover {
     transform: scale(1.05);
