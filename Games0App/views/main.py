@@ -13,6 +13,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+import json
 import random
 
 
@@ -150,19 +151,33 @@ def game_play():
         if len(next_question) == 4:
             next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
             random.shuffle(next_question["all_answers"])
+            redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
 
-        reveal_card_starter = 9
-        length_card_starter = 3
-        redis_client.hset(token, 'reveal_card', reveal_card_starter)
-        redis_client.hset(token, 'length_card', length_card_starter)
+        if "fill_blank" in game.param or "trivia_madness" in game.param:
+            reveal_card_starter = 9
+            length_card_starter = 3
+            helpers = {'reveal_card': f"{reveal_card_starter} coupons",
+            'length_card': f"{length_card_starter} coupons"}
+            redis_client.hset(token, 'reveal_card', reveal_card_starter)
+            redis_client.hset(token, 'length_card', length_card_starter)
+        
+        elif "_mc" in game.param:
+            remove_higher_starter = 3
+            remove_lower_starter = 3
+            helpers = {'r_higher_card': f"{remove_higher_starter} coupons",
+            'r_lower_card': f"{remove_lower_starter} coupons"}
+            redis_client.hset(token, 'r_higher_card', remove_higher_starter)
+            redis_client.hset(token, 'r_lower_card', remove_lower_starter)
+
+        else:
+            helpers = {}
 
         redis_client.hset(token, 'score', 0)
 
         response = make_response(render_template('game.html', in_game=in_game, game=game, token=token,
                                                 game_name=game_name, next_question=next_question,
                                                 question_no=1, timer=timer, score=0, user=current_user,
-                                                helpers={'reveal_card': f"{reveal_card_starter} coupons",
-                                                        'length_card': f"{length_card_starter} coupons"}))
+                                                helpers=helpers))
         response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
                             str(next_question["last_question_no"]))
         
@@ -189,12 +204,21 @@ def game_play():
     if len(next_question) == 4:
         next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
         random.shuffle(next_question["all_answers"])
-
+        redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
+    
     helpers = {}
-    reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
-    helpers['reveal_card'] = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
-    length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
-    helpers['length_card'] = f"{length_card} coupons" if length_card > 0 else "-90 points"
+
+    if "fill_blank" in game.param or "trivia_madness" in game.param:
+        reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
+        helpers['reveal_card'] = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
+        length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
+        helpers['length_card'] = f"{length_card} coupons" if length_card > 0 else "-90 points"
+
+    elif "_mc" in game.param:
+        remove_higher = int(redis_client.hget(token, 'r_higher_card').decode('utf-8'))
+        helpers['r_higher_card'] = f"{remove_higher} coupons" if remove_higher > 0 else "-90 points"
+        remove_lower = int(redis_client.hget(token, 'r_lower_card').decode('utf-8'))
+        helpers['r_lower_card'] = f"{remove_lower} coupons" if remove_lower > 0 else "-90 points"
 
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 

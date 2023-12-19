@@ -32,7 +32,7 @@ def register():
     confirm_password = request.form.get('confirm_password')
     if not confirm_password:
         errors['confirm_password'] = 'Please confirm your password.'
-    if not password == confirm_password:
+    elif not password == confirm_password:
         errors['confirm_password'] = 'Passwords do not match.'
     if errors:
         return jsonify(success=False, errors=errors)

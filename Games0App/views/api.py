@@ -7,6 +7,7 @@ if production:
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
     redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+import json
 import random
 
 
@@ -96,14 +97,6 @@ def reveal_length():
 
     answer = answer.replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
-    # if answer.isnumeric() and len(answer) == 1:
-    #     digit_to_word = {
-    #         '0': 'zero', '1': 'one', '2': 'two', '3': 'three',
-    #         '4': 'four', '5': 'five', '6': 'six', '7': 'seven',
-    #         '8': 'eight', '9': 'nine'
-    #     }
-    #     answer = digit_to_word[answer]
-
     no_of_words = len(answer.split())
     no_of_words_part = "a single word" if no_of_words == 1 else f"{no_of_words} words"
 
@@ -119,3 +112,73 @@ def reveal_length():
         length_card_text = "-90 points"
 
     return jsonify(success=True, score=score, message=message, length_card_text=length_card_text)
+
+
+@api.route('/remove_higher', methods=['POST'])
+def remove_higher():
+
+    token = request.form.get('token')
+
+    higher_card = int(redis_client.hget(token, 'r_higher_card').decode('utf-8'))
+    score = int(redis_client.hget(token, 'score').decode('utf-8'))
+
+    if higher_card == 0:
+        if score < 90:
+            return jsonify(success=False, message='You need at least 90 points to remove a wrong answer!')
+        
+    answer = redis_client.hget(token, 'answer').decode('utf-8')
+    all_answers = json.loads(redis_client.hget(token, 'all_answers').decode('utf-8'))
+
+    if all_answers[0] == answer:
+        answer_to_remove = all_answers[1]
+    elif all_answers[1] == answer:
+        answer_to_remove = all_answers[0]
+    else:
+        random_pick = random.randint(0, 1)
+        answer_to_remove = all_answers[random_pick]
+    
+    if higher_card > 0:
+        higher_card -= 1
+        redis_client.hset(token, 'r_higher_card', higher_card)
+        higher_card_text = f"{higher_card} coupons" if higher_card > 0 else "-90 points"
+    else:
+        score -= 90
+        redis_client.hset(token, 'score', score)
+        higher_card_text = "-90 points"
+
+    return jsonify(success=True, score=score, answer_to_remove=answer_to_remove, higher_card_text=higher_card_text)
+
+
+@api.route('/remove_lower', methods=['POST'])
+def remove_lower():
+
+    token = request.form.get('token')
+
+    lower_card = int(redis_client.hget(token, 'r_lower_card').decode('utf-8'))
+    score = int(redis_client.hget(token, 'score').decode('utf-8'))
+
+    if lower_card == 0:
+        if score < 90:
+            return jsonify(success=False, message='You need at least 90 points to remove a wrong answer!')
+        
+    answer = redis_client.hget(token, 'answer').decode('utf-8')
+    all_answers = json.loads(redis_client.hget(token, 'all_answers').decode('utf-8'))
+
+    if all_answers[2] == answer:
+        answer_to_remove = all_answers[3]
+    elif all_answers[3] == answer:
+        answer_to_remove = all_answers[2]
+    else:
+        random_pick = random.randint(2, 3)
+        answer_to_remove = all_answers[random_pick]
+    
+    if lower_card > 0:
+        lower_card -= 1
+        redis_client.hset(token, 'r_lower_card', lower_card)
+        lower_card_text = f"{lower_card} coupons" if lower_card > 0 else "-90 points"
+    else:
+        score -= 90
+        redis_client.hset(token, 'score', score)
+        lower_card_text = "-90 points"
+
+    return jsonify(success=True, score=score, answer_to_remove=answer_to_remove, lower_card_text=lower_card_text)

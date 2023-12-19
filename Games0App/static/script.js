@@ -194,6 +194,94 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    var removeHigher = document.querySelector('.remove-higher');
+
+    if (removeHigher) {
+        removeHigher.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var form = this.closest('.remove-higher-form');
+
+            if (form) {
+                var formData = new FormData(form);
+
+                fetch('/remove_higher', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .then(function(data) {
+                    var removeHigher = document.querySelector('.remove-higher');
+                    if (data.success) {
+                        var scoreElement = document.getElementById('score');
+                        var wrongAnswerElementId = data.answer_to_remove.replace(/\s+/g, '_') + '_box';
+                        var wrongAnswerElement = document.getElementById(wrongAnswerElementId);
+                        var textElement = document.getElementById('remove-higher-text');
+                        scoreElement.textContent = data.score;
+                        if (wrongAnswerElement) {
+                            wrongAnswerElement.style.display = 'none';
+                        }
+                        textElement.textContent = data.higher_card_text;
+                    }
+                    removeHigher.disabled = true;
+                })
+                .catch(function(error) {
+                    console.error('Fetch error:', error);
+                });
+            }
+        });
+    }
+
+    var removeLower = document.querySelector('.remove-lower');
+
+    if (removeLower) {
+        removeLower.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var form = this.closest('.remove-lower-form');
+
+            if (form) {
+                var formData = new FormData(form);
+
+                fetch('/remove_lower', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                })
+                .then(function(data) {
+                    var removeLower = document.querySelector('.remove-lower');
+                    if (data.success) {
+                        var scoreElement = document.getElementById('score');
+                        var wrongAnswerElementId = data.answer_to_remove.replace(/\s+/g, '_') + '_box';
+                        var wrongAnswerElement = document.getElementById(wrongAnswerElementId);
+                        var textElement = document.getElementById('remove-lower-text');
+                        scoreElement.textContent = data.score;
+                        if (wrongAnswerElement) {
+                            wrongAnswerElement.style.display = 'none';
+                        }
+                        textElement.textContent = data.lower_card_text;
+                    }
+                    removeLower.disabled = true;
+                })
+                .catch(function(error) {
+                    console.error('Fetch error:', error);
+                });
+            }
+        });
+    }
+
     var answerForm = document.querySelector('.game-box form');
     if (answerForm) {
         var isMultipleChoice = answerForm.getAttribute('data-multiple-choice') === 'true';

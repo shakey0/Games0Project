@@ -111,12 +111,20 @@
 }
 
 .reveal-letter, .reveal-length {
-    margin: 0px 35px;
     width: 120px;
+    font-size: 18px;
+}
+
+.remove-higher, .remove-lower {
+    width: 140px;
+    font-size: 15.5px;
+}
+
+.reveal-letter, .reveal-length, .remove-higher, .remove-lower {
+    margin: 0px 35px;
     border: none;
     border-radius: 10px;
     padding: 5px;
-    font-size: 18px;
     font-weight: bold;
     background-color: rgb(187, 197, 198);
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
@@ -125,7 +133,7 @@
     transform: translateY(-94px);
 }
 
-.reveal-letter:hover, .reveal-length:hover {
+.reveal-letter:hover, .reveal-length:hover, .remove-higher:hover, .remove-lower:hover {
     background-color: rgb(200, 167, 159);
 }
 

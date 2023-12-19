@@ -118,6 +118,13 @@ class GamePlay:
                     question = item['question'].strip()
                     answer = item['correctAnswer'].strip()
                     wrong_answers = [wrong_answer.strip() for wrong_answer in item['incorrectAnswers']]
+                    is_valid = True
+                    for item in [answer] + wrong_answers:
+                        if len(item) > 30:
+                            is_valid = False
+                            break
+                    if not is_valid:
+                        continue
                     valid_questions.append([question, answer, wrong_answers])
             
             if valid_questions:

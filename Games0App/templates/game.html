@@ -72,9 +72,9 @@
             {% if "_mc" in game.param %}
                 <div class="mc_answer-selection">
                     {% for answer in next_question["all_answers"] %}
-                        <div class="mc_answer">
-                            <input class="mc_answer-radio" type="radio" id="{{ answer }}" name="answer" value="{{ answer }}">
-                            <label for="{{ answer }}">{{ answer }}</label>
+                        <div class="mc_answer" id="{{ answer | replace(" ", "_") }}_box">
+                            <input class="mc_answer-radio" type="radio" id="{{ answer | replace(" ", "_") }}" name="answer" value="{{ answer }}">
+                            <label for="{{ answer | replace(" ", "_") }}">{{ answer }}</label>
                         </div>
                     {% endfor %}
                 </div>
@@ -85,21 +85,39 @@
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
+        
         <div class="helper-box">
-            <div class="helper-buttons">
-                <form class="reveal-letter-form" method="POST" action="/reveal_letter">
-                    <input type="hidden" name="token" value="{{ token }}">
-                    <button class="reveal-letter">Reveal a letter</button>
-                </form>
-                <form class="reveal-length-form" method="POST" action="/reveal_length">
-                    <input type="hidden" name="token" value="{{ token }}">
-                    <button class="reveal-length">Reveal length</button>
-                </form>
-            </div>
-            <div class="helper-button-tags">
-                <p class="reveal-letter-tag" id="reveal-letter-text">{{ helpers['reveal_card'] }}</p>
-                <p class="reveal-length-tag" id="reveal-length-text">{{ helpers['length_card'] }}</p>
-            </div>
+            {% if "_mc" in game.param %}
+                <div class="helper-buttons">
+                    <form class="remove-higher-form" method="POST" action="/remove_higher">
+                        <input type="hidden" name="token" value="{{ token }}">
+                        <button class="remove-higher">Remove higher wrong answer</button>
+                    </form>
+                    <form class="remove-lower-form" method="POST" action="/remove_lower">
+                        <input type="hidden" name="token" value="{{ token }}">
+                        <button class="remove-lower">Remove lower wrong answer</button>
+                    </form>
+                </div>
+                <div class="helper-button-tags">
+                    <p class="remove-higher-tag" id="remove-higher-text">{{ helpers['r_higher_card'] }}</p>
+                    <p class="remove-lower-tag" id="remove-lower-text">{{ helpers['r_lower_card'] }}</p>
+                </div>
+            {% else %}
+                <div class="helper-buttons">
+                    <form class="reveal-letter-form" method="POST" action="/reveal_letter">
+                        <input type="hidden" name="token" value="{{ token }}">
+                        <button class="reveal-letter">Reveal a letter</button>
+                    </form>
+                    <form class="reveal-length-form" method="POST" action="/reveal_length">
+                        <input type="hidden" name="token" value="{{ token }}">
+                        <button class="reveal-length">Reveal length</button>
+                    </form>
+                </div>
+                <div class="helper-button-tags">
+                    <p class="reveal-letter-tag" id="reveal-letter-text">{{ helpers['reveal_card'] }}</p>
+                    <p class="reveal-length-tag" id="reveal-length-text">{{ helpers['length_card'] }}</p>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% else %}
