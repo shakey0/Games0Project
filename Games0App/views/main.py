@@ -125,6 +125,10 @@ def game_play():
 
     if request.form.get('in_game') == "start":
 
+        if redis_client.hget(token, 'question_no'):  # Check if the game has already started and stop cheating
+            flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+            return redirect('/')
+
         in_game = "yes"
 
         timer = int(request.form.get('difficulty'))
@@ -188,6 +192,9 @@ def game_play():
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
 
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
+    if question_no != int(request.form.get('question_no')):
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return redirect('/')
     redis_client.hset(token, 'question_no', question_no+1)
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
