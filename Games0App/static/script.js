@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         scoreElement.textContent = data.score;
                         if (totalHints === 1) {
                             messageElement.textContent = data.message;
+                            messageElement.style.marginBottom = "10px";
                         } else {
                             messageElement.innerHTML += '<br>' + data.message;
                         }
@@ -173,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         scoreElement.textContent = data.score;
                         if (totalHints === 1) {
                             messageElement.textContent = data.message;
+                            messageElement.style.marginBottom = "10px";
                         } else {
                             messageElement.innerHTML += '<br>' + data.message;
                         }
@@ -288,10 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         answerForm.addEventListener('submit', function(event) {
             var isValid = false;
-            var errorMessage = '';
 
             if (isMultipleChoice) {
-                // Check if any radio button is selected
                 var radios = document.querySelectorAll('.mc_answer-radio');
                 for (var i = 0; i < radios.length; i++) {
                     if (radios[i].checked) {
@@ -299,20 +299,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                     }
                 }
-                if (!isValid) {
-                    errorMessage = 'Please select one of the options.';
-                }
             } else {
-                // Check if text input is not empty
                 var textInput = document.querySelector('.answer-input');
                 if (textInput.value.trim() !== '') {
                     isValid = true;
-                } else {
-                    errorMessage = 'Please type your answer in the box.';
                 }
             }
-
-            // Show error message and prevent form submission if no valid input
             if (!isValid) {
                 event.preventDefault();
             }
@@ -322,7 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Start the first countdown as the page loads
     if (document.querySelector('.before-countdown')) {
         startFirstCountdown();
     }

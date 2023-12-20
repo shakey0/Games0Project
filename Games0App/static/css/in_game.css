@@ -154,6 +154,14 @@
     transform: translateY(-88px);
 }
 
+.remove-higher-tag {
+    padding-right: 10px;
+}
+
+.remove-lower-tag {
+    padding-left: 10px;
+}
+
 .hint-messages {
     text-align: center;
     font-size: 1.8em;

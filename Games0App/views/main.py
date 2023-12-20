@@ -155,7 +155,7 @@ def game_play():
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:
             reveal_card_starter = 9
-            length_card_starter = 3
+            length_card_starter = 5
             helpers = {'reveal_card': f"{reveal_card_starter} coupons",
             'length_card': f"{length_card_starter} coupons"}
             redis_client.hset(token, 'reveal_card', reveal_card_starter)
