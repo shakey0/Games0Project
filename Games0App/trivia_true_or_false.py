@@ -391,7 +391,24 @@ true_or_false_food = {
     "78": {"category": "food", "statement": "A Jelly Bean takes around ____ days to make.", "answer": "7", "options": ["7", "3"]},
     "79": {"category": "food", "statement": "Tomatoes were once thought to be ____.", "answer": "poisonous", "options": ["poisonous", "radioactive"]},
     "80": {"category": "food", "statement": "Flamingoes are pink because of the ____ they eat.", "answer": "shrimp and algae", "options": ["shrimp and algae", "shellfish and plankton"]},
-    
-
-
+    "81": {"category": "food", "statement": "Apples belong to the ____ family.", "answer": "rose", "options": ["rose", "melon"]},
+    "82": {"category": "food", "statement": "Bananas are curved because ____. ", "answer": "they grow towards the sun", "options": ["they grow towards the sun", "it helps them ventilate"]},
+    "83": {"category": "food", "statement": "Ancient Egyptians where often buried with ____.", "answer": "watermelons", "options": ["watermelons", "mangoes"]},
+    "84": {"category": "food", "statement": "The word 'salary' originates from the word ____.", "answer": "salt", "options": ["salt", "salmon"]},
+    "85": {"category": "food", "statement": "The word 'cereal' comes from the name of the ____ of grain.", "answer": "Roman goddess", "options": ["Roman goddess", "Greek goddess"]},
+    "86": {"category": "food", "statement": "Pancake Day started because a lady ran to ____ with her pan and pancake.", "answer": "church", "options": ["church", "the market"]},
+    "87": {"category": "food", "statement": "Eggplants/Aubergines are a member of the ____ family.", "answer": "nightshade", "options": ["nightshade", "belladonna"]},
+    "88": {"category": "food", "statement": "If not harvested, an ____ will bloom into a beautiful flower.", "answer": "artichoke", "options": ["artichoke", "asparagus"]},
+    "89": {"category": "food", "statement": "The world's first noodles were made from ____.", "answer": "millet", "options": ["millet", "rice"]},
+    "90": {"category": "food", "statement": "The world's first chocolate bar was made in ____.", "answer": "England", "options": ["England", "France"]},
+    "91": {"category": "food", "statement": "The world's first chocolate chip cookie was made in ____.", "answer": "Massachusetts", "options": ["Massachusetts", "New York"]},
+    "92": {"category": "food", "statement": "The tea bag was invented by accident in ____.", "answer": "1908", "options": ["1908", "1918"]},
+    "93": {"category": "food", "statement": "Fornax was the Roman goddess of ____.", "answer": "bakers and ovens", "options": ["bakers and ovens", "fruit and vegetables"]},
+    "94": {"category": "food", "statement": "The ancient Romans used to drop a piece of ____ into their wine for good health.", "answer": "toast", "options": ["toast", "fruit"]},
+    "95": {"category": "food", "statement": "The first food ever cooked in a microwave was ____.", "answer": "popcorn", "options": ["popcorn", "pizza"]},
+    "96": {"category": "food", "statement": "The Ancient Egyptians used ____ to treat infections.", "answer": "moldy bread", "options": ["moldy bread", "moldy onions"]},
+    "97": {"category": "food", "statement": "Eating ____ can interfere with the metabolism of some medications.", "answer": "grapefruit", "options": ["grapefruit", "bananas"]},
+    "98": {"category": "food", "statement": "The word biscuit comes from the Latin words 'bis' and 'coctus' which means ____.", "answer": "twice baked", "options": ["twice baked", "twice coated"]},
+    "99": {"category": "food", "statement": "The word salad originally meant ____.", "answer": "salted vegetables", "options": ["salted vegetables", "assorted vegetables"]},
+    "100": {"category": "food", "statement": "Pavlova originated in ____.", "answer": "New Zealand", "options": ["New Zealand", "Australia"]}
 }
