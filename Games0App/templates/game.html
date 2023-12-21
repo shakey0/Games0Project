@@ -102,7 +102,7 @@
                     <p class="remove-higher-tag" id="remove-higher-text">{{ helpers['r_higher_card'] }}</p>
                     <p class="remove-lower-tag" id="remove-lower-text">{{ helpers['r_lower_card'] }}</p>
                 </div>
-            {% else %}
+            {% elif "fill_blank" in game.param or "trivia_madness" in game.param %}
                 <div class="helper-buttons">
                     <form class="reveal-letter-form" method="POST" action="/reveal_letter">
                         <input type="hidden" name="token" value="{{ token }}">

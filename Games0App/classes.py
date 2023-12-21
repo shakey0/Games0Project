@@ -9,6 +9,7 @@ else:
 from Games0App.utils import spell_check_sentence, find_and_convert_numbers
 from Games0App.lists import blank_words_to_avoid
 import json
+import csv
 import random
 
 
@@ -31,6 +32,8 @@ class GamePlay:
             self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty=medium"
         elif api_source == "trivia":
             self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty=medium"
+        else:
+            self.api_url = ""
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 
@@ -137,6 +140,37 @@ class GamePlay:
         return False
 
 
+    def update_stored_statements(self, file_path, redis_group, category=""):
+
+        all_items = []
+        with open(file_path, newline='') as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=';')
+            for row in reader:
+                item = {'category': row['category'], 'statement': row['statement'], 'answer': row['answer'], 'options': row['options'].split(', ')}
+                if category:
+                    if item['category'].strip().lower() == category.strip().lower():
+                        all_items.append(item)
+                else:
+                    all_items.append(item)
+
+        random_items = random.sample(all_items, min(30, len(all_items)))
+
+        constructed_statements = []
+        for item in random_items:
+            random_option = random.choice(item['options'])
+            statement = item['statement'].replace('____', random_option)
+            answer = item['statement'].replace('____', item['answer'])
+            constructed_statements.append([statement, answer])
+
+        if constructed_statements:
+            print('VALID QUESTIONS:\n', constructed_statements)
+            serialized_questions = [json.dumps(question) for question in constructed_statements]
+            redis_client.sadd(redis_group, *serialized_questions)
+            print('Added questions to Redis set')
+            return True
+        return False
+
+
     def get_question_from_redis_set(self, redis_group, category):
         question = redis_client.spop(redis_group)
         if question is not None:
@@ -181,28 +215,28 @@ class GamePlay:
 
 
     def get_question(self, last_question_no, category=""):
-        if self.api_source:
-            if category:
-                if self.api_source == "ninjas":
-                    category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
-                else:
-                    category = category.lower().replace(' ', '_').replace('&', 'and')
-                redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
-                redis_group = "{}_{}_collection".format(self.lower_name, category)
+        if category:
+            if self.api_source == "ninjas":
+                category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
             else:
-                redis_string = "{}_{}".format(self.lower_name, last_question_no+1)
-                redis_group = self.lower_name + "_collection"
+                category = category.lower().replace(' ', '_').replace('&', 'and')
+            redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
+            redis_group = "{}_{}_collection".format(self.lower_name, category)
+        else:
+            redis_string = "{}_{}".format(self.lower_name, last_question_no+1)
+            redis_group = self.lower_name + "_collection"
+        
+        print('Trying to get question from Redis')
+        question = self.get_question_from_redis(last_question_no, redis_string, category)
+        if question is not None:
+            return question
+        
+        print('Trying to get question from Redis set')
+        question = self.get_question_from_redis_set(redis_group, category)
+        if question is not None:
+            return question
             
-            print('Trying to get question from Redis')
-            question = self.get_question_from_redis(last_question_no, redis_string, category)
-            if question is not None:
-                return question
-            
-            print('Trying to get question from Redis set')
-            question = self.get_question_from_redis_set(redis_group, category)
-            if question is not None:
-                return question
-            
+        if self.api_source:
             print('Triggering API call to get more questions')
             count = 0
             while count < 3:
@@ -225,4 +259,18 @@ class GamePlay:
                     if question is not None:
                         return question
             print('Failed to get question from API')
+            return None
+        
+        elif "_tf" in self.param:
+            print('Loading questions from file')
+            if category:
+                result = self.update_stored_statements('Games0App/static/true_or_false_trivia.csv', redis_group, category)
+            else:
+                result = self.update_stored_statements('Games0App/static/true_or_false_trivia.csv', redis_group)
+            if result:
+                print('Trying to get question from Redis set')
+                question = self.get_question_from_redis_set(redis_group, category)
+                if question is not None:
+                    return question
+            print('Failed to get question from file')
             return None

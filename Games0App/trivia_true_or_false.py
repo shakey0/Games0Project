@@ -412,3 +412,27 @@ true_or_false_food = {
     "99": {"category": "food", "statement": "The word salad originally meant ____.", "answer": "salted vegetables", "options": ["salted vegetables", "assorted vegetables"]},
     "100": {"category": "food", "statement": "Pavlova originated in ____.", "answer": "New Zealand", "options": ["New Zealand", "Australia"]}
 }
+
+
+# import csv
+
+# output_file_path = 'true_or_false_trivia.csv'
+
+# with open(output_file_path, 'w', newline='') as csvfile:
+
+#     writer = csv.writer(csvfile, delimiter=';')
+    
+#     writer.writerow(['ID', 'category', 'statement', 'answer', 'options'])
+    
+#     dicionaries = [true_or_false_animals, true_or_false_countries, true_or_false_cities, true_or_false_food]
+
+#     for dictionary in dicionaries:
+#         for key, value in dictionary.items():
+#             id = key
+#             category = value['category']
+#             statement = value['statement']
+#             answer = value['answer']
+#             options = ', '.join(value['options'])
+#             writer.writerow([id, category, statement, answer, options])
+
+# print(f'Data has been written to {output_file_path}')

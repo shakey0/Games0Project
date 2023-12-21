@@ -46,7 +46,7 @@ games = [
             default=False, param="trivia_mc", api_source="trivia"),
     GamePlay("Trivia - True or False",
             "You will be given 10 true or false questions from your chosen category.",
-            categories=["two"], param="trivia_tf_categories"),
+            categories=["Animals", "Countries", "Cities", "Food"], param="trivia_tf_categories"),
     GamePlay("Trivia - True or False",
             "You will be given 10 true or false questions.",
             default=False, param="trivia_tf"),

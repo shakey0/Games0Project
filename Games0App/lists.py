@@ -28,4 +28,5 @@ blank_words_to_avoid = ['what', 'when', 'where', 'which', 'whom', 'whose', 'does
                         'hate', 'hates', 'hated', 'hating', 'prefer', 'prefers', 'preferred', 'hear',
                         'heard', 'hears', 'hearing', 'happen', 'happened', 'happens', 'happening',
                         'have', 'having', 'having', 'give', 'gave', 'gives', 'giving', 'given', 'gets',
-                        'getting', 'gotten', 'goes', 'going', 'went', 'gone', 'used', 'uses', 'using']
+                        'getting', 'gotten', 'goes', 'going', 'went', 'gone', 'used', 'uses', 'using',
+                        'ever']
