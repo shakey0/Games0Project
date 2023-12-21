@@ -3,4 +3,3 @@ venv/
 .env
 .DS_Store
 **/.DS_Store
-Games0App/static/true_or_false_trivia.csv
