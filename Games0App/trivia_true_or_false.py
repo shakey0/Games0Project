@@ -372,6 +372,26 @@ true_or_false_food = {
     "59": {"category": "food", "statement": "The ancient Egyptians used ____ as a form of currency.", "answer": "bread", "options": ["bread", "rice"]},
     "60": {"category": "food", "statement": "The ancient Romans used ____ as a form of currency.", "answer": "salt", "options": ["salt", "pepper"]},
     "61": {"category": "food", "statement": "The ancient Aztecs used ____ as a form of currency.", "answer": "cocoa beans", "options": ["cocoa beans", "coffee beans"]},
-    "62": {"category": "food", "statement": ""}
+    "62": {"category": "food", "statement": "The word vegetable has no ____.", "answer": "scientific definition", "options": ["scientific definition", "legal definition"]},
+    "63": {"category": "food", "statement": "The Romans ate ____ as a delicacy.", "answer": "flamingo tongue", "options": ["flamingo tongue", "flamingo heart"]},
+    "64": {"category": "food", "statement": "The second most consumed beverage in the world is ____.", "answer": "tea", "options": ["tea", "coffee"]},
+    "65": {"category": "food", "statement": "The Black Sapote is known as the ____ fruit.", "answer": "chocolate pudding", "options": ["chocolate pudding", "chocolate cake"]},
+    "66": {"category": "food", "statement": "Lettuce is a member of the ____ family.", "answer": "sunflower", "options": ["sunflower", "daisy"]},
+    "67": {"category": "food", "statement": "The original color or Coca-Cola was ____.", "answer": "green", "options": ["green", "blue"]},
+    "68": {"category": "food", "statement": "Pineapple contains a protein-digesting enzyme called ____.", "answer": "bromelain", "options": ["bromelain", "papain"]},
+    "69": {"category": "food", "statement": "The oldest known winery is located in ____, believed to be around 6,000 years old.", "answer": "Armenia", "options": ["Armenia", "Georgia"]},
+    "70": {"category": "food", "statement": "It would take a honeybee the equivalent of ____ trips around the world to make one kilogram of honey.", "answer": "seven", "options": ["seven", "eleven"]},
+    "71": {"category": "food", "statement": "The miracle berry is known for ____.", "answer": "making sour things taste sweet", "options": ["making sour things taste sweet", "causing a quick rush of endorphins"]},
+    "72": {"category": "food", "statement": "Fish is an essential part of the ____ diet.", 'answer': "Inuit", "options": ["Inuit", "Maasai"]},
+    "73": {"category": "food", "statement": "Margarine was originally made from ____.", "answer": "beef fat", "options": ["beef fat", "pork fat"]},
+    "74": {"category": "food", "statement": "The color purple is often associated with ____.", "answer": "antioxidants", "options": ["antioxidants", "zinc"]},
+    "75": {"category": "food", "statement": "Garlic is known to attract ____.", "answer": "leeches", "options": ["leeches", "mosquitoes"]},
+    "76": {"category": "food", "statement": "Pumpkins were once recommended for removing ____.", "answer": "freckles", "options": ["freckles", "warts"]},
+    "77": {"category": "food", "statement": "Carrots were first grown for their ____.", "answer": "leaves", "options": ["leaves", "roots"]},
+    "78": {"category": "food", "statement": "A Jelly Bean takes around ____ days to make.", "answer": "7", "options": ["7", "3"]},
+    "79": {"category": "food", "statement": "Tomatoes were once thought to be ____.", "answer": "poisonous", "options": ["poisonous", "radioactive"]},
+    "80": {"category": "food", "statement": "Flamingoes are pink because of the ____ they eat.", "answer": "shrimp and algae", "options": ["shrimp and algae", "shellfish and plankton"]},
+    
+
 
 }
