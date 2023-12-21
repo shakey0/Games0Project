@@ -102,6 +102,8 @@ class GamePlay:
                     answer = item['answer'].strip()
                     if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 2:
                         continue
+                    if len(question) > 100:
+                        continue
                     answer = find_and_convert_numbers(answer)
                     if self.validate_trivia_madness_question(question, answer):
                         if not question[-1] in ['.', '!', '?']:
@@ -113,6 +115,8 @@ class GamePlay:
                 
                 elif "fill_blank" in self.param:
                     sentence = item['fact'] if 'fact' in item else item['joke']
+                    if len(sentence) > 100:
+                        continue
                     fill_in_the_blank = self.create_fill_blank_answer(sentence)
                     if fill_in_the_blank:
                         valid_questions.append(fill_in_the_blank)
@@ -120,6 +124,8 @@ class GamePlay:
                 elif "trivia_mc" in self.param:
                     question = item['question'].strip()
                     answer = item['correctAnswer'].strip()
+                    if len(question) > 100:
+                        continue
                     wrong_answers = [wrong_answer.strip() for wrong_answer in item['incorrectAnswers']]
                     is_valid = True
                     for item in [answer] + wrong_answers:

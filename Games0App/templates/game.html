@@ -78,6 +78,17 @@
                         </div>
                     {% endfor %}
                 </div>
+            {% elif "_tf" in game.param %}
+                <div class="tf_answer-selection">
+                    <div class="tf_answer" id="True_box">
+                        <input class="tf_answer-radio" type="radio" id="True" name="answer" value="True">
+                        <label for="True">True</label>
+                    </div>
+                    <div class="tf_answer" id="False_box">
+                        <input class="tf_answer-radio" type="radio" id="False" name="answer" value="False">
+                        <label for="False">False</label>
+                    </div>
+                </div>
             {% else %}
                 <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
             {% endif %}
@@ -123,7 +134,17 @@
 {% else %}
     {% if correct %}
         <div class="after-answer">
-            <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
+            {% if "_tf" in game.param %}
+                <h2 class="correct-answer-text">You are right!</h2>
+                {% if statement %}
+                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                {% else %}
+                    <h2 class="correct-answer-text">Here's the correction:</h2>
+                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                {% endif %}
+            {% else %}
+                <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
+            {% endif %}
             <h2 class="current-score-text">You answered in <b class="score">{{ seconds }} seconds.</b></h2>
             <h2 class="current-score-text"><b class="score">+{{ new_points }} points</b></h2>
             {% if question_no >= 10 %}
@@ -136,14 +157,26 @@
         {% if seconds == 0 %}
             <h1 class="question-over"><b>Time up!</b></h1>
         {% endif %}
-    <div class="after-answer">
-        <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
-        {% if question_no >= 10 %}
-            <h2 class="current-score-text">Your final score is <b class="score">{{ score }} points</b>.</h2>
-        {% else %}
-            <h2 class="current-score-text">Your current score is <b class="score">{{ score }} points</b>.</h2>
-        {% endif %}
-    </div>
+        <div class="after-answer">
+            {% if "_tf" in game.param %}
+                <h2 class="correct-answer-text">Sorry!</h2>
+                {% if statement %}
+                    <h2 class="correct-answer-text">True was the correct answer.</h2>
+                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                {% else %}
+                    <h2 class="correct-answer-text">False was the correct answer.</h2>
+                    <h2 class="correct-answer-text">Here's the correction:</h2>
+                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                {% endif %}
+            {% else %}
+                <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
+            {% endif %}
+            {% if question_no >= 10 %}
+                <h2 class="current-score-text">Your final score is <b class="score">{{ score }} points</b>.</h2>
+            {% else %}
+                <h2 class="current-score-text">Your current score is <b class="score">{{ score }} points</b>.</h2>
+            {% endif %}
+        </div>
     {% endif %}
     <div class="after-answer">
         {% if question_no >= 10 %}

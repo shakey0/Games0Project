@@ -263,7 +263,8 @@ def game_answer():
 
     answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
-    if answer:
+    statement = False
+    if answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
         answer = find_and_convert_numbers(answer)
         # TESTS FOR CONVERTING NUMBERS
         # - 1000000
@@ -290,6 +291,20 @@ def game_answer():
         # - 1458
         # - and more...
         correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+    elif answer and "_mc" in game.param:
+        correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+    elif "_tf" in game.param:
+        set_question = redis_client.hget(token, 'question').decode('utf-8')
+        if answer == "True" and set_question == real_answer:
+            correct, statement = True, True
+        elif answer == "False" and set_question != real_answer:
+            correct, statement = True, False
+        elif answer == "True" and set_question != real_answer:
+            correct, statement = False, False
+        elif answer == "False" and set_question == real_answer:
+            correct, statement = False, True
+        else:
+            correct, statement = False, set_question == real_answer
     else:
         answer = "No answer given"
         correct = False
@@ -311,7 +326,7 @@ def game_answer():
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                            timer=timer, score=score, correct=correct, seconds=seconds,
+                            timer=timer, score=score, correct=correct, statement=statement, seconds=seconds,
                             new_points=new_points, question_no=question_no, real_answer=real_answer,
                             user=current_user)
 

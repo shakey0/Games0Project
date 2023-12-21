@@ -42,7 +42,7 @@
     }
 }
 
-.mc_answer-selection {
+.mc_answer-selection, .tf_answer-selection {
     display: inline-block;
     flex-direction: column;
     justify-content: center;
@@ -54,33 +54,33 @@
     color: rgb(119, 210, 119);
 }
 
-.mc_answer {
+.mc_answer, .tf_answer {
     margin: 16px 0px 0px;
     display: block;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.mc_answer:hover {
+.mc_answer:hover, .tf_answer:hover {
     transform: scale(1.08);
 }
 
-.mc_answer-radio {
+.mc_answer-radio, .tf_answer-radio {
     transform: scale(2);
     cursor: pointer;
 }
 
-.mc_answer label {
+.mc_answer label, .tf_answer label {
     cursor: pointer;
     margin-left: 6px;
 }
 
 @media (max-width: 815px) {
-    .mc_answer-selection {
+    .mc_answer-selection, .tf_answer-selection {
         font-size: 24px;
     }
 
-    .mc_answer-radio {
+    .mc_answer-radio, .tf_answer-radio {
         transform: scale(1.6);
     }
 }
@@ -198,11 +198,11 @@
 }
 
 @media (max-width: 522px) {
-    .mc_answer-selection {
+    .mc_answer-selection, .tf_answer-selection {
         gap: 10px;
         font-size: 22px;
     }
-    .mc_answer {
+    .mc_answer, .tf_answer {
         margin: 8px 0px 0px;
     }
     .in-countdown {
@@ -226,7 +226,7 @@
 }
 
 @media (max-width: 448px) {
-    .mc_answer-selection {
+    .mc_answer-selection, .tf_answer-selection {
         font-size: 20px;
     }
     .answer-input {
@@ -250,7 +250,7 @@
 }
 
 @media (max-width: 358px) {
-    .mc_answer-selection {
+    .mc_answer-selection, .tf_answer-selection {
         font-size: 18px;
     }
     .answer-input {
