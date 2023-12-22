@@ -29,9 +29,9 @@ class GamePlay:
         elif api_source == "ninjas":
             self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'
         elif categories and api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty=medium"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty={}"
         elif api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty=medium"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty={}"
         else:
             self.api_url = ""
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
@@ -76,8 +76,7 @@ class GamePlay:
             return False
         return True
 
-    def update_stored_questions(self, url, redis_group, category=""):
-        print(category)
+    def update_stored_questions(self, url, redis_group):
         print(url)
         from Games0App.foreign_api import get_api_questions_from_ninjas, get_api_questions_from_trivia
 
@@ -177,22 +176,21 @@ class GamePlay:
         return False
 
 
-    def get_question_from_redis_set(self, redis_group, category):
+    def get_question_from_redis_set(self, redis_group, category, difficulty):
         question = redis_client.spop(redis_group)
         if question is not None:
             print('Got question from Redis set')
-            if category:
-                redis_question_no_string = "{}_{}_last_question_no".format(self.lower_name, category)
-                incremented_question_no = redis_client.incr(redis_question_no_string)
-                field = "{}_{}_{}".format(self.lower_name, category, incremented_question_no)
-                hash_name = "{}_{}_hash".format(self.lower_name, category)
-            else:
-                redis_question_no_string = "{}_last_question_no".format(self.lower_name)
-                incremented_question_no = redis_client.incr(redis_question_no_string)
-                field = "{}_{}".format(self.lower_name, incremented_question_no)
-                hash_name = "{}_hash".format(self.lower_name)
+
+            base_string = self.create_base_string(category, difficulty)
+
+            redis_question_no_string = base_string + "_last_question_no"
+            incremented_question_no = redis_client.incr(redis_question_no_string)
+
+            field = base_string + "_" + str(incremented_question_no)
+            hash_name = base_string + "_hash"
 
             redis_client.hset(hash_name, field, question)
+
             if redis_client.ttl(hash_name) == -1:
                 redis_client.expire(hash_name, 3600)
                 redis_client.expire(redis_question_no_string, 3600)
@@ -206,8 +204,10 @@ class GamePlay:
                 return None
 
 
-    def get_question_from_redis(self, last_question_no, redis_string, category):
-        hash_name = "{}_{}_hash".format(self.lower_name, category) if category else "{}_hash".format(self.lower_name)
+    def get_question_from_redis(self, last_question_no, redis_string, category, difficulty):
+        base_string = self.create_base_string(category, difficulty)
+        hash_name = base_string + "_hash"
+
         question = redis_client.hget(hash_name, redis_string)
         if question is not None:
             print('Got question from Redis')
@@ -220,25 +220,26 @@ class GamePlay:
                 return None
 
 
-    def get_question(self, last_question_no, category=""):
+    def get_question(self, last_question_no, category="", difficulty=""):
         if category:
+            print("CATEGORY: ", category)  # SOLVE THIS PROBLEM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            print(self.api_source)
             if self.api_source == "ninjas":
                 category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
             else:
                 category = category.lower().replace(' ', '_').replace('&', 'and')
-            redis_string = "{}_{}_{}".format(self.lower_name, category, last_question_no+1)
-            redis_group = "{}_{}_collection".format(self.lower_name, category)
-        else:
-            redis_string = "{}_{}".format(self.lower_name, last_question_no+1)
-            redis_group = self.lower_name + "_collection"
+        
+        base_string = self.create_base_string(category, difficulty)
+        redis_string = base_string + "_" + str(last_question_no+1)
+        redis_group = base_string + "_collection"
         
         print('Trying to get question from Redis')
-        question = self.get_question_from_redis(last_question_no, redis_string, category)
+        question = self.get_question_from_redis(last_question_no, redis_string, category, difficulty)
         if question is not None:
             return question
         
         print('Trying to get question from Redis set')
-        question = self.get_question_from_redis_set(redis_group, category)
+        question = self.get_question_from_redis_set(redis_group, category, difficulty)
         if question is not None:
             return question
             
@@ -247,21 +248,21 @@ class GamePlay:
             count = 0
             while count < 3:
                 count += 1
-                if self.api_variable:
+                if self.api_variable:  # For ninjas API
                     if category:
                         print("CATEGORY: ", category)
-                        result = self.update_stored_questions(self.api_url.format(self.api_variable, category), redis_group, category)
+                        result = self.update_stored_questions(self.api_url.format(self.api_variable, category), redis_group)
                     else:
                         result = self.update_stored_questions(self.api_url.format(self.api_variable), redis_group)
-                else:
+                else:  # For trivia API
                     if category:
                         print("CATEGORY: ", category)
-                        result = self.update_stored_questions(self.api_url.format(category), redis_group, category)
+                        result = self.update_stored_questions(self.api_url.format(category, difficulty), redis_group)
                     else:
-                        result = self.update_stored_questions(self.api_url, redis_group)
+                        result = self.update_stored_questions(self.api_url.format(difficulty), redis_group)
                 if result:
                     print('Trying to get question from Redis set')
-                    question = self.get_question_from_redis_set(redis_group, category)
+                    question = self.get_question_from_redis_set(redis_group, category, difficulty)
                     if question is not None:
                         return question
             print('Failed to get question from API')
@@ -275,8 +276,17 @@ class GamePlay:
                 result = self.update_stored_statements('Games0App/static/true_or_false_trivia.csv', redis_group)
             if result:
                 print('Trying to get question from Redis set')
-                question = self.get_question_from_redis_set(redis_group, category)
+                question = self.get_question_from_redis_set(redis_group, category, difficulty)
                 if question is not None:
                     return question
             print('Failed to get question from file')
             return None
+
+
+    def create_base_string(self, category, difficulty):
+        base_string = self.lower_name
+        if category:
+            base_string += "_" + category
+        if difficulty:
+            base_string += "_" + difficulty
+        return base_string

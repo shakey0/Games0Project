@@ -42,21 +42,38 @@
     <div class="pre-game">
         <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
-            <h2 class="level-selection-title">Difficulty level (time to answer):</h2>
+            <h2 class="level-selection-title">Speed level (time to answer):</h2>
             <div class="level-selection">
                 <div class="level">
-                    <input class="level-radio" type="radio" id="easy" name="difficulty" value="60" checked>
+                    <input class="level-radio" type="radio" id="easy" name="speed" value="60">
                     <label for="easy"><b style="color:cornflowerblue;">Easy</b> (60 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="medium" name="difficulty" value="30">
+                    <input class="level-radio" type="radio" id="medium" name="speed" value="30" checked>
                     <label for="medium"><b style="color:cornflowerblue;">Medium</b> (30 seconds)</label>
                 </div>
                 <div class="level">
-                    <input class="level-radio" type="radio" id="hard" name="difficulty" value="15">
+                    <input class="level-radio" type="radio" id="hard" name="speed" value="15">
                     <label for="hard"><b style="color:cornflowerblue;">Hard</b> (15 seconds)</label>
                 </div>
             </div>
+            {% if "_mc" in game.param %}
+                <h2 class="level-selection-title">Difficulty level:</h2>
+                <div class="level-selection">
+                    <div class="level">
+                        <input class="level-radio" type="radio" id="easy2" name="difficulty" value="easy">
+                        <label for="easy2"><b style="color:cornflowerblue;">Easy</b></label>
+                    </div>
+                    <div class="level">
+                        <input class="level-radio" type="radio" id="medium2" name="difficulty" value="medium" checked>
+                        <label for="medium2"><b style="color:cornflowerblue;">Medium</b></label>
+                    </div>
+                    <div class="level">
+                        <input class="level-radio" type="radio" id="hard2" name="difficulty" value="hard">
+                        <label for="hard2"><b style="color:cornflowerblue;">Hard</b></label>
+                    </div>
+                </div>
+            {% endif %}
             <input type="hidden" name="in_game" value="start">
             <input type="hidden" name="token" value="{{ token }}">
             <input class="submit-game" type="submit" value="Start Game">

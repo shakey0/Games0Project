@@ -131,8 +131,13 @@ def game_play():
 
         in_game = "yes"
 
-        timer = int(request.form.get('difficulty'))
+        timer = int(request.form.get('speed'))
         redis_client.hset(token, 'timer', timer)
+
+        difficulty = ""
+        if "_mc" in game.param:
+            difficulty = request.form.get('difficulty')
+            redis_client.hset(token, 'difficulty', difficulty)
         
         cookied_question_number = request.cookies.get(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'))
         if cookied_question_number:
@@ -142,9 +147,9 @@ def game_play():
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
         if game.categories:
-            next_question = game.get_question(cookied_question_number, category)
+            next_question = game.get_question(cookied_question_number, category=category, difficulty=difficulty)
         else:
-            next_question = game.get_question(cookied_question_number)
+            next_question = game.get_question(cookied_question_number, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
         
         redis_client.hset(token, 'question_no', 1)
@@ -191,6 +196,10 @@ def game_play():
 
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
 
+    difficulty = ""
+    if "_mc" in game.param:
+        difficulty = redis_client.hget(token, 'difficulty').decode('utf-8')
+
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if question_no != int(request.form.get('question_no')):
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
@@ -200,9 +209,9 @@ def game_play():
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
     if game.categories:
-        next_question = game.get_question(question_tracker, category)
+        next_question = game.get_question(question_tracker, category=category, difficulty=difficulty)
     else:
-        next_question = game.get_question(question_tracker)
+        next_question = game.get_question(question_tracker, difficulty=difficulty)
     
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
