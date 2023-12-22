@@ -147,7 +147,7 @@ def game_play():
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
         if game.categories:
-            next_question = game.get_question(cookied_question_number, category=category, difficulty=difficulty)
+            next_question = game.get_question(cookied_question_number, category=category_name, difficulty=difficulty)
         else:
             next_question = game.get_question(cookied_question_number, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
@@ -209,7 +209,7 @@ def game_play():
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
     if game.categories:
-        next_question = game.get_question(question_tracker, category=category, difficulty=difficulty)
+        next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
     else:
         next_question = game.get_question(question_tracker, difficulty=difficulty)
     

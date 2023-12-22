@@ -222,8 +222,6 @@ class GamePlay:
 
     def get_question(self, last_question_no, category="", difficulty=""):
         if category:
-            print("CATEGORY: ", category)  # SOLVE THIS PROBLEM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            print(self.api_source)
             if self.api_source == "ninjas":
                 category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
             else:
