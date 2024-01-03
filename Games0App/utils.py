@@ -1,6 +1,9 @@
 from spellchecker import SpellChecker
 spell = SpellChecker()
 import re
+# import os
+# from openai import OpenAI
+# openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 
 
 def spell_check_sentence(sentence):
@@ -108,3 +111,24 @@ def find_and_convert_numbers(text):
         text = text.replace(num, words)
 
     return text
+
+
+# def check_blank_answer_for_alternative(user_answer, real_answer, sentence):
+#     if not re.match("^[a-zA-Z0-9]+$", user_answer):
+#         return False
+#     if spell.unknown([user_answer]):  # Names will be unknown, but after much testing this has not been an issue
+#         return False
+#     print("Sending request to OpenAI")
+#     print("USER ANSWER: ", user_answer)
+#     print("REAL ANSWER: ", real_answer)
+#     print("SENTENCE: ", sentence.replace('____', real_answer))
+#     completion = openai_client.chat.completions.create(model="gpt-3.5-turbo-1106",
+#     messages=[{"role": "user",
+#     "content": f"Does '{user_answer}' provide the same meaning as '{real_answer}' in the sentence '{sentence.replace('____', real_answer)}'? Answer with 'Yes' or 'No' only."}])
+#     response_text = completion.choices[0].message.content
+#     print(completion)
+#     print("RESPONSE TEXT: ", response_text)
+#     return "Yes" in response_text
+
+
+# check_blank_answer_for_alternative("yellow", "invented", "An ear trumpet was used before the hearing aid was ____ by people who had difficulty hearing.")

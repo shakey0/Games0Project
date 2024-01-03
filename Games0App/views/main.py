@@ -51,8 +51,8 @@ games = [
             "You will be given 10 true or false questions.",
             default=False, param="trivia_tf"),
     GamePlay("Number to Reach",
-            "DIFFERENT MESSAGE",
-            param="number_to_reach")
+            "You will be given 10 questions each with 4 sums. You need to choose the sum that equals the number given.",
+            param="number_to_reach_mc")
 ]
 
 
@@ -300,6 +300,17 @@ def game_answer():
         # - 1458
         # - and more...
         correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+        # if correct == False and "fill_blank" in game.param and len(answer) <= 15:
+        #     set_question = redis_client.hget(token, 'question').decode('utf-8')
+        #     correct = check_blank_answer_for_alternative(answer.strip(), real_answer, set_question)
+        #     if correct:
+        #         real_answer = answer.strip()
+        # elif correct == False and "trivia_madness" in game.param and len(answer) <= 25:
+        #     pass
+    elif "number" in game.param:
+        correct = answer == real_answer
+        set_question = redis_client.hget(token, 'question').decode('utf-8')
+        real_answer = f"{real_answer} = {set_question[39:-1]}"
     elif answer and "_mc" in game.param:
         correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
     elif "_tf" in game.param:

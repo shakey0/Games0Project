@@ -159,6 +159,9 @@
                     <h2 class="correct-answer-text">Here's the correction:</h2>
                     <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
                 {% endif %}
+            {% elif "number" in game.param %}
+                <h2 class="correct-answer-text">You are right!</h2>
+                <h2 class="correct-answer-text"><b class="correct-answer">{{ real_answer }}</b></h2>
             {% else %}
                 <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
             {% endif %}
@@ -185,6 +188,9 @@
                     <h2 class="correct-answer-text">Here's the correction:</h2>
                     <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
                 {% endif %}
+            {% elif "number" in game.param %}
+                <h2 class="correct-answer-text">Sorry! It was actually this:</h2>
+                <h2 class="correct-answer-text"><b class="correct-answer">{{ real_answer }}</b></h2>
             {% else %}
                 <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
             {% endif %}
