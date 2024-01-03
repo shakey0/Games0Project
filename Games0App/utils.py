@@ -100,16 +100,10 @@ def number_to_words(n):
 
 
 def find_and_convert_numbers(text):
-    # Regular expression to find full numbers, including those with commas
     numbers = re.findall(r'\b\d{1,3}(?:,\d{3})*\b', text)
-    
-    # Convert each number to words and build a dictionary
     converted = {num: number_to_words(int(num.replace(',', ''))) for num in numbers}
-
-    # Replace each number in the text with its word representation
     for num, words in converted.items():
         text = text.replace(num, words)
-
     return text
 
 

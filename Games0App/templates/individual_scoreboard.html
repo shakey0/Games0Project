@@ -15,6 +15,26 @@
 {% endblock %}
 {% block content %}
 
-<div>Hello! {{ game_name }}, {{ game_type }}, {{ score }}, {{ timer }} </div>
+<div>
+  <h1>Scoreboard</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Username</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{user.username}}</td>
+        <td>{{user.score}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 {% endblock %}

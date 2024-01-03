@@ -2,7 +2,7 @@ from Games0App import db
 
 class HighScores(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), ondelete='CASCADE')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     game = db.Column(db.String(50))
     score = db.Column(db.Integer)
     date = db.Column(db.DateTime)

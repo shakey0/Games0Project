@@ -26,10 +26,12 @@ def create_app():
     from .views.user_profile import user_profile as user_blueprint
     from .views.auth import auth as auth_blueprint
     from .views.api import api as api_blueprint
+    from .views.individual_scoreboard import scoreboard as scoreboard_blueprint
 
     app.register_blueprint(main_blueprint)
     app.register_blueprint(user_blueprint)
     app.register_blueprint(auth_blueprint)
     app.register_blueprint(api_blueprint)
+    app.register_blueprint(scoreboard_blueprint)
 
     return app
