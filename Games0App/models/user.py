@@ -9,8 +9,6 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hashed = db.Column(BYTEA)
-    games_played = db.Column(JSONB)
-    games_tracker = db.Column(JSONB)
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

@@ -286,13 +286,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var answerForm = document.querySelector('.game-box form');
     if (answerForm) {
-        var isMultipleChoice = answerForm.getAttribute('data-multiple-choice') === 'true';
+        var isSelectionChoice = answerForm.getAttribute('data-selection-choice') === 'true';
 
         answerForm.addEventListener('submit', function(event) {
             var isValid = false;
 
-            if (isMultipleChoice) {
-                var radios = document.querySelectorAll('.mc_answer-radio');
+            if (isSelectionChoice) {
+                var radios = document.querySelectorAll('.mc_answer-radio, .tf_answer-radio');
                 for (var i = 0; i < radios.length; i++) {
                     if (radios[i].checked) {
                         isValid = true;

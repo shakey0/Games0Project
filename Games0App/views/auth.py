@@ -11,6 +11,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/register', methods=['POST'])
 def register():
+
     errors = {}
     username = request.form.get('username')
     if not username:
@@ -19,6 +20,8 @@ def register():
         errors['username'] = 'Username must be at least 4 characters.'
     elif len(username) > 20:
         errors['username'] = 'Username must be max 20 characters.'
+    elif any(char not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for char in username):
+        errors['username'] = 'Username must only contain letters, numbers, underscores and hyphens.'
     email = request.form.get('email')
     if not email:
         errors['email'] = 'Please enter an email.'
@@ -34,17 +37,19 @@ def register():
         errors['confirm_password'] = 'Please confirm your password.'
     elif not password == confirm_password:
         errors['confirm_password'] = 'Passwords do not match.'
+    
     if errors:
         return jsonify(success=False, errors=errors)
+    
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    # NEED TO GET GAMES PLAYED AND GAMES TRACKER FROM CLIENT COOKIE SESSION
-    user = User(username=request.form.get('username'), email=request.form.get('email'), password_hashed=hashed_password,
-                games_played={}, games_tracker={})
+    user = User(username=request.form.get('username'), email=request.form.get('email'), password_hashed=hashed_password)
+    
     try:
         db.session.add(user)
         db.session.commit()
         login_user(user)
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
+    
     except IntegrityError as e:
         db.session.rollback()
         if 'email' in str(e.orig):
@@ -56,12 +61,15 @@ def register():
 
 @auth.route('/login', methods=['POST'])
 def login():
+
     credential = request.form.get('username')
     if not credential:
         return jsonify(success=False, error="Please enter your email or username.")
+    
     password = request.form.get('password')
     if not password:
         return jsonify(success=False, error="Please enter your password.")
+    
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
     if user:
         print('USER FOUND')

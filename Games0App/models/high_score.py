@@ -1,6 +1,6 @@
 from Games0App import db
 
-class HighScores(db.Model):
+class HighScore(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     game = db.Column(db.String(50))
@@ -17,6 +17,6 @@ class HighScores(db.Model):
 
 # Keeps track of which users have liked which scores
 scores_users = db.Table('scores_users',
-    db.Column('score_id', db.Integer, db.ForeignKey('high_scores.id', ondelete='CASCADE'), primary_key=True),
+    db.Column('score_id', db.Integer, db.ForeignKey('high_score.id', ondelete='CASCADE'), primary_key=True),
     db.Column('user_id', db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), primary_key=True)
 )

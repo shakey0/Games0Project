@@ -21,16 +21,39 @@
     <thead>
       <tr>
         <th scope="col">Rank</th>
-        <th scope="col">Username</th>
         <th scope="col">Score</th>
+        <th scope="col">Player</th>
+        <th scope="col">Date</th>
+        <th scope="col">Comment</th>
+        <th scope="col">Likes</th>
       </tr>
     </thead>
     <tbody>
-      {% for user in users %}
+      {% for score in high_scores %}
       <tr>
         <th scope="row">{{loop.index}}</th>
-        <td>{{user.username}}</td>
-        <td>{{user.score}}</td>
+        <td>{{score[0].score}}
+          <form action="/like_high_score" method="POST">
+            <!-- PUT CSRF TOKEN HERE -->
+            <div class="likes-container">
+              {% if score.user_likes %}
+                <input type="hidden" name="score_id" value="{{score.id}}">
+                <input type="hidden" name="liked" value="yes">
+                <input type="submit" class="like-button" value="Liked">
+              {% else %}
+                {% if user.is_authenticated %}
+                  <input type="hidden" name="score_id" value="{{score.id}}">
+                  <input type="hidden" name="liked" value="no">
+                  <input type="submit" class="liked-button" value="Like">
+                {% endif %}
+              {% endif %}
+            </div>
+          </form>
+        </td>
+        <td>{{score.username}}</td>
+        <td>{{score[0].date.strftime('%d-%m-%Y') }}</td>
+        <td>{{score[0].message}}</td>
+        <td>{{score[0].likes}}</td>
       </tr>
       {% endfor %}
     </tbody>

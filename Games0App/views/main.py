@@ -3,11 +3,12 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.models.user import User # Probably don't need this
 from Games0App.games import games
-from Games0App.models.high_scores import HighScores
+from Games0App.models.high_score import HighScore
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers
 import secrets
 import json
 import random
+import datetime
 
 
 main = Blueprint('main', __name__)
@@ -51,7 +52,7 @@ def game_setup():
 
     if game.categories:
         redis_client.hset(token, 'category_name', category)
-        # redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
+        redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             user=current_user)
@@ -257,6 +258,12 @@ def game_answer():
         # - 1458
         # - and more...
         correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+
+        # IMPORTANT TEST QUESTION:
+        # What is the name for a group of gorillas?
+        # Answer: band OR a band
+        # test with single letter because this seemed to pass before
+
         # if correct == False and "fill_blank" in game.param and len(answer) <= 15:
         #     set_question = redis_client.hget(token, 'question').decode('utf-8')
         #     correct = check_blank_answer_for_alternative(answer.strip(), real_answer, set_question)
@@ -324,8 +331,8 @@ def game_finish():
 
     game_name_param = game.lower_name
     if game.categories:
-        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        game_name_param += "_" + category_name
+        category = redis_client.hget(token, 'category').decode('utf-8')
+        game_name_param += "_" + category
     difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
     if difficulty:
         game_name_param += "_" + difficulty
@@ -333,12 +340,13 @@ def game_finish():
     # timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
-    end_game_data = {"game_name": game_name_param, "score": score, "user_id": current_user.id}
-    if current_user.is_authenticated:
-        pass
-        # db.session.commit()
-    
-    return redirect(f'/scoreboard?token={token}')
+    # end_game_data = {"game_name": game_name_param, "score": score, "user_id": current_user.id}
 
-    # return render_template('individual_scoreboard.html', difficulty=difficulty, score=score,
-    #                         game_name=game_name, game_type=game_type, game=game, user=current_user)
+    if current_user.is_authenticated:
+        message = request.form.get('message')
+        high_score = HighScore(user_id=current_user.id, game=game_name_param, score=score,
+                                date=datetime.datetime.now(), message=message, likes=0)
+        db.session.add(high_score)
+        db.session.commit()
+
+    return redirect(f'/scoreboard?token={token}')

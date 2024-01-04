@@ -15,7 +15,7 @@
 {% endblock %}
 {% block content %}
 {% if in_game == "before" %}
-    <h1 class="question-title">Welcome to Trivia Madness!</h1>
+    <h1 class="question-title">Welcome to {{ game_name }}!</h1>
     <h2 class="question-title-2">Choose a category:</h2>
     <div class="all-categories">
         {% for category in categories %}
@@ -85,7 +85,7 @@
     <h1 class="in-countdown" style="display: none;">{{ timer }}</h1>
     <h3 id="hint-message" class="hint-messages"></h3>
     <div class="game-box" style="display: none;">
-        <form method="POST" action="/game_answer" data-multiple-choice="{% if "_mc" in game.param %}true{% else %}false{% endif %}">
+        <form method="POST" action="/game_answer" data-selection-choice="{% if "_mc" in game.param or "_tf" in game.param %}true{% else %}false{% endif %}">
             {% if "_mc" in game.param %}
                 <div class="mc_answer-selection">
                     {% for answer in next_question["all_answers"] %}
@@ -113,7 +113,6 @@
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
             <input type="submit" class="submit-game" value="Submit Answer">
         </form>
-        
         <div class="helper-box">
             {% if "_mc" in game.param %}
                 <div class="helper-buttons">
@@ -205,6 +204,9 @@
         {% if question_no >= 10 %}
             <form method="POST" action="/game_finish">
                 <input type="hidden" name="token" value="{{ token }}">
+                {% if user.is_authenticated %}
+                    <input class="message-input" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+                {% endif %}
                 <input class="submit-game" type="submit" value="Scoreboard">
             </form>
         {% else %}
