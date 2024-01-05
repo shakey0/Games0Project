@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pre_game.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/in_game.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/category_selection.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/individual_scoreboard.css') }}">
     <title>GamesZero</title>
 </head>
 <body>
@@ -109,7 +110,9 @@
     <div id="overlay"></div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/pop_ups_and_menu.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/auth_apis.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/password_checker.js') }}"></script>
 </body>
 </html>
 <!-- url_for('scores.leaderboard') url_for('auth.logout')-->

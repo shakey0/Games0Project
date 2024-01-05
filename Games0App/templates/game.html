@@ -57,7 +57,7 @@
                     <label for="hard"><b style="color:cornflowerblue;">Hard</b> (15 seconds)</label>
                 </div>
             </div>
-            {% if "_mc" in game.param %}
+            {% if game.has_difficulty %}
                 <h2 class="level-selection-title">Difficulty level:</h2>
                 <div class="level-selection">
                     <div class="level">
@@ -218,4 +218,8 @@
         {% endif %}
     </div>
 {% endif %}
+
+<script src="{{ url_for('static', filename='scripts/in_game_functions.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/helper_apis.js') }}"></script>
+
 {% endblock %}

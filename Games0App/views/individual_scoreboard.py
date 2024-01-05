@@ -94,7 +94,7 @@ def scoreboard_page():
 
     high_scores = get_high_scores(stored_game_name)
 
-    print(db.session.query(HighScore).all()[0].score)
+    # print(db.session.query(HighScore).all()[0].score)
 
     return render_template('individual_scoreboard.html', user=current_user, game_name=game_name, game=game,
                             high_scores=high_scores)

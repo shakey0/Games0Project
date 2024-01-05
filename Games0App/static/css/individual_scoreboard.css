@@ -1,0 +1,17 @@
+.liked-thumbsup, .like-thumbsup {
+    height: 20px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.liked-thumbsup {
+    opacity: 0.5;
+}
+
+.liked-thumbsup:hover, .like-thumbsup:hover {
+    cursor: pointer;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}

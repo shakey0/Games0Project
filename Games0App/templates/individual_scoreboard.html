@@ -16,7 +16,7 @@
 {% block content %}
 
 <div>
-  <h1>Scoreboard</h1>
+  <h1 class="question-title">{{ game.name }}<br><i>Scoreboard</i></h1>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -25,35 +25,37 @@
         <th scope="col">Player</th>
         <th scope="col">Date</th>
         <th scope="col">Comment</th>
-        <th scope="col">Likes</th>
+        <!--<th scope="col">Likes</th>-->
       </tr>
     </thead>
     <tbody>
       {% for score in high_scores %}
       <tr>
         <th scope="row">{{loop.index}}</th>
-        <td>{{score[0].score}}
+        <td>
+          {{score[0].score}}
           <form action="/like_high_score" method="POST">
             <!-- PUT CSRF TOKEN HERE -->
             <div class="likes-container">
               {% if score.user_likes %}
                 <input type="hidden" name="score_id" value="{{score.id}}">
                 <input type="hidden" name="liked" value="yes">
-                <input type="submit" class="like-button" value="Liked">
+                <img class="liked-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="liked">
               {% else %}
                 {% if user.is_authenticated %}
                   <input type="hidden" name="score_id" value="{{score.id}}">
                   <input type="hidden" name="liked" value="no">
-                  <input type="submit" class="liked-button" value="Like">
+                  <img class="like-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
                 {% endif %}
               {% endif %}
             </div>
           </form>
+          {{score[0].likes}}
         </td>
         <td>{{score.username}}</td>
         <td>{{score[0].date.strftime('%d-%m-%Y') }}</td>
         <td>{{score[0].message}}</td>
-        <td>{{score[0].likes}}</td>
+        <!--<td>{{score[0].likes}}</td>-->
       </tr>
       {% endfor %}
     </tbody>
