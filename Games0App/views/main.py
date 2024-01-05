@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
-from Games0App.models.user import User # Probably don't need this
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers
@@ -58,6 +57,26 @@ def game_setup():
                             user=current_user)
 
 
+def get_token_game_category_and_game_name():
+
+    token = request.form.get('token')
+
+    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
+    if not game_type:
+        flash("Sorry, your game has expired. Please start again.")
+        return redirect('/')
+    game = next(item for item in games if item.param == game_type)
+
+    category_name = ""
+    if game.categories:
+        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
+        game_name = game.name + " - " + category_name
+    else:
+        game_name = game.name
+        
+    return token, game, category_name, game_name
+
+
 @main.route('/game_play', methods=['GET', 'POST'])
 def game_play():
 
@@ -65,20 +84,7 @@ def game_play():
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
         return redirect('/')
 
-    token = request.form.get('token')
-    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
-    if not game_type:
-        flash("Sorry, your game has expired. Please start again.")
-        return redirect('/')
-    game = next(item for item in games if item.param == game_type)
-
-    if game.categories:
-        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        # category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name = game.name + " - " + category_name
-    else:
-        game_name = game.name
-
+    token, game, category_name, game_name = get_token_game_category_and_game_name()
     redis_client.hset(token, 'revealed_string', '')
 
     if request.form.get('in_game') == "start":
@@ -93,7 +99,7 @@ def game_play():
         redis_client.hset(token, 'timer', timer)
 
         difficulty = ""
-        if "_mc" in game.param:
+        if game.has_difficulty:
             difficulty = request.form.get('difficulty')
             redis_client.hset(token, 'difficulty', difficulty)
         
@@ -104,10 +110,7 @@ def game_play():
             cookied_question_number = 0
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
-        if game.categories:
-            next_question = game.get_question(cookied_question_number, category=category_name, difficulty=difficulty)
-        else:
-            next_question = game.get_question(cookied_question_number, difficulty=difficulty)
+        next_question = game.get_question(cookied_question_number, category=category_name, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
         
         redis_client.hset(token, 'question_no', 1)
@@ -155,7 +158,7 @@ def game_play():
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
 
     difficulty = ""
-    if "_mc" in game.param:
+    if game.has_difficulty:
         difficulty = redis_client.hget(token, 'difficulty').decode('utf-8')
 
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
@@ -166,10 +169,7 @@ def game_play():
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
-    if game.categories:
-        next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
-    else:
-        next_question = game.get_question(question_tracker, difficulty=difficulty)
+    next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
     
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
@@ -215,18 +215,7 @@ def game_answer():
 
     in_game = "after"
 
-    token = request.form.get('token')
-    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
-    if not game_type:
-        flash("Sorry, your game has expired. Please start again.")
-        return redirect('/')
-    game = next(item for item in games if item.param == game_type)
-
-    if game.categories:
-        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        game_name = game.name + " - " + category_name
-    else:
-        game_name = game.name
+    token, game, category_name, game_name = get_token_game_category_and_game_name()
 
     answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
@@ -322,12 +311,7 @@ def game_finish():
         flash("Either something went wrong, or you refreshed the page. Your game has expired.")
         return redirect('/')
 
-    token = request.form.get('token')
-    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
-    if not game_type:
-        flash("Sorry, your game has expired. Please start again.")
-        return redirect('/')
-    game = next(item for item in games if item.param == game_type)
+    token, game, category_name, game_name = get_token_game_category_and_game_name()
 
     game_name_param = game.lower_name
     if game.categories:

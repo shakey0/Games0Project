@@ -7,13 +7,15 @@ import random
 
 
 class GamePlay:
-    def __init__(self, name, intro_message, default=True, categories=[], param="", api_source="", api_variable=""):
+    def __init__(self, name, intro_message, default=True, categories=[], has_difficulty=False, param="",
+                api_source="", api_variable=""):
         self.name = name
         self.lower_name = name.lower().replace(' ', '').replace('-', '').replace('&', '')
         self.image = self.lower_name + '.png'
         self.intro_message = intro_message
         self.default = default
         self.categories = categories
+        self.has_difficulty = has_difficulty
         self.param = param
         self.api_source = api_source
         self.api_variable = api_variable
@@ -27,7 +29,8 @@ class GamePlay:
             self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty={}"
         else:
             self.api_url = ""
-        self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth", 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
+        self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",
+                                7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 
     def create_fill_blank_answer(self, sentence):

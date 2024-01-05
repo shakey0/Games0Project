@@ -29,7 +29,7 @@ def format_answer(answer):
 
 def normalise_answer(answer):
     answer = answer.lower().strip()
-    answer = find_and_convert_numbers(answer)
+    # answer = find_and_convert_numbers(answer) # THIS NEEDS CHECKING !!!!!!!!!!!!!
 
     if '&' in answer:
         answer = answer.replace('&', '')
@@ -69,27 +69,28 @@ def is_close_match(str1, str2):
     return True
 
 
-def number_to_words(n):
-    if n == 0:
-        return 'zero'
-
+def word_chunk(chunk):
     units = ['','one','two','three','four','five','six','seven','eight','nine']
     teens = ['','eleven','twelve','thirteen','fourteen','fifteen','sixteen', 'seventeen','eighteen','nineteen']
     tens = ['','ten','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety']
+
+    if chunk == 0:
+        return ''
+    elif chunk < 10:
+        return units[chunk]
+    elif chunk < 20:
+        return teens[chunk-10]
+    elif chunk < 100:
+        return tens[chunk//10] + ('' if chunk % 10 == 0 else ' ' + units[chunk % 10])
+    else:
+        return units[chunk//100] + ' hundred' + ('' if chunk % 100 == 0 else ' and ' + word_chunk(chunk % 100))
+
+def number_to_words(n):
+    if n == 0:
+        return 'zero'
+    
     thousands = ['','thousand','million','billion']
-
-    def word_chunk(chunk):
-        if chunk == 0:
-            return ''
-        elif chunk < 10:
-            return units[chunk]
-        elif chunk < 20:
-            return teens[chunk-10]
-        elif chunk < 100:
-            return tens[chunk//10] + ('' if chunk % 10 == 0 else ' ' + units[chunk % 10])
-        else:
-            return units[chunk//100] + ' hundred' + ('' if chunk % 100 == 0 else ' and ' + word_chunk(chunk % 100))
-
+    
     words = []
     for i, chunk in enumerate(reversed(str(n).zfill(12))):
         chunk = int(chunk)

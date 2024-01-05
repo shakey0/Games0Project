@@ -12,7 +12,7 @@ scoreboard = Blueprint('scoreboard', __name__)
 
 def get_high_scores(game_name):
 
-    print(game_name)
+    # print(game_name)
 
     current_user_id = current_user.id if current_user.is_authenticated else 0
 
@@ -40,8 +40,8 @@ def get_high_scores(game_name):
     ).limit(10)
 
     high_scores = high_scores_query.all()
-    print('Current user id:', current_user_id)
-    print(high_scores)
+    # print('Current user id:', current_user_id)
+    # print(high_scores)
     # print(top_scores_query.statement)
     return high_scores
 
@@ -96,5 +96,5 @@ def scoreboard_page():
 
     print(db.session.query(HighScore).all()[0].score)
 
-    return render_template('individual_scoreboard.html', user=current_user, game_name=game_name,
+    return render_template('individual_scoreboard.html', user=current_user, game_name=game_name, game=game,
                             high_scores=high_scores)
