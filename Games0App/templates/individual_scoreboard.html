@@ -30,7 +30,7 @@
     </thead>
     <tbody>
       {% for score in high_scores %}
-      <tr>
+      <tr class="score-container" data-score-id="{{score[0].id}}">
         <th scope="row">{{loop.index}}</th>
         <td>
           {{score[0].score}}
@@ -38,19 +38,21 @@
             <!-- PUT CSRF TOKEN HERE -->
             <div class="likes-container">
               {% if score.user_likes %}
-                <input type="hidden" name="score_id" value="{{score.id}}">
+                <input type="hidden" name="score_id" value="{{ score[0].id }}">
                 <input type="hidden" name="liked" value="yes">
                 <img class="liked-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="liked">
               {% else %}
                 {% if user.is_authenticated %}
-                  <input type="hidden" name="score_id" value="{{score.id}}">
+                  <input type="hidden" name="score_id" value="{{ score[0].id }}">
                   <input type="hidden" name="liked" value="no">
                   <img class="like-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
                 {% endif %}
               {% endif %}
             </div>
           </form>
-          {{score[0].likes}}
+          <div class="likes-count">
+            {{score[0].likes}}
+          </div>
         </td>
         <td>{{score.username}}</td>
         <td>{{score[0].date.strftime('%d-%m-%Y') }}</td>
@@ -61,5 +63,7 @@
     </tbody>
   </table>
 </div>
+
+<script src="{{ url_for('static', filename='scripts/scoreboard_apis.js') }}"></script>
 
 {% endblock %}

@@ -1,5 +1,9 @@
 from flask import Blueprint, request, jsonify
-from Games0App.extensions import redis_client
+from flask_login import current_user
+from Games0App.extensions import db, redis_client
+from Games0App.models.high_score import HighScore, scores_users
+from sqlalchemy import update, delete
+from sqlalchemy.exc import IntegrityError
 import json
 import random
 
@@ -175,3 +179,50 @@ def remove_lower():
         lower_card_text = "-90 points"
 
     return jsonify(success=True, score=score, answer_to_remove=answer_to_remove, lower_card_text=lower_card_text)
+
+
+@api.route('/like_high_score', methods=['POST'])
+def like_high_score():
+
+    if not current_user.is_authenticated:
+        return jsonify(success=False, error="Something wasn't right there...")
+    
+    score_id = request.form['score_id']
+    liked = True if request.form['liked'] == "yes" else False
+
+    try:
+        with db.session.begin_nested():
+
+            update_statement = (
+                update(HighScore)
+                .where(HighScore.id == score_id)
+                .values(likes=HighScore.likes - 1 if liked else HighScore.likes + 1)
+                .returning(HighScore.likes)
+            )
+            new_likes_count = db.session.execute(update_statement).scalar()
+
+            if liked:
+                delete_statement = (
+                    delete(scores_users)
+                    .where(scores_users.c.score_id == score_id)
+                    .where(scores_users.c.user_id == current_user.id)
+                )
+                db.session.execute(delete_statement)
+            else:
+                insert_statement = (
+                    scores_users.insert()
+                    .values(score_id=score_id, user_id=current_user.id)
+                )
+                db.session.execute(insert_statement)
+
+        db.session.commit()
+
+    except IntegrityError as e:
+        print(f"Integrity Error: {e}")
+    except Exception as e:
+        print(f"General Error: {e}")
+
+    if new_likes_count is not None:
+        return jsonify(success=True, newLikesCount=new_likes_count)
+    else:
+        return jsonify(success=False, error="Something wasn't right there...")
