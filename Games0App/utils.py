@@ -1,6 +1,7 @@
 from spellchecker import SpellChecker
 spell = SpellChecker()
 import re
+from better_profanity import profanity
 # import os
 # from openai import OpenAI
 # openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
@@ -106,6 +107,37 @@ def find_and_convert_numbers(text):
     for num, words in converted.items():
         text = text.replace(num, words)
     return text
+
+
+def format_date(date_str):
+    months = {
+        "01": "Jan", "02": "Feb", "03": "Mar", "04": "Apr", "05": "May", "06": "Jun",
+        "07": "Jul", "08": "Aug", "09": "Sep", "10": "Oct", "11": "Nov", "12": "Dec"
+    }
+    month, day = date_str.split('-')
+    def get_day_suffix(day):
+        if day in ("11", "12", "13"):
+            return "th"
+        elif day[-1] == "1":
+            return "st"
+        elif day[-1] == "2":
+            return "nd"
+        elif day[-1] == "3":
+            return "rd"
+        return "th"
+    day_formatted = str(int(day)) + get_day_suffix(day)
+    return f"{months[month]} {day_formatted}"
+
+
+def validate_victory_message(victory_message):
+    if not victory_message:
+        return True # Victory message is optional
+    victory_message = victory_message.strip()
+    if len(victory_message) > 25:
+        return "Max 25 characters."
+    if profanity.contains_profanity(victory_message):
+        return "Contains bad language."
+    return True
 
 
 # def check_blank_answer_for_alternative(user_answer, real_answer, sentence):

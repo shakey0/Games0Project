@@ -1,9 +1,9 @@
-from flask import Blueprint, render_template, redirect, request, make_response, flash
+from flask import Blueprint, render_template, redirect, request, make_response, flash, jsonify
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
-from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers
+from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
 import json
 import random
@@ -321,16 +321,16 @@ def game_finish():
     if difficulty:
         game_name_param += "_" + difficulty
 
-    # timer = int(redis_client.hget(token, 'timer').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
-
-    # end_game_data = {"game_name": game_name_param, "score": score, "user_id": current_user.id}
 
     if current_user.is_authenticated:
         message = request.form.get('message')
+        message_check = validate_victory_message(message)
+        if message_check != True:
+            return jsonify(success=False, error=message_check)
         high_score = HighScore(user_id=current_user.id, game=game_name_param, score=score,
                                 date=datetime.datetime.now(), message=message, likes=0)
         db.session.add(high_score)
         db.session.commit()
 
-    return redirect(f'/scoreboard?token={token}')
+    return jsonify(success=True, token=token)

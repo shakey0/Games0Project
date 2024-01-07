@@ -65,4 +65,35 @@ $(document).ready(function(){
         });
     });
 
+    // End of game form with victory message
+    $('.go-to-scoreboard').on('click', function(event) {
+        event.preventDefault();
+    
+        const $button = $(this);
+        $button.prop('disabled', true);
+        const $form = $button.closest('form');
+    
+        const formData = $form.serialize();
+    
+        $.ajax({
+            url: '/game_finish',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    const scoreboardRoute = `/scoreboard?token=${encodeURIComponent(response.token)}`;
+                    window.location.href = scoreboardRoute;
+                } else {
+                    $('.victory-message-error').text(response.error);
+                    $('.victory-message-error').removeClass('hidden');
+                }
+                $button.prop('disabled', false);
+            },
+            error: function() {
+                $('.victory-message-error').text('An unexpected error occurred. Please try again.');
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
 });

@@ -4,6 +4,7 @@ from Games0App.extensions import db, redis_client
 from Games0App.models.user import User
 from Games0App.models.high_score import HighScore, scores_users
 from Games0App.games import games
+from Games0App.utils import format_date
 from sqlalchemy.sql import case
 
 
@@ -41,7 +42,7 @@ def get_high_scores(game_name):
 
     high_scores = high_scores_query.all()
     # print('Current user id:', current_user_id)
-    # print(high_scores)
+    print(high_scores)
     # print(top_scores_query.statement)
     return high_scores
 
@@ -97,4 +98,4 @@ def scoreboard_page():
     # print(db.session.query(HighScore).all()[0].score)
 
     return render_template('individual_scoreboard.html', user=current_user, game_name=game_name, game=game,
-                            high_scores=high_scores)
+                            high_scores=high_scores, format_date=format_date)

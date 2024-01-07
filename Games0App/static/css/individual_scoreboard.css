@@ -4,6 +4,7 @@
     border-radius: 3px;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
     transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    margin-bottom: -2px;
 }
 
 .liked-thumbsup {
@@ -14,4 +15,34 @@
     cursor: pointer;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.6);
     transform: scale(1.05);
+}
+
+.scoreboard-table {
+    width: 800px;
+    max-width: 90%;
+    margin: 40px auto;
+    font-size: 1.3em;
+}
+
+.score-container td, .score-container th {
+    text-align: center;
+    border: #64594c 1px solid;
+}
+
+.score-card {
+    color: rgb(82, 234, 95);
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+.score-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.likes-count {
+    font-size: 0.6em;
+    margin-top: -2px;
 }
