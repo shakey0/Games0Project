@@ -16,7 +16,39 @@
 {% block content %}
 
 <div>
-  <h1 class="question-title">{{ game.name }}<br><i>Scoreboard</i></h1>
+  <h1 class="question-title">{{ game_name }}<br><i>Scoreboard - {% if game.has_difficulty %}Level: {{ difficulty }}{% endif %}</i></h1>
+
+  {% if needs_high_score %}
+    {% if not user.is_authenticated %}
+      <div class="high_score_login">
+        <p>
+          <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+          or
+          <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+          to save your score!
+        </p>
+      </div>
+    {% else %}
+      <div class="after-answer">
+        <form method="POST" action="/game_finish">
+          <input type="hidden" name="token" value="{{ token }}">
+            <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
+            <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+          <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
+        </form>
+      </div>
+    {% endif %}
+  {% elif not user.is_authenticated %}
+  <div class="high_score_login">
+    <p>
+      <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+      or
+      <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+      to like scores!
+    </p>
+  </div>
+  {% endif %}
+
   <table class="scoreboard-table">
     <thead>
       <tr>
@@ -47,6 +79,8 @@
                     <input type="hidden" name="score_id" value="{{ score[0].id }}">
                     <input type="hidden" name="liked" value="no">
                     <img class="like-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
+                  {% else %}
+                    <img class="like-thumbsup-false" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
                   {% endif %}
                 {% endif %}
               </div>

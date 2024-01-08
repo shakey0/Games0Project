@@ -1,4 +1,4 @@
-.liked-thumbsup, .like-thumbsup {
+.liked-thumbsup, .like-thumbsup, .like-thumbsup-false {
     height: 20px;
     border: 1px solid #000000;
     border-radius: 3px;
@@ -7,7 +7,7 @@
     margin-bottom: -2px;
 }
 
-.liked-thumbsup {
+.liked-thumbsup, .like-thumbsup-false {
     opacity: 0.5;
 }
 
@@ -45,4 +45,28 @@
 .likes-count {
     font-size: 0.6em;
     margin-top: -2px;
+}
+
+.high_score_login {
+    text-align: center;
+    margin: 40px auto;
+    font-size: 24px;
+    color: rgb(238, 180, 86);
+}
+
+.score-auth-button {
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(238, 180, 86);
+    background: none;
+    border: none;
+    outline: inherit;
+    text-decoration: none;
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.score-auth-button:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
 }

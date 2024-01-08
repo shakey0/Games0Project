@@ -3,6 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
+from Games0App.views.route_functions import get_key_game_data
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
 import json
@@ -15,7 +16,7 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 def index():
-    return render_template('index.html', games=games, user=current_user)
+    return render_template('index.html', games=games, token=None, user=current_user)
 
 
 @main.route('/game_setup')
@@ -40,7 +41,7 @@ def game_setup():
     if game.categories and not in_game:
         in_game = "before"
         return render_template('game.html', in_game=in_game, categories=game.categories, game_type=game_type,
-                                game_name=game_name, user=current_user)
+                                game_name=game_name, token=None, user=current_user)
 
     in_game = "intro"
 
@@ -57,34 +58,16 @@ def game_setup():
                             user=current_user)
 
 
-def get_token_game_category_and_game_name():
-
-    token = request.form.get('token')
-
-    game_type = redis_client.hget(token, 'game_type').decode('utf-8')
-    if not game_type:
-        flash("Sorry, your game has expired. Please start again.")
-        return redirect('/')
-    game = next(item for item in games if item.param == game_type)
-
-    category_name = ""
-    if game.categories:
-        category_name = redis_client.hget(token, 'category_name').decode('utf-8')
-        game_name = game.name + " - " + category_name
-    else:
-        game_name = game.name
-        
-    return token, game, category_name, game_name
-
-
 @main.route('/game_play', methods=['GET', 'POST'])
 def game_play():
 
-    if request.method == 'GET':
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+    try:
+        token, game, category_name, game_name = get_key_game_data(request.method)
+    except:
+        print("GAME EXPIRED")
+        flash("It looks like your game has expired.")
         return redirect('/')
-
-    token, game, category_name, game_name = get_token_game_category_and_game_name()
+    
     redis_client.hset(token, 'revealed_string', '')
 
     if request.form.get('in_game') == "start":
@@ -209,13 +192,14 @@ def game_play():
 @main.route('/game_answer', methods=['GET', 'POST'])
 def game_answer():
 
-    if request.method == 'GET':
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
-        return redirect('/')
-
     in_game = "after"
 
-    token, game, category_name, game_name = get_token_game_category_and_game_name()
+    try:
+        token, game, category_name, game_name = get_key_game_data(request.method)
+    except:
+        print("GAME EXPIRED")
+        flash("It looks like your game has expired.")
+        return redirect('/')
 
     answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
@@ -307,11 +291,12 @@ def game_answer():
 @main.route('/game_finish', methods=['GET', 'POST'])
 def game_finish():
 
-    if request.method == 'GET':
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+    try:
+        token, game, category_name, game_name = get_key_game_data(request.method)
+    except:
+        print("GAME EXPIRED")
+        flash("It looks like your game has expired.")
         return redirect('/')
-
-    token, game, category_name, game_name = get_token_game_category_and_game_name()
 
     game_name_param = game.lower_name
     if game.categories:
@@ -332,5 +317,6 @@ def game_finish():
                                 date=datetime.datetime.now(), message=message, likes=0)
         db.session.add(high_score)
         db.session.commit()
+        redis_client.hset(token, 'high_score_saved', "yes")
 
     return jsonify(success=True, token=token)

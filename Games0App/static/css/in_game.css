@@ -102,6 +102,10 @@
     margin-top: 20px;
 }
 
+.message-input-s {
+    margin-top: 30px;
+}
+
 .message-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     color: #909090;
 }
