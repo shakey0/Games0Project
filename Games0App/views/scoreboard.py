@@ -64,6 +64,6 @@ def scoreboard_page():
     if difficulty:
         difficulty = difficulty.title()
 
-    return render_template('individual_scoreboard.html', user=current_user, game_name=game_name, game=game,
+    return render_template('scoreboard.html', user=current_user, game_name=game_name, game=game,
                             token=token, high_scores=high_scores, needs_high_score=needs_high_score,
                             format_date=format_date, difficulty=difficulty)

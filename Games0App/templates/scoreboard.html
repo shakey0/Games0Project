@@ -16,7 +16,7 @@
 {% block content %}
 
 <div>
-  <h1 class="question-title">{{ game_name }}<br><i>Scoreboard - {% if game.has_difficulty %}Level: {{ difficulty }}{% endif %}</i></h1>
+  <h1 class="question-title">{{ game_name }}<br><i>Scoreboard{% if game.has_difficulty %} - Level: {{ difficulty }}{% endif %}</i></h1>
 
   {% if needs_high_score %}
     {% if not user.is_authenticated %}
