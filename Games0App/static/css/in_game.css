@@ -86,7 +86,6 @@
 }
 
 .answer-input, .message-input {
-    width: 400px;
     padding: 10px;
     border: none;
     border-radius: 10px;
@@ -95,15 +94,21 @@
 }
 
 .answer-input {
+    width: 400px;
     margin-bottom: 20px;
 }
 
 .message-input {
+    width: 260px;
     margin-top: 20px;
 }
 
 .message-input-s {
     margin-top: 30px;
+}
+
+.message-input-sa {
+    margin-top: 0px;
 }
 
 .message-input::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -120,6 +125,12 @@
 
 .message-input:-moz-placeholder { /* Firefox 18- */
     color: #909090;
+}
+
+@media (max-width: 374px) {
+    .message-input-sa {
+        width: 230px;
+    }
 }
 
 .helper-box {
@@ -250,16 +261,13 @@
     .hint-messages {
         font-size: 1.4em;
     }
-    .message-input {
-        margin-bottom: 20px;
-    }
 }
 
 @media (max-width: 448px) {
     .mc_answer-selection, .tf_answer-selection {
         font-size: 20px;
     }
-    .answer-input, .message-input {
+    .answer-input {
         width: 382px;
     }
     .hint-messages {
@@ -268,13 +276,13 @@
 }
 
 @media (max-width: 418px) {
-    .answer-input, .message-input {
+    .answer-input {
         width: 352px;
     }
 }
 
 @media (max-width: 388px) {
-    .answer-input, .message-input {
+    .answer-input {
         width: 322px;
     }
 }
@@ -283,7 +291,7 @@
     .mc_answer-selection, .tf_answer-selection {
         font-size: 18px;
     }
-    .answer-input, .message-input {
+    .answer-input {
         width: 292px;
     }
 }

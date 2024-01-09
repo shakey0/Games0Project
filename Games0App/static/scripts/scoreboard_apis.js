@@ -40,4 +40,58 @@ $(document).ready(function(){
         });
     }
 
+    $('.amend-score-confirm').on('click', function(event) {
+        event.preventDefault();
+    
+        const $button = $(this);
+        $button.prop('disabled', true);
+        const $form = $button.closest('form');
+    
+        const formData = $form.serialize();
+    
+        $.ajax({
+            url: '/amend_score',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    $('.victory-message-error').text(response.error);
+                    $('.victory-message-error').removeClass('hidden');
+                }
+                $button.prop('disabled', false);
+            },
+            error: function() {
+                $('.victory-message-error').text('An unexpected error occurred. Please try again.');
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
+    $('.delete-score-confirm').on('click', function(event) {
+        event.preventDefault();
+    
+        const $button = $(this);
+        $button.prop('disabled', true);
+        const $form = $button.closest('form');
+    
+        const formData = $form.serialize();
+    
+        $.ajax({
+            url: '/delete_score',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    window.location.reload();
+                }
+                $button.prop('disabled', false);
+            },
+            error: function() {
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
 });

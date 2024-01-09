@@ -63,7 +63,7 @@
     color: rgb(255, 255, 255);
 }
 
-.login-box, .register-box {
+.login-box, .register-box, .amend-score-box {
     border: 1px solid rgb(142, 114, 99);
     background-color: #191c27;
     border-radius: 10px;
@@ -80,18 +80,34 @@
     padding: 25px 30px;
 }
 
-.login-box-header, .register-box-header {
+.amend-score-box {
+    width: 300px;
+    padding: 25px 30px;
+}
+
+.login-box-header, .register-box-header{
     text-align: center;
     font-size: 1.3em;
     padding-bottom: 10px;
 }
 
-.login-box-header h2, .register-box-header h2 {
+.amend-score-box-header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+@media (max-width: 374px) {
+    .amend-score-box-header {
+        font-size: 0.9em;
+    }
+}
+
+.login-box-header h2, .register-box-header h2, .amend-score-box-header h2 {
     margin: 0;
     padding: 0;
 }
 
-.login-box-content, .register-box-content {
+.login-box-content, .register-box-content, .amend-score-box-content {
     margin-top: 20px;
     font-size: 1.1em;
 }

@@ -32,8 +32,8 @@
       <div class="after-answer">
         <form method="POST" action="/game_finish">
           <input type="hidden" name="token" value="{{ token }}">
-            <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
-            <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+          <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
+          <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
           <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
         </form>
       </div>
@@ -57,7 +57,6 @@
         <th scope="col">Player</th>
         <th scope="col">Date</th>
         <th scope="col">Comment</th>
-        <!--<th scope="col">Likes</th>-->
       </tr>
     </thead>
     <tbody>
@@ -92,8 +91,32 @@
         </td>
         <td>{{ score.username }}</td>
         <td>{{ format_date(score[0].date.strftime('%m-%d')) }}</td>
-        <td>{{ score[0].message }}</td>
-        <!--<td>{{score[0].likes}}</td>-->
+        <td class="score-message-container">
+          {% if score[0].message %}{{ score[0].message }}{% else %}-{% endif %}
+          {% if score[0].user_id == user.id %}
+            <img class="edit-score-button" src="{{ url_for('static', filename='images/pencil.png') }}" alt="edit" data-amend-score-box-target="#amend-score-box-{{score[0].id}}">
+            <div class="amend-score-box pop-up-box" id="amend-score-box-{{score[0].id}}">
+              <button data-cancel-button-over class="cancel-button">&times;</button>
+              <form method="POST" action="/amend_score">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="score_id" value="{{ score[0].id }}">
+                <div class="amend-score-box-header">
+                    <h2>New Message</h2>
+                </div>
+                <div class="amend-score-box-content">
+                  <div class="victory-message-error" style="transform: translateY(-7px); color: rgb(255, 119, 0);"></div>
+                  <input class="message-input message-input-sa" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+                  <input class="amend-score-confirm" type="submit" value="Confirm">
+                </div>
+              </form>
+              <form method="POST" action="/delete_score">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="score_id" value="{{ score[0].id }}">
+                <input class="delete-score-confirm" type="submit" value="Remove Entire Entry">
+              </form>
+            </div>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, request, redirect, flash
+from flask import Blueprint, render_template, request, redirect, flash, jsonify
 from flask_login import current_user
-from Games0App.extensions import redis_client
+from Games0App.extensions import db, redis_client
 from Games0App.games import games
+from Games0App.models.high_score import HighScore
 from Games0App.views.route_functions import get_high_scores
-from Games0App.utils import format_date
+from Games0App.utils import format_date, validate_victory_message
+from sqlalchemy import update
 
 
 scoreboard = Blueprint('scoreboard', __name__)
@@ -67,3 +69,30 @@ def scoreboard_page():
     return render_template('scoreboard.html', user=current_user, game_name=game_name, game=game,
                             token=token, high_scores=high_scores, needs_high_score=needs_high_score,
                             format_date=format_date, difficulty=difficulty)
+
+
+@scoreboard.route('/amend_score', methods=['POST'])
+def amend_score():
+
+    score_id = request.form.get('score_id')
+    message = request.form.get('message')
+
+    message_check = validate_victory_message(message)
+    if message_check != True:
+        return jsonify(success=False, error=message_check)
+    
+    db.session.execute(update(HighScore).where(HighScore.id == score_id).values(message=message))
+    db.session.commit()
+
+    return jsonify(success=True)
+
+
+@scoreboard.route('/delete_score', methods=['POST'])
+def delete_score():
+
+    score_id = request.form.get('score_id')
+
+    db.session.delete(HighScore.query.get(score_id))
+    db.session.commit()
+
+    return jsonify(success=True)

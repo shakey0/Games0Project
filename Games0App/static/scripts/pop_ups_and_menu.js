@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const openBoxButtonsOver = document.querySelectorAll('[data-login-button-target], [data-register-button-target]');
+    const openBoxButtonsOver = document.querySelectorAll('[data-login-button-target], [data-register-button-target], [data-amend-score-box-target]');
     const cancelBoxButtonsOver = document.querySelectorAll('[data-cancel-button-over]');
     const overlay = document.getElementById('overlay');
 
     openBoxButtonsOver.forEach(button => {
         button.addEventListener('click', () => {
-            const boxSelector = button.dataset.loginButtonTarget || button.dataset.registerButtonTarget;
+            const boxSelector = button.dataset.loginButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget;
             const box = document.querySelector(boxSelector);
             openBoxOver(box);
         });
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cancelBoxButtonsOver.forEach(button => {
         button.addEventListener('click', () => {
-            const box = button.closest('.login-box, .register-box');
+            const box = button.closest('.login-box, .register-box, .amend-score-box');
             closeBoxOver(box);
         });
     });
