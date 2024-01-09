@@ -93,19 +93,21 @@ def number_to_words(n):
     thousands = ['','thousand','million','billion']
     
     words = []
-    for i, chunk in enumerate(reversed(str(n).zfill(12))):
-        chunk = int(chunk)
-        if chunk or i % 3 == 0:
-            words.append(word_chunk(chunk) + ('' if i == 0 else ' ' + thousands[i//3]))
-    
-    return ' '.join(reversed(words)).strip()
+    str_n = str(n).zfill(12)
+    for i in range(0, 12, 3):
+        chunk = int(str_n[9-i:12-i])
+        if chunk:
+            words.append(word_chunk(chunk) + ' ' + thousands[i//3])
 
+    return ' '.join(filter(None, reversed(words))).strip()
 
 def find_and_convert_numbers(text):
-    numbers = re.findall(r'\b\d{1,3}(?:,\d{3})*\b', text)
+    numbers = re.findall(r'\b\d{1,3}(?:,\d{3})*(?!\d)|\b\d+\b', text)
+    print("NUMBERS: ", numbers)
     converted = {num: number_to_words(int(num.replace(',', ''))) for num in numbers}
     for num, words in converted.items():
         text = text.replace(num, words)
+    print("TEXT: ", text)
     return text
 
 
