@@ -20,7 +20,7 @@
 .scoreboard-table {
     width: 870px;
     max-width: 90%;
-    margin: 40px auto;
+    margin: 25px auto 70px;
     font-size: 1.3em;
     overflow-x: auto;
 }
@@ -51,6 +51,7 @@
     .scoreboard-table {
         min-width: 678px;
         font-size: 1em;
+        margin: 20px auto 60px;
     }
 }
 
@@ -58,6 +59,7 @@
     .scoreboard-table {
         min-width: 626px;
         font-size: 0.9em;
+        margin: 16px auto 50px;
     }
 }
 
@@ -87,9 +89,13 @@
 
 .high_score_login {
     text-align: center;
-    margin: 40px auto;
+    margin: 10px auto 40px;
     font-size: 24px;
     color: rgb(238, 180, 86);
+}
+
+.high_score_login p {
+    margin: 0px;
 }
 
 .score-auth-button {
@@ -111,6 +117,33 @@
 
 .score-message-container {
     position: relative;
+}
+
+@media (max-width: 522px) {
+    .high_score_login {
+        margin: 10px auto 30px;
+        font-size: 22px;
+    }
+    .score-auth-button {
+        font-size: 22px;
+    }
+}
+@media (max-width: 448px) {
+    .high_score_login {
+        margin: 10px auto 20px;
+        font-size: 20px;
+    }
+    .score-auth-button {
+        font-size: 20px;
+    }
+}
+@media (max-width: 392px) {
+    .high_score_login {
+        font-size: 18px;
+    }
+    .score-auth-button {
+        font-size: 18px;
+    }
 }
 
 .edit-score-button {

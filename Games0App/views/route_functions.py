@@ -108,9 +108,7 @@ def get_user_scores(username):
 
     likes_subquery = get_like_subquery(current_user_id)
 
-    user_id_subquery = db.session.query(User.id).filter(User.username == username).subquery()
-    if not user_id_subquery:
-        return None
+    user_id_subquery = db.session.query(User.id).filter(User.username == username).scalar_subquery()
 
     user_scores_query = db.session.query(
         HighScore,

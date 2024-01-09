@@ -8,6 +8,8 @@
     {{ word[0:3] }}
     {% elif word == 'Language' or word == 'Mathematics' %}
     {{ word[0:4] }}
+    {% elif word == 'Scoreboards' %}
+    {{ word }}
     {% else %}
     {{ word[0] }}
     {% endif %}
@@ -15,40 +17,41 @@
 {% endblock %}
 {% block content %}
 
+{% if needs_high_score %}
+{% if not user.is_authenticated %}
+  <div class="high_score_login">
+    <p>
+      <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+      or
+      <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+      to save your score!
+    </p>
+  </div>
+{% else %}
+  <div class="after-answer">
+    <form method="POST" action="/game_finish">
+      <input type="hidden" name="token" value="{{ token }}">
+      <h1 class="add-score-title">Add Your Score</h1>
+      <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
+      <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+      <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
+    </form>
+  </div>
+{% endif %}
+{% elif not user.is_authenticated %}
+<div class="high_score_login">
+<p>
+  <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+  or
+  <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+  to like scores!
+</p>
+</div>
+{% endif %}
+
 {% for game_scores in all_games_scores %}
   <div>
-    <h1 class="question-title">{{ all_games_scores[game_scores][0]['game_name'] }}<br><i>Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</i></h1>
-
-    {% if needs_high_score %}
-      {% if not user.is_authenticated %}
-        <div class="high_score_login">
-          <p>
-            <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
-            or
-            <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
-            to save your score!
-          </p>
-        </div>
-      {% else %}
-        <div class="after-answer">
-          <form method="POST" action="/game_finish">
-            <input type="hidden" name="token" value="{{ token }}">
-            <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
-            <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
-            <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
-          </form>
-        </div>
-      {% endif %}
-    {% elif not user.is_authenticated %}
-    <div class="high_score_login">
-      <p>
-        <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
-        or
-        <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
-        to like scores!
-      </p>
-    </div>
-    {% endif %}
+    <h1 class="score-title">{{ all_games_scores[game_scores][0]['game_name'] }}<br><i>Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</i></h1>
 
     <table class="scoreboard-table">
       <thead>

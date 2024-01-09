@@ -239,11 +239,15 @@ body {
     }
 }
 
-.question-title, .question-title-opening, .question-in-game, .question-over {
+.question-title, .question-title-opening, .question-in-game, .question-over, .score-title, .add-score-title {
     text-align: center;
     font-size: 34px;
     font-weight: bold;
     margin: 0px 20px;
+}
+
+.score-title {
+    font-size: 30px;
 }
 
 .question-title-2 {
@@ -262,15 +266,30 @@ body {
     padding: 0 20px;
 }
 
+@media (max-width: 960px) {
+    .score-title {
+        font-size: 28px;
+    }
+}
+
 @media (max-width: 715px) {
     .question-title, .question-title-opening, .question-in-game, .question-over {
         font-size: 30px;
+    }
+    .score-title {
+        font-size: 26px;
     }
     .question-title-2 {
         font-size: 26px;
     }
     .correct-answer-text, .current-score-text {
         font-size: 26px;
+    }
+}
+
+@media (max-width: 620px) {
+    .score-title {
+        font-size: 24px;
     }
 }
 
@@ -281,11 +300,18 @@ body {
     .question-title, .question-title-opening, .question-in-game, .question-over {
         font-size: 26px;
     }
+    .score-title {
+        font-size: 22px;
+        margin: 0px 10px;
+    }
     .question-title-2 {
         font-size: 26px;
     }
     .correct-answer-text, .current-score-text {
         font-size: 24px;
+    }
+    .add-score-title {
+        font-size: 30px;
     }
 }
 
@@ -295,6 +321,9 @@ body {
     }
     .question-title, .question-title-opening, .question-in-game, .question-over {
         font-size: 24px;
+    }
+    .score-title {
+        font-size: 20px;
     }
     .question-title-2 {
         font-size: 24px;
@@ -307,6 +336,9 @@ body {
 @media (max-width: 392px) {
     .question-title, .question-title-opening, .question-in-game, .question-over {
         font-size: 22px;
+    }
+    .score-title {
+        font-size: 18px;
     }
     .question-title-2 {
         font-size: 22px;
@@ -336,6 +368,7 @@ body {
 
 .submit-score {
     margin-top: 30px;
+    margin-bottom: 40px;
     height: 60px;
     border-radius: 10px;
 }
@@ -361,6 +394,12 @@ body {
         font-size: 28px;
         border-radius: 10px;
         margin-top: 10px;
+        height: 54px;
+    }
+    .submit-score {
+        font-size: 28px;
+        border-radius: 10px;
+        margin-top: 25px;
         height: 54px;
     }
 }

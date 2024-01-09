@@ -68,7 +68,7 @@ def scoreboard_page():
         high_scores = get_high_scores(game_name_param)
 
     elif username:
-        game_name = f"{current_user.username}'s Scores"
+        game_name = f"{username}'s Scores"
 
         needs_high_score = False
 
@@ -78,7 +78,7 @@ def scoreboard_page():
             return redirect('/')
         
     else:
-        game_name = "All Scoreboards"
+        game_name = "Scoreboards"
 
         needs_high_score = False
 
