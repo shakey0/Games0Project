@@ -37,7 +37,7 @@
 }
 
 /* &times; button for pop up boxes */
-.cancel-button {
+.cancel-button, .cancel-button-a {
     position: absolute;
     display: block;
     font-weight: 900;
@@ -46,10 +46,6 @@
     padding: 0;
     outline: none;
     cursor: pointer;
-    transition: color 0.3s;
-}
-
-.cancel-button {
     font-size: 2.4em;
     font-family: cursive;
     color: rgb(232, 213, 203);
@@ -58,7 +54,11 @@
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.cancel-button:hover {
+.cancel-button-a {
+    font-size: 40px;
+}
+
+.cancel-button:hover, .cancel-button-a:hover {
     transform: scale(1.1);
     color: rgb(255, 255, 255);
 }
@@ -94,11 +94,12 @@
 .amend-score-box-header {
     text-align: center;
     padding-bottom: 10px;
+    font-size: 20px;
 }
 
 @media (max-width: 374px) {
     .amend-score-box-header {
-        font-size: 0.9em;
+        font-size: 18px;
     }
 }
 
