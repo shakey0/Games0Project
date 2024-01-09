@@ -15,113 +15,115 @@
 {% endblock %}
 {% block content %}
 
-<div>
-  <h1 class="question-title">{{ game_name }}<br><i>Scoreboard{% if game.has_difficulty %} - Level: {{ difficulty }}{% endif %}</i></h1>
+{% for game_scores in all_games_scores %}
+  <div>
+    <h1 class="question-title">{{ all_games_scores[game_scores][0]['game_name'] }}<br><i>Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</i></h1>
 
-  {% if needs_high_score %}
-    {% if not user.is_authenticated %}
-      <div class="high_score_login">
-        <p>
-          <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
-          or
-          <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
-          to save your score!
-        </p>
-      </div>
-    {% else %}
-      <div class="after-answer">
-        <form method="POST" action="/game_finish">
-          <input type="hidden" name="token" value="{{ token }}">
-          <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
-          <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
-          <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
-        </form>
-      </div>
+    {% if needs_high_score %}
+      {% if not user.is_authenticated %}
+        <div class="high_score_login">
+          <p>
+            <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+            or
+            <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+            to save your score!
+          </p>
+        </div>
+      {% else %}
+        <div class="after-answer">
+          <form method="POST" action="/game_finish">
+            <input type="hidden" name="token" value="{{ token }}">
+            <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
+            <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+            <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
+          </form>
+        </div>
+      {% endif %}
+    {% elif not user.is_authenticated %}
+    <div class="high_score_login">
+      <p>
+        <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
+        or
+        <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
+        to like scores!
+      </p>
+    </div>
     {% endif %}
-  {% elif not user.is_authenticated %}
-  <div class="high_score_login">
-    <p>
-      <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
-      or
-      <button class="score-auth-button" data-register-button-target="#register-box">Sign up</button> 
-      to like scores!
-    </p>
-  </div>
-  {% endif %}
 
-  <table class="scoreboard-table">
-    <thead>
-      <tr>
-        <th scope="col">Rank</th>
-        <th scope="col">Score</th>
-        <th scope="col">Player</th>
-        <th scope="col">Date</th>
-        <th scope="col">Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for score in high_scores %}
-      <tr class="score-container" data-score-id="{{score[0].id}}">
-        <th scope="row">{{ loop.index }}</th>
-        <td class="score-zone">
-          <b class="score-card">{{ score[0].score }}</b>
-          <div class="likes-section">
-            <form action="/like_high_score" method="POST">
-              <!-- PUT CSRF TOKEN HERE -->
-              <div class="likes-container">
-                {% if score.user_likes_score %}
-                  <input type="hidden" name="score_id" value="{{ score[0].id }}">
-                  <input type="hidden" name="liked" value="yes">
-                  <img class="liked-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="liked">
-                {% else %}
-                  {% if user.is_authenticated %}
-                    <input type="hidden" name="score_id" value="{{ score[0].id }}">
-                    <input type="hidden" name="liked" value="no">
-                    <img class="like-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
-                  {% else %}
-                    <img class="like-thumbsup-false" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
-                  {% endif %}
-                {% endif %}
+    <table class="scoreboard-table">
+      <thead>
+        <tr>
+          <th scope="col">Rank</th>
+          <th scope="col">Score</th>
+          <th scope="col">Player</th>
+          <th scope="col">Date</th>
+          <th scope="col">Comment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for score in all_games_scores[game_scores] %}
+          <tr class="score-container" data-score-id="{{ score['score_id'] }}">
+            <th scope="row">{{ loop.index }}</th>
+            <td class="score-zone">
+              <b class="score-card">{{ score['score'] }}</b>
+              <div class="likes-section">
+                <form action="/like_high_score" method="POST">
+                  <!-- PUT CSRF TOKEN HERE -->
+                  <div class="likes-container">
+                    {% if score['user_likes_score'] %}
+                      <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
+                      <input type="hidden" name="liked" value="yes">
+                      <img class="liked-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="liked">
+                    {% else %}
+                      {% if user.is_authenticated %}
+                        <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
+                        <input type="hidden" name="liked" value="no">
+                        <img class="like-thumbsup" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
+                      {% else %}
+                        <img class="like-thumbsup-false" src="{{ url_for('static', filename='images/thumbsup.png') }}" alt="like">
+                      {% endif %}
+                    {% endif %}
+                  </div>
+                </form>
+                <div class="likes-count">
+                  {{ score['likes'] }}
+                </div>
               </div>
-            </form>
-            <div class="likes-count">
-              {{ score[0].likes }}
-            </div>
-          </div>
-        </td>
-        <td>{{ score.username }}</td>
-        <td>{{ format_date(score[0].date.strftime('%m-%d')) }}</td>
-        <td class="score-message-container">
-          {% if score[0].message %}{{ score[0].message }}{% else %}-{% endif %}
-          {% if score[0].user_id == user.id %}
-            <img class="edit-score-button" src="{{ url_for('static', filename='images/pencil.png') }}" alt="edit" data-amend-score-box-target="#amend-score-box-{{score[0].id}}">
-            <div class="amend-score-box pop-up-box" id="amend-score-box-{{score[0].id}}">
-              <button data-cancel-button-over class="cancel-button-a">&times;</button>
-              <form method="POST" action="/amend_score">
-                <!-- PUT CSRF TOKEN HERE -->
-                <input type="hidden" name="score_id" value="{{ score[0].id }}">
-                <div class="amend-score-box-header">
-                    <h2>New Message</h2>
+            </td>
+            <td>{{ score['username'] }}</td>
+            <td>{{ format_date(score['date'].strftime('%m-%d')) }}</td>
+            <td class="score-message-container">
+              {% if score['message'] %}{{ score['message'] }}{% else %}-{% endif %}
+              {% if score['user_id'] == user.id %}
+                <img class="edit-score-button" src="{{ url_for('static', filename='images/pencil.png') }}" alt="edit" data-amend-score-box-target="#amend-score-box-{{ score['score_id'] }}">
+                <div class="amend-score-box pop-up-box" id="amend-score-box-{{ score['score_id'] }}">
+                  <button data-cancel-button-over class="cancel-button-a">&times;</button>
+                  <form method="POST" action="/amend_score">
+                    <!-- PUT CSRF TOKEN HERE -->
+                    <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
+                    <div class="amend-score-box-header">
+                        <h2>New Message</h2>
+                    </div>
+                    <div class="amend-score-box-content">
+                      <div class="victory-message-error" style="transform: translateY(-7px); color: rgb(255, 119, 0);"></div>
+                      <input class="message-input message-input-sa" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+                      <input class="amend-score-confirm" type="submit" value="Confirm">
+                    </div>
+                  </form>
+                  <form method="POST" action="/delete_score">
+                    <!-- PUT CSRF TOKEN HERE -->
+                    <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
+                    <input class="delete-score-confirm" type="submit" value="Remove Entire Entry">
+                  </form>
                 </div>
-                <div class="amend-score-box-content">
-                  <div class="victory-message-error" style="transform: translateY(-7px); color: rgb(255, 119, 0);"></div>
-                  <input class="message-input message-input-sa" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
-                  <input class="amend-score-confirm" type="submit" value="Confirm">
-                </div>
-              </form>
-              <form method="POST" action="/delete_score">
-                <!-- PUT CSRF TOKEN HERE -->
-                <input type="hidden" name="score_id" value="{{ score[0].id }}">
-                <input class="delete-score-confirm" type="submit" value="Remove Entire Entry">
-              </form>
-            </div>
-          {% endif %}
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endfor %}
 
 <script src="{{ url_for('static', filename='scripts/scoreboard_apis.js') }}"></script>
 

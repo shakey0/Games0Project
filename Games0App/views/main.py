@@ -313,8 +313,9 @@ def game_finish():
         message_check = validate_victory_message(message)
         if message_check != True:
             return jsonify(success=False, error=message_check)
-        high_score = HighScore(user_id=current_user.id, game=game_name_param, score=score,
-                                date=datetime.datetime.now(), message=message, likes=0)
+        high_score = HighScore(user_id=current_user.id, game=game_name_param, game_name=game_name,
+                                difficulty=difficulty, score=score, date=datetime.datetime.now(),
+                                message=message, likes=0)
         db.session.add(high_score)
         db.session.commit()
         redis_client.hset(token, 'high_score_saved', "yes")
