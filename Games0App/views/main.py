@@ -298,13 +298,14 @@ def game_finish():
         flash("It looks like your game has expired.")
         return redirect('/')
 
-    game_name_param = game.lower_name
+    game_name_param = game.param
     if game.categories:
         category = redis_client.hget(token, 'category').decode('utf-8')
         game_name_param += "_" + category
     difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
     if difficulty:
         game_name_param += "_" + difficulty
+    redis_client.hset(token, 'game_name_param', game_name_param)
 
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 

@@ -15,10 +15,8 @@ scoreboard = Blueprint('scoreboard', __name__)
 def scoreboard_page():
 
     token = request.args.get('token')
-    game_type = request.args.get('game_type')
+    game_name_param = request.args.get('game_name_param')
     username = request.args.get('username')
-
-    difficulty = None
 
     if token:
         game_type = redis_client.hget(token, 'game_type')
@@ -32,20 +30,27 @@ def scoreboard_page():
         if game.categories:
             category_name = redis_client.hget(token, 'category_name').decode('utf-8')
             game_name = game.name + " - " + category_name
-            game_name_param = game.lower_name + "_" + category_name.lower().replace(' ', '').replace('&', '')
         else:
             game_name = game.name
-            game_name_param = game.lower_name
-        if "_mc" in game.param:
-            difficulty = redis_client.hget(token, 'difficulty').decode('utf-8')
-            game_name_param += "_" + difficulty
 
+        game_name_param = redis_client.hget(token, 'game_name_param').decode('utf-8')
         high_score_saved = redis_client.hget(token, 'high_score_saved')
         needs_high_score = True if not high_score_saved else False
 
         high_scores = get_high_scores(game_name_param)
     
-    elif game_type:
+    elif game_name_param:
+        game_type = game_name_param
+        if ("easy" in game_name_param or "medium" in game_name_param or "hard" in game_name_param) \
+            and "categories" in game_name_param:
+            game_type = game_name_param.rsplit("_", 2)[0]
+            category_name = game_name_param.rsplit("_", 2)[1].title()
+        elif "easy" in game_name_param or "medium" in game_name_param or "hard" in game_name_param:
+            game_type = game_name_param.rsplit("_", 1)[0]
+        elif "categories" in game_name_param:
+            game_type = game_name_param.rsplit("_", 1)[0]
+            category_name = game_name_param.rsplit("_", 1)[1].title()
+
         try:
             game = next(item for item in games if item.param == game_type)
         except:
@@ -53,15 +58,9 @@ def scoreboard_page():
             return redirect('/')
 
         if game.categories:
-            category_name = request.args.get('category_name')
             game_name = game.name + " - " + category_name
-            game_name_param = game.lower_name + "_" + category_name.lower().replace(' ', '').replace('&', '')
         else:
             game_name = game.name
-            game_name_param = game.lower_name
-        if "_mc" in game.param:
-            difficulty = request.args.get('difficulty')
-            game_name_param += "_" + difficulty
 
         needs_high_score = False
 

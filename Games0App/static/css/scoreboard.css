@@ -146,6 +146,28 @@
     }
 }
 
+.username-score-button {
+    white-space: nowrap;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    transition: color 0.3s ease;
+}
+
+.username-score-button:hover {
+    color: rgb(251, 223, 158);
+}
+
+.game-score-button {
+    white-space: nowrap;
+    text-decoration: none;
+    color: rgb(232, 213, 203);
+    transition: color 0.3s ease;
+}
+
+.game-score-button:hover {
+    color: rgb(251, 223, 158);
+}
+
 .edit-score-button {
     position: absolute;
     padding-right: 20px;

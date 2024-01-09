@@ -22,7 +22,7 @@
             <h2 class="game-title-top-small">{% block game_title_small %}{% endblock %}</h2>
         </div>
         <div class="nav-bar-right">
-            <a href="{{ url_for('user_profile.user_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
+            <a href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
             {% if in_game == "yes" or in_game == "after" %}
                 <div class="menu-score">
                     <p>Score:</p><h2 id="score">{{ score }}</h2>
@@ -38,7 +38,7 @@
             <button class="options-button" data-login-button-target="#login-box">Log in</button>
             <button class="options-button" data-register-button-target="#register-box">Sign up</button>
         {% endif %}
-        <a href=""><button class="options-button">Leaderboards</button></a>
+        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-button">Leaderboards</button></a>
         <button class="options-button">About</button>
         <a href=""><button class="options-button">Contact</button></a>
         {% if user.is_authenticated %}
