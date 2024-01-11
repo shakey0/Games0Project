@@ -20,22 +20,26 @@ print("Last ID:", last_id)
 write_questions = input("Do you want to write questions to the CSV? (y/n) ")
 if write_questions.lower() == 'y':
     API_KEY = os.environ.get('NINJA_API_KEY')
-    response = requests.get("https://api.api-ninjas.com/v1/jokes?limit=30", headers={'X-Api-Key': API_KEY})
+    # response = requests.get("https://api.api-ninjas.com/v1/jokes?limit=30", headers={'X-Api-Key': API_KEY})
+    response = requests.get('https://official-joke-api.appspot.com/jokes/ten', headers={'X-Api-Key': API_KEY})
     response = json.loads(response.text)
+    print(response)
 
     for item in response:
         os.system('clear')
-        if len(item['joke']) > 100 or '?' not in item['joke'] or len(item['joke'].split('? ')) < 2:
-            continue
-        joke_question = item['joke'].split('? ')[0] + '?'
-        joke_answer = item['joke'].split('? ')[1]
+        # if len(item['joke']) > 100 or '?' not in item['joke'] or len(item['joke'].split('? ')) < 2:
+        #     continue
+        # joke_question = item['joke'].split('? ')[0] + '?'
+        # joke_answer = item['joke'].split('? ')[1]
+        joke_question = item['setup']
+        joke_answer = item['punchline']
         is_okay = input(f"Is this joke okay? (y/n)\nJOKE QUESTION: {joke_question}\nJOKE ANSWER: {joke_answer}\n")
         if is_okay.lower() == 'y':
             blank_words = []
             while True:
                 print('Blank words so far:', blank_words)
-                blank_word = input("Enter a word that can be a blank or *** to stop adding: ")
-                if blank_word == '***':
+                blank_word = input("Enter a word that can be a blank or Q to stop adding: ")
+                if blank_word.lower() == 'q':
                     break
                 elif len(blank_word) >= 3:
                     blank_words.append(blank_word)
