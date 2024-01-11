@@ -30,14 +30,13 @@ def format_answer(answer):
 
 def normalise_answer(answer):
     answer = answer.lower().strip()
-    # answer = find_and_convert_numbers(answer) # THIS NEEDS CHECKING !!!!!!!!!!!!!
 
     if '&' in answer:
         answer = answer.replace('&', '')
     if 'and' in answer:
         answer = answer.replace('and', '')
 
-    for article in ['the ', 'a ', 'an ', 'my ', 'your ', 'his ', 'her ', 'its ', 'our ', 'their ', 'it\'s ', 'they\'re', 'he\'s', 'she\'s']:
+    for article in ['the ', 'a ', 'an ', 'some ', 'my ', 'your ', 'he ', 'his ', 'she ', 'her ', 'hers ', 'it ', 'its ', 'we ', 'our ', 'they ', 'their ', 'it\'s ', 'they\'re', 'he\'s', 'she\'s']:
         if answer.startswith(article):
             answer = answer[len(article):]
             break
