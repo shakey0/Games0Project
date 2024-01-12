@@ -102,11 +102,11 @@ def number_to_words(n):
 
 def find_and_convert_numbers(text):
     numbers = re.findall(r'\b\d{1,3}(?:,\d{3})*(?!\d)|\b\d+\b', text)
-    print("NUMBERS: ", numbers)
+    # print("NUMBERS: ", numbers)
     converted = {num: number_to_words(int(num.replace(',', ''))) for num in numbers}
     for num, words in converted.items():
         text = text.replace(num, words)
-    print("TEXT: ", text)
+    # print("TEXT: ", text)
     return text
 
 

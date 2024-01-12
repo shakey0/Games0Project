@@ -40,7 +40,7 @@
 {% elif in_game == "intro" %}
     <h1 class="question-title">{{ game_name }}</h1>
     <div class="pre-game">
-        <p class="instruction-text">{{ game.intro_message }} You will have XX seconds to type your answer for each question. The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
+        <p class="instruction-text">{{ game.intro_message }} The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
             <h2 class="level-selection-title">Speed level (time to answer):</h2>
             <div class="level-selection">

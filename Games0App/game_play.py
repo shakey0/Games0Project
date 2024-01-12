@@ -24,9 +24,9 @@ class GamePlay:
         elif api_source == "ninjas":
             self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'
         elif categories and api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&categories={}&difficulty={}"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=50&categories={}&difficulty={}"
         elif api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=30&difficulty={}"
+            self.api_url = "https://the-trivia-api.com/api/questions?limit=50&difficulty={}"
         else:
             self.api_url = ""
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",
@@ -59,16 +59,19 @@ class GamePlay:
 
     def validate_trivia_madness_question(self, question, answer):
         if len(answer.split()) > 2 or len(answer) > 15 or len(answer.split()[0]) > 10:
+            print('ANSWER LENGTH ERROR\n', question, answer)
             return False
         if len(answer.split()) == 2 and len(answer.split()[1]) > 10:
+            print('ANSWER LENGTH ERROR\n', question, answer)
             return False
         if not spell_check_sentence(question):
-            print('QUESTION SPELLING ERROR\n', question)
+            print('QUESTION SPELLING ERROR\n', question, answer)
             return False
         if not spell_check_sentence(answer):
-            print('ANSWER SPELLING ERROR\n', answer)
+            print('ANSWER SPELLING ERROR\n', question, answer)
             return False
         if any(c.isalpha() for c in answer) and any(c.isdigit() for c in answer):
+            print('ANSWER HAS MIXED CHARS\n', question, answer)
             return False
         return True
 
@@ -96,14 +99,17 @@ class GamePlay:
                     question = item['question'].strip()
                     answer = item['answer'].strip()
                     if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 2:
+                        print('ANSWER TOO CONFUSING\n', question, answer)
                         continue
                     if len(question) > 100:
+                        print('QUESTION TOO LONG\n', question, answer)
                         continue
                     answer = find_and_convert_numbers(answer)
                     if self.validate_trivia_madness_question(question, answer):
                         if not question[-1] in ['.', '!', '?']:
                             question += '?'
                         if answer.lower().replace(' ', '').replace('-', '').replace('&', '') in answers:
+                            print('DUPLICATE ANSWER\n', question,  answer)
                             continue
                         answers.append(answer.lower().replace(' ', '').replace('-', '').replace('&', ''))
                         valid_questions.append([question, answer])
@@ -363,9 +369,9 @@ class GamePlay:
         elif "_tf" in self.param:
             print('Loading questions from file')
             if category:
-                result = self.update_stored_statements('Games0App/static/true_or_false_trivia.csv', redis_group, category)
+                result = self.update_stored_statements('Games0App/static/quiz_data/true_or_false_trivia.csv', redis_group, category)
             else:
-                result = self.update_stored_statements('Games0App/static/true_or_false_trivia.csv', redis_group)
+                result = self.update_stored_statements('Games0App/static/quiz_data/true_or_false_trivia.csv', redis_group)
             if result:
                 print('Trying to get question from Redis set')
                 question = self.get_question_from_redis_set(redis_group, category, difficulty)

@@ -7,7 +7,7 @@ import csv
 
 
 def get_last_id(word):
-    with open(f'Games0App/static/{word}s.csv', 'r') as f:
+    with open(f'Games0App/static/quiz_data/{word}s.csv', 'r') as f:
         reader = csv.reader(f, delimiter=';')
         last_id = 0
         for row in reader:
@@ -44,20 +44,25 @@ response = json.loads(response.text)
 print(response)
 
 for item in response:
+
     os.system('clear')
+
     if write_questions == '1':
         if len(item['joke']) > 100 or '?' not in item['joke'] or len(item['joke'].split('? ')) < 2:
             continue
         main_part = item['joke'].split('? ')[0] + '?'
         answer_part = item['joke'].split('? ')[1]
+
     elif write_questions == '2':
         main_part = item['setup']
         answer_part = item['punchline']
+
     elif write_questions == '3':
         if len(item['fact']) > 100:
             continue
         main_part = item['fact']
         answer_part = 'NONE'
+
     is_okay = input(f"Is this {word} okay? (y/n)\n{word.upper()} QUESTION: {main_part}\n{word.upper()} ANSWER: {answer_part}\n")
     if is_okay.lower() == 'y':
         blank_words = []
@@ -72,13 +77,17 @@ for item in response:
                 print("Word too short.")
     else:
         continue
+
     supposed_id = last_id + 1
     if word == 'joke':
         entry_to_add = {"id": supposed_id, "joke": main_part, "answer": answer_part, "blanks": blank_words}
     elif word == 'fact':
         entry_to_add = {"id": supposed_id, "fact": main_part, "blanks": blank_words}
+
     os.system('clear')
+
     print(f"FINAL {word.upper()}:", entry_to_add)
+
     abandon = False
     while True:
         is_okay = input(f"Add {word} to CSV? (y/n) ")
@@ -87,12 +96,13 @@ for item in response:
         elif is_okay.lower() == 'n':
             abandon = True
             break
+        
     if not abandon:
         last_id += 1
         if word == 'joke':
-            output_file_path = 'Games0App/static/jokes.csv'
+            output_file_path = 'Games0App/static/quiz_data/jokes.csv'
         elif word == 'fact':
-            output_file_path = 'Games0App/static/facts.csv'
+            output_file_path = 'Games0App/static/quiz_data/facts.csv'
         with open(output_file_path, 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';')
             if word == 'joke':
