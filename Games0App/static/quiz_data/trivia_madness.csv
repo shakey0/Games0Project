@@ -36,7 +36,7 @@ ID;category;question;answer;other_answers
 35;film;"Who performed the opening theme song for the James Bond 007 movie ""Goldfinger""?";Shirley Basey;!
 36;video_games;Which CS:GO eSports team won the major event ESL One Cologne 2016?;SK Gaming;!
 37;general_knowledge;The Fields Medal, one of the most sought after awards in mathematics, is awarded every how many years?;4;!
-38;sports;In baseball, how many fouls are an out?;0;none, nothing, nought, nil
+38;sports;In baseball, how many fouls are an out?;0;none|nothing|nought|nil
 39;books;"Which famous spy novelist wrote the childrens' story ""Chitty-Chitty-Bang-Bang""?";Ian Fleming;!
 40;video_games;What is the maximum HP in Terraria?;500;!
 41;cartoon_&_animations;Which Hanna-Barbera cartoon character travelled with a canine companion named Beegle Beagle?;Grape Ape;!
@@ -58,7 +58,7 @@ ID;category;question;answer;other_answers
 57;film;"Which movie contains the quote, ""Say hello to my little friend!""?";Scarface;!
 58;music;Which genre of Hip Hop does MC Frontalot rap?;Nerdcore;!
 59;general_knowledge;"Where is the train station ""Llanfair­pwllgwyngyll­gogery­chwyrn­drobwll­llan­tysilio­gogo­goch""?";Wales;!
-60;video_games;Capcom's survival horror title Dead Rising, canonically starts on what day of September 2006?;September 19th; September 19, 19, 19th, 19 September, 19th September
+60;video_games;Capcom's survival horror title Dead Rising, canonically starts on what day of September 2006?;September 19th; September 19|19|19th|19 September|19th September
 61;art;Which Van Gogh painting depicts the view from his asylum in Saint-Rémy-de-Provence in southern France?;The Starry Night;!
 62;video_games;"Which monster in ""Monster Hunter Tri"" was causing earthquakes in Moga Village?";Ceadeus;!
 63;video_games;"In Hitman: Blood Money, what is the name of the target in the mission ""Death of a Showman""?";Joseph Clarence;!
@@ -129,7 +129,7 @@ ID;category;question;answer;other_answers
 128;music;What was David Bowie's real surname?;Jones;!
 129;music;Electronic artists Boys Noize and Skrillex have collaborated and released tracks under what name?;Dog Blood;!
 130;books;"In the novel ""Lord of the Rings"", how many rings of power were given to the race of man?";9;!
-131;science_and_nature;Approximately how many Earth years is a year on Uranus?;84;84 years, 84 Earth years
+131;science_and_nature;Approximately how many Earth years is a year on Uranus?;84;84 years|84 Earth years
 132;video_games;What war is Call Of Duty: Black Ops based on?;Cold War;!
 133;history;Who discovered Penicillin?;Alexander Flemming;!
 134;music;"What animal is featured on the cover of English electronic music group The Prodigy's album, ""The Fat of the Land""?";Crab;!
@@ -214,7 +214,7 @@ ID;category;question;answer;other_answers
 213;science_and_nature;What is the most potent toxin known?;Botulinum;Botulinum toxin
 214;sports;Which German sportswear company's logo is the 'Formstripe'?;Puma;!
 215;cartoon_and_animations;"In the 1993 Disney animated series ""Bonkers"", what is the name of Bonker's second partner?";Miranda Wright;!
-216;geography;What is the longest river in Europe?;Volga;Volga River, River Volga
+216;geography;What is the longest river in Europe?;Volga;Volga River|River Volga
 217;television;"In the episode of SpongeBob SquarePants, ""Survival of the Idiots"", Spongebob called Patrick which nickname?";Pinhead;!
 218;music;Which band had hits in 1975 with the songs, 'One Of These Nights' & 'Lyin Eyes'?;The Eagles;!
 219;video_games;Just Cause 2 was mainly set in what fictional Southeast Asian island country?;Panau;!
@@ -323,7 +323,7 @@ ID;category;question;answer;other_answers
 325;film;What did the first moving picture depict?;A galloping horse;!
 326;geography;What is the capital of Senegal?;Dakar;!
 327;history;In 1720, England was in massive debt and became involved in the South Sea Bubble. Who was the main mastermind behind it?;John Blunt;!
-328;history;Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?;Pope Leo III;Pope Leo the third, Pope Leo third, Pope Leo the 3rd, Pope Leo 3rd
+328;history;Who crowned Charlemagne as Holy Roman Emperor on Christmas Day in 800?;Pope Leo III;Pope Leo the third|Pope Leo third|Pope Leo the 3rd|Pope Leo 3rd
 329;video_games;In Final Fantasy XIV, what is the name of the Deep Dungeon that was introduced in the expansion pack, Heavensward?;Palace of the Dead;!
 330;television;Which of the following won the first season of American Idol in 2002?;Kelly Clarkson;!
 331;music;Where was Nicki Minaj born?;Trinidad and Tobago;!
@@ -461,7 +461,7 @@ ID;category;question;answer;other_answers
 464;video_games;Who was the voice actor for Snake in Metal Gear Solid V: The Phantom Pain?;Kiefer Sutherland;!
 465;music;What is the name of Finnish DJ Darude's hit single released in October 1999?;Sandstorm;!
 466;geography;What is the capital city of Bermuda?;Hamilton;!
-467;television;In the original Doctor Who series (1963), fourth doctor Tom Baker's scarf was how long?;7 meters;7 metres, 23 feet
+467;television;In the original Doctor Who series (1963), fourth doctor Tom Baker's scarf was how long?;7 meters;7 metres|23 feet
 468;video_games;Who is the main protagonist in the game Life is Strange: Before The Storm?;Chloe Price;!
 469;geography;What is the capital of Spain?;Madrid;!
 470;video_games;What Ultimate does Makoto Naegi, protagonist of Danganronpa: Trigger Happy Havoc, have?;Ultimate Lucky Student;!
@@ -495,7 +495,7 @@ ID;category;question;answer;other_answers
 498;music;What album did Gorillaz release in 2017?;Humanz;!
 499;sports;Which NBA player has the most games played over the course of their career?;Robert Parish;!
 500;celebrities;Before voicing Pearl in Steven Universe, Deedee Magno Hall was part of which American band?;The Party;!
-501;general_knowledge;What did the Spanish autonomous community of Catalonia ban in 2010, that took effect in 2012?;Bullfighting;Bull fights, Fights with bulls, Fighting with bulls
+501;general_knowledge;What did the Spanish autonomous community of Catalonia ban in 2010, that took effect in 2012?;Bullfighting;Bull fights|Fights with bulls|Fighting with bulls
 502;video_games;"Who is the writer of the game ""Half-Life""?";Marc Laidlaw;!
 503;video_games;"Which country was Eliza ""Ash"" Cohen from ""Tom Clancy's Rainbow Six Siege"" born in?";Israel;!
 504;board_games;Which board game was first released on February 6th, 1935?;Monopoly;!
@@ -623,3 +623,165 @@ ID;category;question;answer;other_answers
 628;science_and_nature;What is the primary addictive substance found in tobacco?;Nicotine;!
 629;general_knowledge;"The Mexican Beer ""Corona"" is what type of beer?";Pale Lager;!
 630;vehicles;What car manufacturer gave away their patent for the seat-belt in the interest of saving lives?;Volvo;!
+631;general;Who opened for the Monkees on their 1968 American Tour?;Jimi Hendrix;!
+632;general;"Not surprisingly, which country often ranks lowest on the Reporters Without Borders ""Press Freedom Index""?";North Korea;!
+633;mythology;In Greek mythology, who was jocasta's son?;Oedipus;!
+634;geography;What was the capital of West Germany before Berlin was reinstated?;Bonn;!
+635;geography;The bridge connecting boston and cambridge via massachusetts avenue is commonly know as the ______?;Harvard Bridge;!
+636;geography;In which country is the port of Frey Bentos?;Uruguay;!
+637;toysgames;"What word is derived from ""shah mat"", from the Arabic for ""the king is dead""?";Checkmate;!
+638;film;Who voices the female hyena in the lion king?;Whoopee Goldberg;!
+639;fooddrink;What colour is the flesh of an avocado?;Green;!
+640;film;Who played the stepmother in 'my stepmother is an alien'?;Kim Bassinger;!
+641;geography;Burma was the former name of which country?;Myanmar;!
+642;books;Who is Dinotopia's illustrator?;James Gurney;!
+643;history;Where was the bloodiest one day battle fought in the U.S. civil war?;Antietam;!
+644;sports;Which game uses the largest ball?;Earthball;!
+645;cartoon_and_animations;Snarf' and 'Liono' are both characters from what famous 80s cartoon show?;Thundercats;!
+646;general;Since 1988, the brand Acuvue has billed itself as introducing the world's first disposable what?;Contact Lens;!
+647;general;In which state is Yale University?;Connecticut;!
+648;general;If you were studying Iatrology what would you be studying?;The science of medicine;!
+649;books;"An avid art collector himself, what comedian penned the novel ""An Object of Beauty,"" about an ambitious young art dealer?";Steve Martin;!
+650;science;What causes the tangy smell at the seaside?;Rotting Seaweed;!
+651;music;Jello Biafra is the principal singer-songwriter for what irreverent San Francisco punk band?;The Dead Kennedys;!
+652;sportsleisure;In 1994 Oliver McCall defeated who to become world heavyweight boxing champion?;Lennox Lewis;!
+653;historyholidays;How do you write 69 in Roman numerals?;LXIX;!
+654;film;Maurice Micklewhite became famous as who?;Michael Caine;!
+655;music;Members of the Buggles, King Crimson & Yes went on to form which band?;Asia;!
+656;sports;"What is ""Magic"" Johnson's first name?";Earvin;!
+657;geography;What is the capital of Rwanda?;Kigali;!
+658;animals;What is a young beaver called?;Kit;Kitten
+659;music;How in the world of music is Richard Starkey more commonly known?;Ringo Starr;!
+660;general;The chrysanthemum is the flower for what month?;November;!
+661;fooddrink;What is the most popular meal ordered in sit down restaurants in the U.S.?;Fried Chicken;!
+662;general;Which area of Dorset which is not an island, is home to Corfe Castle and the town of Swanage?;Isle of Purbeck;!
+663;sports;Who was the first Dutch player to become European footballer of the year?;Johan Cruyff;!
+664;history;Which capital rose up against its Soviet rulers in 1956?;Budapest;!
+665;sports;The 1-wood golf club, used to strike the ball long distances, is better known by what name?;Driver;!
+666;geography;The Indus River flows through which country?;Pakistan;!
+667;books;Which was the first 'james bond' novel?;Casino Royale;!
+668;science;What plant has the largest seed?;Coconut tree;Coconut
+669;general;After which creature is the Californian island of Alcatraz named?;Pelican;!
+670;general;What did scientists build in a squash court under a football stadium at the university of Chicago in 1942?;Nuclear Reactor;!
+671;music;Which singer went solo after performing with the Commodores?;Lionel Richie;!
+672;animals;Which marsupial is native to North America?;Opossum;!
+673;music;Who is Christina Claire Ciminella?;Wynonna Judd;!
+674;geography;What is the capital of Micronesia?;Palikir;!
+675;mythology;In Greek mythology who placed callisto in the heavens as the constellation of ursa major?;Zeus;!
+676;music;In 2012, pop icon Beyonce gave birth to a daughter with what colorful and unusual name?;Blue Ivy;!
+677;film;What filmmaker's 2009 exhibit at New York's Museum of Modern Art included a Jack Skellington figure?;Tim Burton;!
+678;general;Hyundai and which other car manufacturer are located in South Korea?;Kia;!
+679;mythology;In Greek mythology who solved the riddle of the Sphinx?;Oedipus;!
+680;film;Issued on March 4, 1974, what celebrity appeared on the very first cover of People magazine?;Mia Farrow;!
+681;history;Which explorers trip was sponsored by Ferdinand and Isabella?;Christopher Columbus;!
+682;fooddrink;In which country was the Caesar Salad invented?;Mexico;!
+683;geography;Frankfort is the capital of which U.S. state?;Kentucky;!
+684;sportsleisure;Which middleweight boxer is the subject of the film 'Raging Bull'?;Jake Le Motta;!
+685;general;What do supertankers carry?;Oil;!
+686;general;"In 1985, what product's notoriously unsuccessful ""New"" formula was introduced to the public?";Coca Cola;!
+687;geography;Which Mediterranean island is named after the soldiers who were skilled in the use of slings?;The Balearics;The Balearic Islands
+688;history;What was Trotsky's first name?;Leon;!
+689;books;Whose only novel was The Cardinals Mistress?;Benito Mussolini;!
+690;music;I'm Gonna Be'(500 miles) was a hit for who?;The Proclaimers;!
+691;general;What is liquid clay used in pottery called?;Slip;!
+692;music;Who did a double album after leaving the beatles as an effort to raise money for the famine in bangladesh?;George Harrison;!
+693;science_and_nature;Foods that are high in fiber contain a complex carbohydrate indigestible to humans called what?;Cellulose;!
+694;artliterature;How many tales are there in Chaucers Canterbury Tales?;23;!
+695;science_and_nature;Hours how many times do your ribs move every year during breathing?;Five million;About five million
+696;music;"Who sang the song ""I'll Be Missing You""?";Puff Daddy;!
+697;sports;The Three Stars is the national ice hockey team which country?;Sweden;!
+698;animals;A mature Japanese sea squirt eats what?;Its brain;Its own brain
+699;geography;On what river is Liverpool?;Mersey;!
+700;geography;Which country owns the Hen and Chicken islands?;New Zealand;!
+701;fooddrink;What is the main ingredient of an edible faggot?;Liver;!
+702;general;Where did the mafia originate?;Sicily;!
+703;science_and_nature;What has albumen and a yolk?;Egg;!
+704;general;Where would one eat a taco?;Mexico;!
+705;general;What is the oldest known infectious disease?;Leprosy;!
+706;music;What lucky charm does Luciano Pavarotti carry in his pocket whilst performing?;A bent nail;A nail
+707;general;How many names did the first telephone book ever issued contain?;Fifty;!
+708;general;What U.S. city was the capital from 1789 to 1790?;New York City;New York
+709;music;"Who recorded the million selling album ""No Parlez""?";Paul Young;!
+710;music;Which act has had more Christmas number one singles in the UK than any other?;The Beatles;!
+711;historyholidays;What came to an end in the United States in December 1933?;Prohibition;!
+712;music;Which singer is known as the 'Empress of the Blues'?;Bessie Smith;!
+713;general;What nursery rhyme character sang for his supper?;Little Tommy Tucker;!
+714;music;Juice Newton was the Queen of what?;Hearts;!
+715;music;Which 60's singing duo divorced after 11 years of marriage?;Sonny and Cher;!
+716;religionmythology;In Greek mythology, who had nine heads?;Hydra;!
+717;sciencenature;Which dam harnesses The Colorado River?;The Hoover Dam;!
+718;general;Which is the only U.S. state capital without a McDonald's?;Montpelier;Montpelier, Vermont
+719;geography;What is the capital of Jordan?;Amman;!
+720;film;Which film won the best sound effects Oscar in 1990?;Hunt For Red October;!
+721;sciencenature;Oneirology is a study and interpretation of what?;Dreams;!
+722;sportsleisure;What trophy is awarded to the winner of the NHL playoffs?;Stanley Cup;!
+723;sciencenature;In what body part does an osteopath specialise?;Bones;!
+724;music;Who released the album Anarchy in the UK?;The Sex Pistols;!
+725;geography;Beirut is the capital of ______?;Lebanon;!
+726;music;What relation is Eagle Eye Cherry to Neneh Cherry?;Half Brother;!
+727;music;"Who Had A Hit With ""Rock The Boat"" In 1974?";The Hues Corporation;!
+728;fooddrink;Coquille St Jaques is a fancy name for what?;Scallops;!
+729;general;"What's the international radio code word for the letter ""B""?";Bravo;!
+730;fooddrink;What does 'V.S.O.P' stand for on a bottle of wine or sherry?;Very Special Old Pale;!
+731;general;On what number is the decimal system based?;Ten;!
+732;general;What was the name of the magazine on Suddenly Susan?;The Gate;!
+733;sciencenature;Which Russian chemist (1834-1907) founded our modern periodic table?;Dmitry Ivanovich Mendeleyev;!
+734;sciencenature;What is the largest native carnivore in England?;Badger;!
+735;geography;In which Irish county can you kiss the Blaney stone?;Cork;!
+736;film;Which actor wore an old trenchcoat in one scene in all his films?;David Niven;!
+737;geography;What is the capital of France?;Paris;!
+738;music;What was the name of Bill Haley's best known band?;The Comets;!
+739;sports;In 1984 Los Angeles hosted the Summer Games, which city hosted the Winter Games that year?;Sarajevo;!
+740;film;"In the 1998 film ""The Big Lebowski,"" what actress plays Bunny, a trophy wife who wears green nail polish?";Tara Reid;!
+741;geography;What are great waves resulting from earthquakes?;Tsunamis;Tsunami waves|Tsunami
+742;general;"From which language does the word ""typhoon"" originate?";Chinese;!
+743;general;Who was the father of Alexander the Great?;Philip II of Macedon;!
+744;books;Which pen name does the author Harry Patterson also use?;Jack Higgins;!
+745;geography;What is the lowest body of water on Earth?;Dead Sea;!
+746;animals;Indigenous to Africa, the graceful impala is a variety of what animal?;Antelope;!
+747;sciencenature;Ten degrees Celsius is the equivalent of how many degrees Fahrenheit?;Fifty Degrees;!
+748;general;What is the colour of the italian liqeuer galliano?;Yellow;!
+749;sciencenature;What space shuttle did Discovery replace?;Challenger;!
+750;geography;What's the capital of Brazil?;Brazilia;!
+751;geography;How many U.S. states border the pacific ocean?;Five;!
+752;general;In which long running TV show are you likely to find Susie Dent?;Countdown;!
+753;general;In Friends where does Joey keep his favourite book?;In the freezer;The freezer
+754;animals;What is a group of this animal called: Swallow?;Flight;!
+755;general;Following earlier failures on TV, Danny Thomas successfully returns in?;Make;!
+756;sciencenature;What causes the tangy smell at the seaside?;Rotting seaweed;!
+757;geography;What was Ho Chi Minh City previously known as?;Saigon;!
+758;artliterature;For which novel was Boris Pasternak awarded the 1958 Nobel Prize, an award he declined?;Dr Zhivago;!
+759;general;What is Bart Simpson's middle name?;Jojo;!
+760;general;HG Wells invisible man had what physical oddity?;He was albino;Albino
+761;film;What film is about the migration of poor workers from the dust bowl to the California fruit valleys?;Grapes of Wrath;!
+762;geography;What is the Capital of: Saint Helena?;Jamestown;!
+763;religionmythology;He was condemned in Hades to forever push a boulder uphill, only for it to come rolling down before it reached the top?;Sisyphus;!
+764;artliterature;"From which Shakespeare play is this line taken: ""Goodnight, goodnight! Parting is such sweet sorrow, That I should say goodnight till it be morrow.""?";Romeo and Juliet;!
+765;general;What European country's national anthem has no official words?;Spain;!
+766;general;Collectively, what name is given to the first ten of the twenty six amendments to the United States' Constitution?;The Bill of Rights;!
+767;history;Who was the king of England during the American Revolution?;George III;George the Third
+768;general;Andy Green first broke the sound barrier on land in what car?;Thrust Ssc;!
+769;music;Musically, who described herself as 'The Last of the Red Hot Mommas'?;Sophie Tucker;!
+770;artliterature;Which two brothers wrote fairytales in Germany in the 19th century?;The Brothers Grimm;The Grimm Brothers
+771;sciencenature;This dry, warm wind flows eastward down the slopes of the Rocky Mountains?;Chinook;!
+772;history;What city did General Sherman burn in 1864?;Atlanta;!
+773;general;Which dress designer was shot dead in the summer of 1997?;Gianni Versace;!
+774;general;What's the unit of measure for a racehorse's height?;Hand;Hands
+775;sciencenature;What is the scientific name for brimstone?;Sulphur;!
+776;geography;What is the former name of Guinea-Bissau?;Portuguese Guinea;!
+777;music;"Who sang the song ""I'll Be Missing You""?";Puff Daddy;!
+778;sciencenature;Which piece of science history was created at the Roslin Institute in Scotland on 5th July 1996?;Dolly the sheep;Dolly
+779;geography;In which European city is Templehof airport?;Berlin;!
+780;film;Who won the Oscar for Best Director for the film The Deer Hunter in 1978?;Michael Cimino;!
+781;general;20% of Japanese publications are what?;Comic Books;Comics
+782;historyholidays;Who burned Atlanta in 1864?;General Sherman;!
+783;general;To promote breast cancer awareness, in 2010 Elizabeth Hurley helped light 39 landmarks what colour?;Pink;!
+784;film;James Leblanche Stewart became famous under what name?;Stewart Granger;!
+785;entertainment;What film starred Rosie O'Donnell, Rita Wilson and Meg Ryan?;Sleepless in Seattle;!
+786;sportsleisure;In which sport is the Brit (Mucky Maureen) from Barnsley the current world champion?;Mud Wrestling;!
+787;general;What is the shadow-casting pointer on a sundial called?;Gnomon;!
+788;historyholidays;He ruled Rome when Christ was born?;Caesar Augustus;!
+789;music;What was singer Chris Hamill's stage name?;Limahl;!
+790;sciencenature;What type of animal lives in a formicary?;Ants;Ant
+791;historyholidays;Who invented the thermometer in 1593?;Galileo;!
+792;sciencenature;What is a group of flies?;Business;!
