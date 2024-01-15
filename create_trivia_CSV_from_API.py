@@ -8,7 +8,7 @@ import csv
 
 
 def get_last_id():
-    with open(f'Games0App/static/quiz_data/trivia_madness.csv', 'r') as f:
+    with open(f'Games0App/static/quiz_data/trivia_from_apis.csv', 'r') as f:
         reader = csv.reader(f, delimiter=';')
         last_id = 0
         for row in reader:
@@ -89,6 +89,6 @@ for item in response:
     last_id += 1
     if not other_answers:
         other_answers = ['!']
-    with open(f'Games0App/static/quiz_data/trivia_madness.csv', 'a', newline='') as csvfile:
+    with open(f'Games0App/static/quiz_data/trivia_from_apis.csv', 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
         writer.writerow([last_id, category, question, answer, '|'.join(other_answers)])
