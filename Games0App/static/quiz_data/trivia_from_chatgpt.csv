@@ -1,0 +1,107 @@
+ID;category;question;answer
+1;film;"What is the main character's name in 'The Lion King'?";Simba
+2;film;"What is the name of the wizard in 'The Lord of the Rings'?";Gandalf
+3;film;"Who directed the movie 'Titanic'?";James Cameron
+4;film;"In which movie did Tom Hanks say, 'Life is like a box of chocolates'?";Forrest Gump
+5;film;"What is the highest-grossing film of all time?";Avatar
+7;film;"What are the dying words of Charles Foster Kane in 'Citizen Kane'?";Rosebud
+8;film;"What movie features Bruce Willis as John McClane, a New York police officer, taking on a building of criminals?";Die Hard
+9;film;"In which film does Judy Garland sing 'Over the Rainbow'?";The Wizard of Oz
+10;film;"Who is known for saying, 'I'll be back,' in 'The Terminator'?";Arnold Schwarzenegger
+11;film;"In which movie is the fictional character Michael Corleone featured?";The Godfather
+12;film;"Who played the main character in the 1990 film 'Pretty Woman'?";Julia Roberts
+13;film;"What is the name of the fictional African country in 'Black Panther'?";Wakanda
+14;film;"Who voiced Woody in 'Toy Story'?";Tom Hanks
+15;film;"What is the name of the spaceship in 'Alien'?";Nostromo
+16;film;"Who directed 'Schindler's List'?";Steven Spielberg
+17;film;"What 1994 film won the Academy Award for Best Picture?";Forrest Gump
+18;film;"Which actor played the main character in the 2018 film 'Black Panther'?";Chadwick Boseman
+19;film;"Who played the female lead in 'Breakfast at Tiffany's'?";Audrey Hepburn
+21;film;"Who directed the first two 'Harry Potter' movies?";Chris Columbus
+22;film;"In 'The Matrix', what colour pill does Neo take?";Red pill
+23;film;"Who played the character of Severus Snape in the Harry Potter series?";Alan Rickman
+24;film;"What 2001 movie is about a boxer during the Great Depression, directed by Ron Howard?";Cinderella Man
+25;film;"In which city is the film 'Casablanca' set?";Casablanca
+26;film;"Who played the lead role in the 2000 movie 'Gladiator'?";Russell Crowe
+27;film;"What is the name of the kingdom where the 2013 animated movie 'Frozen' is set?";Arendelle
+28;film;"Who directed 'Jaws', 'E.T.', and 'Close Encounters of the Third Kind'?";Steven Spielberg
+29;film;"What film featured the song 'My Heart Will Go On'?";Titanic
+30;film;"Who played the Joker in 'The Dark Knight'?";Heath Ledger
+31;film;"Who played the role of Hermione Granger in the Harry Potter series?";Emma Watson
+32;film;"What is the name of the main character in 'Finding Nemo'?";Nemo
+33;film;"Which movie features the song 'Hakuna Matata'?";The Lion King
+34;film;"Who directed the original 'Star Wars' movie?";George Lucas
+35;film;"In which movie did Scarlett Johansson play a character named Natasha Romanoff?";Iron Man 2
+36;film;"What is the name of the island in 'Jurassic Park'?";Isla Nublar
+37;film;"Who played the character of Rocky Balboa?";Sylvester Stallone
+38;film;"What is Indiana Jones' real first name?";Henry
+39;film;"In which movie did Johnny Depp play a character named Jack Sparrow?";Pirates of the Caribbean
+40;film;"What is the main character's job in 'The Truman Show'?";Insurance salesman
+41;film;"Who directed 'The Grand Budapest Hotel'?";Wes Anderson
+42;film;"What is the name of the fictional British spy in the films based on Ian Fleming's books?";James Bond
+43;film;"Who played the lead role in the 1997 film 'Titanic'?";Kate Winslet
+44;film;"What is the fictional city where Batman lives?";Gotham City
+45;film;"What is the subtitle of the second 'Hunger Games' movie?";Catching Fire
+47;film;"In which film does the character Maximus Decimus Meridius appear?";Gladiator
+48;film;"Who directed 'The Shape of Water'?";Guillermo del Toro
+50;film;"In which movie is there a character named Don Vito Corleone?";The Godfather
+52;film;"Who played the female lead in 'Gone with the Wind'?";Vivien Leigh
+53;film;"What is the name of the ship in 'Pirates of the Caribbean'?";The Black Pearl
+54;film;"Who directed 'The Avengers' (2012)?";Joss Whedon
+55;film;"In which movie did Julia Roberts play a character named Vivian Ward?";Pretty Woman
+58;film;"Who directed 'Inception' and 'Interstellar'?";Christopher Nolan
+59;film;"In 'The Wizard of Oz', what did the Scarecrow want from the wizard?";A brain
+60;film;"What is the name of the main character in 'The Little Mermaid'?";Ariel
+61;film;"Who played the lead role in the movie 'La La Land'?";Emma Stone
+62;film;"What is the name of the kingdom in the Disney film 'Tangled'?";Corona
+63;film;"Who directed 'The Godfather' trilogy?";Francis Ford Coppola
+64;film;"What movie features a famous dance scene between John Travolta and Uma Thurman?";Pulp Fiction
+65;film;"Who played the lead role in 'The Bourne Identity'?";Matt Damon
+66;film;"In which film is the main character an archaeologist named Indiana Jones?";Raiders of the Lost Ark
+67;film;"What is the name of the fictional sport played in the Harry Potter series?";Quidditch
+68;film;"Who voiced the character of Shrek?";Mike Myers
+69;film;"What is the name of the protagonist in 'The Hunger Games'?";Katniss Everdeen
+70;film;"Who directed the film 'Back to the Future'?";Robert Zemeckis
+71;film;"In which movie did Leonardo DiCaprio play a character named Jack Dawson?";Titanic
+73;film;"Who played the character of Norman Bates in the original 'Psycho'?";Anthony Perkins
+74;film;"What 1994 film features a character named Andy Dufresne?";The Shawshank Redemption
+75;film;"What is the name of the villain in 'The Silence of the Lambs'?";Hannibal Lecter
+76;film;"In which movie does the character 'Neo' appear?";The Matrix
+77;film;"Who directed the movie 'E.T. the Extra-Terrestrial'?";Steven Spielberg
+78;film;"What film won the first Academy Award for Best Animated Feature?";Shrek
+79;film;"Who played the character of Luke Skywalker in the original 'Star Wars' trilogy?";Mark Hamill
+80;film;"In which movie is there a character named Travis Bickle?";Taxi Driver
+84;film;"Who directed the movie 'Gone Girl'?";David Fincher
+85;film;"In which film series does the character 'Frodo Baggins' appear?";The Lord of the Rings
+86;film;"What is the name of the spaceship in 'Star Wars' piloted by Han Solo?";Millennium Falcon
+87;film;"Who played the character of Captain Jack Sparrow in 'Pirates of the Caribbean'?";Johnny Depp
+88;film;"What is the name of the animated film about a rat who wants to be a chef?";Ratatouille
+89;film;"Who directed the movie 'Psycho'?";Alfred Hitchcock
+90;film;"In which movie does the character Dorothy Gale get transported to a magical land?";The Wizard of Oz
+91;film;"Who played the character of Tony Montana in 'Scarface'?";Al Pacino
+92;film;"In which movie is the main character a giant green ogre?";Shrek
+94;film;"Who directed 'The Dark Knight' Trilogy?";Christopher Nolan
+95;film;"In 'Frozen', what is the name of the snowman brought to life by Elsa?";Olaf
+97;film;"Who played the role of Edward Scissorhands?";Johnny Depp
+98;film;"In which movie did Audrey Hepburn play a princess who explores Rome with a journalist?";Roman Holiday
+100;film;"In which film is the fictional character Tyler Durden a central figure?";Fight Club
+101;film;"Who played the lead role in 'The Devil Wears Prada'?";Meryl Streep
+102;film;"What is the name of the main antagonist in the 'Harry Potter' series?";Lord Voldemort
+103;film;"In which movie did Sandra Bullock play an astronaut?";Gravity
+104;film;"What is the name of the character played by Brad Pitt in 'Fight Club'?";Tyler Durden
+105;film;"Who directed the movie 'Gladiator'?";Ridley Scott
+106;film;"In which movie does the character 'Ellen Ripley' fight aliens?";Alien
+108;film;"Who played the character of Elle Woods in 'Legally Blonde'?";Reese Witherspoon
+109;film;"What is the name of the protagonist in the 'Mad Max' series?";Max Rockatansky
+110;film;"In which film did Jennifer Lawrence play a character named Katniss Everdeen?";The Hunger Games
+111;film;"Who directed the 'Lord of the Rings' trilogy?";Peter Jackson
+112;film;"In which movie is the character 'Rick Blaine' a central figure?";Casablanca
+114;film;"Who played the lead role in the movie 'Braveheart'?";Mel Gibson
+115;film;"In which film does the character 'Sarah Connor' appear?";The Terminator
+116;film;"What is the name of the main character in the 'Indiana Jones' series?";Indiana Jones
+117;film;"Who directed the movie 'Avatar'?";James Cameron
+118;film;"In which movie does the character 'Norman Bates' appear?";Psycho
+119;film;"Who played the character of John McClane in the 'Die Hard' series?";Bruce Willis
+122;film;"In which movie does the character 'Marty McFly' travel back in time?";Back to the Future
+123;film;"Who played the character of Hannibal Lecter in 'The Silence of the Lambs'?";Anthony Hopkins
+125;film;"Who directed the movie 'Reservoir Dogs'?";Quentin Tarantino
