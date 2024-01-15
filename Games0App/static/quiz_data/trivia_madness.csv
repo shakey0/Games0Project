@@ -623,7 +623,7 @@ ID;category;question;answer;other_answers
 628;science_and_nature;What is the primary addictive substance found in tobacco?;Nicotine;!
 629;general_knowledge;"The Mexican Beer ""Corona"" is what type of beer?";Pale Lager;!
 630;vehicles;What car manufacturer gave away their patent for the seat-belt in the interest of saving lives?;Volvo;!
-631;general;Who opened for the Monkees on their 1968 American Tour?;Jimi Hendrix;!
+631;music;Who opened for the Monkees on their 1968 American Tour?;Jimi Hendrix;!
 632;general;"Not surprisingly, which country often ranks lowest on the Reporters Without Borders ""Press Freedom Index""?";North Korea;!
 633;mythology;In Greek mythology, who was jocasta's son?;Oedipus;!
 634;geography;What was the capital of West Germany before Berlin was reinstated?;Bonn;!
@@ -640,7 +640,7 @@ ID;category;question;answer;other_answers
 645;cartoon_and_animations;Snarf' and 'Liono' are both characters from what famous 80s cartoon show?;Thundercats;!
 646;general;Since 1988, the brand Acuvue has billed itself as introducing the world's first disposable what?;Contact Lens;!
 647;general;In which state is Yale University?;Connecticut;!
-648;general;If you were studying Iatrology what would you be studying?;The science of medicine;!
+648;science;If you were studying Iatrology what would you be studying?;The science of medicine;!
 649;books;"An avid art collector himself, what comedian penned the novel ""An Object of Beauty,"" about an ambitious young art dealer?";Steve Martin;!
 650;science;What causes the tangy smell at the seaside?;Rotting Seaweed;!
 651;music;Jello Biafra is the principal singer-songwriter for what irreverent San Francisco punk band?;The Dead Kennedys;!
@@ -696,11 +696,11 @@ ID;category;question;answer;other_answers
 701;fooddrink;What is the main ingredient of an edible faggot?;Liver;!
 702;general;Where did the mafia originate?;Sicily;!
 703;science_and_nature;What has albumen and a yolk?;Egg;!
-704;general;Where would one eat a taco?;Mexico;!
+704;general;Where would one eat an authentic taco?;Mexico;!
 705;general;What is the oldest known infectious disease?;Leprosy;!
 706;music;What lucky charm does Luciano Pavarotti carry in his pocket whilst performing?;A bent nail;A nail
-707;general;How many names did the first telephone book ever issued contain?;Fifty;!
-708;general;What U.S. city was the capital from 1789 to 1790?;New York City;New York
+707;history;How many names did the first telephone book ever issued contain?;Fifty;!
+708;history;What U.S. city was the capital from 1789 to 1790?;New York City;New York
 709;music;"Who recorded the million selling album ""No Parlez""?";Paul Young;!
 710;music;Which act has had more Christmas number one singles in the UK than any other?;The Beatles;!
 711;historyholidays;What came to an end in the United States in December 1933?;Prohibition;!
@@ -735,7 +735,7 @@ ID;category;question;answer;other_answers
 740;film;"In the 1998 film ""The Big Lebowski,"" what actress plays Bunny, a trophy wife who wears green nail polish?";Tara Reid;!
 741;geography;What are great waves resulting from earthquakes?;Tsunamis;Tsunami waves|Tsunami
 742;general;"From which language does the word ""typhoon"" originate?";Chinese;!
-743;general;Who was the father of Alexander the Great?;Philip II of Macedon;!
+743;history;Who was the father of Alexander the Great?;Philip II of Macedon;!
 744;books;Which pen name does the author Harry Patterson also use?;Jack Higgins;!
 745;geography;What is the lowest body of water on Earth?;Dead Sea;!
 746;animals;Indigenous to Africa, the graceful impala is a variety of what animal?;Antelope;!
@@ -744,15 +744,14 @@ ID;category;question;answer;other_answers
 749;sciencenature;What space shuttle did Discovery replace?;Challenger;!
 750;geography;What's the capital of Brazil?;Brazilia;!
 751;geography;How many U.S. states border the pacific ocean?;Five;!
-752;general;In which long running TV show are you likely to find Susie Dent?;Countdown;!
-753;general;In Friends where does Joey keep his favourite book?;In the freezer;The freezer
+752;tv;In which long running TV show are you likely to find Susie Dent?;Countdown;!
+753;tv;In Friends where does Joey keep his favourite book?;In the freezer;The freezer
 754;animals;What is a group of this animal called: Swallow?;Flight;!
-755;general;Following earlier failures on TV, Danny Thomas successfully returns in?;Make;!
+755;tv;Following earlier failures on TV, Danny Thomas successfully returns in?;Make;!
 756;sciencenature;What causes the tangy smell at the seaside?;Rotting seaweed;!
 757;geography;What was Ho Chi Minh City previously known as?;Saigon;!
 758;artliterature;For which novel was Boris Pasternak awarded the 1958 Nobel Prize, an award he declined?;Dr Zhivago;!
-759;general;What is Bart Simpson's middle name?;Jojo;!
-760;general;HG Wells invisible man had what physical oddity?;He was albino;Albino
+759;tv;What is Bart Simpson's middle name?;Jojo;!
 761;film;What film is about the migration of poor workers from the dust bowl to the California fruit valleys?;Grapes of Wrath;!
 762;geography;What is the Capital of: Saint Helena?;Jamestown;!
 763;religionmythology;He was condemned in Hades to forever push a boulder uphill, only for it to come rolling down before it reached the top?;Sisyphus;!
@@ -765,7 +764,7 @@ ID;category;question;answer;other_answers
 770;artliterature;Which two brothers wrote fairytales in Germany in the 19th century?;The Brothers Grimm;The Grimm Brothers
 771;sciencenature;This dry, warm wind flows eastward down the slopes of the Rocky Mountains?;Chinook;!
 772;history;What city did General Sherman burn in 1864?;Atlanta;!
-773;general;Which dress designer was shot dead in the summer of 1997?;Gianni Versace;!
+773;celebrities;Which dress designer was shot dead in the summer of 1997?;Gianni Versace;!
 774;general;What's the unit of measure for a racehorse's height?;Hand;Hands
 775;sciencenature;What is the scientific name for brimstone?;Sulphur;!
 776;geography;What is the former name of Guinea-Bissau?;Portuguese Guinea;!
@@ -785,3 +784,250 @@ ID;category;question;answer;other_answers
 790;sciencenature;What type of animal lives in a formicary?;Ants;Ant
 791;historyholidays;Who invented the thermometer in 1593?;Galileo;!
 792;sciencenature;What is a group of flies?;Business;!
+793;tv;What was the name of the older brother on Happy Days?;Chuck Cunningham;!
+794;books;In which Charles Dickens novel does Herbert Pocket appear?;Great Expectations;!
+795;celebrities;"Who famously said ""if in doubt, tell the truth""?";Mark Twain;!
+796;animals;What is a group of squirrels called?;Dray;!
+797;politics;Before becoming vice president, Joe Biden served as what U.S. state's senator for 36 years?;Delaware;!
+798;sciencenature;What is the technical name for 'falling stars'?;Meteors;!
+799;sciencenature;This instrument measures the velocity of the wind?;Anemometer;!
+800;general;Who makes Pringles?;Proctor and Gamble;!
+801;religionmythology;Who is the Norse god of lightning?;Odin;!
+802;geography;What is the basic unit of currency for Yemen?;Rial;!
+803;sports;Mintonette was the original name of what sport?;Volleyball;!
+804;tv;Bugs Bunny was a caricature of what actor?;Clark Gable;!
+805;history;How many bags of mail were lost by the Pony Express?;One;!
+806;fooddrink;Miso, a basic ingredient in Japanese cooking, is made of what?;Soybean Paste;Soybean|Soybeans
+807;geography;Mauritania is in which continent?;Africa;!
+808;film;Whose autobiography is called 'All of me'?;Barbara Windsor;Barbara Windsor's
+809;tv;What was the first Hanna-Barbera cartoon?;Ruff and Reddy;!
+810;sportsleisure;What is Ian Botham's middle name?;Terrence;!
+811;geography;What is the capital of Ethiopia?;Addis Ababa;!
+812;tv;On Happy Days, what animal did Fonzie jump his motorcycle over?;A shark;!
+813;history;Who was united nation's first general secretary?;Trygve Lie;!
+814;fooddrink;Swine is a Chinese brand name of which food?;Chocolate;!
+815;music;Which pop group of the 90's were made up of John Hendry, Tony Mortimer, Brian Harvey and Terry Caldwell?;East 17;!
+816;general;The caduceus, a staff entwined with two serpents, is the symbol for what profession?;Medicine;!
+817;geography;What is the Capital of Belize?;Belmopan;!
+818;general;"What's the international radio code word for the letter ""G""?";Golf;!
+819;books;Who Wrote the Novel 'The Witching Hour'?;Anne Rice;!
+820;celebrities;Who won an Oscar for the soundtrack to Chariots of Fire?;Vangelis;!
+821;science;Where in your body is your patella?;Knee;On the knee|On your knee|In the knee|In your knee
+822;artliterature;What dance is associated with Vienna?;The Waltz;!
+823;historyholidays;Which former British prime minister returned to power in 1951?;Winston Churchill;!
+824;science;The silkworm lives on a diet of leaves from only one type of plant, what is it?;Mulberry;!
+825;film;"What was Tom Cruise's call sign in the movie ""Top Gun""?";Maverick;!
+826;music;Name the band from the following members: Robert Plant, Jimmy Page, John Paul Jones, John Bonham?;Led Zeppelin;!
+827;geography;Which country is the Island of Korcula part of?;Croatia;!
+828;books;Elizabeth Bennett is the central character in what novel?;Pride and Prejudice;!
+829;geography;What is the capital of Alaska?;Juneau;!
+830;sportsleisure;What sport is sometimes called 'rugger'?;Rugby Union;Rugby
+831;general;In Chicago its illegal to fish wearing what?;Your Pyjamas;Pyjamas
+832;geography;What is the largest country in Africa, by area?;Sudan;!
+833;music;Who released the 70's album 'Arrival'?;Abba;!
+834;general;Whose likeness is displayed on the purple heart medal?;George Washington;!
+835;science;The process of splitting atoms is called?;Fission;!
+836;history;Who did Spain fight in the 1808-1814 Peninsular War?;Portugal;!
+837;film;"Which movie was reportedly so bad it inspired the Golden Raspberry Awards, which ""honor"" Hollywood's worst films?";Xanadu;!
+838;sciencenature;Phobos and Deimos are the moons of which planet?;Mars;!
+839;entertainment;Who shot Bruce Wayne's parents?;Joe Chill;Chill
+840;animals;What kind of creature is a 'Meadow Brown'?;Butterfly;!
+841;historyholidays;Which French king was known as the Sun King?;Louis XIV;Louis the 14th|Louis 14th
+842;geography;Surfing is believed to have originated where?;Hawaii;!
+843;geography;Which two countries form the region of Patagonia?;Argentina and Chile;!
+844;fooddrink;What type of pastry is used for profiteroles?;Choux;!
+845;animals;Saanen, Hongtong & Toggenburg are all breeds of which animal?;Goats;Goat
+846;music;Which duo wrote the musicals Brigadoon and My Fair Lady?;Alan Lerner and Fredric Loewe;!
+847;celebrities;Who wrote the line East is East and West is West?;Rudyard Kipling;!
+848;general;What is the birthstone for January?;Garnet;!
+849;artliterature;How many stories did enid blyton publish in 1959?;59;!
+850;general;Where would you find a howdah?;On the back of an elephant;Back of an elephant|On an elephant's back|Elephant's back
+851;celebrities;Who signed the USA for Africa poster with his thumbprint?;Stevie Wonder;!
+852;film;What was Keanu Reeves' computer world alias in 'the matrix'?;Neo;!
+853;entertainment;Who played 'Johnny Mnemonic'?;Keanu Reeves;!
+854;entertainment;Who is Goldie Hawns' acting partner?;Kurt Russell;!
+855;science;Of which metal is sperrylite the ore?;Platinum;!
+856;history;In what city was the world's first blood bank opened in 1940?;New York;New York City
+857;film;Alfred Hitchcock's daughter appeared in Psycho, what's her name?;Patricia Hitchcock;!
+858;religionmythology;Who killed a dragon in ancient mythology?;St. George;Saint George|George
+859;art;Which Swiss artist, born in 1879, painted Landscape With Yellow Birds, The Twittering Machine and Fish Magic?;Paul Klee;!
+860;geography;What is the national airline of Brazil called?;Varig;!
+861;general;The Comstock load is a silver deposit in what U.S. state?;Nevada;!
+862;geography;Which is the only land-locked country in South East Asia?;Laos;!
+863;sciencenature;What metal do you get from Hematite?;Iron;!
+864;historyholidays;Whose army did Admiral Nelson defeat at the battle of Trafalgar?;Napoleon;Napoleon's
+865;sportsleisure;Which sport featured in the Olympics will you find the terms 'Bump, Set, Spike & Pancake''?;Volleyball;!
+866;general;What was the first product to have a barcode?;Wrigley's Gum;!
+867;history;What was the first country to have a public monorail system?;Japan;!
+868;general;What is a triangle whose sides are all of different lengths?;Scalene;!
+869;geography;Which waterfall has the highest drop in the world?;Angel Falls;!
+870;geography;What is the capital of Oman?;Muscat;!
+871;sportsleisure;In which city is the Cotton Bowl played?;Dallas;!
+872;celebrities;In 1994, Texas native Tom Ford began his legendary tenure as creative director of what Italian label?;Gucci;!
+873;science;What kind of small glass bottle turns liquid perfume into a fine spray?;Atomiser;!
+874;science;A plant or animal that grows and feeds on or in another organism is called a what?;Parasite;!
+875;artliterature;"Who was the merchant in Shakespeare's ""The Merchant of Venice""?";Antonio;!
+876;history;"The 1938 ""War of the Worlds"" radio broadcast convinced listeners that what event had taken place?";Alien Invasion;!
+877;geography;Which is the language that is most spoken in the world?;Chinese;!
+878;history;What was the language of ancient Rome?;Latin;!
+879;fooddrink;What do the initials U.H.T refer to in relation to milk?;Ultra Heat Treated;!
+880;history;Who said 'when power corrupts, poetry cleanses'?;John F Kennedy;!
+881;sports;Which game is played at 12 a-side for women, but at 10 a-side for men?;Lacrosse;!
+882;geography;What U.S. state is home to both Boise National Forest and Coeur d'Alene National Forest?;Idaho;!
+883;tv;In 'Star Trek', what is Data's rank?;Lieutenant Commander;!
+884;film;"What country was the setting for ""Doctor Zhivago""?";Russia;!
+885;general;In the US 20% of all lightning strike deaths occur where?;Golf courses;On golf courses|On a golf course|Golf course
+886;geography;What is the capital of South Dakota?;Pierre;!
+887;fooddrink;"Opponents of genetically modified food often refer to it by what ""scary"" name?";Frankenfood;!
+888;geography;With what country is Fidel Castro associated?;Cuba;!
+889;geography;What capital city is found near the headwaters of the Bosna River?;Sarajevo;!
+890;historyholidays;Who played Jack Nicholson's wife in The Shining?;Shelley Duvall;!
+891;general;What is the flower that stands for: sweet and secret love?;Honey Flower;!
+892;animals;What bird has the longest fledging period 360 days?;King Penguin;!
+893;general;What is the name for a child's hat tied under the chin?;Bonnet;!
+894;film;Which mother and daughter both appeared in John Carpenters The Fog?;Jamie Lee Curtis and Janet Leigh;!
+895;celebrities;Who wrote the autobiography 'Managing My Life'?;Sir Alex Ferguson;!
+896;sports;What nationality was tennis star Vitas Gerulaitis?;American;USA
+897;animals;What is a group of monkeys called?;Troop;!
+898;music;"The single ""Respect Yourself"" was released in the 1990's by which die hard music lover?";Bruce Willis;!
+899;music;What was Madonna's first UK number one single?;Get into the Groove;!
+900;animals;What type of creature is a niffe?;Fish;!
+901;sportsleisure;What sport was first introduced into the Olympics in 2000?;Trampolining;!
+902;history;Which East African leader gave himself the title of 'Conqueror of the British Empire'?;Idi Amin;!
+903;music;Which group had their first U.K. number one tilt ill 1974 with Down Down?;Status Quo;!
+904;music;Who was originally known as Harry Webb?;Sir Cliff Richard;!
+905;entertainment;What instrument does an organ grinder play?;Hurdy Gurdy;!
+906;general;"Like Chevrolet's Volt, Nissan offers a 100% electric car with what ""green"" name?";Leaf;!
+907;sportsleisure;Where were the 1988 Olympics held?;Seoul;Seoul, Korea|Seoul, South Korea
+908;history;In which American State was the first atomic bomb test carried out in July 1945?;New Mexico;!
+909;tv;"Calling it ""historical fiction"" in 2011 the History Channel refused to air a miniseries about what political family?";The Kennedys;!
+910;general;What is the highest-pitched woodwind musical instrument?;Piccolo;!
+911;celebrities;What duo lost their Grammy for Best New Artist from the eighties?;Milli Vanilli;!
+912;music;How old was Leann Rhymes when she had her first number one country album?;Thirteen;!
+913;animals;What is a bandy bandy?;A snake;!
+914;music;Which song penned by the Gibb Brothers provided Barbara Streisand with her only UK number one single in 1980?;Woman in Love;!
+915;geography;What is the largest city in Switzerland?;Zurich;!
+916;geography;Which is the smallest continent?;Europe;!
+917;geography;What is the saltiest sea in the world?;The Dead Sea;!
+918;entertainment;Which actor won Oscars twice for 'best male performance' in the '90s?;Tom Hanks;!
+919;mythology;Who was the Norse god of light, beauty & peace?;Balder;!
+920;music;Who directed the stage version of The Lion King?;Julia Taymor;!
+921;film;Who is the voice of Darth Vadar?;James Earl Jones;!
+922;general;What is the literal meaning of 'pince-nez'?;Pinch Nose;!
+923;general;What nickname is attached to the US stealth fighter aircraft the f-117a?;Nighthawk;!
+924;celebrities;Howard Hughs used to store what in large metal containers?;His urine;Urine
+925;music;Which musician of non-U.K. citizenship was awarded an honorary knighthood (KBE) in 1986?;Bob Geldof;!
+926;artliterature;The study of building design is ____________?;Architecture;!
+927;general;What kitchen utensil is often found in four-sided versions?;Grater;!
+928;history;Which of these products is traditionally pink because its inventor only had pink dye on hand at the time of its creation?;Bubble Gum;!
+929;entertainment;Where does George Jetson work?;Spacely Sprockets;!
+930;music;"Who recorded the album ""Nylon Curtain""?";Billy Joel;!
+931;sports;Which tennis player defected to the west in 1975?;Martina Navratilova;!
+932;music;Who had his first UK top 40 hit single in 2004 with Magic, thirty years after his death at the age of 26?;Nick Drake;!
+933;music;In 1987, who released her second album 'solitude standing'?;Suzanne Vega;!
+934;history;Who founded Methodism in 1738?;John Wesley;!
+935;general;What is the name of the board at a race track showing odds and results?;Tote;!
+936;film;Which directors films included Shivers, Videodrome and The Fly?;David Cronenberg;!
+937;fooddrink;What berries give gin its flavour?;Juniper Berries;!
+938;artliterature;Who wrote the famous series of Discworld books?;Terry Pratchett;!
+939;film;Which film links novelist Ira Levin and Sharon Stone?;Sliver;!
+940;science;What instrument is used to measure the strength of a magnetic field?;Magnetometer;!
+941;art;The French call it nature morte the Spanish bodegon what is it?;Still Life Painting;!
+942;general;ILM, the special effects company founded by George Lucas, stands for Industrial Light and what?;Magic;!
+943;general;The average Britain consumes 14571 what in their lifetime?;Pints of beer;!
+944;religionmythology;In the Old Testament whose name means Gods with us?;Emanuel;!
+945;artliterature;Who wrote the Maltese Falcon?;Dashiell Hammet;!
+946;geography;Of which island do Ireland, Britain, Iceland and Norway dispute ownership?;Rockall;Rockall Island
+947;tv;On which fictional street does 'Freddy Kruger' live out a nightmare?;Elm Street;!
+948;celebrities;Comedian Dan Whitney is better known by what stage name?;Larry The Cable Guy;!
+949;music;Which band recorded the live album 'Live and Dangerous'?;Thin Lizzie;!
+950;technologyvideogames;As what was Sony's video recorder known?;Betamax;!
+951;history;Who was the first Englishman to die in an aircrash?;Charles Rolls;!
+952;tv;What show did Claire Danes get her start on?;My So-called Life;!
+953;art;Italian painter Jacopo Robusti is better known as who?;Tintoretto;!
+954;sportsleisure;On what type of surface are the tennis matches at Wimbledon played?;Grass;!
+955;fooddrink;What type of food is Port Salut?;Cheese;!
+956;general;Which department of the U.S. federal government has the authority to issue passports?;State;!
+957;fooddrink;What is the chief food for half the people in the world?;Rice;!
+958;general;What is dittology?;Double Meaning;!
+959;history;The Spanish-American War began in 1898 as an intervention by the United States on behalf of what country?;Cuba;!
+960;general;What colour does the prefix 'leuco-' refer to?;White;!
+961;science;Prized for their distinctive flavor, vanilla beans are the fruit of a rare type of what flower?;Orchids;!
+962;history;Which country was the proposed target in the German 'Operation Tannenbaum' in World War II?;Switzerland;!
+963;music;"With which rock band does ""Slash"" play guitar?";Guns n Roses;!
+964;fooddrink;The Queensland nut or bush nut is more commonly known as this?;Macadamia;!
+965;geography;What U.S. state's name is believed to derive from a mythical paradise described in a 1510 Spanish novel?;California;!
+966;artliterature;"Of which bird did Wordsworth write ""Shall I call thee bird, or but a wandering voice""?";The Cuckoo;!
+967;geography;What country did Queen Beatrix rule?;Netherlands;!
+968;geography;What is the Capital of American Samoa?;Pago Pago;!
+969;geography;The port of Piraeus serves which European capital?;Athens;!
+970;religionmythology;What mountain do Greeks believe was the home of the Muses?;Helicon;!
+971;general;What sort of an animal is an anchovy?;Fish;!
+972;sports;In what sport did Jeffery Archer win an Oxford Blue (USA Letter)?;Athletics;!
+973;religionmythology;In the Bible, Goliath was the champion of which people or tribe?;Philistines;!
+974;sports;What brand of footwear is endorsed by Dr. J?;Converse;!
+975;sportsleisure;David Campeze was the leading try scorer for which country?;Australia;!
+976;music;"Who recorded the 1996 album, ""Older""?";George Michael;!
+977;entertainment;Which 1980's Pink Floyd album was made into a film that starred Bob Geldof, and featured the artwork of cartoonist Gerald Scarfe?;The Wall;!
+978;science;Which is the geological period before the Ordovician?;Cambrian;!
+979;history;The oldest one in America still working opened in 1829, what is it?;Brewery;!
+980;music;Who wrote white Christmas while sunning himself in California?;Irving Berlin;!
+981;geography;Which region of Spain has Barcelona as its capital?;Catalonia;!
+982;sport;In which country do they play houlani, a type of hockey?;Turkey;!
+983;fooddrink;Which spirit is added to sugar and egg yolks to make Advocaat?;Brandy;!
+984;science;What does a pteridologist study?;Ferns;!
+985;sciencenature;What's the most venemous spider?;Black Widow;!
+986;celebrities;What is tattooed on Glen Campbell's arm?;A dagger;!
+987;geography;Because gold is so coveted there, in what country are brides often draped in more than a kilo of gold jewelry?;India;!
+988;science;Carrots are said to be good for the eyes because they enable the body to create what nutrient?;Vitamin A;!
+989;music;What is Johnny Rottens real name?;John Lydon;!
+990;historyholidays;Who was the first woman in space?;Valentina Tereshkova;!
+991;general;In England, what professionals are classified either as barristers or solicitors?;Lawyers;!
+992;books;Which American author wrote Moby Dick?;Herman Melville;!
+993;tv;"Debuting in 2008, ""The Rachel Maddow Show"" is a popular political talk show that airs on what network?";Msnbc;!
+994;fooddrink;Which wine grape variety is most planted in California?;Chardonnay;!
+995;sciencenature;A one-humped camel is called a _________.?;Dromedary;!
+996;celebrities;"The punny 1966 Time Magazine headline ""Truman's Compote"" combines an author's name and a type of what?";Dessert;!
+997;historyholidays;This U.S. Secretary of State won the Nobel Peace Prize in 1973.;Henry Kissinger;!
+998;religionmythology;Who was the Greek god of prophecy and archery?;Apollo;!
+999;history;What war began in 1899 with the invasion of natal, and ended in 1902 with the peace of vereeniging?;Boer War;!
+1000;celebrities;Who married John Lange?;Shania Twain;!
+1001;geography;Banaba (or Ocean Island) is found in which country?;Kiribati;!
+1002;sportsleisure;How many jumps are there in the Grand National?;30;30 jumps
+1003;history;"""What country's quest for independence began with a priest's fiery 1810 speech known as ""The Cry of Dolores""?";Mexico;!
+1004;general;What was the name of Garfield's vet?;Liz Wilson;!
+1005;general;What was the name of the first U.S. communications satellite to amplify radio & TV signals?;Telstar;!
+1006;music;"Who had a hit with ""We Didn't Start The Fire""?";Billy Joel;!
+1007;music;"Who had a hit with the song ""Don't Pay The Ferryman""?";Chris De Burgh;!
+1008;science;What are white dwarfs and red giants?;Stars;!
+1009;history;The Good Friday agreement, signed on Good Friday 1998, is also known as what?;The Belfast Agreement;!
+1010;history;A presumed expert at Mongolian beef, Huou was a 13th-century culinary pioneer and personal chef for whom?;Kublai Khan;!
+1011;history;Who is credited with inventing television?;John Baird;!
+1012;music;"What singer's concerts often include ""Hot Patootie,"" a song he sang as Eddie in ""The Rocky Horror Picture Show""?";Meat Loaf;!
+1013;religionmythology;In which book of the Bible did Moses die?;Deuteronomy;!
+1014;general;"What's the international radio code word for the letter ""I""?";India;!
+1015;history;Which nineteenth century author is buried in Samoa?;Robert Louis Stevenson;!
+1016;geography;What is the basic unit of currency for Malaysia?;Ringgit;!
+1017;music;Which album cover had to be reshot because it featured unauthorised shots of various personalities?;Some Girls;!
+1018;history;How did Virginia Woolf die?;Committed Suicide;!
+1019;film;Counterculture icon Timothy Leary was the godfather of what Hollywood actress?;Winona Ryder;!
+1020;books;In which town or city was the novelist Sir Waiter Scott born?;Edinburgh;!
+1021;fooddrink;Since 1916, Nathan's Hot Dog Eating Contest has been held annually at what iconic New York locale?;Coney Island;!
+1022;animals;What is a group of swallows?;Flight;!
+1023;film;In a case of life imitating art, Charlie Sheen admitted he took steroids to enhance his performance in what movie?;Major League;!
+1024;geography;What is the only French speaking republic in Americas?;Haiti;!
+1025;film;Which film starring Julie Andrews and Christopher Plummer won the Oscar for best picture in 1965?;The Sound of Music;!
+1026;science;What kind of energy powers most communications satellites?;Solar Energy;!
+1027;books;Name Captain Nemo's pet seal?;Esmeralda;!
+1028;general;What is the fear of being last known as?;Telosphobia;!
+1029;film;Who played Juliet in Zeffirelli's Romeo and Juliet?;Olivia Hussey;!
+1030;entertainment;The Who' had a Guiness world record for what?;Loudest Band;!
+1031;history;What was the name of the first U.S. space station?;Skylab;!
+1032;general;What does a funambulist walk on?;A Tightrope;!
+1033;religionmythology;What is the name of the Jewish New Year?;Rosh Hashanah;!
+1034;general;Area 51 is located in which US state?;Nevada;!
+1035;general;Which U.S. president appears on the front of the $100,000 bill?;Woodrow Wilson;!
+1036;history;What was the name of the first U.S. space shuttle?;Enterprise;!
+1037;history;What was the name of the first U.S. space shuttle to orbit the Earth?;Columbia;!
+1038;history;What was the name of the first U.S. space shuttle to be launched into space?;Columbia;!
+1039;general;Which U.S. president appears on the front of the $2 bill?;Thomas Jefferson;!

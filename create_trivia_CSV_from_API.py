@@ -91,4 +91,4 @@ for item in response:
         other_answers = ['!']
     with open(f'Games0App/static/quiz_data/trivia_madness.csv', 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
-        writer.writerow([last_id, category, question, answer, ', '.join(other_answers)])
+        writer.writerow([last_id, category, question, answer, '|'.join(other_answers)])
