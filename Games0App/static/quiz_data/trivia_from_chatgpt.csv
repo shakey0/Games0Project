@@ -213,3 +213,104 @@ ID;category;question;answer
 286;music;"Who composed the music for 'The Lion King'?";Elton John
 287;music;"Which artist is known for the song 'That's What I Like'?";Bruno Mars
 288;music;"Who is the lead singer of the band The Who?";Roger Daltrey
+291;sports;"Which country won the 2018 FIFA World Cup?";France
+292;sports;"Who is known as the 'Great One' in hockey?";Wayne Gretzky
+293;sports;"What sport is associated with Wimbledon?";Tennis
+294;sports;"Who holds the record for the most Olympic gold medals?";Michael Phelps
+295;sports;"What is the national sport of Japan?";Sumo wrestling
+296;sports;"In which sport would you perform a 'slam dunk'?";Basketball
+298;sports;"What sport does Roger Federer play?";Tennis
+299;sports;"In which sport is the Stanley Cup awarded?";Ice Hockey
+300;sports;"Who is known as the 'King of Clay' in tennis?";Rafael Nadal
+301;sports;"Which sport uses terms like 'stale fish' and 'ollie'?";Skateboarding
+302;sports;"Who won the Masters in Golf in 2019?";Tiger Woods
+304;sports;"What sport does Serena Williams play?";Tennis
+306;sports;"Who is famous for his 'Airness' in basketball?";Michael Jordan
+307;sports;"In which sport is the Ryder Cup competed for?";Golf
+308;sports;"What is the highest score possible in a single frame of bowling?";30
+309;sports;"Which country is renowned for its success in rugby?";New Zealand
+310;sports;"What sport is the Tour de France associated with?";Cycling
+312;sports;"What is the only sport to be played on the moon?";Golf
+313;sports;"In which sport would you find a 'scrum'?";Rugby
+314;sports;"Who is the most decorated gymnast in Olympic history?";Simone Biles
+315;sports;"What sport is associated with the Super Bowl?";American Football
+316;sports;"In tennis, what is a zero score called?";Love
+317;sports;"Who is known for the 'Hand of God' goal in soccer?";Diego Maradona
+318;sports;"What sport involves stones and brooms on ice?";Curling
+319;sports;"Who is the fastest man in the world?";Usain Bolt
+320;sports;"In which sport would you compete for the America's Cup?";Sailing
+321;sports;"What is the highest score possible in 10-pin bowling?";300
+325;sports;"Which country traditionally performs the Haka before their rugby matches?";New Zealand
+326;sports;"In golf, what is the term for a score of one under par on a hole?";Birdie
+327;sports;"Who holds the record for the most goals in the NHL?";Wayne Gretzky
+328;sports;"What sport is played at Lords?";Cricket
+329;sports;"In which sport might you find an athlete using a 'pommel horse'?";Gymnastics
+330;sports;"What is the term for when a bowler makes three strikes in a row in bowling?";Turkey
+331;sports;"Which boxer was known as 'The Greatest' and 'The People's Champion'?";Muhammad Ali
+332;sports;"In which sport would you compete in the Davis Cup?";Tennis
+334;sports;"Who is the youngest golfer to win the Masters?";Tiger Woods
+335;sports;"What sport is associated with the Vince Lombardi Trophy?";American Football
+336;sports;"In tennis, what term is used when the score is 40-40?";Deuce
+337;sports;"What country has won the most World Cups in football (soccer)?";Brazil
+338;sports;"In basketball, what is the term for an assist that leads directly to a score?";Dime
+339;sports;"Which country is known for producing top table tennis players?";China
+343;sports;"In which sport would you perform a 'layup'?";Basketball
+346;sports;"In rugby, what is the term for a group of forwards huddled together?";Scrum
+347;sports;"Who is known as the 'Spanish Matador' in tennis?";Rafael Nadal
+348;sports;"What sport involves two teams pulling at opposite ends of a rope?";Tug of War
+350;sports;"In which sport would you find the terms 'stalefish' and 'mctwist'?";Snowboarding
+353;sports;"Who is known for winning seven Tour de France titles, which were later stripped?";Lance Armstrong
+354;sports;"What sport is traditionally played at Wimbledon?";Tennis
+355;sports;"Which country is known for its success in sumo wrestling?";Japan
+356;sports;"In basketball, how many points is a standard field goal worth?";Two points
+357;sports;"Who is the most famous footballer to wear number 10 for Brazil?";Pele
+358;sports;"In what sport do athletes compete for the Claret Jug?";Golf
+359;sports;"Which country dominates in Olympic weightlifting?";China
+360;sports;"What is the term for scoring three goals in a single soccer game?";Hat-trick
+361;sports;"Who holds the record for the most points scored in an NBA game?";Wilt Chamberlain
+362;sports;"In which sport is the term 'alley-oop' used?";Basketball
+366;sports;"What is the term for a hole-in-one in golf?";Ace
+367;sports;"Which swimmer won eight gold medals at the 2008 Beijing Olympics?";Michael Phelps
+368;sports;"In which sport is the term 'eagle' used?";Golf
+370;sports;"Which country won the first ever Football World Cup in 1930?";Uruguay
+371;sports;"Who is the only tennis player to have won each of the four grand slam events at least four times?";Steffi Graf
+373;sports;"In which sport is the term 'scrummy' used?";Rugby
+374;sports;"Who was the first gymnast to score a perfect 10 in the Olympics?";Nadia Comaneci
+378;sports;"In which sport would you find a 'bonspiel'?";Curling
+379;sports;"Who holds the record for the most home runs in MLB history?";Barry Bonds
+380;sports;"What sport is associated with the Calcutta Cup?";Rugby Union
+382;sports;"Who is famous for the 'Fosbury Flop' technique in high jump?";Dick Fosbury
+383;sports;"Which sport involves takedowns, pins, and submissions?";Wrestling
+384;sports;"In football, what is the term for a pass caught by a defensive player?";Interception
+385;sports;"What is the highest governing body in world football (soccer)?";FIFA
+386;sports;"In which sport would you perform a 'backstroke'?";Swimming
+388;sports;"In which sport is the term 'bogey' used?";Golf
+389;sports;"What sport did Michael Jordan play during his first retirement from basketball?";Baseball
+393;sports;"What is the term for a score of three under par on a golf hole?";Albatross
+394;sports;"In which sport would you find a 'coxswain'?";Rowing
+395;sports;"What sport is associated with the Triple Crown?";Horse Racing
+396;sports;"In what sport would you use a 'caddie'?";Golf
+397;sports;"Who is known for the phrase 'Float like a butterfly, sting like a bee'?";Muhammad Ali
+398;sports;"In which sport is the term 'spike' used?";Volleyball
+400;sports;"In which sport would you perform a 'Salchow jump'?";Figure Skating
+402;sports;"In which sport is the term 'duckworth-lewis' used?";Cricket
+406;sports;"In cricket, what is the term for a bowler delivering six consecutive balls?";An over
+407;sports;"Who is the most successful female race car driver in the history of American open-wheel racing?";Danica Patrick
+408;sports;"In tennis, what is a match with no sets lost called?";Straight sets
+411;sports;"What is the term for a 0-0 score in tennis?";Love-all
+412;sports;"In which sport would you find the positions of fly-half and hooker?";Rugby
+414;sports;"Who is known as 'His Airness' in the NBA?";Michael Jordan
+415;sports;"What is the term for a tie in chess where neither player can checkmate?";Stalemate
+417;sports;"Which country won the most medals in the 2016 Rio Olympics?";United States
+420;sports;"What is the highest governing body in cricket?";International Cricket Council
+422;sports;"In which sport might you find a 'rearguard action'?";Cricket
+426;sports;"In baseball, what term describes a ball that is hit out of the field of play?";Home run
+428;sports;"In which sport is the term 'screwball' used?";Baseball
+430;sports;"In which sport would you use a foil or épée?";Fencing
+432;sports;"In which sport is the Ashes series contested?";Cricket
+433;sports;"Which sport involves terms like 'gutter', 'spare', and 'strike'?";Bowling
+434;sports;"In which sport would you find a 'slalom'?";Skiing
+436;sports;"In cycling, what color jersey is worn by the leader of the Tour de France?";Yellow
+437;sports;"Who holds the record for the most consecutive Wimbledon wins in men's singles?";Roger Federer
+438;sports;"In which sport is the term 'knockout' used?";Boxing
+439;sports;"In cricket, what is it called when a bowler delivers a ball that is not hit by the batsman and removes the bails?";Bowled
