@@ -314,3 +314,293 @@ ID;category;question;answer
 437;sports;"Who holds the record for the most consecutive Wimbledon wins in men's singles?";Roger Federer
 438;sports;"In which sport is the term 'knockout' used?";Boxing
 439;sports;"In cricket, what is it called when a bowler delivers a ball that is not hit by the batsman and removes the bails?";Bowled
+441;history;"Who was the first President of the United States?";George Washington
+444;history;"Who was the famous British Prime Minister during World War II?";Winston Churchill
+445;history;"Which empire was ruled by Julius Caesar?";The Roman Empire
+446;history;"What wall was built to separate England and Scotland in the Roman era?";Hadrian's Wall
+447;history;"Who was the first man to walk on the moon?";Neil Armstrong
+448;history;"What ship famously sank in 1912 after hitting an iceberg?";The Titanic
+450;history;"Who was the leader of the Soviet Union during World War II?";Joseph Stalin
+451;history;"What ancient city was destroyed by a volcanic eruption in 79 AD?";Pompeii
+452;history;"Who was the first woman to fly solo across the Atlantic Ocean?";Amelia Earhart
+453;history;"Which country gifted the Statue of Liberty to the USA?";France
+455;history;"Who discovered penicillin in 1928?";Alexander Fleming
+456;history;"What was the name of the ship that brought the Pilgrims to America in 1620?";The Mayflower
+457;history;"Who was the Egyptian queen famous for her beauty and love affairs with Julius Caesar and Mark Antony?";Cleopatra
+458;history;"During which war was the Battle of Gettysburg fought?";The American Civil War
+459;history;"Who was the first emperor of China?";Qin Shi Huang
+460;history;"What was the main language of the Roman Empire?";Latin
+462;history;"Who was known as 'The Maid of Orléans'?";Joan of Arc
+463;history;"Which empire was known for its road network including the famous Silk Road?";The Roman Empire
+464;history;"Who was the famous Renaissance artist who painted the 'Mona Lisa'?";Leonardo da Vinci
+465;history;"What was the period of intense artistic and cultural development in Europe during the 14th to 17th centuries called?";The Renaissance
+466;history;"Who was the Greek philosopher known for his method of questioning?";Socrates
+467;history;"Which war took place between 1950 and 1953?";The Korean War
+469;history;"In which city was the first atomic bomb dropped in 1945?";Hiroshima
+470;history;"What was the name of the alliance between Germany, Italy, and Japan during World War II?";The Axis Powers
+472;history;"Who was the first female Prime Minister of the United Kingdom?";Margaret Thatcher
+473;history;"What ancient civilization is known for creating the Olympic Games?";The Greeks
+476;history;"Who was the first explorer to circumnavigate the globe?";Ferdinand Magellan
+477;history;"Which empire was ruled by Genghis Khan?";The Mongol Empire
+479;history;"What is the name of the first successful English colony in America?";Jamestown
+481;history;"What ancient city is famous for its hanging gardens, one of the Seven Wonders of the Ancient World?";Babylon
+483;history;"What famous structure did the emperor Shah Jahan build in memory of his wife?";The Taj Mahal
+484;history;"Who was the president of the United States during the majority of World War I?";Woodrow Wilson
+485;history;"Which civilization is known for building Chichen Itza and the city of Tulum?";The Mayans
+487;history;"What was the medieval system of economic and political life based on land ownership and personal loyalty?";Feudalism
+488;history;"Who was the first human to journey into space?";Yuri Gagarin
+489;history;"What was the name of the alliance formed by England, France, and Russia in the early 20th century?";The Triple Entente
+490;history;"What ancient empire was based in modern-day Mexico and known for its stepped pyramids?";The Aztecs
+491;history;"Who was known as the 'Iron Lady' of British politics?";Margaret Thatcher
+494;history;"Which famous Italian explorer discovered the New World in the service of Spain?";Christopher Columbus
+496;history;"Who wrote the Declaration of Independence?";Thomas Jefferson
+498;history;"Which American President is famous for the Emancipation Proclamation?";Abraham Lincoln
+499;history;"Who was the first Emperor of Rome?";Augustus Caesar
+503;history;"Who was the Roman god of war, after whom a planet was named?";Mars
+505;history;"Which empire did Napoleon Bonaparte lead?";The French Empire
+507;history;"Which ancient civilization is known for its massive stone heads and pyramids in Mesoamerica?";The Olmecs
+512;history;"Who was the first African American woman to refuse to give up her seat on a bus, sparking the Montgomery Bus Boycott?";Rosa Parks
+513;history;"What war was fought in the United States from 1861 to 1865?";The American Civil War
+514;history;"Who was the first president of the Republic of South Africa after the end of apartheid?";Nelson Mandela
+516;history;"What was the medieval charge of land granted by a lord in exchange for service called?";A fief
+520;history;"Who is famous for developing the theory of relativity?";Albert Einstein
+521;history;"What famous wall separated East and West Berlin?";The Berlin Wall
+522;history;"What was the series of conflicts between England and France from 1337 to 1453 called?";The Hundred Years' War
+525;history;"Who was the Greek philosopher who taught Alexander the Great?";Aristotle
+526;history;"What was the ancient city and empire located in present-day Turkey known for its architectural wonders like the Temple of Artemis?";Ephesus
+527;history;"What British ship was famously sunk by a German U-Boat in 1915, influencing the U.S. to enter World War I?";The RMS Lusitania
+528;history;"Who was the first female Prime Minister of India?";Indira Gandhi
+530;history;"In which city was the Declaration of Independence signed in 1776?";Philadelphia
+531;history;"Who was known as the 'father of the Constitution'?";James Madison
+533;history;"What was the first capital of the United States?";New York
+535;history;"What ancient civilization is known for its unique writing system involving hieroglyphs?";Egypt
+540;history;"Who was the first person to reach the South Pole?";Roald Amundsen
+545;history;"Who was the first American President to be impeached?";Andrew Johnson
+546;history;"What empire is known for its golden age under the rule of Suleiman the Magnificent?";The Ottoman Empire
+549;history;"What was the name of the peace treaty that ended World War I?";The Treaty of Versailles
+550;history;"Who was the first person to propose the theory of evolution by natural selection?";Charles Darwin
+552;history;"Who was the Greek philosopher known for his Academy in Athens?";Plato
+553;history;"In which war did the Battle of Bunker Hill take place?";The American Revolutionary War
+554;history;"Which civilization is known for building the ancient city of Machu Picchu?";The Incas
+556;history;"Who was the first female ruler of ancient Egypt, known for expanding trade and building projects?";Hatshepsut
+561;geography;"What is the capital of France?";Paris
+562;geography;"Which river is the longest in the world?";The Nile
+563;geography;"What is the largest continent by land area?";Asia
+565;geography;"What is the name of the world's largest ocean?";Pacific Ocean
+566;geography;"Which desert is the largest in the world?";Sahara Desert
+567;geography;"What is the capital of Australia?";Canberra
+568;geography;"Which mountain is the highest in the world?";Mount Everest
+569;geography;"What is the smallest country in the world?";Vatican City
+570;geography;"Which country is known as the land of the rising sun?";Japan
+571;geography;"What is the longest river in the United States?";Mississippi River
+572;geography;"Which country has the most natural lakes?";Canada
+573;geography;"What is the capital city of Spain?";Madrid
+574;geography;"Which country is also known as the Hellenic Republic?";Greece
+575;geography;"What is the largest island in the world?";Greenland
+576;geography;"In which continent is the Sahara Desert located?";Africa
+577;geography;"What is the capital of Germany?";Berlin
+578;geography;"Which country is home to the Great Barrier Reef?";Australia
+579;geography;"What country is the city of Dubai located in?";United Arab Emirates
+581;geography;"What is the capital of Canada?";Ottawa
+582;geography;"Which river flows through London?";The Thames
+583;geography;"What is the largest country in the world by area?";Russia
+584;geography;"Which country is known for having a maple leaf on its national flag?";Canada
+585;geography;"What city is the Statue of Liberty located near?";New York
+586;geography;"In which country are the Pyramids of Giza found?";Egypt
+587;geography;"What is the capital of Italy?";Rome
+588;geography;"Which sea separates Australia and New Zealand?";Tasman Sea
+589;geography;"Which African country was formerly known as Abyssinia?";Ethiopia
+590;geography;"What is the name of the highest mountain in Africa?";Mount Kilimanjaro
+591;geography;"What river runs through Baghdad?";The Tigris
+592;geography;"Which country is the largest by size in Africa?";Algeria
+593;geography;"What is the capital of Brazil?";Brasília
+594;geography;"Which U.S. state is known as the 'Sunshine State'?";Florida
+595;geography;"In which country is the ancient city of Petra located?";Jordan
+596;geography;"What is the longest river in Europe?";The Volga
+597;geography;"Which country has the largest population in the world?";India
+598;geography;"What is the capital of Mexico?";Mexico City
+599;geography;"Which European city is known for its canals and is sometimes called the 'Venice of the North'?";Amsterdam
+600;geography;"What is the capital of Japan?";Tokyo
+601;geography;"Which ocean lies on the east coast of the United States?";Atlantic Ocean
+602;geography;"Which country is home to the Amazon rainforest?";Brazil
+604;geography;"Which city is known as the 'Eternal City'?";Rome
+606;geography;"Which European country is known for its fjords?";Norway
+607;geography;"What is the capital of India?";New Delhi
+610;geography;"Which country is the largest in South America?";Brazil
+611;geography;"What is the capital of Russia?";Moscow
+612;geography;"Which country is known for inventing the sauna?";Finland
+613;geography;"What is the largest gulf in the world?";Gulf of Mexico
+614;geography;"Which two continents are located entirely in the Southern Hemisphere?";Australia and Antarctica
+615;geography;"Which African nation has the largest population?";Nigeria
+616;geography;"What is the capital of South Korea?";Seoul
+617;geography;"Which mountain range separates Europe and Asia?";The Ural Mountains
+618;geography;"What is the name of the desert area in California?";Death Valley
+619;geography;"Which river forms part of the border between Mexico and the United States?";The Rio Grande
+620;geography;"What is the capital of Argentina?";Buenos Aires
+621;geography;"What is the capital of Egypt?";Cairo
+622;geography;"Which country is known as the 'Land of the Long White Cloud'?";New Zealand
+623;geography;"What is the deepest ocean in the world?";Pacific Ocean
+624;geography;"What is the capital city of Sweden?";Stockholm
+625;geography;"Which river flows through Paris?";The Seine
+627;geography;"What is the capital of Kenya?";Nairobi
+628;geography;"What mountain range runs along the western coast of South America?";The Andes
+629;geography;"Which country is both an island and a continent?";Australia
+630;geography;"What is the capital of Indonesia?";Jakarta
+631;geography;"Which U.S. state is known for its volcanoes, including Mauna Loa and Kilauea?";Hawaii
+634;geography;"Which city is known as the 'City of Love'?";Paris
+636;geography;"What is the longest river in Asia?";Yangtze River
+637;geography;"What is the capital of Scotland?";Edinburgh
+638;geography;"Which country is the Colosseum located in?";Italy
+639;geography;"What is the name of the sea separating Florida and Cuba?";Straits of Florida
+641;geography;"What is the capital of Thailand?";Bangkok
+642;geography;"Which country is known for its historical and cultural region, Transylvania?";Romania
+643;geography;"What is the largest lake in the world?";Caspian Sea
+645;geography;"What is the capital of Turkey?";Ankara
+646;geography;"Which city is known as the 'Pearl of the Orient'?";Hong Kong
+647;geography;"What is the capital of Norway?";Oslo
+648;geography;"What ocean lies to the west of the United States?";Pacific Ocean
+649;geography;"Which African country has the largest economy?";Nigeria
+650;geography;"What is the capital of Portugal?";Lisbon
+653;geography;"What is the largest desert in the world?";The Antarctic Desert
+654;geography;"What is the capital of Ireland?";Dublin
+655;geography;"Which body of water separates Saudi Arabia from Africa?";The Red Sea
+656;geography;"What is the capital city of Switzerland?";Bern
+657;geography;"Which country is known for the Great Wall?";China
+658;geography;"What is the capital of New Zealand?";Wellington
+659;geography;"Which river flows through the Grand Canyon?";The Colorado River
+660;geography;"What is the smallest state in the USA?";Rhode Island
+661;geography;"What is the name of the mountain range in western North America?";The Rocky Mountains
+662;geography;"Which country is the Serengeti National Park located in?";Tanzania
+663;geography;"What is the capital of Poland?";Warsaw
+664;geography;"Which sea is located to the north of Turkey?";The Black Sea
+665;geography;"What is the capital of Cuba?";Havana
+666;geography;"Which country is the largest in the Middle East?";Saudi Arabia
+667;geography;"What is the largest lake in Africa?";Lake Victoria
+668;geography;"What is the name of the famous waterfall located on the border of Zambia and Zimbabwe?";Victoria Falls
+670;geography;"Which ocean lies to the east of Africa?";Indian Ocean
+671;geography;"What is the name of the world's largest coral reef system?";The Great Barrier Reef
+672;geography;"Which country is Mount Fuji located in?";Japan
+673;geography;"What is the capital of Greece?";Athens
+674;geography;"Which European river flows through Budapest, Vienna, and Belgrade?";The Danube
+675;geography;"What is the name of the desert located in Southern California and Nevada?";The Mojave Desert
+676;geography;"What is the name of the sea located between Italy and the Balkans?";The Adriatic Sea
+678;geography;"Which African country was formerly known as Rhodesia?";Zimbabwe
+679;geography;"What is the name of the sea that borders eastern Russia and Alaska?";The Bering Sea
+680;geography;"What is the capital of Denmark?";Copenhagen
+682;science_and_nature;"What gas do plants absorb from the atmosphere for photosynthesis?";Carbon Dioxide
+683;science_and_nature;"What is the closest planet to the Sun?";Mercury
+684;science_and_nature;"What force keeps us on the ground?";Gravity
+686;science_and_nature;"What do you call a baby kangaroo?";Joey
+687;science_and_nature;"What is the largest mammal in the world?";Blue Whale
+688;science_and_nature;"What part of the plant conducts photosynthesis?";Leaves
+690;science_and_nature;"What type of animal is a frog?";Amphibian
+691;science_and_nature;"What natural satellite orbits the Earth?";The Moon
+692;science_and_nature;"What is the most abundant gas in the Earth's atmosphere?";Nitrogen
+694;science_and_nature;"What is the hardest natural substance on Earth?";Diamond
+695;science_and_nature;"What is the largest organ in the human body?";Skin
+696;science_and_nature;"What do bees collect and use to create honey?";Nectar
+697;science_and_nature;"Which planet is known as the Red Planet?";Mars
+698;science_and_nature;"What is the primary source of energy for the Earth?";The Sun
+699;science_and_nature;"What type of animal is a spider?";Arachnid
+700;science_and_nature;"What do you call molten rock before it has erupted from a volcano?";Magma
+703;science_and_nature;"What is the name of the galaxy that contains our Solar System?";The Milky Way
+705;science_and_nature;"What is the main gas found in the air we breathe?";Oxygen
+707;science_and_nature;"Which bird is known for its colorful tail and impressive courtship display?";Peacock
+708;science_and_nature;"What type of tree do acorns come from?";Oak
+710;science_and_nature;"How many hearts does an octopus have?";Three
+711;science_and_nature;"What is the name of the largest planet in our Solar System?";Jupiter
+713;science_and_nature;"Which vitamin is known as ascorbic acid?";Vitamin C
+714;science_and_nature;"What do you call the offspring of a male lion and a female tiger?";Liger
+719;science_and_nature;"What is the largest bird in the world?";Ostrich
+721;science_and_nature;"Which mammal has the longest gestation period?";Elephant
+722;science_and_nature;"What is the main component of the Sun?";Hydrogen
+724;science_and_nature;"Which planet in our solar system is known for its rings?";Saturn
+725;science_and_nature;"What is the hottest planet in our solar system?";Venus
+727;science_and_nature;"What is the scientific name for the study of plants?";Botany
+728;science_and_nature;"What is the only continent on earth where Giraffes live in the wild?";Africa
+729;science_and_nature;"What is the name given to the study of earthquakes?";Seismology
+730;science_and_nature;"Which animal is known to have the most powerful bite in the animal kingdom?";Saltwater Crocodile
+731;science_and_nature;"What is the largest type of ‘big cat’ in the world?";Siberian Tiger
+732;science_and_nature;"What is the name of the element with the atomic number 1?";Hydrogen
+733;science_and_nature;"Which planet is closest in size to Earth?";Venus
+734;science_and_nature;"In what type of biome would you find cacti?";Desert
+736;science_and_nature;"What is the name of the layer of the Earth's atmosphere where weather phenomena occur?";Troposphere
+737;science_and_nature;"Which bird is often associated with delivering babies in popular culture?";Stork
+738;science_and_nature;"What type of animal is a seahorse?";Fish
+740;science_and_nature;"What is the largest reptile in the world?";Saltwater Crocodile
+742;science_and_nature;"What is the most abundant element in the Earth's crust?";Oxygen
+744;science_and_nature;"Which planet is known for having the most moons?";Jupiter
+745;science_and_nature;"What kind of animal is a penguin?";Bird
+747;science_and_nature;"What is the study of weather called?";Meteorology
+748;science_and_nature;"Which element is diamond made of?";Carbon
+750;science_and_nature;"Which bird is known for its ability to mimic sounds?";Lyrebird
+751;science_and_nature;"What is the name of the galaxy that contains our Solar System?";The Milky Way
+754;science_and_nature;"Which planet in our solar system is known as the 'Blue Planet'?";Earth
+755;science_and_nature;"What is the largest land animal?";African Elephant
+756;science_and_nature;"What is the name of the layer of the Earth where we live?";The Crust
+757;science_and_nature;"What is the largest type of deer in the world?";Moose
+758;science_and_nature;"What type of animal is a barracuda?";Fish
+759;science_and_nature;"What gas do plants release into the air as a byproduct of photosynthesis?";Oxygen
+760;science_and_nature;"Which planet in our solar system has the most gravity?";Jupiter
+762;science_and_nature;"What type of animal is a 'flying fox'?";Bat
+763;science_and_nature;"What natural phenomenon is measured by the Richter scale?";Earthquakes
+764;science_and_nature;"Which planet is known as the morning star or evening star?";Venus
+766;science_and_nature;"What type of animal is a 'Portuguese man o' war'?";Jellyfish
+767;science_and_nature;"What is the most common type of tree in the world?";Pine
+768;science_and_nature;"What is the term for an animal that is active during the night?";Nocturnal
+769;science_and_nature;"What is the hardest substance in the human body?";Tooth enamel
+773;science_and_nature;"What is the term for a baby horse?";Foal
+774;science_and_nature;"What metal is liquid at room temperature?";Mercury
+784;science_and_nature;"What do you call an animal that eats both plants and animals?";Omnivore
+790;science_and_nature;"What is the name of the deepest known location in the Earth's oceans?";Mariana Trench
+792;science_and_nature;"What do you call molten rock after it has erupted from a volcano?";Lava
+793;science_and_nature;"Which planet in our solar system is known for having a red color?";Mars
+796;science_and_nature;"What type of animal is a python?";Snake
+798;science_and_nature;"What are the two main metals in the earth's core?";Iron and Nickel
+799;science_and_nature;"What is the term for animals that only eat plants?";Herbivore
+800;science_and_nature;"Which mammal is known to be the largest primate?";Gorilla
+801;science_and_nature;"Which planet in our solar system is known for its Great Red Spot?";Jupiter
+803;science_and_nature;"Which nutrient is obtained from sunlight?";Vitamin D
+804;science_and_nature;"What is the name of the largest rainforest in the world?";The Amazon Rainforest
+807;science_and_nature;"Which bird is known as a symbol of peace?";Dove
+810;science_and_nature;"What is the name given to the study of earthquakes?";Seismology
+812;science_and_nature;"Which planet is known as the 'Evening Star'?";Venus
+813;science_and_nature;"What do you call a scientist who studies rocks?";Geologist
+814;science_and_nature;"What kind of celestial body is the Sun?";Star
+817;science_and_nature;"Which layer of the Earth lies directly beneath the crust?";Mantle
+819;science_and_nature;"What is the largest bird of prey in the world?";Andean Condor
+820;science_and_nature;"What is the name of the galaxy closest to the Milky Way?";Andromeda
+821;science_and_nature;"What do you call a baby frog?";Tadpole
+822;science_and_nature;"What is the name of the process by which leaves change color and fall in autumn?";Deciduous
+826;science_and_nature;"What is the name for the young of a butterfly or moth?";Caterpillar
+827;science_and_nature;"What is the smallest unit of matter?";Atom
+829;science_and_nature;"Which organ in the human body filters blood to produce urine?";Kidney
+831;history;"Who discovered the Americas in 1492?";Christopher Columbus
+834;history;"What ancient city-state was ruled by Pericles?";Athens
+835;history;"Who was the first President of Russia after the dissolution of the Soviet Union?";Boris Yeltsin
+837;history;"Who was the leader of the Normans during the Battle of Hastings in 1066?";William the Conqueror
+840;history;"What was the primary language of the Byzantine Empire?";Greek
+841;history;"Which Mongolian ruler created the largest contiguous empire in history?";Genghis Khan
+842;history;"Who was the British monarch during the Victorian Era?";Queen Victoria
+843;history;"What was the name of the first human civilization?";Sumerian
+847;history;"What was the name of the alliance between Germany and Austria-Hungary in World War I?";The Central Powers
+850;history;"What was the longest dynasty in Chinese history?";The Zhou Dynasty
+855;history;"Who was the Greek goddess of wisdom?";Athena
+857;history;"Who was the Roman god of the sea?";Neptune
+859;history;"Who was the famous ruler of the Kingdom of Macedonia?";Alexander the Great
+864;history;"What was the name of the ship on which Charles Darwin made his famous voyage?";HMS Beagle
+865;history;"Who was the first woman to win a Nobel Prize?";Marie Curie
+869;history;"What ancient civilization was centered in the city of Tenochtitlán?";Aztecs
+870;history;"Who was the leader of the Russian Revolution in 1917?";Vladimir Lenin
+871;history;"What period in history is known for the reawakening of interest in the arts and sciences?";Renaissance
+873;history;"What empire was known for its Incense Route?";Arabian Empire
+875;history;"Who was the first person to propose the heliocentric model of the solar system?";Nicolaus Copernicus
+878;history;"Who was the famous leader of the Carthaginian army during the Second Punic War?";Hannibal
+879;history;"What was the first capital of ancient Egypt?";Memphis
+880;history;"Who was the famous American civil rights leader assassinated in 1968?";Martin Luther King Jr.
+884;history;"What was the main trade good from China along the Silk Road?";Silk
+885;history;"Who was the Greek god of the underworld?";Hades
+886;history;"Which civilization is known for the Trojan War, as recounted in Homer's epics?";Ancient Greeks
+887;history;"What is the name of the first artificial satellite launched into space?";Sputnik 1
+888;history;"What empire was founded by Alexander the Great?";Macedonian Empire
+890;history;"Who was the last Pharaoh of Egypt?";Cleopatra
