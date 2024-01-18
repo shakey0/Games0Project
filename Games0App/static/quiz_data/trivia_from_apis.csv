@@ -236,7 +236,7 @@ ID;category;question;answer
 250;video_games;"What is the name of Joel's daughter in the game, ""The Last of Us""?";Sarah
 252;animals;What colour is the female blackbird?;Brown
 253;japanese_anime_and_manga;"Which animation studio animated ""Hidamari Sketch""?";Shaft
-254;art;Who painted The Starry Night?;Vincent van Gogh
+254;art;Who painted The Starry Night?;Van Gogh
 255;general_knowledge;What is the nickname of the US state of California?;Golden State
 256;video_games;Who's the creator of Geometry Dash?;Robert Topala
 257;general_knowledge;Amsterdam Centraal station is twinned with what station?;London Liverpool Street
@@ -699,7 +699,6 @@ ID;category;question;answer
 754;animals;What is a group of this animal called: Swallow?;Flight
 755;tv;Following earlier failures on TV, Danny Thomas successfully returns in?;Make
 757;geography;What was Ho Chi Minh City previously known as?;Saigon
-758;artliterature;For which novel was Boris Pasternak awarded the 1958 Nobel Prize, an award he declined?;Dr Zhivago
 759;tv;What is Bart Simpson's middle name?;Jojo
 761;film;What film is about the migration of poor workers from the dust bowl to the California fruit valleys?;Grapes of Wrath
 762;geography;What is the Capital of: Saint Helena?;Jamestown
@@ -1156,3 +1155,136 @@ ID;category;question;answer
 1229;general;What does a philographist collect?;Autographs
 1230;books;"In 1955, the novel ""The Year the Yankees Lost the Pennant"" was turned into a Broadway musical with what title?";Damn Yankees
 1231;religionmythology;What are monsters with only one eye called?;Cyclops
+1232;sports;The Los Angeles Dodgers were originally from what U.S. city?;Brooklyn
+1233;sports;Which country did Kabaddi, a contact sport involving tackling, originate from?;India
+1234;sports;Which team was the 2015-2016 NBA Champions?;Cleveland Cavaliers
+1235;sports;Josh Mansour is part of what NRL team?;Penrith Panthers
+1236;sports;Who is Manchester United's leading appearance maker?;Ryan Giggs
+1237;sports;Who won the 2018 Monaco Grand Prix?;Daniel Ricciardo
+1238;sports;In Canadian football, scoring a rouge is worth how many points?;1
+1239;sports;How many scoring zones are there on a conventional dart board?;82
+1240;sports;Which player holds the NHL record of 2,857 points?;Wayne Gretzky
+1241;sports;What is the oldest team in Major League Baseball?;Atlanta Braves
+1242;sports;Which country hosted the 2020 Summer Olympics?;Japan
+1243;sports;What is the highest belt you can get in Taekwondo?;Black
+1244;sports;Which team was the 2014-2015 NBA Champions?;Golden State Warriors
+1245;sports;Which English football team is nicknamed 'The Tigers'?;Hull City
+1246;sports;Which team won 2014 FIFA World Cup in Brazil?;Germany
+1247;sports;Who won the 2015 Formula 1 World Championship?;Lewis Hamilton
+1248;sports;What tool lends it's name to a last-stone advantage in an end in Curling?;Hammer
+1249;sports;What is the name of the AHL affiliate of the Toronto Maple Leafs?;Toronto Marlies
+1250;sports;Who won the 2015 College Football Playoff (CFP) National Championship?;Ohio State Buckeyes
+1251;sports;What team did England beat to win in the 1966 World Cup final?;West Germany
+1252;sports;With which doubles partner did John McEnroe have most success?;Peter Fleming
+1253;sports;"Who is often called ""the Maestro"" in the men's tennis circuit?";Roger Federer
+1254;sports;Which NBA player won Most Valuable Player for the 1999-2000 season?;Shaquille O'Neal
+1255;sports;In a game of snooker, what colour ball is worth 3 points?;Green
+1256;sports;What is “The Sport of Kings”?;Horse Racing
+1257;sports;What team won the 2016 MLS Cup?;Seattle Sounders
+1258;sports;How many premier league trophies did Sir Alex Ferguson win during his time at Manchester United?;13
+1259;sports;Which soccer team won the Copa América Centenario 2016?;Chile
+1260;sports;What is the most common type of pitch thrown by pitchers in baseball?;Fastball
+1261;sportsleisure;Name the famous Italian football team who play in Black and White stripped shirts?;Juventus
+1262;sportsleisure;Which football team has won the European cup the most times?;Real Madrid
+1263;sportsleisure;Which animal is on top of rugby's Calcutta Cup?;Elephant
+1264;sportsleisure;Who was Ben Johnson running for when disqualified in Seoul?;Canada
+1265;sportsleisure;Which premiership club play their home games at The JJB Stadium?;Wigan Athletic
+1266;sportsleisure;What is Tiger Woods' real first name?;Eldrick Woods
+1267;sportsleisure;How many players are there in a netball team?;7
+1268;sportsleisure;Which British boxer was first to win 3 Lonsdale belts outright?;Henry Cooper
+1269;sportsleisure;In what sport would you find a 'Sukahara'?;Gymnastics
+1270;sportsleisure;Who was the only woman to win an athletics gold medal for Britain in the 1992 Barcelona Olympics?;Sally Gunnell
+1271;sportsleisure;What do the initials TT stand for in regard with the Isle Of Man Motorcyle Race?;Tourist Trophy
+1272;sportsleisure;What was the first London club that David Seaman played for?;Queens Park Rangers
+1273;sportsleisure;Which is the only non English team to have won the FA cup?;Cardiff City
+1274;artliterature;Which former Jockey specialises in novels concerning horse racing?;Dick Francis
+1276;artliterature;Who wrote 'To Kill A Mockingbird'?;Harper Lee
+1277;artliterature;"Who wrote the book ""The Origin of Species"" ?";Charles Darwin
+1278;artliterature;Who wrote 'Gone With The Wind'?;Margaret Mitchell
+1279;artliterature;Whose life was the subject of James Boswell's Biography, published in 1791?;Samuel Johnson
+1280;artliterature;Who Wrote The Novels 'The Hunt For Red October'' And 'Clear And Present Danger''?;Tom Clancy
+1281;artliterature;"Who wrote ""Animal Farm""?";George Orwell
+1282;artliterature;Who wrote the vampire series that featured Lestat as the main character?;Anne Rice
+1283;artliterature;How many lines are in a sonnet?;Fourteen
+1284;artliterature;In one of Donald Horne's novels, which was 'the lucky country'?;Australia
+1285;artliterature;Which outlaw rode a horse called black bess?;Dick Turpin
+1286;artliterature;What is the fourth book in the Harry Potter series?;The Goblet of Fire
+1287;artliterature;"What Irish playwright and author, wrote ""The Importance of Being Ernest"" and ""A Picture of Dorian Grey"" among others?";Oscar Wilde
+1288;artliterature;"Who wrote the novel ""The Strange Case of Dr. Jekyll and Mr Hyde""?";Robert Louis Stevenson
+1289;artliterature;Which Shakespeare play contains the line 'if music be the food of love play on'?;Twelfth Night
+1290;artliterature;In 'Alice In Wonderland', who never stopped sobbing?;Mock Turtle
+1291;artliterature;What is the name of the Russian national ballet?;The Kirov Ballet
+1292;artliterature;Who was the human companion of Willow?;Mad Mardigan
+1293;artliterature;Who painted 'Irises'?;Van Gogh
+1294;artliterature;Who created 'Maudie Frickett'?;Jonathan Winters
+1295;artliterature;What Shakespearean play features the line: A plague on both your houses?;Romeo and Juliet
+1296;artliterature;What was Picasso's first name?;Pablo
+1297;artliterature;Which science fiction story centres around alien children in a village?;The Midwitch Cuckoos
+1298;artliterature;What is an Icelandic epic called?;Saga
+1299;artliterature;Which Gilbert and Sullivan Opera is about the Emperor of Japan?;The Mikado
+1300;artliterature;From whom did Bilbo obtain The Ring?;Gollum
+1301;artliterature;Which Italian city was the centre of The Renaissance?;Florence
+1302;artliterature;Which author wrote The Spy Who Came in from the Cold?;John Le Carre
+1303;books;Which Russian author wrote the epic novel War and Peace?;Leo Tolstoy
+1304;books;What is the name of the gang that Ponyboy is a part of in the book, The Outsiders?;The Greasers
+1305;books;What is Ron Weasley's middle name?;Bilius
+1306;books;What book series published by Jim Butcher follows a wizard in modern day Chicago?;The Dresden Files
+1307;books;Which novel by John Grisham was conceived on a road trip to Florida while thinking about stolen books with his wife?;Camino Island
+1308;books;In the Magic: The Gathering universe, which plane does the Homelands expansion take place in?;Ulgrotha
+1309;books;In the Lord of the Rings, who is the father of the dwarf Gimli?;Gloin
+1310;books;Which American author was also a budding travel writer and wrote of his adventures with his dog Charley?;John Steinbeck
+1311;books;"In the ""The Hobbit"", who kills Smaug?";Bard
+1312;books;In the Magic: The Gathering universe, the Fallen Empires expansion takes place on which continent?;Sarpadia
+1313;books;In Romance of the Three Kingdoms, who was not a member of the Peach Garden Oath?;Zhao Yun
+1314;books;"J.K. Rowling completed ""Harry Potter and the Deathly Hallows"" in which hotel in Edinburgh, Scotland?";The Balmoral
+1315;books;"What was the name of Captain Nemo's submarine in ""20,000 Leagues Under the Sea""?";The Nautilus
+1316;books;"What was Sir Handel's original name in ""The Railway Series"" and it's animated counterpart ""Thomas and Friends?""";Falcon
+1317;books;In the Magic: The Gathering universe, the Antiquities, Ice Age, and Alliances expansions take place on which continent?;Terisiare
+1318;books;"Who wrote the 1967 horror novel ""Rosemary's Baby""?";Ira Levin
+1319;books;"The title of Adolf Hitler's autobiography ""Mein Kampf"" is what when translated to English?";My Struggle
+1320;books;What is the fourth book of the Old Testament?;Numbers
+1321;japanese_anime_and_manga;What studio animated Fullmetal Alchemist?;Bones
+1322;japanese_anime_and_manga;"Who voices ""Shou Suzuki"" in the English dub of ""Mob Psycho 100""?";Casey Mongillo
+1323;japanese_anime_and_manga;What is the last name of Edward and Alphonse in the Fullmetal Alchemist series.;Elric
+1324;japanese_anime_and_manga;The manga JoJo's Bizarre Adventure is split into how many parts?;8
+1325;japanese_anime_and_manga;"In ""To Love-Ru"", Ren and Run are from what planet?";Memorze
+1326;japanese_anime_and_manga;What was studio Trigger's first original long-form animated series for television?;Kill la Kill
+1327;japanese_anime_and_manga;Who was the Author of the manga Uzumaki?;Junji Ito
+1328;japanese_anime_and_manga;"Which animation studio produced ""Log Horizon""?";Satelite
+1329;japanese_anime_and_manga;"What song plays in the ending credits of the anime ""Ergo Proxy""?";Paranoid Android
+1330;japanese_anime_and_manga;What is the name of JoJo's Bizarre Adventure Part 5?;Vento Aureo
+1331;japanese_anime_and_manga;"Who wrote and directed the animated movie ""Spirited Away"" (2001)?";Hayao Miyazaki
+1332;japanese_anime_and_manga;"Who was the Director of the 1988 Anime film ""Grave of the Fireflies""?";Isao Takahata
+1333;japanese_anime_and_manga;"Who is the armored titan in ""Attack On Titan""?";Reiner Braun
+1334;japanese_anime_and_manga;"Akatsuki's subclass in ""Log Horizon"" is what?";Tracker
+1335;japanese_anime_and_manga;"What is the theme song of ""Neon Genesis Evangelion""?";A Cruel Angel's Thesis
+1336;japanese_anime_and_manga;"In ""Puella Magi Madoka Magica"", what is the first name of Madoka's younger brother?";Tatsuya
+1337;japanese_anime_and_manga;In Ms. Kobayashi's Dragon Maid, who is Kobayashi's maid?;Tohru
+1338;japanese_anime_and_manga;"Who is the creator of the manga series ""One Piece""?";Eiichiro Oda
+1339;japanese_anime_and_manga;"In ""Highschool DxD"", Koneko Toujou is from what race?";Nekomata
+1340;japanese_anime_and_manga;Which studio made Cowboy Bebop?;Sunrise
+1341;japanese_anime_and_manga;"In ""To Love-Ru: Darkness"", which of the girls attempt making a harem for Rito Yuuki?";Momo Deviluke
+1342;japanese_anime_and_manga;"The character Momonga from the ""Overlord"" series orders his servants to call him by what name?";Ainz Ooal Gown
+1343;japanese_anime_and_manga;Which studio animated Soul Eater?;Bones
+1344;japanese_anime_and_manga;"The heroine of ""Humanity Has Declined"" is a mediator between humans and what?";Fairies
+1345;japanese_anime_and_manga;"In ""A Certain Scientific Railgun"", how many ""sisters"" did Accelerator have to kill to achieve the rumored level 6?";20,000
+1346;japanese_anime_and_manga;"In ""Inuyasha"", what are the heros are looking to collect?";Jewel Shards
+1347;japanese_anime_and_manga;What studio animated Ouran High School Host Club?;Bones
+1348;japanese_anime_and_manga;"In ""Love Live: School Idol Project"" what pseudonym does Kotori Minami use in her job as a maid?";Minalinsky
+1349;cartoon_and_animations;"Who voice acted the character Hiccup in the movie ""How to Train Your Dragon""?";Jay Baruchel
+1350;cartoon_and_animations;"Which singer provided the voice of Metroid's Mother Brain in the animated series ""Captain N: The Game Master""?";Levi Stubbs
+1351;cartoon_and_animations;In The Simpsons, which war did Seymour Skinner serve in the USA Army as a Green Beret?;Vietnam War
+1352;cartoon_and_animations;"What is the name of the Alligator that The Simpsons ""killed"" in the episode ""Kill The Alligator and Run""?";Captain Jack
+1353;cartoon_and_animations;What was the first Disney movie to use CGI?;The Black Cauldron
+1354;cartoon_and_animations;What is Scooby-Doo's real name?;Scoobert
+1355;cartoon_and_animations;In the web-comic Homestuck, what is the name of the game the 4 kids play?;Sburb
+1356;cartoon_and_animations;What is the cartoon character, Andy Capp, known as in Germany?;Willi Wakker
+1357;cartoon_and_animations;Wendy O. Koopa appeared in the Super Mario DIC Cartoons, but what was she known as?;Kootie Pie
+1358;cartoon_and_animations;"What is Dipper's real name from ""Gravity Falls""?";Mason Pines
+1359;cartoon_and_animations;The song 'Little April Shower' features in which Disney cartoon film?;Bambi
+1360;cartoon_and_animations;What was the name of Jonny's pet dog in The Adventures of Jonny Quest?;Bandit
+1361;cartoon_and_animations;Who was the villain of 'The Lion King'?;Scar
+1362;cartoon_and_animations;"Which city did Anger berate for ruining pizza in ""Inside Out""?";San Francisco
+1363;cartoon_and_animations;"What was the name of the sea witch in the 1989 Disney film ""The Little Mermaid""?";Ursula
+1364;cartoon_and_animations;What is the name of Ruby Rose's weapon from RWBY?;Crescent Rose
+1365;cartoon_and_animations;"In ""My Little Pony: Friendship is Magic"", which of these ponies represents the quality of honesty?";Applejack

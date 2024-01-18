@@ -20,9 +20,9 @@ print("1. Add jokes from Open Trivia Database to CSV")
 print("2. Add jokes from API Ninjas to CSV")
 write_questions = input("Choose the number of your CSV and API: ")
 if write_questions == '1':
-    api = 'https://opentdb.com/api.php?amount=50&type=multiple'
+    api = 'https://opentdb.com/api.php?amount=50&category=32&type=multiple'
 elif write_questions == '2':
-    api = 'https://api.api-ninjas.com/v1/trivia?limit=30'
+    api = 'https://api.api-ninjas.com/v1/trivia?limit=30&category=artliterature'
 else:
     print("Invalid input.")
     exit()
@@ -62,16 +62,14 @@ for item in response:
             question = question[0].upper() + question[1:]
         answer = item['answer']
     
-    other_answers = []
     while True:
         os.system('clear')
         print()
         print('CATEGORY:', category)
         print('QUESTION:', question)
         print('ANSWER:', answer)
-        print('OTHER ANSWERS:', other_answers)
         print()
-        choice = input('Enter=add, C=edit_category, A=edit_answer, Q=edit_question, Z=discard, O=add_other_answer: ')
+        choice = input('Enter=add, C=edit_category, A=edit_answer, Q=edit_question, Z=discard: ')
         if choice.lower() == 'c':
             category = input('Enter category: ')
         elif choice.lower() == 'a':
@@ -80,15 +78,10 @@ for item in response:
             question = input('Enter question: ')
         elif choice.lower() == 'z' or choice == '':
             break
-        elif choice.lower() == 'o':
-            other_answer = input('Enter other answer: ')
-            other_answers.append(other_answer)
     if choice.lower() == 'z':
         continue
 
     last_id += 1
-    if not other_answers:
-        other_answers = ['!']
     with open(f'Games0App/static/quiz_data/trivia_from_apis.csv', 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
-        writer.writerow([last_id, category, question, answer, '|'.join(other_answers)])
+        writer.writerow([last_id, category, question, answer])
