@@ -201,41 +201,17 @@ def game_answer():
         flash("It looks like your game has expired.")
         return redirect('/')
 
-    answer = request.form.get('answer')
+    user_answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
     statement = False
-    if answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
-        answer = find_and_convert_numbers(answer)
-        # TESTS FOR CONVERTING NUMBERS
-        # - 1000000
-        # - 48300894
-        # - 1,000,000
-        # - 32,059,320
-        # - 100000
-        # - 100,000
-        # - 10000
-        # - 10,000
-        # - 1000
-        # - 7,000
-        # - 8,900
-        # - 8900
-        # - 1,000
-        # - 100
-        # - 10
-        # - 1
-        # - 5 million
-        # - 96 thousand
-        # - 2 hundred
-        # - 1940
-        # - 1800
-        # - 1458
-        # - and more...
-        correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
-
-        # IMPORTANT TEST QUESTION:
-        # What is the name for a group of gorillas?
-        # Answer: band OR a band
-        # test with single letter because this seemed to pass before
+    if user_answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
+        user_answer = find_and_convert_numbers(user_answer)
+        correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
+        if (' and ' in user_answer or ' & ' in user_answer) and correct == False:
+            answer_part_one = user_answer.split(' and ')[0].split(' & ')[0]
+            answer_part_two = user_answer.split(' and ')[1].split(' & ')[1]
+            user_answer = answer_part_two + ' and ' + answer_part_one
+            correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
 
         # if correct == False and "fill_blank" in game.param and len(answer) <= 15:
         #     set_question = redis_client.hget(token, 'question').decode('utf-8')
@@ -244,26 +220,27 @@ def game_answer():
         #         real_answer = answer.strip()
         # elif correct == False and "trivia_madness" in game.param and len(answer) <= 25:
         #     pass
+
     elif "number" in game.param:
-        correct = answer == real_answer
+        correct = user_answer == real_answer
         set_question = redis_client.hget(token, 'question').decode('utf-8')
         real_answer = f"{real_answer} = {set_question[39:-1]}"
-    elif answer and "_mc" in game.param:
-        correct = is_close_match(normalise_answer(answer), normalise_answer(real_answer))
+    elif user_answer and "_mc" in game.param:
+        correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
     elif "_tf" in game.param:
         set_question = redis_client.hget(token, 'question').decode('utf-8')
-        if answer == "True" and set_question == real_answer:
+        if user_answer == "True" and set_question == real_answer:
             correct, statement = True, True
-        elif answer == "False" and set_question != real_answer:
+        elif user_answer == "False" and set_question != real_answer:
             correct, statement = True, False
-        elif answer == "True" and set_question != real_answer:
+        elif user_answer == "True" and set_question != real_answer:
             correct, statement = False, False
-        elif answer == "False" and set_question == real_answer:
+        elif user_answer == "False" and set_question == real_answer:
             correct, statement = False, True
         else:
             correct, statement = False, set_question == real_answer
     else:
-        answer = "No answer given"
+        user_answer = "No answer given"
         correct = False
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))

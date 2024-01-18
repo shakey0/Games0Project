@@ -31,9 +31,9 @@ def format_answer(answer):
 def normalise_answer(answer):
     answer = answer.lower().strip()
 
-    if '&' in answer:
+    if ' & ' in answer:
         answer = answer.replace('&', '')
-    if 'and' in answer:
+    if ' and ' in answer:
         answer = answer.replace('and', '')
 
     for article in ['the ', 'a ', 'an ', 'some ', 'my ', 'your ', 'he ', 'his ', 'she ', 'her ', 'hers ', 'it ', 'its ', 'we ', 'our ', 'they ', 'their ', 'it\'s ', 'they\'re', 'he\'s', 'she\'s']:
@@ -44,21 +44,24 @@ def normalise_answer(answer):
     return format_answer(answer)
 
 
-def is_close_match(str1, str2):
+def is_close_match(user_answer, real_answer):
+    if real_answer.lower() in user_answer.lower(): # NEEDS TESTING - MAY BE TOO LENIENT
+        return True
+    
     # Check if the strings are the same or differ by only one character
-    len_str1, len_str2 = len(str1), len(str2)
-    if len_str1 > len_str2 + 1 or len_str1 + 1 < len_str2:
+    len_u_answer, len_r_answer = len(user_answer), len(real_answer)
+    if len_u_answer > len_r_answer + 1 or len_u_answer + 1 < len_r_answer:
         return False
 
     i, j, diff = 0, 0, 0
-    while i < len_str1 and j < len_str2:
-        if str1[i] != str2[j]:
+    while i < len_u_answer and j < len_r_answer:
+        if user_answer[i] != real_answer[j]:
             if diff:
                 return False
             diff = 1
-            if len_str1 > len_str2:
+            if len_u_answer > len_r_answer:
                 i += 1
-            elif len_str1 < len_str2:
+            elif len_u_answer < len_r_answer:
                 j += 1
             else:
                 i += 1
