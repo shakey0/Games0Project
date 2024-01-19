@@ -93,18 +93,23 @@ def game_play():
             cookied_question_number = 0
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
+        # CONTAIN IN ONE FUNCTION ----------------------------------------
         next_question = game.get_question(cookied_question_number, category=category_name, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
+        if not next_question:
+            flash("Something went wrong.")
+            return redirect('/')
         
-        redis_client.hset(token, 'question_no', 1)
+        redis_client.hset(token, 'question_no', 1) # OMIT FROM FUNCTION
         redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
         redis_client.hset(token, 'question', next_question["question"])
         redis_client.hset(token, 'answer', next_question["answer"])
 
-        if len(next_question) == 4:
+        if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
             next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
             random.shuffle(next_question["all_answers"])
             redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
+        # ----------------------------------------------------------------
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:
             reveal_card_starter = 9
@@ -152,16 +157,22 @@ def game_play():
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
+    # CONTAIN IN ONE FUNCTION ----------------------------------------
     next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
+    print('NEXT QUESTION: ', next_question)
+    if not next_question:
+        flash("Something went wrong.")
+        return redirect('/')
     
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
     redis_client.hset(token, 'answer', next_question["answer"])
 
-    if len(next_question) == 4:
+    if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
         next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
         random.shuffle(next_question["all_answers"])
         redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
+    # ----------------------------------------------------------------
     
     helpers = {}
 
@@ -204,6 +215,7 @@ def game_answer():
     user_answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
     statement = False
+
     if user_answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
         user_answer = find_and_convert_numbers(user_answer)
         correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
@@ -213,20 +225,14 @@ def game_answer():
             user_answer = answer_part_two + ' and ' + answer_part_one
             correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
 
-        # if correct == False and "fill_blank" in game.param and len(answer) <= 15:
-        #     set_question = redis_client.hget(token, 'question').decode('utf-8')
-        #     correct = check_blank_answer_for_alternative(answer.strip(), real_answer, set_question)
-        #     if correct:
-        #         real_answer = answer.strip()
-        # elif correct == False and "trivia_madness" in game.param and len(answer) <= 25:
-        #     pass
-
     elif "number" in game.param:
         correct = user_answer == real_answer
         set_question = redis_client.hget(token, 'question').decode('utf-8')
         real_answer = f"{real_answer} = {set_question[39:-1]}"
+        
     elif user_answer and "_mc" in game.param:
         correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
+
     elif "_tf" in game.param:
         set_question = redis_client.hget(token, 'question').decode('utf-8')
         if user_answer == "True" and set_question == real_answer:
@@ -239,6 +245,7 @@ def game_answer():
             correct, statement = False, True
         else:
             correct, statement = False, set_question == real_answer
+
     else:
         user_answer = "No answer given"
         correct = False

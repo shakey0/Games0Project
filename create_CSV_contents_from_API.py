@@ -51,19 +51,19 @@ for item in response:
         if len(item['joke']) > 100 or '?' not in item['joke'] or len(item['joke'].split('? ')) < 2:
             continue
         main_part = item['joke'].split('? ')[0] + '?'
-        answer_part = item['joke'].split('? ')[1]
+        punchline_part = item['joke'].split('? ')[1]
 
     elif write_questions == '2':
         main_part = item['setup']
-        answer_part = item['punchline']
+        punchline_part = item['punchline']
 
     elif write_questions == '3':
         if len(item['fact']) > 100:
             continue
         main_part = item['fact']
-        answer_part = 'NONE'
+        punchline_part = 'NONE'
 
-    is_okay = input(f"Is this {word} okay? (y/n)\n{word.upper()} QUESTION: {main_part}\n{word.upper()} ANSWER: {answer_part}\n")
+    is_okay = input(f"Is this {word} okay? (y/n)\n{word.upper()} QUESTION: {main_part}\n{word.upper()} PUNCHLINE: {punchline_part}\n")
     if is_okay.lower() == 'y':
         blank_words = []
         while True:
@@ -71,6 +71,8 @@ for item in response:
             blank_word = input("Enter a word that can be a blank or Q to stop adding: ")
             if blank_word.lower() == 'q':
                 break
+            elif any(char.isdigit() for char in blank_word):
+                print("Word cannot contain numbers.")
             elif len(blank_word) >= 3:
                 blank_words.append(blank_word)
             else:
@@ -80,7 +82,7 @@ for item in response:
 
     supposed_id = last_id + 1
     if word == 'joke':
-        entry_to_add = {"id": supposed_id, "joke": main_part, "answer": answer_part, "blanks": blank_words}
+        entry_to_add = {"id": supposed_id, "joke": main_part, "punchline": punchline_part, "blanks": blank_words}
     elif word == 'fact':
         entry_to_add = {"id": supposed_id, "fact": main_part, "blanks": blank_words}
 
@@ -106,7 +108,7 @@ for item in response:
         with open(output_file_path, 'a', newline='') as csvfile:
             writer = csv.writer(csvfile, delimiter=';')
             if word == 'joke':
-                writer.writerow([str(entry_to_add["id"]), entry_to_add['joke'], entry_to_add['answer'],
+                writer.writerow([str(entry_to_add["id"]), entry_to_add['joke'], entry_to_add['punchline'],
                                 ', '.join(entry_to_add['blanks'])])
             elif word == 'fact':
                 writer.writerow([str(entry_to_add["id"]), entry_to_add['fact'], ', '.join(entry_to_add['blanks'])])

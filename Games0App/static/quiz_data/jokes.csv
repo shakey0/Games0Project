@@ -1,4 +1,4 @@
-ID;joke;answer;blanks
+ID;joke;punchline;blanks
 1;What do you call a cow with no legs?;Ground beef;cow, legs, ground
 2;What do you call a cow with two legs?;Lean beef; cow, legs, lean
 3;What do you call a cow with all of its legs?;High steaks; cow, legs, high, steaks
@@ -19,11 +19,11 @@ ID;joke;answer;blanks
 18;Why don't programmers like nature?;Too many bugs; nature, bugs
 19;Why are giraffes slow to apologize?;It takes them a long time to swallow their pride;giraffes, slow, swallow, pride
 20;What side of a leopard has the most spots?;The outside;outside
-21;What did daddy fish do when mommy fish got herself lost?;He flounder;daddy, fish, mommy, flounder
+21;What did daddy fish do when mommy fish got herself lost?;He flounder;daddy, fish, flounder
 22;What do you call an alligator with a vest?;An Investigator!;alligator, vest, investigator
 23;Why did the coffee file a police report?;Because it was mugged.;police, report, mugged
 24;Want to hear a joke about pizza?;Never mind it is too cheesy.;pizza, cheesy
-25;How do you make gold soup?;You use 14 carrots.;gold, fourteen, carrots
+25;How do you make gold soup?;You use 14 carrots.;gold, carrots
 26;How do you unlock a monastery door?;With a monk key.;monk, key
 27;How did the desk lamp store manager feel when thieves stole all his lightbulbs?;He was delighted.;feel, stole, delighted
 28;What do vegetarian zombies eat?;Graaaaaaiiiins......;zombies

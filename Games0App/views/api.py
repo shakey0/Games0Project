@@ -35,9 +35,9 @@ def reveal_letter():
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
-    answer = answer.lower().strip()
+    answer = answer.strip()
     for article in ['the ', 'a ', 'an ']:
-        if answer.startswith(article):
+        if answer.lower().startswith(article):
             answer = answer[len(article):]
             break
 

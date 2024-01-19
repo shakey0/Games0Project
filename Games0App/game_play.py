@@ -1,196 +1,104 @@
 from Games0App.extensions import redis_client
-from Games0App.utils import spell_check_sentence, find_and_convert_numbers
+from Games0App.sort_questions import sort_fill_blank_facts_questions, sort_fill_blank_jokes_questions, \
+    sort_trivia_madness_questions, sort_trivia_mc_questions, sort_trivia_tf_questions
 from Games0App.sum_generator import create_sums_for_question
-from Games0App.lists import blank_words_to_avoid # WON'T BE NEEDED
+import requests
 import json
 import csv
 import random
 
 
 class GamePlay:
-    def __init__(self, name, intro_message, default=True, categories=[], has_difficulty=False, param="",
-                api_source="", api_variable=""):
+    def __init__(self, name, intro_message, param, load_route, default=True, categories=[], has_difficulty=False):
         self.name = name
         self.lower_name = name.lower().replace(' ', '').replace('-', '').replace('&', '')
         self.image = self.lower_name + '.png'
         self.intro_message = intro_message
+        self.param = param
+        self.load_route = load_route
         self.default = default
         self.categories = categories
         self.has_difficulty = has_difficulty
-        self.param = param
-        self.api_source = api_source
-        self.api_variable = api_variable
-        if categories and api_source == "ninjas":
-            self.api_url = 'https://api.api-ninjas.com/v1/{}?category={}&limit=30'
-        elif api_source == "ninjas":
-            self.api_url = 'https://api.api-ninjas.com/v1/{}?limit=30'
-        elif categories and api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=50&categories={}&difficulty={}"
-        elif api_source == "trivia":
-            self.api_url = "https://the-trivia-api.com/api/questions?limit=50&difficulty={}"
-        else:
-            self.api_url = ""
         self.question_numbers = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",
                                 7: "seventh", 8: "eighth", 9: "ninth", 10: "last"}
 
 
-    def create_fill_blank_answer(self, sentence):
-        punctuation = ['.', ',', '!', '?', ';', ':', '(', ')', '[', ']', '{', '}', '"', "'"]
-        split_sentence = sentence.split()
-        count = 0
-        while count < 100:
-            if not spell_check_sentence(sentence):
-                return None
-            count += 1
-            random_word = random.choice(split_sentence)
-            if not random_word[1:-1].isalpha():
-                continue
-            for punct in punctuation:
-                random_word = random_word.replace(punct, '')
-            if random_word.lower() in blank_words_to_avoid:
-                continue
-            if not random_word.isalpha():
-                continue
-            if len(random_word) < 4 or len(random_word) > 8:
-                continue
-            if not sentence[-1] in ['.', '!', '?']:
-                sentence += '.'
-            return [sentence.replace(random_word, '____'), random_word]
-        return None
+    def get_questions_from_api(self, category, difficulty):
 
-    def validate_trivia_madness_question(self, question, answer):
-        if len(answer.split()) > 2 or len(answer) > 15 or len(answer.split()[0]) > 10:
-            print('ANSWER LENGTH ERROR\n', question, answer)
-            return False
-        if len(answer.split()) == 2 and len(answer.split()[1]) > 10:
-            print('ANSWER LENGTH ERROR\n', question, answer)
-            return False
-        if not spell_check_sentence(question):
-            print('QUESTION SPELLING ERROR\n', question, answer)
-            return False
-        if not spell_check_sentence(answer):
-            print('ANSWER SPELLING ERROR\n', question, answer)
-            return False
-        if any(c.isalpha() for c in answer) and any(c.isdigit() for c in answer):
-            print('ANSWER HAS MIXED CHARS\n', question, answer)
-            return False
-        return True
-
-    def update_stored_questions(self, url, redis_group):
+        if category and difficulty:
+            url = self.load_route[1].format(category, difficulty)
+        elif category: # Currently not in use
+            url = self.load_route[1].format(category)
+        elif difficulty:
+            url = self.load_route[1].format(difficulty)
+        else: # Currently not in use
+            url = self.load_route[1]
         print(url)
-        from Games0App.foreign_api import get_api_questions_from_ninjas, get_api_questions_from_trivia
 
         try:
-            if self.api_source == "ninjas":
-                response = get_api_questions_from_ninjas(url)
-            elif self.api_source == "trivia":
-                response = get_api_questions_from_trivia(url)
-            else:
-                response = None
-            response = json.loads(response)
+            response = requests.get(url)
+            if response.status_code == requests.codes.ok:
+                print(response.text)
+                response = json.loads(response.text)
         except json.JSONDecodeError as e:
             print(f"JSON decoding error: {e}")
+            response = None
+        except requests.exceptions.ConnectionError as e:
+            print(f"Connection error: {e}")
+            response = None
+        except requests.exceptions.Timeout as e:
+            print(f"Timeout error: {e}")
+            response = None
+        except:
+            print("Error:", response.status_code, response.text)
+            response = None
 
         if response:
-            valid_questions = []
-            answers = []
-            for item in response:
+            return response
+        return None
+    
 
-                if "trivia_madness" in self.param:
-                    question = item['question'].strip()
-                    answer = item['answer'].strip()
-                    if ',' in answer or '.' in answer or '_' in answer or len(answer.split()) > 2:
-                        print('ANSWER TOO CONFUSING\n', question, answer)
-                        continue
-                    if len(question) > 100:
-                        print('QUESTION TOO LONG\n', question, answer)
-                        continue
-                    answer = find_and_convert_numbers(answer)
-                    if self.validate_trivia_madness_question(question, answer):
-                        if not question[-1] in ['.', '!', '?']:
-                            question += '?'
-                        if answer.lower().replace(' ', '').replace('-', '').replace('&', '') in answers:
-                            print('DUPLICATE ANSWER\n', question,  answer)
-                            continue
-                        answers.append(answer.lower().replace(' ', '').replace('-', '').replace('&', ''))
-                        valid_questions.append([question, answer])
-                
-                elif "fill_blank" in self.param:
-                    sentence = item['fact'] if 'fact' in item else item['joke']
-                    if len(sentence) > 100:
-                        continue
-                    fill_in_the_blank = self.create_fill_blank_answer(sentence)
-                    if fill_in_the_blank:
-                        valid_questions.append(fill_in_the_blank)
-
-                elif "trivia_mc" in self.param:
-                    question = item['question'].strip()
-                    answer = item['correctAnswer'].strip()
-                    if len(question) > 100:
-                        continue
-                    wrong_answers = [wrong_answer.strip() for wrong_answer in item['incorrectAnswers']]
-                    is_valid = True
-                    for item in [answer] + wrong_answers:
-                        if len(item) > 30:
-                            is_valid = False
-                            break
-                    if not is_valid:
-                        continue
-                    valid_questions.append([question, answer, wrong_answers])
-            
-            if valid_questions:
-                print('VALID QUESTIONS:\n', valid_questions)
-                serialized_questions = [json.dumps(question) for question in valid_questions]
-                redis_client.sadd(redis_group, *serialized_questions)
-                print('Added questions to Redis set')
-                return True
-            return False
-        return False
-
-
-    def update_stored_statements(self, file_path, redis_group, category=""):
+    def get_questions_from_csv(self, category, difficulty):
+        if category:
+            category = category.replace('_and_', '_')
 
         all_items = []
-        with open(file_path, newline='') as csvfile:
+        with open(f"Games0App/static/quiz_data/{self.load_route[1]}.csv", newline='') as csvfile:
+
             reader = csv.DictReader(csvfile, delimiter=';')
+            headers = reader.fieldnames
+
             for row in reader:
-                item = {'category': row['category'], 'statement': row['statement'], 'answer': row['answer'], 'options': row['options'].split(', ')}
-                if category:
-                    if item['category'].strip().lower() == category.strip().lower():
-                        all_items.append(item)
-                else:
+                item = {header: row[header] for header in headers}
+                if 'options' in item:
+                    item['options'] = item['options'].split(', ')
+                if 'blanks' in item:
+                    item['blanks'] = item['blanks'].split(', ')
+                if category and ('category' in item and item['category'].strip().lower() == category.strip().lower()):
                     all_items.append(item)
+                elif not category:
+                    all_items.append(item)
+                # difficulty is not currently in use
+        all_items = random.sample(all_items, min(30, len(all_items)))
+        return all_items
 
-        random_items = random.sample(all_items, min(30, len(all_items)))
 
-        constructed_statements = []
-        for item in random_items:
-            random_option = random.choice(item['options'])
-            statement = item['statement'].replace('____', random_option)
-            answer = item['statement'].replace('____', item['answer'])
-            constructed_statements.append([statement, answer])
-
-        if constructed_statements:
-            print('VALID QUESTIONS:\n', constructed_statements)
-            serialized_questions = [json.dumps(question) for question in constructed_statements]
-            redis_client.sadd(redis_group, *serialized_questions)
-            print('Added questions to Redis set')
-            return True
-        return False
-
-        
-    def update_stored_sums(self, redis_group, difficulty):
-
+    def get_questions_from_function(self, category, difficulty):
         valid_questions = []
-
         for _ in range(30):
-            question, answer, wrong_answers = create_sums_for_question(difficulty)
-            if question and answer and wrong_answers:
-                valid_questions.append([question, answer, wrong_answers])
+            if self.load_route[1] == 'sum_generator':
+                question, answer, wrong_answers = create_sums_for_question(difficulty)
+                if question and answer and wrong_answers:
+                    valid_questions.append([0, question, answer, wrong_answers])
+            # Currently sum_generator is the only function that generates questions
+            # category is not currently in use
+        return valid_questions
 
-        if valid_questions:
-            print('VALID QUESTIONS:\n', valid_questions)
-            serialized_questions = [json.dumps(question) for question in valid_questions]
+    
+    def update_stored_questions(self, questions, redis_group):
+        if questions:
+            print('VALID QUESTIONS:\n', questions)
+            serialized_questions = [json.dumps(question) for question in questions]
             redis_client.sadd(redis_group, *serialized_questions)
             print('Added questions to Redis set')
             return True
@@ -217,12 +125,14 @@ class GamePlay:
                 redis_client.expire(redis_question_no_string, 3600)
 
             question = json.loads(question.decode('utf-8'))
-            if len(question) == 2:
-                return {"last_question_no": incremented_question_no, "question": question[0], "answer": question[1]}
-            elif len(question) == 3:
-                return {"last_question_no": incremented_question_no, "question": question[0], "answer": question[1], "wrong_answers": question[2]}
-            else:
-                return None
+            if len(question) == 3:
+                return {"last_question_no": incremented_question_no, "ID": question[0],
+                        "question": question[1], "answer": question[2]}
+            elif len(question) == 4:
+                return {"last_question_no": incremented_question_no, "ID": question[0],
+                        "question": question[1], "answer": question[2], "wrong_answers": question[3]}
+            return None
+        return None
 
 
     def get_question_from_redis(self, last_question_no, redis_string, category, difficulty):
@@ -233,20 +143,19 @@ class GamePlay:
         if question is not None:
             print('Got question from Redis')
             question = json.loads(question.decode('utf-8'))
-            if len(question) == 2:
-                return {"last_question_no": last_question_no+1, "question": question[0], "answer": question[1]}
-            elif len(question) == 3:
-                return {"last_question_no": last_question_no+1, "question": question[0], "answer": question[1], "wrong_answers": question[2]}
-            else:
-                return None
+            if len(question) == 3:
+                return {"last_question_no": last_question_no+1, "ID": question[0],
+                        "question": question[1], "answer": question[2]}
+            elif len(question) == 4:
+                return {"last_question_no": last_question_no+1, "ID": question[0],
+                        "question": question[1], "answer": question[2], "wrong_answers": question[3]}
+            return None
+        return None
 
 
     def get_question(self, last_question_no, category="", difficulty=""):
         if category:
-            if self.api_source == "ninjas":
-                category = category.lower().replace(' ', '').replace('-', '').replace('&', '')
-            else:
-                category = category.lower().replace(' ', '_').replace('&', 'and')
+            category = category.lower().replace(' - hard', '').replace(' & ', '_and_').replace(' ', '_')
         
         base_string = self.create_base_string(category, difficulty)
         redis_string = base_string + "_" + str(last_question_no+1)
@@ -262,23 +171,19 @@ class GamePlay:
         if question is not None:
             return question
             
-        if self.api_source:
+        if self.load_route[0] == 'api':
             print('Triggering API call to get more questions')
             count = 0
             while count < 3:
                 count += 1
-                if self.api_variable:  # For ninjas API
-                    if category:
-                        print("CATEGORY: ", category)
-                        result = self.update_stored_questions(self.api_url.format(self.api_variable, category), redis_group)
-                    else:
-                        result = self.update_stored_questions(self.api_url.format(self.api_variable), redis_group)
-                else:  # For trivia API
-                    if category:
-                        print("CATEGORY: ", category)
-                        result = self.update_stored_questions(self.api_url.format(category, difficulty), redis_group)
-                    else:
-                        result = self.update_stored_questions(self.api_url.format(difficulty), redis_group)
+                question_package = self.get_questions_from_api(category, difficulty)
+                if not question_package:
+                    continue
+                if "the-trivia-api.com" in self.load_route[1]:
+                    valid_questions = sort_trivia_mc_questions(question_package, self.load_route)
+                else: # There are currently no other types of questions that come directly from APIs
+                    continue
+                result = self.update_stored_questions(valid_questions, redis_group)
                 if result:
                     print('Trying to get question from Redis set')
                     question = self.get_question_from_redis_set(redis_group, category, difficulty)
@@ -287,12 +192,20 @@ class GamePlay:
             print('Failed to get question from API')
             return None
         
-        elif "_tf" in self.param:
+        elif self.load_route[0] == 'csv':
             print('Loading questions from file')
-            if category:
-                result = self.update_stored_statements('Games0App/static/quiz_data/true_or_false_trivia.csv', redis_group, category)
+            question_package = self.get_questions_from_csv(category, difficulty)
+            if self.load_route[1] == 'facts':
+                valid_questions = sort_fill_blank_facts_questions(question_package, self.load_route)
+            elif self.load_route[1] == 'jokes':
+                valid_questions = sort_fill_blank_jokes_questions(question_package, self.load_route)
+            elif self.load_route[1] == 'trivia_madness':
+                valid_questions = sort_trivia_madness_questions(question_package, self.load_route)
+            elif self.load_route[1] == 'true_or_false_trivia':
+                valid_questions = sort_trivia_tf_questions(question_package, self.load_route)
             else:
-                result = self.update_stored_statements('Games0App/static/quiz_data/true_or_false_trivia.csv', redis_group)
+                valid_questions = None
+            result = self.update_stored_questions(valid_questions, redis_group)
             if result:
                 print('Trying to get question from Redis set')
                 question = self.get_question_from_redis_set(redis_group, category, difficulty)
@@ -301,9 +214,10 @@ class GamePlay:
             print('Failed to get question from file')
             return None
         
-        elif "number" in self.param:
-            print('Generating sums')
-            result = self.update_stored_sums(redis_group, difficulty)
+        elif self.load_route[0] == 'function':
+            print('Generating questions')
+            valid_questions = self.get_questions_from_function(category, difficulty)
+            result = self.update_stored_questions(valid_questions, redis_group)
             if result:
                 print('Trying to get question from Redis set')
                 question = self.get_question_from_redis_set(redis_group, category, difficulty)

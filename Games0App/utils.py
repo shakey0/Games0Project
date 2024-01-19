@@ -1,23 +1,10 @@
-from spellchecker import SpellChecker
-spell = SpellChecker()
 import re
 from better_profanity import profanity
+# from spellchecker import SpellChecker
+# spell = SpellChecker()
 # import os
 # from openai import OpenAI
 # openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
-
-
-def spell_check_sentence(sentence):
-    spell_check_sentence = sentence.replace('?', '').replace('!', '').replace('.', '').replace(',', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
-    split_sentence = spell_check_sentence.split()
-    split_sentence = [word for word in split_sentence if not word[0].isupper()]
-    wrong_words = spell.unknown(split_sentence)
-    if wrong_words:
-        if all('.' in word or '_' in word or 'like' in word for word in wrong_words):
-            return True
-        print('WRONG WORDS: ', wrong_words)
-        return False
-    return True
 
 
 def format_answer(answer):
@@ -144,10 +131,23 @@ def validate_victory_message(victory_message):
     return True
 
 
+# def spell_check_sentence(sentence):
+#     spell_check_sentence = sentence.replace('?', '').replace('!', '').replace('.', '').replace(',', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+#     split_sentence = spell_check_sentence.split()
+#     split_sentence = [word for word in split_sentence if not word[0].isupper()]
+#     wrong_words = spell.unknown(split_sentence)
+#     if wrong_words:
+#         if all('.' in word or '_' in word or 'like' in word for word in wrong_words):
+#             return True
+#         print('WRONG WORDS: ', wrong_words)
+#         return False
+#     return True
+
+
 # def check_blank_answer_for_alternative(user_answer, real_answer, sentence):
 #     if not re.match("^[a-zA-Z0-9]+$", user_answer):
 #         return False
-#     if spell.unknown([user_answer]):  # Names will be unknown, but after much testing this has not been an issue
+#     if spell.unknown([user_answer]):  # Names will be unknown, needs testing
 #         return False
 #     print("Sending request to OpenAI")
 #     print("USER ANSWER: ", user_answer)
