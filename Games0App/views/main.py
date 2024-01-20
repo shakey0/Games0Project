@@ -3,7 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
-from Games0App.views.route_functions import get_key_game_data
+from Games0App.views.route_functions import get_key_game_data, get_next_question
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
 import json
@@ -85,6 +85,8 @@ def game_play():
         if game.has_difficulty:
             difficulty = request.form.get('difficulty')
             redis_client.hset(token, 'difficulty', difficulty)
+
+        redis_client.hset(token, 'question_no', 1)
         
         cookied_question_number = request.cookies.get(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'))
         if cookied_question_number:
@@ -93,23 +95,7 @@ def game_play():
             cookied_question_number = 0
         print('COOKIED QUESTION NUMBER: ', cookied_question_number)
 
-        # CONTAIN IN ONE FUNCTION ----------------------------------------
-        next_question = game.get_question(cookied_question_number, category=category_name, difficulty=difficulty)
-        print('NEXT QUESTION: ', next_question)
-        if not next_question:
-            flash("Something went wrong.")
-            return redirect('/')
-        
-        redis_client.hset(token, 'question_no', 1) # OMIT FROM FUNCTION
-        redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
-        redis_client.hset(token, 'question', next_question["question"])
-        redis_client.hset(token, 'answer', next_question["answer"])
-
-        if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
-            next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
-            random.shuffle(next_question["all_answers"])
-            redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
-        # ----------------------------------------------------------------
+        next_question = get_next_question(game, token, cookied_question_number, category_name, difficulty)
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:
             reveal_card_starter = 9
@@ -157,22 +143,7 @@ def game_play():
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
-    # CONTAIN IN ONE FUNCTION ----------------------------------------
-    next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
-    print('NEXT QUESTION: ', next_question)
-    if not next_question:
-        flash("Something went wrong.")
-        return redirect('/')
-    
-    redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
-    redis_client.hset(token, 'question', next_question["question"])
-    redis_client.hset(token, 'answer', next_question["answer"])
-
-    if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
-        next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
-        random.shuffle(next_question["all_answers"])
-        redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
-    # ----------------------------------------------------------------
+    next_question = get_next_question(game, token, question_tracker, category_name, difficulty)
     
     helpers = {}
 

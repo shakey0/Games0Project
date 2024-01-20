@@ -1,10 +1,12 @@
-from flask import request
+from flask import request, redirect, flash
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.models.user import User
 from Games0App.models.high_score import HighScore, scores_users
 from Games0App.games import games
 from sqlalchemy.sql import case
+import json
+import random
 
 
 # For main.py ---------------------------------------------------------------
@@ -30,6 +32,25 @@ def get_key_game_data(request_type):
         game_name = game.name
         
     return token, game, category_name, game_name
+
+
+def get_next_question(game, token, question_number, category_name, difficulty):
+    next_question = game.get_question(question_number, category=category_name, difficulty=difficulty)
+    print('NEXT QUESTION: ', next_question)
+    if not next_question:
+        flash("Something went wrong.")
+        return redirect('/')
+    
+    redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
+    redis_client.hset(token, 'question', next_question["question"])
+    redis_client.hset(token, 'answer', next_question["answer"])
+
+    if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
+        next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
+        random.shuffle(next_question["all_answers"])
+        redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
+    
+    return next_question
 
 
 # For scoreboard.py ---------------------------------------------------------------
