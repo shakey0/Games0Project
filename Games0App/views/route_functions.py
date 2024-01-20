@@ -61,7 +61,34 @@ def organise_score_data(score_data):
             all_games_scores[score['game']] = []
         all_games_scores[score['game']].append(score)
 
-    return all_games_scores
+    sorted_games_scores = {}
+
+    difficulties = ['easy', 'medium', 'hard']
+    for game in games:
+        if game.categories:
+            for category in game.categories:
+                category = category.lower().replace(' ', '').replace('&', '')
+                if game.has_difficulty:
+                    for difficulty in difficulties:
+                        game_name = f"{game.param}_{category}_{difficulty}"
+                        if game_name in all_games_scores:
+                            sorted_games_scores[game_name] = all_games_scores[game_name]
+                else:
+                    game_name = f"{game.param}_{category}"
+                    if game_name in all_games_scores:
+                        sorted_games_scores[game_name] = all_games_scores[game_name]
+        else:
+            if game.has_difficulty:
+                for difficulty in difficulties:
+                    game_name = f"{game.param}_{difficulty}"
+                    if game_name in all_games_scores:
+                        sorted_games_scores[game_name] = all_games_scores[game_name]
+            else:
+                game_name = game.param
+                if game_name in all_games_scores:
+                    sorted_games_scores[game_name] = all_games_scores[game_name]
+
+    return sorted_games_scores
 
 
 def get_like_subquery(current_user_id):

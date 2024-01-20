@@ -20,9 +20,9 @@ print("1. Add jokes from Open Trivia Database to CSV")
 print("2. Add jokes from API Ninjas to CSV")
 write_questions = input("Choose the number of your CSV and API: ")
 if write_questions == '1':
-    api = 'https://opentdb.com/api.php?amount=50&category=32&type=multiple'
+    api = 'https://opentdb.com/api.php?amount=50&category=32&type=multiple' # Category can be changed or omitted
 elif write_questions == '2':
-    api = 'https://api.api-ninjas.com/v1/trivia?limit=30&category=artliterature'
+    api = 'https://api.api-ninjas.com/v1/trivia?limit=30&category=artliterature' # Category can be changed or omitted
 else:
     print("Invalid input.")
     exit()
@@ -82,6 +82,6 @@ for item in response:
         continue
 
     last_id += 1
-    with open(f'Games0App/static/quiz_data/trivia_from_apis.csv', 'a', newline='') as csvfile:
+    with open(f'trivia_from_apis.csv', 'a', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=';')
         writer.writerow([last_id, category, question, answer])
