@@ -1,14 +1,17 @@
 from flask import Flask
-from Games0App.extensions import db, migrate
+from flask_login import LoginManager
+from Games0App.extensions import db, migrate, count_words, format_date
 from .config import load_config
 import os
-from flask_login import LoginManager
 
 def create_app():
     app = Flask(__name__)
 
     env = os.getenv('FLASK_ENV', 'development')
     app.config.from_object(load_config(env))
+
+    app.jinja_env.filters['count_words'] = count_words
+    app.jinja_env.filters['format_date'] = format_date
 
     db.init_app(app)
     migrate.init_app(app, db)

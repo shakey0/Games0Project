@@ -4,7 +4,7 @@ from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.route_functions import get_high_scores, get_user_scores, get_all_scores
-from Games0App.utils import format_date, validate_victory_message
+from Games0App.utils import validate_victory_message
 from sqlalchemy import update
 
 
@@ -84,8 +84,7 @@ def scoreboard_page():
         high_scores = get_all_scores()
 
     return render_template('scoreboard.html', user=current_user, game_name=game_name, token=token,
-                            all_games_scores=high_scores, needs_high_score=needs_high_score,
-                            format_date=format_date)
+                            all_games_scores=high_scores, needs_high_score=needs_high_score)
 
 
 @scoreboard.route('/amend_score', methods=['POST'])

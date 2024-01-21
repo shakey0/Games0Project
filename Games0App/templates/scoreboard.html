@@ -98,7 +98,7 @@
               </div>
             </td>
             <td><a href="{{ url_for('scoreboard.scoreboard_page', username=score['username']) }}" class="username-score-button">{{ score['username'] }}</a></td>
-            <td>{{ format_date(score['date'].strftime('%m-%d')) }}</td>
+            <td>{{ score['date'].strftime('%m-%d') | format_date }}</td>
             <td class="score-message-container">
               {% if score['message'] %}{{ score['message'] }}{% else %}-{% endif %}
               {% if score['user_id'] == user.id %}
