@@ -108,7 +108,7 @@
                 </div>
             {% else %}
                 {% if "trivia_madness" in game.param %}
-                    <h3>The answer is {{ next_question["answer"] | count_words }}.</h3> <!-- UNDER EDIT !!!!! -->
+                    <h3>The answer is {{ next_question["answer"] | count_words }}.</h3>
                 {% endif %}
                 <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
             {% endif %}

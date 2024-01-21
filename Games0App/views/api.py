@@ -72,6 +72,8 @@ def reveal_letter():
     return jsonify(success=True, score=score, message=message, reveal_card_text=reveal_card_text)
 
 
+ordinals = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth']
+
 @api.route('/reveal_length', methods=['POST'])
 def reveal_length():
 
@@ -87,17 +89,19 @@ def reveal_length():
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
     answer = answer.lower().strip()
-    for article in ['the ', 'a ', 'an ']:
-        if answer.startswith(article):
-            answer = answer[len(article):]
-            break
+    # for article in ['the ', 'a ', 'an ']:
+    #     if answer.startswith(article):
+    #         answer = answer[len(article):]
+    #         break
 
     answer = answer.replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
     no_of_words = len(answer.split())
-    no_of_words_part = "a single word" if no_of_words == 1 else f"{no_of_words} words"
-
-    message = f"The answer is {no_of_words_part} totalling {len(answer.replace(' ', ''))} characters."
+    if no_of_words == 1:
+        message = f"The answer is {len(answer)} letters."
+    else:
+        word_lengths = [len(word) for word in answer.split()]
+        message = f"The word lengths are {', '.join([str(length) for length in word_lengths[:-1]])} and {word_lengths[-1]} letters respectively."
 
     if length_card > 0:
         length_card -= 1
