@@ -72,8 +72,6 @@ def reveal_letter():
     return jsonify(success=True, score=score, message=message, reveal_card_text=reveal_card_text)
 
 
-ordinals = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth']
-
 @api.route('/reveal_length', methods=['POST'])
 def reveal_length():
 
