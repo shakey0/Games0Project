@@ -51,6 +51,24 @@
     color: gold;
 }
 
+.hint-messages {
+    text-align: center;
+    margin: 5px;
+    font-style: italic;
+    color: burlywood;
+}
+
+@media (max-width: 500px) {
+    .hint-messages {
+        margin: 3px;
+    }
+}
+@media (max-width: 395px) {
+    .hint-messages {
+        margin: 2px;
+    }
+}
+
 .answer-selection-box {
     display: inline-block;
     flex-direction: column;
@@ -62,24 +80,50 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.answer-selector {
+    margin: 22px;
+}
+
+@media (max-width: 1025px) {
+    .answer-selection-box {
+        font-size: 26px;
+    }
+    .answer-selector {
+        margin: 20px;
+    }
+}
+
 @media (max-width: 815px) {
     .answer-selection-box {
-        font-size: 28px;
+        font-size: 24px;
+    }
+    .answer-selector {
+        margin: 18px;
     }
 }
 @media (max-width: 605px) {
     .answer-selection-box {
-        font-size: 26px;
+        font-size: 24px;
+    }
+    .answer-selector {
+        margin: 16px;
     }
 }
 @media (max-width: 500px) {
     .answer-selection-box {
-        font-size: 24px;
+        font-size: 22px;
+    }
+    .answer-selector {
+        margin: 14px;
     }
 }
-
-.answer-selector {
-    margin: 20px;
+@media (max-width: 430px) {
+    .answer-selection-box {
+        font-size: 20px;
+    }
+    .answer-selector {
+        margin: 12px;
+    }
 }
 
 .answer-input, .message-input {
@@ -168,12 +212,6 @@
 
 .remove-lower-tag {
     padding-left: 10px;
-}
-
-.hint-messages {
-    text-align: center;
-    font-style: italic;
-    color: burlywood;
 }
 
 @media (max-width: 710px) {

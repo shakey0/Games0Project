@@ -1,6 +1,5 @@
 .submit-game-btn, .submit-score-btn {
-    margin-top: 40px;
-    margin-bottom: 40px;
+    margin-top: 40px; margin-bottom: 40px;
     padding: 10px 20px;
     border: none;
     background-color: rgb(139, 194, 196);
@@ -29,16 +28,18 @@
         height: 70px;
     }
 }
-@media (max-width: 535px) {
+@media (max-width: 500px) {
     .submit-game-btn {
         height: 60px;
+        margin-top: 30px; margin-bottom: 30px;
         border-radius: 10px;
         font-size: 28px;
     }
 }
-@media (max-width: 465px) {
+@media (max-width: 395px) {
     .submit-game-btn, .submit-score-btn {
         height: 50px;
+        margin-top: 20px; margin-bottom: 20px;
         font-size: 26px;
     }
 }
