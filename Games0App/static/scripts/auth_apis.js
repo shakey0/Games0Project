@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $('.log-in-button').on('click', function(event) {
+    $('.log-in-btn').on('click', function(event) {
         event.preventDefault();
     
         const $button = $(this);
@@ -30,7 +30,7 @@ $(document).ready(function(){
         });
     });
 
-    $('.sign-up-button').on('click', function(event) {
+    $('.sign-up-btn').on('click', function(event) {
         event.preventDefault();
     
         const $button = $(this);

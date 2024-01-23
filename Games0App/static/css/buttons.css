@@ -1,0 +1,99 @@
+.submit-game-btn, .submit-score-btn {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    border: none;
+    background-color: rgb(139, 194, 196);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.submit-game-btn:hover, .submit-score-btn:hover {
+    transform: scale(1.05);
+    background-color: rgb(111, 197, 199);
+}
+
+.submit-game-btn {
+    height: 80px;
+    border-radius: 20px;
+    font-size: 32px;
+}
+
+.submit-score-btn {
+    height: 60px;
+    border-radius: 10px;
+    font-size: 32px;
+}
+
+@media (max-width: 920px) {
+    .submit-game-btn {
+        height: 70px;
+    }
+}
+@media (max-width: 535px) {
+    .submit-game-btn {
+        height: 60px;
+        border-radius: 10px;
+        font-size: 28px;
+    }
+}
+@media (max-width: 465px) {
+    .submit-game-btn, .submit-score-btn {
+        height: 50px;
+        font-size: 26px;
+    }
+}
+
+.delete-score-btn {
+    margin-top: 40px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(166, 0, 0);
+    font-size: 24px;
+    color: rgb(255, 242, 221);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+.delete-score-btn:hover {
+    transform: scale(1.05);
+    background-color: rgb(200, 120, 0);
+}
+
+@media (max-width: 395px) {
+    .delete-score-btn {
+        padding: 9px 18px;
+        font-size: 22px;
+    }
+}
+
+.all-categories-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.all-categories-btn {
+    height: 80px;
+    margin: 30px 10px 40px;
+    padding: 0px 80px;
+    border-radius: 20px;
+    border: 1px solid rgb(142, 114, 99);
+    background-color: black;
+    font-size: 24px;
+    color: rgb(203, 194, 176);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.all-categories-btn:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 430px) {
+    .all-categories-btn {
+        padding: 0 60px;
+    }
+}
+@media (max-width: 395px) {
+    .all-categories-btn {
+        padding: 0 40px;
+    }
+}

@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_header.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_defaults.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav_bar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/buttons.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/pop_ups.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pre_game.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/in_game.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/game.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/category_selection.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/scoreboard.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -17,34 +18,34 @@
     <!-- Nav bar with website title, game title, and options menu -->
     <div class="nav-bar">
         <div class="nav-bar-left">
-            <a href="{{ url_for('main.index') }}"><h1 class="home-title-link">GamesZero</h1></a>
-            <h2 class="game-title-top">{% block game_title %}{% endblock %}</h2>
-            <h2 class="game-title-top-small">{% block game_title_small %}{% endblock %}</h2>
+            <a class="home-title-tag link-fmt" href="{{ url_for('main.index') }}">GamesZero</a>
+            <p class="game-title-tag">{% block game_title %}{% endblock %}</p>
+            <p class="game-title-tag-small">{% block game_title_small %}{% endblock %}</p>
         </div>
         <div class="nav-bar-right">
-            <a href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}"><h2 class="username-link">{{ user.username }}</h2></a>
+            <a class="nav-username-link link-fmt" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">{{ user.username }}</a>
             {% if in_game == "yes" or in_game == "after" %}
-                <div class="menu-score">
-                    <p>Score:</p><h2 id="score">{{ score }}</h2>
+                <div class="bar-score-box">
+                    <p class="score-mes">Score:</p><p class="score-tag" id="score">{{ score }}</p>
                 </div>
             {% else %}
-                <button class="menu-button">Menu</button>
+                <button class="menu-btn">Menu</button>
             {% endif %}
         </div>
     </div>
     <!-- Options menu -->
     <div class="options-menu" id="options-menu" style="display: none;">
         {% if not user.is_authenticated %}
-            <button class="options-button" data-login-button-target="#login-box">Log in</button>
-            <button class="options-button" data-register-button-target="#register-box">Sign up</button>
+            <button class="options-btn clear-btn" data-login-button-target="#login-box">Log in</button>
+            <button class="options-btn clear-btn" data-register-button-target="#register-box">Sign up</button>
         {% endif %}
-        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-button">Leaderboards</button></a>
-        <button class="options-button">About</button>
-        <a href=""><button class="options-button">Contact</button></a>
+        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Leaderboards</button></a>
+        <button class="options-btn clear-btn">About</button>
+        <a href=""><button class="options-btn clear-btn">Contact</button></a>
         {% if user.is_authenticated %}
             <form method="POST" action="/logout">
                 <!-- PUT CSRF TOKEN HERE -->
-                <input type="submit" value="Log out" class="log-out-button options-button">
+                <input class="options-btn clear-btn" style="font-weight: 100;" type="submit" value="Log out">
             </form>
         {% endif %}
     </div>
@@ -55,10 +56,10 @@
         <button data-cancel-button-over class="cancel-button">&times;</button>
         <form method="POST" action="/login">
             <!-- PUT CSRF TOKEN HERE -->
-            <div class="login-box-header">
-                <h2>Login</h2>
+            <div class="pop-up-header">
+                <p>Login</p>
             </div>
-            <div class="login-box-content">
+            <div class="pop-up-content">
                 <div class="login-box-item">
                     <input type="text" name="username" placeholder="Username or email" autofocus>
                 </div>
@@ -69,8 +70,8 @@
                     <div class="login-error-message" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
                 </div>
             </div>
-            <div class="login-box-footer">
-                <input class="log-in-button" type="submit" value="Login">
+            <div class="pop-up-footer">
+                <input class="log-in-btn" type="submit" value="Login">
             </div>
         </form>
     </div>
@@ -78,10 +79,10 @@
         <button data-cancel-button-over class="cancel-button">&times;</button>
         <form id="registrationForm" method="POST" action="/register">
             <!-- PUT CSRF TOKEN HERE -->
-            <div class="register-box-header">
-                <h2>Register</h2>
+            <div class="pop-up-header">
+                <p>Register</p>
             </div>
-            <div class="register-box-content">
+            <div class="pop-up-content">
                 <div class="register-box-item">
                     <div class="register-username-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
                     <input type="text" name="username" placeholder="Username" autofocus>
@@ -103,8 +104,8 @@
                     <div class="register-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
                 </div>
             </div>
-            <div class="register-box-footer">
-                <input class="sign-up-button" type="submit" value="Register">
+            <div class="pop-up-footer">
+                <input class="sign-up-btn" type="submit" value="Register">
             </div>
         </form>
     </div>
@@ -115,4 +116,3 @@
     <script src="{{ url_for('static', filename='scripts/password_checker.js') }}"></script>
 </body>
 </html>
-<!-- url_for('scores.leaderboard') url_for('auth.logout')-->

@@ -1,8 +1,9 @@
 .all-categories {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, 320px);
+    justify-content: center;
+    margin: 0 80px;
     gap: 30px;
-    margin: 40px 80px 30px;
 }
 
 .category {
@@ -19,90 +20,44 @@
 }
 
 .category-name {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgb(142, 114, 99);
+    background-color: black;
     font-size: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    border: 1px solid rgb(142, 114, 99);
-    background-color: black;
     color: rgb(203, 194, 176);
-    cursor: pointer;
 }
 
-.all-categories-button-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
+@media (max-width: 920px) {
+    .all-categories {
+        margin: 0 20px;
+    }
+}
+@media (max-width: 710px) {
+    .all-categories {
+        grid-template-columns: repeat(auto-fit, 270px);
+        margin: 0 20px;
+        gap: 20px;
+    }
+    .category-name {
+        font-size: 18px;
+    }
+}
+@media (max-width: 605px) {
+    .all-categories {
+        grid-template-columns: repeat(auto-fit, 320px);
+        margin: 0 20px;
+        gap: 30px;
+    }
+    .category-name {
+        font-size: 20px;
+    }
 }
 
-.all-categories-button {
-    padding: 0px 80px;
-    height: 80px;
-    font-size: 24px;
-    font-weight: bold;
-    border-radius: 10px;
-    border: 1px solid rgb(142, 114, 99);
-    background-color: black;
-    color: rgb(203, 194, 176);
-    cursor: pointer;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.all-categories-button:hover {
-    transform: scale(1.05);
-}
-
-@media (max-width: 768px) {
+@media (max-width: 360px) {
     .all-categories {
-        margin: 40px 20px 30px;
+        grid-template-columns: repeat(auto-fit, 295px);
     }
-}
-@media (max-width: 565px) {
-    .all-categories {
-        margin: 40px 80px 30px;
-    }
-}
-@media (max-width: 525px) {
-    .all-categories {
-        margin: 40px 60px 30px;
-    }
-}
-@media (max-width: 522px) {
-    .all-categories {
-        margin: 30px 60px 30px;
-    }
-}
-@media (max-width: 485px) {
-    .all-categories {
-        margin: 30px 40px 30px;
-    }
-}
-@media (max-width: 445px) {
-    .all-categories {
-        margin: 30px 20px 30px;
-    }
-}
-@media (max-width: 425px) {
-    .all-categories {
-        margin: 30px 10px 30px;
-    }
-    .all-categories-button {
-        padding: 0px 60px;
-    }
-}
-@media (max-width: 385px) {
-    .all-categories-button {
-        padding: 0px 40px;
-    }
-}
-@media (max-width: 345px) {
-    .all-categories-button {
-        padding: 0px 20px;
+    .category-name {
+        font-size: 19.5px;
     }
 }

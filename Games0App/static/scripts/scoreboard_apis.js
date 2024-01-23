@@ -40,7 +40,7 @@ $(document).ready(function(){
         });
     }
 
-    $('.amend-score-confirm').on('click', function(event) {
+    $('.amend-score-btn').on('click', function(event) {
         event.preventDefault();
     
         const $button = $(this);
@@ -69,7 +69,7 @@ $(document).ready(function(){
         });
     });
 
-    $('.delete-score-confirm').on('click', function(event) {
+    $('.delete-score-btn').on('click', function(event) {
         event.preventDefault();
     
         const $button = $(this);

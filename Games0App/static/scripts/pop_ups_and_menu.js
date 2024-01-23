@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
     //     }
     // }
 
-    var menuButton = document.querySelector('.menu-button');
+    var menuButton = document.querySelector('.menu-btn');
     var optionsMenu = document.getElementById('options-menu');
-    var optionsButtons = document.querySelectorAll('.options-button');
+    var optionsButtons = document.querySelectorAll('.options-btn');
     var isMenuVisible = false;
 
     function toggleMenu() {

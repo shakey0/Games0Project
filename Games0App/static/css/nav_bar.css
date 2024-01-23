@@ -1,0 +1,212 @@
+.nav-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+    background-color: #191c27;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.nav-bar-left, .nav-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.home-title-tag {
+    margin-bottom: 4px;
+    font-size: 36px;
+    color: rgb(232, 213, 203);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.home-title-tag:hover {
+    color: rgb(251, 223, 158);
+    transform: scale(1.05);
+}
+
+.game-title-tag-small {
+    display: none;
+}
+
+@media (max-width: 1130px) {
+    .game-title-tag {
+        display: none;
+    }
+    .game-title-tag-small {
+        display: block;
+    }
+}
+
+.game-title-tag, .game-title-tag-small {
+    margin: 0;
+    padding-left: 20px;
+    border-left: solid 1px rgb(232, 213, 203);
+    font-size: 26px;
+    color: rgb(232, 213, 203);
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.nav-username-link {
+    max-width: 200px; /* CHECK !!!!!!!!!!!!!!!!!!!!!!!!! */
+    margin-bottom: 4px;
+    font-size: 26px;
+    color: rgb(232, 213, 203);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.nav-username-link:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
+}
+
+/* @media (max-width: 460px) { IMPORTANT !!!!! NEED TO LOOK AT THIS !!!!!
+    .nav-username-link {
+        max-width: 150px;
+    }
+}
+@media (max-width: 410px) {
+    .nav-username-link {
+        max-width: 100px;
+    }
+}
+@media (max-width: 360px) {
+    .nav-username-link {
+        max-width: 70px;
+    }
+} */
+
+.menu-btn {
+    margin-bottom: 4px;
+    padding-left: 20px;
+    border: none;
+    border-left: solid 1px rgb(232, 213, 203);
+    font-size: 26px;
+    font-weight: bold;
+    color: rgb(232, 213, 203);
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    text-decoration: none;
+    background-color: transparent;
+    cursor: pointer;
+    transition: text-shadow 0.3s ease;
+}
+
+.menu-btn:hover {
+    text-shadow: 2px 2px 4px rgba(191, 191, 0, 0.6);
+}
+
+.bar-score-box {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    padding-left: 20px;
+    border-left: solid 1px rgb(232, 213, 203);
+    gap: 10px;
+}
+
+.score-mes {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.score-tag {
+    font-size: 30px;
+    font-weight: bold;
+    color: darkorange;
+}
+
+@media (max-width: 815px) {
+    .nav-bar {
+        height: 70px;
+        padding: 10px 20px;
+    }
+    .nav-bar-left, .nav-bar-right {
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+    }
+    .nav-bar-right {
+        align-items: flex-end;
+        margin-top: 5px;
+    }
+    .home-title-tag, .username-link {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    .home-title-tag {
+        margin-bottom: 5px;
+        font-size: 28px;
+    }
+    .game-title-tag, .game-title-tag-small {
+        padding-top: 5px;
+        padding-left: 0px;
+        border-left: none;
+        border-top: solid 1px rgb(232, 213, 203);
+        font-size: 20px;
+    }
+    .menu-btn, .bar-score-box {
+        padding-top: 5px;
+        padding-left: 0px;
+        padding-right: 0px;
+        border-left: none;
+        border-top: solid 1px rgb(232, 213, 203);
+        font-size: 24px;
+    }
+    .nav-username-link {
+        margin-bottom: 5px;
+        font-size: 20px;
+    }
+}
+
+.options-menu {
+    position: fixed;
+    top: 81px; right: 0;
+    z-index: 8;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    background-color: #191c27;
+    gap: 10px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.options-btn {
+    font-size: 18px;
+    outline: inherit;
+    color: rgb(232, 213, 203);
+}
+
+.options-btn:hover {
+    transform: scale(1.05);
+    color: rgb(251, 223, 158);
+}
+
+@media (max-width: 815px) {
+    .options-menu {
+        top: 91px;
+    }
+}
+
+@media (max-width: 605px) {
+    .options-menu {
+        flex-direction: column;
+        height: auto;
+        padding: 20px 15px;
+        gap: 20px;
+    }
+    .options-btn {
+        font-size: 20px;
+    }
+}

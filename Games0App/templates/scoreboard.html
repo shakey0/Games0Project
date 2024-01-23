@@ -23,7 +23,7 @@
 
 {% if needs_high_score %}
   {% if not user.is_authenticated %}
-    <div class="high_score_login">
+    <div class="high-score-login">
       <p>
         <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
         or
@@ -35,15 +35,15 @@
     <div class="after-answer">
       <form method="POST" action="/game_finish">
         <input type="hidden" name="token" value="{{ token }}">
-        <h1 class="add-score-title">Add Your Score</h1>
+        <h1 class="score-title">Add Your Score</h1>
         <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
-        <input class="message-input message-input-s" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
-        <input class="submit-score go-to-scoreboard" type="submit" value="Add My Score">
+        <input class="message-input" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+        <input class="submit-score-btn go-to-scoreboard" type="submit" value="Add My Score">
       </form>
     </div>
   {% endif %}
 {% elif not user.is_authenticated %}
-  <div class="high_score_login">
+  <div class="high-score-login">
     <p>
       <button class="score-auth-button" data-login-button-target="#login-box">Log in</button>
       or
@@ -54,9 +54,9 @@
 {% endif %}
 
 {% for game_scores in all_games_scores %}
-  <div>
-    <h1 class="score-title"><a href="{{ url_for('scoreboard.scoreboard_page', game_name_param=all_games_scores[game_scores][0]['game']) }}" class="game-score-button">{{ all_games_scores[game_scores][0]['game_name'] }}</a><br><i>Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</i></h1>
-
+  <div style="margin: 0 10px;">
+    <div class="score-table-separator"></div>
+    <h4 style="font-weight: 100;"><a href="{{ url_for('scoreboard.scoreboard_page', game_name_param=all_games_scores[game_scores][0]['game']) }}" class="game-score-btn clear-btn">{{ all_games_scores[game_scores][0]['game_name'] }}</a><br><b style="color:rgb(236, 164, 101);">Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</b></h4>
     <table class="scoreboard-table">
       <thead>
         <tr>
@@ -104,23 +104,25 @@
               {% if score['user_id'] == user.id %}
                 <img class="edit-score-button" src="{{ url_for('static', filename='images/pencil.png') }}" alt="edit" data-amend-score-box-target="#amend-score-box-{{ score['score_id'] }}">
                 <div class="amend-score-box pop-up-box" id="amend-score-box-{{ score['score_id'] }}">
-                  <button data-cancel-button-over class="cancel-button-a">&times;</button>
+                  <button data-cancel-button-over class="cancel-button">&times;</button>
                   <form method="POST" action="/amend_score">
                     <!-- PUT CSRF TOKEN HERE -->
                     <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
-                    <div class="amend-score-box-header">
-                      <h2>New Message</h2>
+                    <div class="pop-up-header">
+                      <p>Message</p>
                     </div>
-                    <div class="amend-score-box-content">
-                      <div class="victory-message-error" style="transform: translateY(-7px); color: rgb(255, 119, 0);"></div>
-                      <input class="message-input message-input-sa" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
-                      <input class="amend-score-confirm" type="submit" value="Confirm">
+                    <div class="pop-up-content">
+                      <div class="victory-message-error" style="transform: translateY(-7px); font-size: 20px; color: rgb(255, 119, 0);"></div>
+                      <input type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+                    </div>
+                    <div class="pop-up-footer">
+                      <input class="amend-score-btn" type="submit" value="Confirm">
                     </div>
                   </form>
                   <form method="POST" action="/delete_score">
                     <!-- PUT CSRF TOKEN HERE -->
                     <input type="hidden" name="score_id" value="{{ score['score_id'] }}">
-                    <input class="delete-score-confirm" type="submit" value="Remove Entire Entry">
+                    <input class="delete-score-btn" type="submit" value="Remove Entire Entry">
                   </form>
                 </div>
               {% endif %}

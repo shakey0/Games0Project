@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     
-    var revealButton = document.querySelector('.reveal-letter');
+    var revealLetterBtn = document.querySelector('.reveal-letter-btn');
     var clickCount = 0;
     var totalHints = 0;
     
-    if (revealButton) {
-        revealButton.addEventListener('click', function (event) {
+    if (revealLetterBtn) {
+        revealLetterBtn.addEventListener('click', function (event) {
             event.preventDefault();
 
             clickCount++;
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(function(data) {
-                    var revealButton = document.querySelector('.reveal-letter');
+                    var revealLetterBtn = document.querySelector('.reveal-letter-btn');
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
@@ -48,10 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         } else {
                             messageElement.innerHTML += '<br>' + data.message;
                         }
-                        revealButton.disabled = true;
+                        revealLetterBtn.disabled = true;
                     }
                     if (clickCount >= 2) {
-                        revealButton.disabled = true;
+                        revealLetterBtn.disabled = true;
                     }
                 })
                 .catch(function(error) {
@@ -62,10 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    var lengthButton = document.querySelector('.reveal-length');
+    var revealLengthBtn = document.querySelector('.reveal-length-btn');
 
-    if (lengthButton) {
-        lengthButton.addEventListener('click', function (event) {
+    if (revealLengthBtn) {
+        revealLengthBtn.addEventListener('click', function (event) {
             event.preventDefault();
 
             totalHints++;
@@ -87,8 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(function(data) {
-                    var lengthButton = document.querySelector('.reveal-length');
-                    lengthButton.disabled = true;
+                    var revealLengthBtn = document.querySelector('.reveal-length-btn');
+                    revealLengthBtn.disabled = true;
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    var removeHigher = document.querySelector('.remove-higher');
+    var removeHigherBtn = document.querySelector('.remove-higher-btn');
 
-    if (removeHigher) {
-        removeHigher.addEventListener('click', function (event) {
+    if (removeHigherBtn) {
+        removeHigherBtn.addEventListener('click', function (event) {
             event.preventDefault();
 
             var form = this.closest('.remove-higher-form');
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(function(data) {
-                    var removeHigher = document.querySelector('.remove-higher');
+                    var removeHigherBtn = document.querySelector('.remove-higher-btn');
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var wrongAnswerElementId = data.answer_to_remove.replace(/\s+/g, '_') + '_box';
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         textElement.textContent = data.higher_card_text;
                     }
-                    removeHigher.disabled = true;
+                    removeHigherBtn.disabled = true;
                 })
                 .catch(function(error) {
                     console.error('Fetch error:', error);
@@ -162,10 +162,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    var removeLower = document.querySelector('.remove-lower');
+    var removeLowerBtn = document.querySelector('.remove-lower-btn');
 
-    if (removeLower) {
-        removeLower.addEventListener('click', function (event) {
+    if (removeLowerBtn) {
+        removeLowerBtn.addEventListener('click', function (event) {
             event.preventDefault();
 
             var form = this.closest('.remove-lower-form');
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 })
                 .then(function(data) {
-                    var removeLower = document.querySelector('.remove-lower');
+                    var removeLowerBtn = document.querySelector('.remove-lower-btn');
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var wrongAnswerElementId = data.answer_to_remove.replace(/\s+/g, '_') + '_box';
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         textElement.textContent = data.lower_card_text;
                     }
-                    removeLower.disabled = true;
+                    removeLowerBtn.disabled = true;
                 })
                 .catch(function(error) {
                     console.error('Fetch error:', error);

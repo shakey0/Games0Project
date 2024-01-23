@@ -15,8 +15,8 @@
 {% endblock %}
 {% block content %}
 {% if in_game == "before" %}
-    <h1 class="question-title">Welcome to {{ game_name }}!</h1>
-    <h2 class="question-title-2">Choose a category:</h2>
+    <h1>Welcome to {{ game_name }}!</h1>
+    <h3>Choose a category:</h3>
     <div class="all-categories">
         {% for category in categories %}
             <div class="category">
@@ -24,108 +24,108 @@
                     <input type="hidden" name="in_game" value="intro">
                     <input type="hidden" name="category" value="{{ category }}">
                     <input type="hidden" name="game_type" value="{{ game_type }}">
-                    <input class="category-name" type="submit" value="{{ category }}">
+                    <input class="category-name absolute-box" type="submit" value="{{ category }}">
                 </form>
             </div>
         {% endfor %}
     </div>
-    <div class="all-categories-button-container">
+    <div class="all-categories-btn-container">
         <form method="GET" action="/game_setup">
             <input type="hidden" name="in_game" value="intro">
             <input type="hidden" name="category" value="All">
             <input type="hidden" name="game_type" value="{{ game_type }}">
-            <input class="all-categories-button" type="submit" value="Play All Categories">
+            <input class="all-categories-btn box-btn" type="submit" value="Play All Categories">
         </form>
     </div>
 {% elif in_game == "intro" %}
-    <h1 class="question-title">{{ game_name }}</h1>
-    <div class="pre-game">
+    <h1>{{ game_name }}</h1>
+    <div class="pre-game-box">
         <p class="instruction-text">{{ game.intro_message }} The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
-            <h2 class="level-selection-title">Speed level (time to answer):</h2>
-            <div class="level-selection">
-                <div class="level">
-                    <input class="level-radio" type="radio" id="easy" name="speed" value="60">
+            <h2>Speed level (time to answer):</h2>
+            <div class="pre-selection-box">
+                <div class="selector-class">
+                    <input type="radio" id="easy" name="speed" value="60">
                     <label for="easy"><b style="color:cornflowerblue;">Easy</b> (60 seconds)</label>
                 </div>
-                <div class="level">
-                    <input class="level-radio" type="radio" id="medium" name="speed" value="30" checked>
+                <div class="selector-class">
+                    <input type="radio" id="medium" name="speed" value="30" checked>
                     <label for="medium"><b style="color:cornflowerblue;">Medium</b> (30 seconds)</label>
                 </div>
-                <div class="level">
-                    <input class="level-radio" type="radio" id="hard" name="speed" value="15">
+                <div class="selector-class">
+                    <input type="radio" id="hard" name="speed" value="15">
                     <label for="hard"><b style="color:cornflowerblue;">Hard</b> (15 seconds)</label>
                 </div>
             </div>
             {% if game.has_difficulty %}
-                <h2 class="level-selection-title">Difficulty level:</h2>
-                <div class="level-selection">
-                    <div class="level">
-                        <input class="level-radio" type="radio" id="easy2" name="difficulty" value="easy">
+                <h2>Difficulty level:</h2>
+                <div class="pre-selection-box">
+                    <div class="selector-class">
+                        <input type="radio" id="easy2" name="difficulty" value="easy">
                         <label for="easy2"><b style="color:cornflowerblue;">Easy</b></label>
                     </div>
-                    <div class="level">
-                        <input class="level-radio" type="radio" id="medium2" name="difficulty" value="medium" checked>
+                    <div class="selector-class">
+                        <input type="radio" id="medium2" name="difficulty" value="medium" checked>
                         <label for="medium2"><b style="color:cornflowerblue;">Medium</b></label>
                     </div>
-                    <div class="level">
-                        <input class="level-radio" type="radio" id="hard2" name="difficulty" value="hard">
+                    <div class="selector-class">
+                        <input type="radio" id="hard2" name="difficulty" value="hard">
                         <label for="hard2"><b style="color:cornflowerblue;">Hard</b></label>
                     </div>
                 </div>
             {% endif %}
             <input type="hidden" name="in_game" value="start">
             <input type="hidden" name="token" value="{{ token }}">
-            <input class="submit-game" type="submit" value="Start Game">
+            <input class="submit-game-btn" type="submit" value="Start Game">
         </form>
     </div>
 {% elif in_game == "yes" %}
-    <h1 class="question-title-opening">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="question-in-game" style="display: none;">{{ next_question["question"] }}</h1>
+    <h1 class="func-pre">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
+    <h1 class="func-in" style="display: none; font-weight: 100;">{{ next_question["question"] }}</h1>
     <h1 class="in-countdown" style="display: none;">{{ timer }}</h1>
-    <h3 id="hint-message" class="hint-messages"></h3>
-    <div class="game-box" style="display: none;">
+    <h4 id="hint-message" class="hint-messages" style="margin: 10px;"></h4>
+    <div class="in-game-box" style="display: none;">
         <form method="POST" action="/game_answer" data-selection-choice="{% if "_mc" in game.param or "_tf" in game.param %}true{% else %}false{% endif %}">
             {% if "_mc" in game.param %}
-                <div class="mc_answer-selection">
+                <div class="answer-selection-box">
                     {% for answer in next_question["all_answers"] %}
-                        <div class="mc_answer" id="{{ answer | replace(" ", "_") }}_box">
-                            <input class="mc_answer-radio" type="radio" id="{{ answer | replace(" ", "_") }}" name="answer" value="{{ answer }}">
+                        <div class="selector-class answer-selector" id="{{ answer | replace(" ", "_") }}_box">
+                            <input class="answer-radio" type="radio" id="{{ answer | replace(" ", "_") }}" name="answer" value="{{ answer }}">
                             <label for="{{ answer | replace(" ", "_") }}">{{ answer }}</label>
                         </div>
                     {% endfor %}
                 </div>
             {% elif "_tf" in game.param %}
-                <div class="tf_answer-selection">
-                    <div class="tf_answer" id="True_box">
-                        <input class="tf_answer-radio" type="radio" id="True" name="answer" value="True">
+                <div class="answer-selection-box">
+                    <div class="selector-class answer-selector" id="True_box">
+                        <input class="answer-radio" type="radio" id="True" name="answer" value="True">
                         <label for="True">True</label>
                     </div>
-                    <div class="tf_answer" id="False_box">
-                        <input class="tf_answer-radio" type="radio" id="False" name="answer" value="False">
+                    <div class="selector-class answer-selector" id="False_box">
+                        <input class="answer-radio" type="radio" id="False" name="answer" value="False">
                         <label for="False">False</label>
                     </div>
                 </div>
             {% else %}
                 {% if "trivia_madness" in game.param %}
-                    <h3>The answer is {{ next_question["answer"] | count_words }}.</h3>
+                    <h4 style="margin-top: 0">The answer is {{ next_question["answer"] | count_words }}.</h4>
                 {% endif %}
                 <input class="answer-input" type="text" name="answer" placeholder="Type your answer here" autocomplete="off" autofocus>
             {% endif %}
             <input type="hidden" name="token" value="{{ token }}">
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
-            <input type="submit" class="submit-game" value="Submit Answer">
+            <input type="submit" class="submit-game-btn" value="Submit Answer">
         </form>
         <div class="helper-box">
             {% if "_mc" in game.param %}
                 <div class="helper-buttons">
                     <form class="remove-higher-form" method="POST" action="/remove_higher">
                         <input type="hidden" name="token" value="{{ token }}">
-                        <button class="remove-higher">Remove higher wrong answer</button>
+                        <button class="box-btn remove-higher-btn">Remove higher wrong answer</button>
                     </form>
                     <form class="remove-lower-form" method="POST" action="/remove_lower">
                         <input type="hidden" name="token" value="{{ token }}">
-                        <button class="remove-lower">Remove lower wrong answer</button>
+                        <button class="box-btn remove-lower-btn">Remove lower wrong answer</button>
                     </form>
                 </div>
                 <div class="helper-button-tags">
@@ -136,11 +136,11 @@
                 <div class="helper-buttons">
                     <form class="reveal-letter-form" method="POST" action="/reveal_letter">
                         <input type="hidden" name="token" value="{{ token }}">
-                        <button class="reveal-letter">Reveal a letter</button>
+                        <button class="box-btn reveal-letter-btn">Reveal a letter</button>
                     </form>
                     <form class="reveal-length-form" method="POST" action="/reveal_length">
                         <input type="hidden" name="token" value="{{ token }}">
-                        <button class="reveal-length">Reveal length</button>
+                        <button class="box-btn reveal-length-btn">Reveal length</button>
                     </form>
                 </div>
                 <div class="helper-button-tags">
@@ -153,53 +153,52 @@
 {% else %}
     {% if correct %}
         <div class="after-answer">
+            <h2>You are right!</h2>
             {% if "_tf" in game.param %}
-                <h2 class="correct-answer-text">You are right!</h2>
                 {% if statement %}
-                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                    <h3>'{{ real_answer }}'</h3>
                 {% else %}
-                    <h2 class="correct-answer-text">Here's the correction:</h2>
-                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                    <h3>Here's the correction:</h3>
+                    <h3>'{{ real_answer }}'</h3>
                 {% endif %}
             {% elif "number" in game.param %}
-                <h2 class="correct-answer-text">You are right!</h2>
-                <h2 class="correct-answer-text"><b class="correct-answer">{{ real_answer }}</b></h2>
+                <h3>{{ real_answer }}</h3>
             {% else %}
-                <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b> is the correct answer!</h2>
+                <h3>'{{ real_answer }}' is the correct answer!</h3>
             {% endif %}
-            <h2 class="current-score-text">You answered in <b class="score">{{ seconds }} seconds.</b></h2>
-            <h2 class="current-score-text"><b class="score">+{{ new_points }} points</b></h2>
+            <h3>You answered in <b class="score">{{ seconds }} seconds.</b></h3>
+            <h3><b class="score">+{{ new_points }} points</b></h3>
             {% if question_no >= 10 %}
-                <h2 class="current-score-text">Your final score: <b class="score">{{ score }} points!</b></h2>
+                <h2>Your final score: <b class="score">{{ score }} points!</b></h2>
             {% else %}
-                <h2 class="current-score-text">Your score: <b class="score">{{ score }} points</b></h2>
+                <h2>Your score: <b class="score">{{ score }} points</b></h2>
             {% endif %}
         </div>
     {% else %}
         {% if seconds == 0 %}
-            <h1 class="question-over"><b>Time up!</b></h1>
+            <h1>Time up!</h1>
         {% endif %}
         <div class="after-answer">
+            <h2>Sorry!</h2>
             {% if "_tf" in game.param %}
-                <h2 class="correct-answer-text">Sorry!</h2>
                 {% if statement %}
-                    <h2 class="correct-answer-text">True was the correct answer.</h2>
-                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                    <h3>True was the correct answer.</h3>
+                    <h3>'{{ real_answer }}'</h3>
                 {% else %}
-                    <h2 class="correct-answer-text">False was the correct answer.</h2>
-                    <h2 class="correct-answer-text">Here's the correction:</h2>
-                    <h2 class="correct-answer-text"><b class="correct-answer">'{{ real_answer }}'</b></h2>
+                    <h3>False was the correct answer.</h3>
+                    <h3>Here's the correction:</h3>
+                    <h3>'{{ real_answer }}'</h3>
                 {% endif %}
             {% elif "number" in game.param %}
-                <h2 class="correct-answer-text">Sorry! It was actually this:</h2>
-                <h2 class="correct-answer-text"><b class="correct-answer">{{ real_answer }}</b></h2>
+                <h3>Sorry! It was actually this:</h3>
+                <h3>{{ real_answer }}</h3>
             {% else %}
-                <h2 class="correct-answer-text">Sorry! The correct answer was <b class="correct-answer">'{{ real_answer }}'</b>.</h2>
+                <h3>Sorry! The correct answer was '{{ real_answer }}'.</h3>
             {% endif %}
             {% if question_no >= 10 %}
-                <h2 class="current-score-text">Your final score is <b class="score">{{ score }} points</b>.</h2>
+                <h2>Your final score is <b class="score">{{ score }} points</b>.</h2>
             {% else %}
-                <h2 class="current-score-text">Your current score is <b class="score">{{ score }} points</b>.</h2>
+                <h2>Your current score is <b class="score">{{ score }} points</b>.</h2>
             {% endif %}
         </div>
     {% endif %}
@@ -210,14 +209,16 @@
                 {% if user.is_authenticated %}
                     <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
                     <input class="message-input" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
+                    <input class="submit-game-btn go-to-scoreboard" style="margin-top: 35px;" type="submit" value="Scoreboard">
+                {% else %}
+                    <input class="submit-game-btn go-to-scoreboard" style="margin-top: 10px;" type="submit" value="Scoreboard">
                 {% endif %}
-                <input class="submit-game-end go-to-scoreboard" type="submit" value="Scoreboard">
             </form>
         {% else %}
             <form method="POST" action="/game_play">
                 <input type="hidden" name="token" value="{{ token }}">
                 <input type="hidden" name="question_no" value="{{ question_no }}">
-                <input class="submit-game" type="submit" value="Next Question">
+                <input class="submit-game-btn" style="margin-top: 10px;" type="submit" value="Next Question">
             </form>
         {% endif %}
     </div>

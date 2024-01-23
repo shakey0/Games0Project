@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    var answerForm = document.querySelector('.game-box form');
+    var answerForm = document.querySelector('.in-game-box form');
     if (answerForm) {
         var isSelectionChoice = answerForm.getAttribute('data-selection-choice') === 'true';
 
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var isValid = false;
 
             if (isSelectionChoice) {
-                var radios = document.querySelectorAll('.mc_answer-radio, .tf_answer-radio');
+                var radios = document.querySelectorAll('.answer-radio');
                 for (var i = 0; i < radios.length; i++) {
                     if (radios[i].checked) {
                         isValid = true;
@@ -38,10 +38,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 function startFirstCountdown() {
     const countdownElement = document.querySelector('.before-countdown');
     let countdownValue = parseInt(countdownElement.textContent, 10);
-    const questionTitleOpening = document.querySelector('.question-title-opening');
-    const questionInGame = document.querySelector('.question-in-game');
+    const questionTitleOpening = document.querySelector('.func-pre');
+    const questionInGame = document.querySelector('.func-in');
     const inGameCountdown = document.querySelector('.in-countdown');
-    const gameBox = document.querySelector('.game-box');
+    const gameBox = document.querySelector('.in-game-box');
 
     const intervalId = setInterval(() => {
         countdownElement.innerText = countdownValue;
@@ -69,11 +69,11 @@ function startFirstCountdown() {
 function startSecondCountdown() {
     const countdownElement = document.querySelector('.in-countdown');
     let countdownValue = parseInt(countdownElement.textContent, 10);
-    const questionInGame = document.querySelector('.question-in-game');
-    const gameBox = document.querySelector('.game-box');
+    const questionInGame = document.querySelector('.func-in');
+    const gameBox = document.querySelector('.in-game-box');
     const helperBox = document.querySelector('.helper-box');
     const hiddenTimerInput = document.getElementById('countdown-timer');
-    const gameForm = document.querySelector('.game-box form');
+    const gameForm = document.querySelector('.in-game-box form');
 
     const intervalId = setInterval(() => {
         countdownElement.innerText = countdownValue;

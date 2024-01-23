@@ -2,14 +2,14 @@
 {% block game_title %}Game Selection{% endblock %}
 {% block game_title_small %}Game Selection{% endblock %}
 {% block content %}
-<h1 class="question-title">What game do you want to play?</h1>
+<h1>What game do you want to play?</h1>
 <div class="all-games">
     {% for game in games if game.default %}
     <div class="game">
-        <div class="game-content">
+        <div class="game-content absolute-box">
             <a href="{{ url_for('main.game_setup', game_type=game.param) }}">
                 <img class="game-image" src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }}">
-                <h2 class="game-name">{{ game.name }}</h2>
+                <p class="game-name">{{ game.name }}</p>
             </a>
         </div>
     </div>
