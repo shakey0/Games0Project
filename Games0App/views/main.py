@@ -76,6 +76,8 @@ def game_play():
             flash("Either something went wrong, or you refreshed the page. Your game has expired.")
             return redirect('/')
 
+        redis_client.hset(token, 'question_no', 1)
+
         in_game = "yes"
 
         timer = int(request.form.get('speed'))
@@ -85,8 +87,6 @@ def game_play():
         if game.has_difficulty:
             difficulty = request.form.get('difficulty')
             redis_client.hset(token, 'difficulty', difficulty)
-
-        redis_client.hset(token, 'question_no', 1)
         
         cookied_question_number = request.cookies.get(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'))
         if cookied_question_number:
@@ -126,6 +126,12 @@ def game_play():
                             str(next_question["last_question_no"]))
         
         return response if response else redirect('/')
+    
+    question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
+    if question_no != int(request.form.get('question_no')):
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return redirect('/')
+    redis_client.hset(token, 'question_no', question_no+1)
 
     in_game = "yes"
 
@@ -134,12 +140,6 @@ def game_play():
     difficulty = ""
     if game.has_difficulty:
         difficulty = redis_client.hget(token, 'difficulty').decode('utf-8')
-
-    question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
-    if question_no != int(request.form.get('question_no')):
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
-        return redirect('/')
-    redis_client.hset(token, 'question_no', question_no+1)
 
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
@@ -174,14 +174,20 @@ def game_play():
 @main.route('/game_answer', methods=['GET', 'POST'])
 def game_answer():
 
-    in_game = "after"
-
     try:
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
         print("GAME EXPIRED")
         flash("It looks like your game has expired.")
         return redirect('/')
+    
+    question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
+    if redis_client.hget(token, f'question_{question_no}'):
+        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        return redirect('/')
+    redis_client.hset(token, f'question_{question_no}', 'Completed')
+
+    in_game = "after"
 
     user_answer = request.form.get('answer')
     real_answer = redis_client.hget(token, 'answer').decode('utf-8')
@@ -234,8 +240,6 @@ def game_answer():
     else:
         new_points = 0
         seconds = seconds_to_answer_left
-
-    question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, statement=statement, seconds=seconds,
