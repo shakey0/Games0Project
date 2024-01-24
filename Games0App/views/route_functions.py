@@ -40,7 +40,7 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
 
     formatted_category_name = game.format_category_name(category_name)
 
-    if first_question and current_user.is_authenticated:
+    if first_question and current_user.is_authenticated and game.load_route[0] != 'function':
         user_question_tracker.cache_questions(game.create_base_string(formatted_category_name, difficulty))
 
     count = 0

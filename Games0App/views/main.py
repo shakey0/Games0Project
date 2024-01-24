@@ -265,18 +265,19 @@ def game_finish():
         flash(expired_message)
         return redirect('/')
 
-    game_name_param = game.param
-    if game.categories:
-        category = redis_client.hget(token, 'category').decode('utf-8')
-        game_name_param += "_" + category
-    difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
-    if difficulty:
-        game_name_param += "_" + difficulty
-    redis_client.hset(token, 'game_name_param', game_name_param)
-
-    score = int(redis_client.hget(token, 'score').decode('utf-8'))
-
     if current_user.is_authenticated:
+
+        game_name_param = game.param
+        if game.categories:
+            category = redis_client.hget(token, 'category').decode('utf-8')
+            game_name_param += "_" + category
+        difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
+        if difficulty:
+            game_name_param += "_" + difficulty
+        redis_client.hset(token, 'game_name_param', game_name_param)
+
+        score = int(redis_client.hget(token, 'score').decode('utf-8'))
+
         message = request.form.get('message')
         message_check = validate_victory_message(message)
         if message_check != True:
@@ -286,6 +287,11 @@ def game_finish():
                                 message=message, likes=0)
         db.session.add(high_score)
         db.session.commit()
+
         redis_client.hset(token, 'high_score_saved', "yes")
+
+        formatted_category_name = game.format_category_name(category_name)
+        game.create_base_string(formatted_category_name, difficulty)
+        
 
     return jsonify(success=True, token=token)
