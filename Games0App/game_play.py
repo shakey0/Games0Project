@@ -154,9 +154,8 @@ class GamePlay:
 
 
     def get_question(self, last_question_no, category="", difficulty=""):
-        if category:
-            category = category.lower().replace(' - hard', '').replace(' & ', '_and_').replace(' ', '_')
         
+        category = self.format_category_name(category)
         base_string = self.create_base_string(category, difficulty)
         redis_string = base_string + "_" + str(last_question_no+1)
         redis_group = base_string + "_collection"
@@ -226,6 +225,11 @@ class GamePlay:
             print('Failed to generate sums')
             return None
 
+
+    def format_category_name(self, category):
+        if category:
+            category = category.lower().replace(' - hard', '').replace(' & ', '_and_').replace(' ', '_')
+        return category
 
     def create_base_string(self, category, difficulty):
         base_string = self.lower_name

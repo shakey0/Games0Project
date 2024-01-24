@@ -42,7 +42,8 @@ def register():
         return jsonify(success=False, errors=errors)
     
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    user = User(username=request.form.get('username'), email=request.form.get('email'), password_hashed=hashed_password)
+    user = User(username=request.form.get('username'), email=request.form.get('email'),
+                password_hashed=hashed_password, last_50_questions={})
     
     try:
         db.session.add(user)

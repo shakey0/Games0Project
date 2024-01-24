@@ -4,6 +4,8 @@ from Games0App.extensions import db, redis_client
 from Games0App.models.user import User
 from Games0App.models.high_score import HighScore, scores_users
 from Games0App.games import games
+from Games0App.user_question_tracker import UserQuestionTracker
+user_question_tracker = UserQuestionTracker()
 from sqlalchemy.sql import case
 import json
 import random
@@ -34,13 +36,41 @@ def get_key_game_data(request_type):
     return token, game, category_name, game_name
 
 
-def get_next_question(game, token, question_number, category_name, difficulty):
-    next_question = game.get_question(question_number, category=category_name, difficulty=difficulty)
-    print('NEXT QUESTION: ', next_question)
-    if not next_question:
-        flash("Something went wrong.")
-        return redirect('/')
-    
+def get_next_question(game, token, question_tracker, category_name, difficulty, first_question=False):
+
+    formatted_category_name = game.format_category_name(category_name)
+
+    if first_question and current_user.is_authenticated:
+        user_question_tracker.cache_questions(game.create_base_string(formatted_category_name, difficulty))
+
+    count = 0
+    while True:
+        count += 1
+        if count > 100:
+            flash("Something went wrong.")
+            # Log error here !!!!!!!!!!!!!
+            return None
+        next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
+        print('NEXT QUESTION: ', next_question)
+        if not next_question:
+            flash("Something went wrong.")
+            # Log error here !!!!!!!!!!!!!
+            return None
+        
+        if current_user.is_authenticated and game.load_route[0] != 'function':
+            result = user_question_tracker.deposit_question(
+                game.create_base_string(formatted_category_name, difficulty), next_question['ID'])
+            if result:
+                break
+        elif game.load_route[0] != 'function':
+            result = user_question_tracker.deposit_question_unauthenticated(
+                game.create_base_string(formatted_category_name, difficulty), next_question['ID'], token)
+            if result:
+                break
+        else:
+            break
+        question_tracker += 1
+
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
     redis_client.hset(token, 'answer', next_question["answer"])

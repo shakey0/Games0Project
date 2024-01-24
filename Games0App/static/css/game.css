@@ -1,5 +1,5 @@
 .in-game-box, .pre-game-box {
-    margin: 0 auto; /* HERE !!!!! */
+    margin: 0 auto;
     max-width: 80%;
     text-align: center;
     justify-content: center;

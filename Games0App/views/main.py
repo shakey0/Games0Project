@@ -6,8 +6,6 @@ from Games0App.models.high_score import HighScore
 from Games0App.views.route_functions import get_key_game_data, get_next_question
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
-import json
-import random
 import datetime
 
 
@@ -58,6 +56,9 @@ def game_setup():
                             user=current_user)
 
 
+expired_message = "Either something went wrong, or you refreshed the page. Your game has expired."
+
+
 @main.route('/game_play', methods=['GET', 'POST'])
 def game_play():
 
@@ -65,7 +66,7 @@ def game_play():
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
         print("GAME EXPIRED")
-        flash("It looks like your game has expired.")
+        flash(expired_message)
         return redirect('/')
     
     redis_client.hset(token, 'revealed_string', '')
@@ -73,7 +74,7 @@ def game_play():
     if request.form.get('in_game') == "start":
 
         if redis_client.hget(token, 'question_no'):  # Check if the game has already started and stop cheating
-            flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+            flash(expired_message)
             return redirect('/')
 
         redis_client.hset(token, 'question_no', 1)
@@ -93,9 +94,13 @@ def game_play():
             cookied_question_number = int(cookied_question_number)
         else:
             cookied_question_number = 0
-        print('COOKIED QUESTION NUMBER: ', cookied_question_number)
+        print('COOKIED QUESTION NUMBER:', cookied_question_number)
 
-        next_question = get_next_question(game, token, cookied_question_number, category_name, difficulty)
+        next_question = get_next_question(game, token, cookied_question_number, category_name, difficulty,
+                                            first_question=True)
+        if not next_question:
+            flash("Something went wrong.")
+            return redirect('/')
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:
             reveal_card_starter = 9
@@ -129,7 +134,7 @@ def game_play():
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if question_no != int(request.form.get('question_no')):
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        flash(expired_message)
         return redirect('/')
     redis_client.hset(token, 'question_no', question_no+1)
 
@@ -144,6 +149,9 @@ def game_play():
     question_tracker = int(redis_client.hget(token, 'question_tracker').decode('utf-8'))
 
     next_question = get_next_question(game, token, question_tracker, category_name, difficulty)
+    if not next_question:
+        flash("Something went wrong.")
+        return redirect('/')
     
     helpers = {}
 
@@ -178,12 +186,12 @@ def game_answer():
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
         print("GAME EXPIRED")
-        flash("It looks like your game has expired.")
+        flash(expired_message)
         return redirect('/')
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if redis_client.hget(token, f'question_{question_no}'):
-        flash("Either something went wrong, or you refreshed the page. Your game has expired.")
+        flash(expired_message)
         return redirect('/')
     redis_client.hset(token, f'question_{question_no}', 'Completed')
 
@@ -254,7 +262,7 @@ def game_finish():
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
         print("GAME EXPIRED")
-        flash("It looks like your game has expired.")
+        flash(expired_message)
         return redirect('/')
 
     game_name_param = game.param
