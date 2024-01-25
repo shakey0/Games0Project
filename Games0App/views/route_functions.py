@@ -63,7 +63,7 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
             if result:
                 break
         elif game.load_route[0] != 'function':
-            result = user_question_tracker.deposit_question_unauthenticated(
+            result = user_question_tracker.deposit_question_unauth(
                 game.create_base_string(formatted_category_name, difficulty), next_question['ID'], token)
             if result:
                 break
@@ -75,12 +75,26 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
     redis_client.hset(token, 'question', next_question["question"])
     redis_client.hset(token, 'answer', next_question["answer"])
 
-    if len(next_question) == 5: # CHANGE TO "wrong answers" in next_question
+    if "wrong_answers" in next_question:
         next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]
         random.shuffle(next_question["all_answers"])
         redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
     
     return next_question
+
+
+def confirm_all_questions_deposited(game, token, category_name, difficulty):
+
+    if game.load_route[0] != 'function':
+        formatted_category_name = game.format_category_name(category_name)
+        game_string = game.create_base_string(formatted_category_name, difficulty)
+        
+        question_cache_key = token + "_unauth_question_cache_" + game_string
+        cached_questions_ids = redis_client.lrange(question_cache_key, 0, -1)
+
+        if cached_questions_ids:
+            user_question_tracker.deposit_question_bundle(
+                [id.decode('utf-8') for id in cached_questions_ids if id], game_string)
 
 
 # For scoreboard.py ---------------------------------------------------------------

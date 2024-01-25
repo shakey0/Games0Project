@@ -3,7 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
-from Games0App.views.route_functions import get_key_game_data, get_next_question
+from Games0App.views.route_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
 import datetime
@@ -264,17 +264,17 @@ def game_finish():
         print("GAME EXPIRED")
         flash(expired_message)
         return redirect('/')
+    
+    game_name_param = game.param
+    if game.categories:
+        category = redis_client.hget(token, 'category').decode('utf-8')
+        game_name_param += "_" + category
+    difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
+    if difficulty:
+        game_name_param += "_" + difficulty
+    redis_client.hset(token, 'game_name_param', game_name_param)
 
     if current_user.is_authenticated:
-
-        game_name_param = game.param
-        if game.categories:
-            category = redis_client.hget(token, 'category').decode('utf-8')
-            game_name_param += "_" + category
-        difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if "_mc" in game.param else ""
-        if difficulty:
-            game_name_param += "_" + difficulty
-        redis_client.hset(token, 'game_name_param', game_name_param)
 
         score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
@@ -290,8 +290,6 @@ def game_finish():
 
         redis_client.hset(token, 'high_score_saved', "yes")
 
-        formatted_category_name = game.format_category_name(category_name)
-        game.create_base_string(formatted_category_name, difficulty)
-        
+        confirm_all_questions_deposited(game, token, category_name, difficulty)
 
     return jsonify(success=True, token=token)
