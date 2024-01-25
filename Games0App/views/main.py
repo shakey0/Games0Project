@@ -294,8 +294,8 @@ def game_finish():
         if message_check != True:
             return jsonify(success=False, error=message_check)
         high_score = HighScore(user_id=current_user.id, game=game_name_param, game_name=game_name,
-                                difficulty=difficulty, score=score, date=datetime.datetime.now(),
-                                message=message, likes=0)
+                                difficulty=difficulty, category=category_name, score=score,
+                                date=datetime.datetime.now(), message=message, likes=0)
         db.session.add(high_score)
         db.session.commit()
 
