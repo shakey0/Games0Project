@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, flash, jsonify
-from flask_login import current_user
+from flask_login import current_user, login_required
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
@@ -97,18 +97,27 @@ def amend_score():
     if message_check != True:
         return jsonify(success=False, error=message_check)
     
-    db.session.execute(update(HighScore).where(HighScore.id == score_id).values(message=message))
-    db.session.commit()
+    score = HighScore.query.filter_by(id=score_id, user_id=current_user.id).first()
 
-    return jsonify(success=True)
+    if score:
+        db.session.execute(update(HighScore).where(HighScore.id == score_id).values(message=message))
+        db.session.commit()
+        return jsonify(success=True)
+    else:
+        return jsonify(success=False, message="Score not found or access denied"), 403
 
 
 @scoreboard.route('/delete_score', methods=['POST'])
+@login_required
 def delete_score():
 
     score_id = request.form.get('score_id')
 
-    db.session.delete(HighScore.query.get(score_id))
-    db.session.commit()
+    score = HighScore.query.filter_by(id=score_id, user_id=current_user.id).first()
 
-    return jsonify(success=True)
+    if score:
+        db.session.delete(score)
+        db.session.commit()
+        return jsonify(success=True)
+    else:
+        return jsonify(success=False, message="Score not found or access denied"), 403
