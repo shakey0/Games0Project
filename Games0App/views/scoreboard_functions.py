@@ -17,6 +17,7 @@ def organise_score_data(score_data):
             'username': username,
             'game': high_score.game,
             'game_name': high_score.game_name,
+            'category': high_score.category,
             'difficulty': high_score.difficulty,
             'score': high_score.score,
             'date': high_score.date,

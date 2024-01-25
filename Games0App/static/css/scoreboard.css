@@ -39,14 +39,20 @@
     }
 }
 
-
-.game-score-btn {
-    white-space: nowrap;
+.quick-game-link-btn {
     color: rgb(232, 213, 203);
 }
 
+.quick-game-link-btn:hover {
+    color: rgb(189, 229, 126);
+}
+
+.game-score-btn {
+    white-space: nowrap;
+    color:rgb(236, 164, 101);
+}
+
 .game-score-btn:hover {
-    transform: scale(1.05);
     color: rgb(251, 223, 158);
 }
 

@@ -61,15 +61,15 @@
                 <h2>Difficulty level:</h2>
                 <div class="pre-selection-box">
                     <div class="selector-class">
-                        <input type="radio" id="easy2" name="difficulty" value="easy">
+                        <input type="radio" id="easy2" name="difficulty" value="easy" {% if difficulty == "easy" %}checked{% endif %}>
                         <label for="easy2"><b style="color:cornflowerblue;">Easy</b></label>
                     </div>
                     <div class="selector-class">
-                        <input type="radio" id="medium2" name="difficulty" value="medium" checked>
+                        <input type="radio" id="medium2" name="difficulty" value="medium" {% if difficulty == "medium" %}checked{% endif %}>
                         <label for="medium2"><b style="color:cornflowerblue;">Medium</b></label>
                     </div>
                     <div class="selector-class">
-                        <input type="radio" id="hard2" name="difficulty" value="hard">
+                        <input type="radio" id="hard2" name="difficulty" value="hard" {% if difficulty == "hard" %}checked{% endif %}>
                         <label for="hard2"><b style="color:cornflowerblue;">Hard</b></label>
                     </div>
                 </div>

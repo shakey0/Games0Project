@@ -5,6 +5,7 @@ class HighScore(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
     game = db.Column(db.String(50))
     game_name = db.Column(db.String(50))
+    category = db.Column(db.String(50))
     difficulty = db.Column(db.String(10))
     score = db.Column(db.Integer)
     date = db.Column(db.DateTime)

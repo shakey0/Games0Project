@@ -26,9 +26,20 @@ def game_setup():
     if request.args.get('category') == "All":
         game_type = game_type.replace('_categories', '')
 
-    game = next(item for item in games if item.param == game_type)
-
     in_game = request.args.get('in_game')
+
+    difficulty = "medium"
+    try:
+        game = next(item for item in games if item.param == game_type)
+    except StopIteration:
+        if '_easy' in game_type or '_medium' in game_type or '_hard' in game_type:
+            split_game_type = game_type.rsplit('_', 1)
+            game_type = split_game_type[0]
+            difficulty = split_game_type[1]
+        if 'categories' in game_type:
+            game_type = game_type.rsplit('_', 1)[0]
+            in_game = "intro"
+        game = next(item for item in games if item.param == game_type)
 
     if game.categories:
         category = request.args.get('category')
@@ -53,7 +64,7 @@ def game_setup():
         redis_client.hset(token, 'category', category.lower().replace(' ', '').replace('&', ''))
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
-                            user=current_user)
+                            user=current_user, difficulty=difficulty)
 
 
 expired_message = "Either something went wrong, or you refreshed the page. Your game has expired."

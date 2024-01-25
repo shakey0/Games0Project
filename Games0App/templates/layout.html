@@ -39,7 +39,7 @@
             <button class="options-btn clear-btn" data-login-button-target="#login-box">Log in</button>
             <button class="options-btn clear-btn" data-register-button-target="#register-box">Sign up</button>
         {% endif %}
-        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Leaderboards</button></a>
+        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Scoreboards</button></a>
         <button class="options-btn clear-btn">About</button>
         <a href=""><button class="options-btn clear-btn">Contact</button></a>
         {% if user.is_authenticated %}
