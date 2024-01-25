@@ -3,7 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
-from Games0App.views.route_functions import get_high_scores, get_user_scores, get_all_scores
+from Games0App.views.scoreboard_functions import get_high_scores, get_user_scores, get_all_scores
 from Games0App.utils import validate_victory_message
 from sqlalchemy import update
 

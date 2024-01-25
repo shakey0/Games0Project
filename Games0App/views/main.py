@@ -3,7 +3,7 @@ from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
-from Games0App.views.route_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
+from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
 from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
 import secrets
 import datetime
