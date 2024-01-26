@@ -156,15 +156,15 @@
             <h2>You are right!</h2>
             {% if "_tf" in game.param %}
                 {% if statement %}
-                    <h3>'{{ real_answer }}'</h3>
+                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
                 {% else %}
                     <h3>Here's the correction:</h3>
-                    <h3>'{{ real_answer }}'</h3>
+                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
                 {% endif %}
             {% elif "number" in game.param %}
-                <h3>{{ real_answer }}</h3>
+                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
             {% else %}
-                <h3>'{{ real_answer }}' is the correct answer!</h3>
+                <h2><p style="font-weight: 100;">'{{ real_answer }}'</p> is the correct answer!</h2>
             {% endif %}
             <h3>You answered in <b class="score">{{ seconds }} seconds.</b></h3>
             <h3><b class="score">+{{ new_points }} points</b></h3>
@@ -183,17 +183,18 @@
             {% if "_tf" in game.param %}
                 {% if statement %}
                     <h3>True was the correct answer.</h3>
-                    <h3>'{{ real_answer }}'</h3>
+                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
                 {% else %}
                     <h3>False was the correct answer.</h3>
                     <h3>Here's the correction:</h3>
-                    <h3>'{{ real_answer }}'</h3>
+                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
                 {% endif %}
             {% elif "number" in game.param %}
-                <h3>Sorry! It was actually this:</h3>
-                <h3>{{ real_answer }}</h3>
+                <h3>It was actually this:</h3>
+                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
             {% else %}
-                <h3>Sorry! The correct answer was '{{ real_answer }}'.</h3>
+                <h3>The correct answer was:</h3>
+                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
             {% endif %}
             {% if question_no >= 10 %}
                 <h2>Your final score is <b class="score">{{ score }} points</b>.</h2>
