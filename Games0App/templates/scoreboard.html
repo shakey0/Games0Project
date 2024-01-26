@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block game_title %}{{game_name}}{% endblock %}
 {% block game_title_small %}
-  {% if "'s Scores" in game_name %}
+  {% if "'s Scores" in game_name or '& Scores' in game_name %}
     {{ game_name }}
   {% else %}
     {% for word in game_name.split() %}
@@ -20,6 +20,16 @@
   {% endif %}
 {% endblock %}
 {% block content %}
+
+{% if game_name == "Your Profile & Scores" %}
+  <div class="user-profile-box">
+    <h1 style="margin-top: 0;">Account Management</h1>
+    <p class="email-profile-info">{{ user.email }}</p>
+    <a class="profile-info-btn" href="">Change Email</a>
+    <a class="profile-info-btn" href="">Change Password</a>
+    <a class="profile-info-btn" href="">Delete Account</a>
+  </div>
+{% endif %}
 
 {% if needs_high_score %}
   {% if not user.is_authenticated %}
