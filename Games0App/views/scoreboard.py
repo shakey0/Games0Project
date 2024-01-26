@@ -41,15 +41,15 @@ def scoreboard_page():
     
     elif game_name_param:
         game_type = game_name_param
-        if ("easy" in game_name_param or "medium" in game_name_param or "hard" in game_name_param) \
+        if ("_easy" in game_name_param or "_medium" in game_name_param or "_hard" in game_name_param) \
             and "categories" in game_name_param:
             game_type = game_name_param.rsplit("_", 2)[0]
-            category_name = game_name_param.rsplit("_", 2)[1].title()
-        elif "easy" in game_name_param or "medium" in game_name_param or "hard" in game_name_param:
+            category_name = request.args.get('category')
+        elif "_easy" in game_name_param or "_medium" in game_name_param or "_hard" in game_name_param:
             game_type = game_name_param.rsplit("_", 1)[0]
         elif "categories" in game_name_param:
             game_type = game_name_param.rsplit("_", 1)[0]
-            category_name = game_name_param.rsplit("_", 1)[1].title()
+            category_name = request.args.get('category')
 
         try:
             game = next(item for item in games if item.param == game_type)
