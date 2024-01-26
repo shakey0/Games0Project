@@ -193,6 +193,31 @@ def like_high_score():
     try:
         with db.session.begin_nested():
 
+            if liked: # The user already liked the score before, so the like is being removed
+                delete_statement = (
+                    delete(scores_users)
+                    .where(scores_users.c.score_id == score_id)
+                    .where(scores_users.c.user_id == current_user.id)
+                )
+                result = db.session.execute(delete_statement)
+                if result.rowcount == 0:
+                    print("No rows deleted, score was previously not liked by user")
+                    # Log (error) here !!!!!!!!!!!!!
+                    return jsonify(success=False, error="previously not liked")
+            else: # The user is liking the score, so the like is being added
+                try:
+                    insert_statement = (
+                        scores_users.insert()
+                        .values(score_id=score_id, user_id=current_user.id)
+                    )
+                    result = db.session.execute(insert_statement)
+                except IntegrityError as e:
+                    print("Not inserted, already liked by user")
+                    # Log error here !!!!!!!!!!!!!
+                    print(f"Integrity Error: {e}")
+                    db.session.rollback()
+                    return jsonify(success=False, error="already liked")
+
             update_statement = (
                 update(HighScore)
                 .where(HighScore.id == score_id)
@@ -201,26 +226,14 @@ def like_high_score():
             )
             new_likes_count = db.session.execute(update_statement).scalar()
 
-            if liked:
-                delete_statement = (
-                    delete(scores_users)
-                    .where(scores_users.c.score_id == score_id)
-                    .where(scores_users.c.user_id == current_user.id)
-                )
-                db.session.execute(delete_statement)
-            else:
-                insert_statement = (
-                    scores_users.insert()
-                    .values(score_id=score_id, user_id=current_user.id)
-                )
-                db.session.execute(insert_statement)
-
         db.session.commit()
 
     except IntegrityError as e:
         print(f"Integrity Error: {e}")
+        # Log error here !!!!!!!!!!!!!
     except Exception as e:
         print(f"General Error: {e}")
+        # Log error here !!!!!!!!!!!!!
 
     if new_likes_count is not None:
         return jsonify(success=True, newLikesCount=new_likes_count)

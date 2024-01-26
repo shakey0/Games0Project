@@ -14,10 +14,14 @@ $(document).ready(function(){
             type: 'POST',
             data: formData,
             success: function(response) {
-                if (response.success) {
 
-                    const scoreId = $button.siblings("input[name='score_id']").val();
-                    const $scoreContainer = $(`.score-container[data-score-id='${scoreId}']`);
+                const scoreId = $button.siblings("input[name='score_id']").val();
+                const $scoreContainer = $(`.score-container[data-score-id='${scoreId}']`);
+
+                const newLikesCount = response.newLikesCount;
+                const $likesCount = $scoreContainer.find('.likes-count');
+
+                if (response.success) {
                     
                     if ($button.hasClass('liked-thumbsup')) {
                         $button.removeClass('liked-thumbsup').addClass('like-thumbsup');
@@ -26,12 +30,29 @@ $(document).ready(function(){
                         $button.removeClass('like-thumbsup').addClass('liked-thumbsup');
                         $likedInput.val("yes");
                     }
-                    const newLikesCount = response.newLikesCount;
-                    const $likesCount = $scoreContainer.find('.likes-count');
                     $likesCount.text(`${newLikesCount}`);
 
                 } else {
-                    alert(response.error || 'An error occurred while processing your request.');
+
+                    const currentLikesCount = parseInt($likesCount.text(), 10) || 0;
+
+                    if (response.error === 'previously not liked') {
+                        const newLikesCount = currentLikesCount - 1;
+                        $likesCount.text(newLikesCount);
+                        if ($button.hasClass('liked-thumbsup')) {
+                            $button.removeClass('liked-thumbsup').addClass('like-thumbsup');
+                            $likedInput.val("no");
+                        } 
+                    } else if (response.error === 'already liked') {
+                        const newLikesCount = currentLikesCount + 1;
+                        $likesCount.text(newLikesCount);
+                        if ($button.hasClass('like-thumbsup')) {
+                            $button.removeClass('like-thumbsup').addClass('liked-thumbsup');
+                            $likedInput.val("yes");
+                        }
+                    } else {
+                        alert(response.error || 'An error occurred while processing your request.');
+                    }
                 }
             },
             error: function() {
