@@ -35,4 +35,11 @@ def create_app():
     app.register_blueprint(api_blueprint)
     app.register_blueprint(scoreboard_blueprint)
 
+    @app.after_request
+    def add_cache_control_headers(response):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+        return response
+
     return app

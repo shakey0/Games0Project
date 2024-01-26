@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_login import current_user
+from flask_login import current_user, login_required
 from Games0App.extensions import db, redis_client
 from Games0App.models.high_score import HighScore, scores_users
 from sqlalchemy import update, delete
@@ -184,10 +184,8 @@ def remove_lower():
 
 
 @api.route('/like_high_score', methods=['POST'])
+@login_required
 def like_high_score():
-
-    if not current_user.is_authenticated:
-        return jsonify(success=False, error="Something wasn't right there...")
     
     score_id = request.form['score_id']
     liked = True if request.form['liked'] == "yes" else False
