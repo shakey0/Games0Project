@@ -52,63 +52,65 @@
     <div class="top-space"></div>
     {% block content %}{% endblock %}
 
-    <div class="login-box pop-up-box" id="login-box">
-        <button data-cancel-button-over class="cancel-button">&times;</button>
-        <form method="POST" action="/login">
-            <!-- PUT CSRF TOKEN HERE -->
-            <div class="pop-up-header">
-                <p>Login</p>
-            </div>
-            <div class="pop-up-content">
-                <div class="login-box-item">
-                    <input type="text" name="username" placeholder="Username or email" autofocus>
+    {% if not user.is_authenticated %}
+        <div class="login-box pop-up-box" id="login-box">
+            <button data-cancel-button-over class="cancel-button">&times;</button>
+            <form method="POST" action="/login">
+                <!-- PUT CSRF TOKEN HERE -->
+                <div class="pop-up-header">
+                    <p>Login</p>
                 </div>
-                <div class="login-box-item">
-                    <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                <div class="pop-up-content">
+                    <div class="login-box-item">
+                        <input type="text" name="username" placeholder="Username or email" autofocus>
+                    </div>
+                    <div class="login-box-item">
+                        <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                    </div>
+                    <div class="login-box-item">
+                        <div class="login-error-message" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                    </div>
                 </div>
-                <div class="login-box-item">
-                    <div class="login-error-message" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                <div class="pop-up-footer">
+                    <input class="log-in-btn" type="submit" value="Login">
                 </div>
-            </div>
-            <div class="pop-up-footer">
-                <input class="log-in-btn" type="submit" value="Login">
-            </div>
-        </form>
-    </div>
-    <div class="register-box pop-up-box" id="register-box">
-        <button data-cancel-button-over class="cancel-button">&times;</button>
-        <form id="registrationForm" method="POST" action="/register">
-            <!-- PUT CSRF TOKEN HERE -->
-            <div class="pop-up-header">
-                <p>Register</p>
-            </div>
-            <div class="pop-up-content">
-                <div class="register-box-item">
-                    <div class="register-username-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <input type="text" name="username" placeholder="Username" autofocus>
+            </form>
+        </div>
+        <div class="register-box pop-up-box" id="register-box">
+            <button data-cancel-button-over class="cancel-button">&times;</button>
+            <form id="registrationForm" method="POST" action="/register">
+                <!-- PUT CSRF TOKEN HERE -->
+                <div class="pop-up-header">
+                    <p>Register</p>
                 </div>
-                <div class="register-box-item">
-                    <div class="register-email-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <input type="text" name="email" placeholder="Email" autofocus>
+                <div class="pop-up-content">
+                    <div class="register-box-item">
+                        <div class="register-username-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                        <input type="text" name="username" placeholder="Username" autofocus>
+                    </div>
+                    <div class="register-box-item">
+                        <div class="register-email-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                        <input type="text" name="email" placeholder="Email" autofocus>
+                    </div>
+                    <div class="register-box-item">
+                        <div class="register-password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                        <input type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password" autocomplete="off" autofocus>
+                        <div id="password-strength" style="color: rgb(0, 149, 255); transform: translateY(-17px);"></div> <!-- password strength meter -->
+                    </div>
+                    <div class="register-box-item">
+                        <div class="register-confirm_password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                        <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
+                    </div>
+                    <div class="register-box-item">
+                        <div class="register-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
+                    </div>
                 </div>
-                <div class="register-box-item">
-                    <div class="register-password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <input type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password" autocomplete="off" autofocus>
-                    <div id="password-strength" style="color: rgb(0, 149, 255); transform: translateY(-17px);"></div> <!-- password strength meter -->
+                <div class="pop-up-footer">
+                    <input class="sign-up-btn" type="submit" value="Register">
                 </div>
-                <div class="register-box-item">
-                    <div class="register-confirm_password-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                    <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
-                </div>
-                <div class="register-box-item">
-                    <div class="register-error-message clear_error" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
-                </div>
-            </div>
-            <div class="pop-up-footer">
-                <input class="sign-up-btn" type="submit" value="Register">
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
+    {% endif %}
     <div id="overlay"></div>
 
     <script src="{{ url_for('static', filename='scripts/pop_ups_and_menu.js') }}"></script>
