@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ auth_type['title'] }}</title>
+</head>
+<body>
+    <h1>{{ auth_type['title'] }} - Secure</h1>
+    {% if auth_type['stage'] == 0 %}
+        <h4>Deleting your account is an irreversible action. Once you complete the steps your account will be immediately delete and completely unrecoverable.</h4>
+        <h4>Are you sure you want to delete your account?</h4>
+        <form action="/delete_account" method="POST">
+            <!-- PUT CSRF TOKEN HERE -->
+            <input type="submit" value="Yes">
+            <input type="submit" value="No">
+        </form>
+    {% elif auth_type['stage'] == 1 %}
+        <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
+        <form action="/{{ auth_type['route'] }}" method="POST">
+            <!-- PUT CSRF TOKEN HERE -->
+            <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
+            <input type="password" name="password" placeholder="Password">
+            <input type="submit" value="Confirm">
+            <input type="submit" value="Cancel">
+        </form>
+    {% elif auth_type['stage'] == 2 %}
+        <h4>{{ auth_type['message'] }}</h4> Your new password:  Are you absolutely sure you want to delete your account?
+        <form action="/{{ auth_type['route'] }}" method="POST">
+            <!-- PUT CSRF TOKEN HERE -->
+            <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
+            <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
+            {% if 'Password' in auth_type['title'] %}
+                <input type="password" name="password" placeholder="Password">
+                <input type="password" name="confirm_password" placeholder="Confirm Password">
+            {% elif 'Email' in auth_type['title'] %}
+                <input type="email" name="email" placeholder="Email">
+            {% endif %}
+            <input type="submit" value="Confirm">
+            <input type="submit" value="Cancel">
+        </form>
+    {% elif auth_type['stage'] == 3 %}
+        <h4>{{ auth_type['message'] }}</h4>
+        {% if not 'Delete' in auth_type['title'] %}
+            <a href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
+        {% endif %}
+        <a href="{{ url_for('main.index') }}">Return to Home</a>
+    {% endif %}
+</body>
+</html>

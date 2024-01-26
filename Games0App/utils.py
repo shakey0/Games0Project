@@ -14,7 +14,6 @@ def format_answer(answer):
         answer = answer.replace(char, '')
     return answer
 
-
 def normalise_answer(answer):
     answer = answer.lower().strip()
 
