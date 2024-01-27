@@ -25,9 +25,9 @@
   <div class="user-profile-box">
     <h1 style="margin-top: 0;">Account Management</h1>
     <p class="email-profile-info">{{ user.email }}</p>
-    <a class="profile-info-btn" href="">Change Email</a>
-    <a class="profile-info-btn" href="">Change Password</a>
-    <a class="profile-info-btn" href="">Delete Account</a>
+    <a class="profile-info-btn" href="{{ url_for('auth.change_email') }}">Change Email</a>
+    <a class="profile-info-btn" href="{{ url_for('auth.change_password') }}">Change Password</a>
+    <a class="profile-info-btn" href="{{ url_for('auth.delete_account') }}">Delete Account</a>
   </div>
 {% endif %}
 

@@ -40,7 +40,7 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        <form action="/{{ auth_type['route'] }}" method="POST">
+        <form action="/{{ auth_type['route'] }}" method="POST" id="authForm">
             <!-- PUT CSRF TOKEN HERE -->
             <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
             <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
@@ -51,7 +51,14 @@
                 <input type="email" name="email" placeholder="Email">
             {% endif %}
             <input type="submit" name="submit_button" value="Confirm">
-            <input type="submit" name="submit_button" value="Cancel">
+            <input type="submit" name="submit_button" value="Cancel" onclick="cancelForm()">
+            <script>
+                function cancelForm() {
+                    var form = document.getElementById('authForm');
+                    form.noValidate = true;
+                    form.submit();
+                }
+            </script>
         </form>
     {% elif auth_type['stage'] == 3 %}
         <h4>{{ auth_type['message'] }}</h4>
