@@ -57,4 +57,4 @@ class AuthTokenManager:
         else:
             print('Token expired.')
             # Log this event
-            return 'token_expired'
+            return 'expired_token'
