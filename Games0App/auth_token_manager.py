@@ -1,4 +1,5 @@
-from flask_login import current_user
+from flask import flash
+from flask_login import current_user, logout_user
 from Games0App.extensions import redis_client
 import os
 
@@ -48,6 +49,12 @@ class AuthTokenManager:
             if key.decode('utf-8') == token:
                 return True
             else:
-                return False
+                print('Invalid token - ALERT!')
+                logout_user()
+                flash("A security threat was detected. You've been logged out.", 'error')
+                # Log this event
+                return 'invalid_token'
         else:
-            return False
+            print('Token expired.')
+            # Log this event
+            return 'token_expired'

@@ -107,25 +107,31 @@ def get_stage(route):
 
     stage_token_1 = request.form.get('stage_token_1')
     if not stage_token_1:
-        print("MISSING TOKEN")
-        return 'missing_token'
+        print("No token sent with form - ALERT!")
+        return 'invalid_token'
+    token_check = auth_token_manager.verify_change_token(route, 1, stage_token_1)
+    if token_check != True:
+        return token_check
     
     stage_token_2 = request.form.get('stage_token_2')
+    if not stage_token_2:
+        return [stage_token_1]
+    
+    token_check = auth_token_manager.verify_change_token(route, 2, stage_token_2)
+    if token_check != True:
+        return token_check
+    return [stage_token_1, stage_token_2]
 
-    if stage_token_1 and not stage_token_2:
-        if auth_token_manager.verify_change_token(route, 1, stage_token_1):
-            return [stage_token_1]
-        
-    elif stage_token_1 and stage_token_2:
-        if auth_token_manager.verify_change_token(route, 1, stage_token_1) and \
-            auth_token_manager.verify_change_token(route, 2, stage_token_2):
-            return [stage_token_1, stage_token_2]
-        
-    print("INVALID TOKEN - ALERT!!!")
-    logout_user()
-    flash("A security threat was detected. You've been logged out.", 'error')
-    # Log this event
-    return 'invalid_token'
+
+def stage_1_validation(route, stage_token_1, auth_type_1, auth_type_2):
+    password_validation = auth_validator.validate_password_for_auth()
+    if password_validation != True:
+        flash(password_validation, 'error')
+        return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
+    
+    stage_token_2 = auth_token_manager.get_new_change_token(route, 2)
+    return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
+                            stage_token_2=stage_token_2)
 
 
 @auth.route('/change_email', methods=['GET', 'POST'])
@@ -147,23 +153,13 @@ def change_email():
     
     stage_data = get_stage('change_email')
 
-    if stage_data == 'missing_token':
+    if stage_data == 'expired_token':
         return redirect_to_scoreboard()
-    
     elif stage_data == 'invalid_token':
         return redirect('/')
 
     elif len(stage_data) == 1 and choice == 'Confirm':
-        stage_token_1 = stage_data[0]
-
-        password_validation = auth_validator.validate_password_for_auth()
-        if password_validation != True:
-            flash(password_validation, 'error')
-            return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
-        
-        stage_token_2 = auth_token_manager.get_new_change_token('change_email', 2)
-        return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                stage_token_2=stage_token_2)
+        return stage_1_validation('change_email', stage_data[0], auth_type_1, auth_type_2)
         
     elif len(stage_data) == 2 and choice == 'Confirm':
         stage_token_1, stage_token_2 = stage_data
@@ -206,23 +202,13 @@ def change_password():
     
     stage_data = get_stage('change_password')
 
-    if stage_data == 'missing_token':
+    if stage_data == 'expired_token':
         return redirect_to_scoreboard()
-    
     elif stage_data == 'invalid_token':
         return redirect('/')
 
     elif len(stage_data) == 1 and choice == 'Confirm':
-        stage_token_1 = stage_data[0]
-
-        password_validation = auth_validator.validate_password_for_auth()
-        if password_validation != True:
-            flash(password_validation, 'error')
-            return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
-        
-        stage_token_2 = auth_token_manager.get_new_change_token('change_password', 2)
-        return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                stage_token_2=stage_token_2)
+        return stage_1_validation('change_password', stage_data[0], auth_type_1, auth_type_2)
         
     elif len(stage_data) == 2 and choice == 'Confirm':
         stage_token_1, stage_token_2 = stage_data
@@ -245,7 +231,7 @@ def change_password():
 def delete_account():
 
     if not auth_token_manager.attempt_check('route', 'change_password'):
-        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+        return redirect_to_scoreboard()
     
     auth_type_0, auth_type_1, auth_type_2, auth_type_3 = get_auth_types('delete', 'account', start_from=0)
 
@@ -254,33 +240,23 @@ def delete_account():
 
     choice = request.form.get('submit_button')
     if choice == 'No' or choice == 'Cancel':
-        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+        return redirect_to_scoreboard()
     if choice == 'Yes':
         stage_token_1 = auth_token_manager.get_new_change_token('delete_account', 1)
         return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
     
     stage_data = get_stage('delete_account')
 
-    if stage_data == 'missing_token':
+    if stage_data == 'expired_token':
         return redirect_to_scoreboard()
     
     elif stage_data == 'invalid_token':
         return redirect('/')
 
     elif len(stage_data) == 1 and choice == 'Confirm':
-        stage_token_1 = stage_data[0]
-
-        password_validation = auth_validator.validate_password_for_auth()
-        if password_validation != True:
-            flash(password_validation, 'error')
-            return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
-        
-        stage_token_2 = auth_token_manager.get_new_change_token('delete_account', 2)
-        return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                stage_token_2=stage_token_2)
+        return stage_1_validation('delete_account', stage_data[0], auth_type_1, auth_type_2)
     
     elif len(stage_data) == 2 and choice == 'Confirm':
-        stage_token_1, stage_token_2 = stage_data
             
         db.session.delete(current_user)
         db.session.commit()
