@@ -241,7 +241,6 @@ def delete_account():
         return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
     
     auth_type_0, auth_type_1, auth_type_2, auth_type_3 = get_auth_types('delete', 'account', start_from=0)
-    auth_type_2['message'] = 'Are you absolutely sure you want to delete your account? This cannot be undone!'
 
     if request.method == 'GET':
         return render_template('auth.html', auth_type=auth_type_0)

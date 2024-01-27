@@ -3,69 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_defaults.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
     <title>{{ auth_type['title'] }}</title>
 </head>
 <body>
     <h1>{{ auth_type['title'] }} - Secure</h1>
-    {% if auth_type['stage'] == 0 %}
-        <h4>Deleting your account is an irreversible action. Once you complete the steps your account will be immediately delete and completely unrecoverable.</h4>
-        <h4>Are you sure you want to delete your account?</h4>
-        <form action="/delete_account" method="POST">
-            <!-- PUT CSRF TOKEN HERE -->
-            <input type="submit" name="submit_button" value="Yes">
-            <input type="submit" name="submit_button" value="No">
-        </form>
-    {% elif auth_type['stage'] == 1 %}
-        <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="{{ category }}">{{ message }}</div>
-                {% endfor %}
+    <div class="main-box">
+        {% if auth_type['stage'] == 0 %}
+            <h4 style="color: rgb(255, 119, 0);">Deleting your account is an irreversible action. Once you complete the steps your account will be immediately delete and completely unrecoverable.</h4>
+            <h4 style="padding-top: 20px;">Are you sure you want to delete your account?</h4>
+            <form style="padding-top: 0;" action="/delete_account" method="POST">
+                <!-- PUT CSRF TOKEN HERE -->
+                <div class="submit-btns">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Yes">
+                    <input class="cancel-btn" type="submit" name="submit_button" value="No">
+                </div>
+            </form>
+        {% elif auth_type['stage'] == 1 %}
+            <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/{{ auth_type['route'] }}" method="POST">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
+                <input class="auth-input" type="password" name="password" placeholder="Password">
+                <div class="submit-btns">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="cancel-btn" type="submit" name="submit_button" value="Cancel">
+                </div>
+            </form>
+        {% elif auth_type['stage'] == 2 %}
+            {% if 'Delete' in auth_type['title'] %}
+                <h4 style="color: rgb(255, 119, 0); margin-bottom: -10px;">Are you absolutely sure you want to delete your account? This cannot be undone!</h4>
+            {% else %}
+            <h4>{{ auth_type['message'] }}</h4>
             {% endif %}
-        {% endwith %}
-        <form action="/{{ auth_type['route'] }}" method="POST">
-            <!-- PUT CSRF TOKEN HERE -->
-            <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
-            <input type="password" name="password" placeholder="Password">
-            <input type="submit" name="submit_button" value="Confirm">
-            <input type="submit" name="submit_button" value="Cancel">
-        </form>
-    {% elif auth_type['stage'] == 2 %}
-        <h4>{{ auth_type['message'] }}</h4>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <div class="{{ category }}">{{ message }}</div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        <form action="/{{ auth_type['route'] }}" method="POST" id="authForm">
-            <!-- PUT CSRF TOKEN HERE -->
-            <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
-            <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
-            {% if 'Password' in auth_type['title'] %}
-                <input type="password" name="password" placeholder="Password">
-                <input type="password" name="confirm_password" placeholder="Confirm Password">
-            {% elif 'Email' in auth_type['title'] %}
-                <input type="email" name="email" placeholder="Email">
-            {% endif %}
-            <input type="submit" name="submit_button" value="Confirm">
-            <input type="submit" name="submit_button" value="Cancel" onclick="cancelForm()">
-            <script>
-                function cancelForm() {
-                    var form = document.getElementById('authForm');
-                    form.noValidate = true;
-                    form.submit();
-                }
-            </script>
-        </form>
-    {% elif auth_type['stage'] == 3 %}
-        <h4>{{ auth_type['message'] }}</h4>
-        {% if not 'Delete' in auth_type['title'] %}
-            <a href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/{{ auth_type['route'] }}" method="POST" id="authForm">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
+                <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
+                {% if 'Password' in auth_type['title'] %}
+                    <input class="auth-input" type="password" name="password" placeholder="Password">
+                    <input class="auth-input" style="margin-top: 15px;" type="password" name="confirm_password" placeholder="Confirm Password">
+                {% elif 'Email' in auth_type['title'] %}
+                    <input class="auth-input email-input" type="email" name="email" placeholder="Email">
+                {% endif %}
+                <div class="submit-btns">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="cancel-btn" type="submit" name="submit_button" value="Cancel" onclick="cancelForm()">
+                    <script>
+                        function cancelForm() {
+                            var form = document.getElementById('authForm');
+                            form.noValidate = true;
+                            form.submit();
+                        }
+                    </script>
+                </div>
+            </form>
+        {% elif auth_type['stage'] == 3 %}
+            <h4>{{ auth_type['message'] }}</h4>
+            <div class="return-btn-box">
+                {% if not 'Delete' in auth_type['title'] %}
+                    <a class="return-btn" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
+                {% endif %}
+                <a class="return-btn" href="{{ url_for('main.index') }}">Return to Home</a>
+            </div>
         {% endif %}
-        <a href="{{ url_for('main.index') }}">Return to Home</a>
-    {% endif %}
+    </div>
 </body>
 </html>
