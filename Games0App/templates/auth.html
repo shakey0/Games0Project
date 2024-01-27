@@ -12,8 +12,8 @@
         <h4>Are you sure you want to delete your account?</h4>
         <form action="/delete_account" method="POST">
             <!-- PUT CSRF TOKEN HERE -->
-            <input type="submit" value="Yes">
-            <input type="submit" value="No">
+            <input type="submit" name="submit_button" value="Yes">
+            <input type="submit" name="submit_button" value="No">
         </form>
     {% elif auth_type['stage'] == 1 %}
         <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
@@ -28,8 +28,8 @@
             <!-- PUT CSRF TOKEN HERE -->
             <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
             <input type="password" name="password" placeholder="Password">
-            <input type="submit" value="Confirm">
-            <input type="submit" value="Cancel">
+            <input type="submit" name="submit_button" value="Confirm">
+            <input type="submit" name="submit_button" value="Cancel">
         </form>
     {% elif auth_type['stage'] == 2 %}
         <h4>{{ auth_type['message'] }}</h4>
@@ -50,8 +50,8 @@
             {% elif 'Email' in auth_type['title'] %}
                 <input type="email" name="email" placeholder="Email">
             {% endif %}
-            <input type="submit" value="Confirm">
-            <input type="submit" value="Cancel">
+            <input type="submit" name="submit_button" value="Confirm">
+            <input type="submit" name="submit_button" value="Cancel">
         </form>
     {% elif auth_type['stage'] == 3 %}
         <h4>{{ auth_type['message'] }}</h4>

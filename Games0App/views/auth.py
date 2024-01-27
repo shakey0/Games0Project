@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify, flash
+from flask import Blueprint, render_template, redirect, url_for, request, session, jsonify, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
 from Games0App.models.user import User
@@ -105,6 +105,10 @@ def change_email():
         stage_token_1 = auth_token_manager.get_new_change_token('change_email', 1)
         return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
     
+    choice = request.form.get('submit_button')
+    if choice == 'Cancel':
+        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+    
     stage_token_1 = request.form.get('stage_token_1')
     if not stage_token_1:
         print("MISSING TOKEN")
@@ -112,7 +116,7 @@ def change_email():
     
     stage_token_2 = request.form.get('stage_token_2')
 
-    if stage_token_1 and not stage_token_2:
+    if stage_token_1 and not stage_token_2 and choice == 'Confirm':
         if auth_token_manager.verify_change_token('change_email', 1, stage_token_1):
 
             password_validation = auth_validator.validate_password_for_auth()
@@ -130,7 +134,7 @@ def change_email():
             # Log this event
             return redirect('/')
         
-    elif stage_token_1 and stage_token_2:
+    elif stage_token_1 and stage_token_2 and choice == 'Confirm':
         if auth_token_manager.verify_change_token('change_email', 1, stage_token_1) and \
             auth_token_manager.verify_change_token('change_email', 2, stage_token_2):
             
@@ -168,6 +172,10 @@ def change_password():
         stage_token_1 = auth_token_manager.get_new_change_token('change_password', 1)
         return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
     
+    choice = request.form.get('submit_button')
+    if choice == 'Cancel':
+        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+    
     stage_token_1 = request.form.get('stage_token_1')
     if not stage_token_1:
         print("MISSING TOKEN")
@@ -175,7 +183,7 @@ def change_password():
     
     stage_token_2 = request.form.get('stage_token_2')
 
-    if stage_token_1 and not stage_token_2:
+    if stage_token_1 and not stage_token_2 and choice == 'Confirm':
         if auth_token_manager.verify_change_token('change_password', 1, stage_token_1):
 
             password_validation = auth_validator.validate_password_for_auth()
@@ -193,7 +201,7 @@ def change_password():
             # Log this event
             return redirect('/')
         
-    elif stage_token_1 and stage_token_2:
+    elif stage_token_1 and stage_token_2 and choice == 'Confirm':
         if auth_token_manager.verify_change_token('change_password', 1, stage_token_1) and \
             auth_token_manager.verify_change_token('change_password', 2, stage_token_2):
             
@@ -220,7 +228,64 @@ def change_password():
 @auth.route('/delete_account', methods=['GET', 'POST'])
 @login_required
 def delete_account():
+
+    if not auth_token_manager.attempt_check('route', 'change_password'):
+        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+    
+    auth_type_0 = get_auth_type('Delete Account', 0, 'delete_account', '')
+    auth_type_1 = get_auth_type('Delete Account', 1, 'delete_account', '')
+    auth_type_2 = get_auth_type('Delete Account', 2, 'delete_account', 'Are you absolutely sure you want to delete your account?')
+    auth_type_3 = get_auth_type('Delete Account', 3, 'delete_account', 'Account successfully deleted!')
+
     if request.method == 'GET':
-        stage_token_1 = auth_token_manager.get_new_change_token('change_email', 1)
-        auth_type = {'title': 'Delete Account', 'stage': 0, 'route': 'delete_account', 'message': ''}
-        return render_template('auth.html', auth_type=auth_type, stage_token_1=stage_token_1)
+        return render_template('auth.html', auth_type=auth_type_0)
+
+    choice = request.form.get('submit_button')
+    if choice == 'No' or choice == 'Cancel':
+        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+    if choice == 'Yes':
+        stage_token_1 = auth_token_manager.get_new_change_token('delete_account', 1)
+        return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
+    
+    stage_token_1 = request.form.get('stage_token_1')
+    if not stage_token_1:
+        print("MISSING TOKEN")
+        return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+    
+    stage_token_2 = request.form.get('stage_token_2')
+
+    if stage_token_1 and not stage_token_2 and choice == 'Confirm':
+        if auth_token_manager.verify_change_token('delete_account', 1, stage_token_1):
+
+            password_validation = auth_validator.validate_password_for_auth()
+            if password_validation != True:
+                flash(password_validation, 'error')
+                return render_template('auth.html', auth_type=auth_type_1, stage_token_1=stage_token_1)
+            
+            stage_token_2 = auth_token_manager.get_new_change_token('delete_account', 2)
+            return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
+                                    stage_token_2=stage_token_2)
+        else:
+            print("INVALID TOKEN - ALERT!!!")
+            logout_user()
+            flash("A security threat was detected. You've been logged out.", 'error')
+            # Log this event
+            return redirect('/')
+    
+    elif stage_token_1 and stage_token_2 and choice == 'Confirm':
+        if auth_token_manager.verify_change_token('delete_account', 1, stage_token_1) and \
+            auth_token_manager.verify_change_token('delete_account', 2, stage_token_2):
+            
+            db.session.delete(current_user)
+            db.session.commit()
+
+            session.clear()
+
+            return render_template('auth.html', auth_type=auth_type_3)
+        
+        else:
+            print("INVALID TOKEN - ALERT!!!")
+            logout_user()
+            flash("A security threat was detected. You've been logged out.", 'error')
+            # Log this event
+            return redirect('/')
