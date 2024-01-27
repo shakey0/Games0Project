@@ -174,8 +174,15 @@ def change_email():
             return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
                                     stage_token_2=stage_token_2)
         
-        current_user.email = request.form.get('email')
-        db.session.commit()
+        try:
+            current_user.email = request.form.get('email')
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'email' in str(e.orig):
+                flash('An account with this email already exists.', 'error')
+                return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
+                                        stage_token_2=stage_token_2)
 
         return render_template('auth.html', auth_type=auth_type_3, user=current_user)
 

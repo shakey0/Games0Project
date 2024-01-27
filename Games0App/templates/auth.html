@@ -75,6 +75,9 @@
             </form>
         {% elif auth_type['stage'] == 3 %}
             <h4>{{ auth_type['message'] }}</h4>
+            {% if 'Email' in auth_type['title'] %}
+            <h4 style="font-weight: 100;">{{ user.email }}</h4>
+            {% endif %}
             <div class="return-btn-box">
                 {% if not 'Delete' in auth_type['title'] %}
                     <a class="return-btn" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
