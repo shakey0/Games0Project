@@ -17,6 +17,13 @@
         </form>
     {% elif auth_type['stage'] == 1 %}
         <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="/{{ auth_type['route'] }}" method="POST">
             <!-- PUT CSRF TOKEN HERE -->
             <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
@@ -25,7 +32,14 @@
             <input type="submit" value="Cancel">
         </form>
     {% elif auth_type['stage'] == 2 %}
-        <h4>{{ auth_type['message'] }}</h4> Your new password:  Are you absolutely sure you want to delete your account?
+        <h4>{{ auth_type['message'] }}</h4>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         <form action="/{{ auth_type['route'] }}" method="POST">
             <!-- PUT CSRF TOKEN HERE -->
             <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
