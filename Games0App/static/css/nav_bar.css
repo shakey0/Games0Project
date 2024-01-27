@@ -54,7 +54,7 @@
 }
 
 .nav-username-link {
-    max-width: 200px; /* CHECK !!!!!!!!!!!!!!!!!!!!!!!!! */
+    max-width: 200px;
     margin-bottom: 4px;
     font-size: 26px;
     color: rgb(232, 213, 203);
@@ -67,22 +67,6 @@
     transform: scale(1.05);
     color: rgb(251, 223, 158);
 }
-
-/* @media (max-width: 460px) { IMPORTANT !!!!! NEED TO LOOK AT THIS !!!!!
-    .nav-username-link {
-        max-width: 150px;
-    }
-}
-@media (max-width: 410px) {
-    .nav-username-link {
-        max-width: 100px;
-    }
-}
-@media (max-width: 360px) {
-    .nav-username-link {
-        max-width: 70px;
-    }
-} */
 
 .menu-btn {
     margin-bottom: 4px;
