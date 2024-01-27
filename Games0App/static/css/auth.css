@@ -92,6 +92,12 @@
     color: rgb(251, 223, 158);
 }
 
+.password-strength {
+    margin-top: 7px;
+    font-size: 21px;
+    color: rgb(255, 179, 0);
+}
+
 @media (max-width: 920px) {
     .error {
         font-size: 19px;
@@ -116,6 +122,9 @@
     .return-btn {
         margin-top: 18px;
         font-size: 22px;
+    }
+    .password-strength {
+        font-size: 20px;
     }
 }
 @media (max-width: 710px) {
@@ -142,6 +151,9 @@
     .return-btn {
         margin-top: 16px;
         font-size: 20px;
+    }
+    .password-strength {
+        font-size: 19px;
     }
 }
 @media (max-width: 500px) {
@@ -174,6 +186,9 @@
         margin: 15px auto 0;
         font-size: 19px;
     }
+    .password-strength {
+        font-size: 18px;
+    }
 }
 @media (max-width: 430px) {
     .error {
@@ -192,6 +207,9 @@
         margin: 0 6px;
         padding: 11px 22px;
         font-size: 18px;
+    }
+    .password-strength {
+        font-size: 17px;
     }
 }
 @media (max-width: 395px) {
@@ -215,5 +233,8 @@
     .return-btn {
         margin-top: 14px;
         font-size: 18px;
+    }
+    .password-strength {
+        font-size: 16px;
     }
 }

@@ -56,8 +56,9 @@
                 <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
                 <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
                 {% if 'Password' in auth_type['title'] %}
-                    <input class="auth-input" type="password" name="password" placeholder="Password">
-                    <input class="auth-input" style="margin-top: 15px;" type="password" name="confirm_password" placeholder="Confirm Password">
+                    <input class="auth-input" type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password">
+                    <div id="password-strength" class="password-strength"></div>
+                    <input class="auth-input" style="margin-top: 10px;" type="password" name="confirm_password" placeholder="Confirm Password">
                 {% elif 'Email' in auth_type['title'] %}
                     <input class="auth-input email-input" type="email" name="email" placeholder="Email">
                 {% endif %}
@@ -86,5 +87,6 @@
             </div>
         {% endif %}
     </div>
+    <script src="{{ url_for('static', filename='scripts/password_checker.js') }}"></script>
 </body>
 </html>
