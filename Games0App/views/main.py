@@ -84,7 +84,7 @@ def game_play():
         flash(expired_message)
         return redirect('/')
     
-    redis_client.hset(token, 'revealed_string', '')
+    redis_client.hset(token, 'revealed_letter_string', '')
 
     if request.form.get('in_game') == "start":
 
@@ -118,20 +118,20 @@ def game_play():
             return redirect('/')
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:
-            reveal_card_starter = 9
-            length_card_starter = 5
-            helpers = {'reveal_card': f"{reveal_card_starter} coupons",
-            'length_card': f"{length_card_starter} coupons"}
-            redis_client.hset(token, 'reveal_card', reveal_card_starter)
-            redis_client.hset(token, 'length_card', length_card_starter)
+            reveal_letter_starter = 9
+            reveal_length_starter = 5
+            helpers = {'reveal_letter_card': f"{reveal_letter_starter} coupons",
+                        'reveal_length_card': f"{reveal_length_starter} coupons"}
+            redis_client.hset(token, 'reveal_letter_card', reveal_letter_starter)
+            redis_client.hset(token, 'reveal_length_card', reveal_length_starter)
         
         elif "_mc" in game.param:
             remove_higher_starter = 3
             remove_lower_starter = 3
-            helpers = {'r_higher_card': f"{remove_higher_starter} coupons",
-            'r_lower_card': f"{remove_lower_starter} coupons"}
-            redis_client.hset(token, 'r_higher_card', remove_higher_starter)
-            redis_client.hset(token, 'r_lower_card', remove_lower_starter)
+            helpers = {'remove_higher_card': f"{remove_higher_starter} coupons",
+                        'remove_lower_card': f"{remove_lower_starter} coupons"}
+            redis_client.hset(token, 'remove_higher_card', remove_higher_starter)
+            redis_client.hset(token, 'remove_lower_card', remove_lower_starter)
 
         else:
             helpers = {}
@@ -171,16 +171,16 @@ def game_play():
     helpers = {}
 
     if "fill_blank" in game.param or "trivia_madness" in game.param:
-        reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
-        helpers['reveal_card'] = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
-        length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
-        helpers['length_card'] = f"{length_card} coupons" if length_card > 0 else "-90 points"
+        reveal_letter = int(redis_client.hget(token, 'reveal_letter_card').decode('utf-8'))
+        helpers['reveal_letter_card'] = f"{reveal_letter} coupons" if reveal_letter > 0 else "-60 points"
+        reveal_length = int(redis_client.hget(token, 'reveal_length_card').decode('utf-8'))
+        helpers['reveal_length_card'] = f"{reveal_length} coupons" if reveal_length > 0 else "-90 points"
 
     elif "_mc" in game.param:
-        remove_higher = int(redis_client.hget(token, 'r_higher_card').decode('utf-8'))
-        helpers['r_higher_card'] = f"{remove_higher} coupons" if remove_higher > 0 else "-90 points"
-        remove_lower = int(redis_client.hget(token, 'r_lower_card').decode('utf-8'))
-        helpers['r_lower_card'] = f"{remove_lower} coupons" if remove_lower > 0 else "-90 points"
+        remove_higher = int(redis_client.hget(token, 'remove_higher_card').decode('utf-8'))
+        helpers['remove_higher_card'] = f"{remove_higher} coupons" if remove_higher > 0 else "-90 points"
+        remove_lower = int(redis_client.hget(token, 'remove_lower_card').decode('utf-8'))
+        helpers['remove_lower_card'] = f"{remove_lower} coupons" if remove_lower > 0 else "-90 points"
 
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 

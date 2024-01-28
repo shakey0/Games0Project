@@ -469,13 +469,13 @@ ID;category;question;answer
 468;geography;What is the capital of France?;Paris
 469;geography;Which river is the longest in the world?;The Nile
 470;geography;What is the largest continent by land area?;Asia
-471;geography;What is the name of the world's largest ocean?;Pacific Ocean
+471;geography;What is the name of the world's largest ocean?;The Pacific Ocean
 472;geography;Which desert is the largest in the world?;Sahara Desert
 473;geography;What is the capital of Australia?;Canberra
 474;geography;Which mountain is the highest in the world?;Mount Everest
 475;geography;What is the smallest country in the world?;Vatican City
 476;geography;Which country is known as the land of the rising sun?;Japan
-477;geography;What is the longest river in the United States?;Mississippi River
+477;geography;What is the longest river in the United States?;The Mississippi River
 478;geography;Which country has the most natural lakes?;Canada
 479;geography;What is the capital city of Spain?;Madrid
 480;geography;Which country is also known as the Hellenic Republic?;Greece
@@ -485,7 +485,7 @@ ID;category;question;answer
 484;geography;Which country is home to the Great Barrier Reef?;Australia
 485;geography;What country is the city of Dubai located in?;United Arab Emirates
 486;geography;What is the capital of Canada?;Ottawa
-487;geography;Which river flows through London?;The Thames
+487;geography;Which river flows through London?;The River Thames
 488;geography;What is the largest country in the world by area?;Russia
 489;geography;Which country is known for having a maple leaf on its national flag?;Canada
 490;geography;What city is the Statue of Liberty located near?;New York
@@ -522,7 +522,7 @@ ID;category;question;answer
 521;geography;What is the capital of Argentina?;Buenos Aires
 522;geography;What is the capital of Egypt?;Cairo
 523;geography;Which country is known as the 'Land of the Long White Cloud'?;New Zealand
-524;geography;What is the deepest ocean in the world?;Pacific Ocean
+524;geography;What is the deepest ocean in the world?;The Pacific Ocean
 525;geography;What is the capital city of Sweden?;Stockholm
 526;geography;Which river flows through Paris?;The Seine
 527;geography;What is the capital of Kenya?;Nairobi
@@ -531,7 +531,7 @@ ID;category;question;answer
 530;geography;What is the capital of Indonesia?;Jakarta
 531;geography;Which U.S. state is known for its volcanoes, including Mauna Loa and Kilauea?;Hawaii
 532;geography;Which city is known as the 'City of Love'?;Paris
-533;geography;What is the longest river in Asia?;Yangtze River
+533;geography;What is the longest river in Asia?;The Yangtze River
 534;geography;What is the capital of Scotland?;Edinburgh
 535;geography;Which country is the Colosseum located in?;Italy
 536;geography;What is the name of the sea separating Florida and Cuba?;Straits of Florida
@@ -541,7 +541,7 @@ ID;category;question;answer
 540;geography;What is the capital of Turkey?;Ankara
 541;geography;Which city is known as the 'Pearl of the Orient'?;Hong Kong
 542;geography;What is the capital of Norway?;Oslo
-543;geography;What ocean lies to the west of the United States?;Pacific Ocean
+543;geography;What ocean lies to the west of the United States?;The Pacific Ocean
 544;geography;Which African country has the largest economy?;Nigeria
 545;geography;What is the capital of Portugal?;Lisbon
 546;geography;What is the largest desert in the world?;The Antarctic Desert
@@ -1675,7 +1675,7 @@ ID;category;question;answer
 1674;world_culture;Who tutored Alexander the Great?;Aristotle
 1675;world_culture;What is the historical name of Sri Lanka?;Ceylon
 1676;world_culture;Which UK country features a dragon on their flag?;Wales
-1677;world_culture;Which ocean borders the west coast of the United States?;Pacific
+1677;world_culture;Which ocean borders the west coast of the United States?;The Pacific Ocean
 1678;world_culture;What is the capital of Wisconsin, USA?;Madison
 1679;world_culture;Who was the first man to travel into outer space twice?;Gus Grissom
 1680;world_culture;During the Mongolian invasions of Japan, what were the Mongol boats mostly stopped by?;Typhoons

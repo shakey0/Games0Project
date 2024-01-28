@@ -24,46 +24,67 @@ def reveal_letter():
 
     token = request.form.get('token')
 
-    reveal_card = int(redis_client.hget(token, 'reveal_card').decode('utf-8'))
+    reveal_letter_ = int(redis_client.hget(token, 'reveal_letter_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
-    if reveal_card == 0:
+    if reveal_letter_ == 0:
         if score < 60:
             return jsonify(success=False, message='You need at least 60 points to reveal a letter!')
     
-    revealed_string = redis_client.hget(token, 'revealed_string').decode('utf-8')
+    revealed_letter_string = redis_client.hget(token, 'revealed_letter_string').decode('utf-8')
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
     answer = answer.strip()
-    for article in ['the ', 'a ', 'an ']:
-        if answer.lower().startswith(article):
-            answer = answer[len(article):]
-            break
 
-    answer = answer.replace(' ', '').replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+    answer = answer.replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
-    alphanumeric_positions = [i for i, char in enumerate(answer) if char.isalnum()]
+    all_alphanumeric_positions = [i for i, char in enumerate(answer) if char.isalnum()]
+    alphanumeric_positions = {}
+    word = answer.split()[0]
+    word_positions = []
+    for i, char in enumerate(answer):
+        if char.isalnum():
+            word_positions.append(i)
+        if char == ' ': # End of word
+            alphanumeric_positions[word] = word_positions
+            word = answer[i+1:].split()[0]
+            word_positions = []
+    alphanumeric_positions[word] = word_positions
+
     count = 0
     random_position = -1
     while count < 100:
         count += 1
-        random_position = random.choice(alphanumeric_positions)
-        if not str(random_position) in revealed_string:
-            revealed_string += str(random_position)
-            redis_client.hset(token, 'revealed_string', revealed_string)
+        random_position = random.choice(all_alphanumeric_positions)
+        if not str(random_position) in revealed_letter_string:
+            if list(alphanumeric_positions.keys())[0].lower() in ['the', 'a', 'an']:
+                if random_position in list(alphanumeric_positions.values())[0]:
+                    continue
+            revealed_letter_string += str(random_position)
+            redis_client.hset(token, 'revealed_letter_string', revealed_letter_string)
             break
         random_position = -1
     if random_position == -1:
         return jsonify(success=False, message='No more letters to reveal!')
+    
     random_char = answer[random_position]
 
-    message =  f"The {ordinal(random_position + 1)} character is {random_char}."
+    word_positions = []
+    for word, positions in alphanumeric_positions.items():
+        if random_position in positions:
+            word_index = list(alphanumeric_positions.keys()).index(word)
+            word_positions = positions
+            break
+    if word_index != 0:
+        random_position -= sum([len(word) + 1 for word in list(alphanumeric_positions.keys())[:word_index]])
 
-    if reveal_card > 0:
-        reveal_card -= 1
-        redis_client.hset(token, 'reveal_card', reveal_card)
-        reveal_card_text = f"{reveal_card} coupons" if reveal_card > 0 else "-60 points"
+    message =  f"The {ordinal(random_position+1)} character in the {ordinal(word_index+1)} word is {random_char}."
+
+    if reveal_letter_ > 0:
+        reveal_letter_ -= 1
+        redis_client.hset(token, 'reveal_letter_card', reveal_letter_)
+        reveal_card_text = f"{reveal_letter_} coupons" if reveal_letter_ > 0 else "-60 points"
     else:
         score -= 60
         redis_client.hset(token, 'score', score)
@@ -77,22 +98,18 @@ def reveal_length():
 
     token = request.form.get('token')
 
-    length_card = int(redis_client.hget(token, 'length_card').decode('utf-8'))
+    reveal_length_ = int(redis_client.hget(token, 'reveal_length_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
-    if length_card == 0:
+    if reveal_length_ == 0:
         if score < 90:
             return jsonify(success=False, message='You need at least 90 points to reveal the length of the answer!')
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
     answer = answer.lower().strip()
-    # for article in ['the ', 'a ', 'an ']:
-    #     if answer.startswith(article):
-    #         answer = answer[len(article):]
-    #         break
 
-    answer = answer.replace('-', ' ').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
+    answer = answer.replace('-', '').replace('&', '').replace('.', '').replace(',', '').replace('!', '').replace('?', '').replace(';', '').replace(':', '').replace('(', '').replace(')', '').replace('[', '').replace(']', '').replace('{', '').replace('}', '').replace('"', '').replace("'", '')
 
     no_of_words = len(answer.split())
     if no_of_words == 1:
@@ -101,10 +118,10 @@ def reveal_length():
         word_lengths = [len(word) for word in answer.split()]
         message = f"The word lengths are {', '.join([str(length) for length in word_lengths[:-1]])} and {word_lengths[-1]} letters respectively."
 
-    if length_card > 0:
-        length_card -= 1
-        redis_client.hset(token, 'length_card', length_card)
-        length_card_text = f"{length_card} coupons" if length_card > 0 else "-90 points"
+    if reveal_length_ > 0:
+        reveal_length_ -= 1
+        redis_client.hset(token, 'reveal_length_card', reveal_length_)
+        length_card_text = f"{reveal_length_} coupons" if reveal_length_ > 0 else "-90 points"
     else:
         score -= 90
         redis_client.hset(token, 'score', score)
@@ -118,7 +135,7 @@ def remove_higher():
 
     token = request.form.get('token')
 
-    higher_card = int(redis_client.hget(token, 'r_higher_card').decode('utf-8'))
+    higher_card = int(redis_client.hget(token, 'remove_higher_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
     if higher_card == 0:
@@ -138,7 +155,7 @@ def remove_higher():
     
     if higher_card > 0:
         higher_card -= 1
-        redis_client.hset(token, 'r_higher_card', higher_card)
+        redis_client.hset(token, 'remove_higher_card', higher_card)
         higher_card_text = f"{higher_card} coupons" if higher_card > 0 else "-90 points"
     else:
         score -= 90
@@ -153,7 +170,7 @@ def remove_lower():
 
     token = request.form.get('token')
 
-    lower_card = int(redis_client.hget(token, 'r_lower_card').decode('utf-8'))
+    lower_card = int(redis_client.hget(token, 'remove_lower_card').decode('utf-8'))
     score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
     if lower_card == 0:
@@ -173,7 +190,7 @@ def remove_lower():
     
     if lower_card > 0:
         lower_card -= 1
-        redis_client.hset(token, 'r_lower_card', lower_card)
+        redis_client.hset(token, 'remove_lower_card', lower_card)
         lower_card_text = f"{lower_card} coupons" if lower_card > 0 else "-90 points"
     else:
         score -= 90
