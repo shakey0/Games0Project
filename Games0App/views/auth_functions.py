@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user
-from Games0App.auth_token_manager import AuthTokenManager
+from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
-from Games0App.auth_validator import AuthValidator
+from Games0App.classes.auth_validator import AuthValidator
 auth_validator = AuthValidator()
 
 

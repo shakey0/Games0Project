@@ -1,8 +1,9 @@
 from flask import request
 from flask_login import current_user
-from Games0App.auth_token_manager import AuthTokenManager
+from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
 import bcrypt
+from better_profanity import profanity
 
 
 class AuthValidator:
@@ -54,4 +55,16 @@ class AuthValidator:
             return 'Please confirm your password.', 'confirm_password'
         elif not password == confirm_password:
             return 'Passwords do not match.', 'confirm_password'
+        return True
+    
+
+    def validate_victory_message(self):
+        message = request.form.get('message')
+        if not message:
+            return True # Victory message is optional
+        message = message.strip()
+        if len(message) > 25:
+            return "Max 25 characters."
+        if profanity.contains_profanity(message):
+            return "Contains bad language."
         return True

@@ -4,7 +4,11 @@ from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
-from Games0App.utils import normalise_answer, is_close_match, find_and_convert_numbers, validate_victory_message
+from Games0App.classes.auth_validator import AuthValidator
+auth_validator = AuthValidator()
+from Games0App.classes.digit_to_word_converter import DigitToWordConverter
+digit_to_word_converter = DigitToWordConverter()
+from Games0App.utils import normalise_answer, is_close_match
 import secrets
 import datetime
 
@@ -213,7 +217,7 @@ def game_answer():
     statement = False
 
     if user_answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
-        user_answer = find_and_convert_numbers(user_answer)
+        user_answer = digit_to_word_converter.find_and_convert_numbers(user_answer)
         correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
         if (' and ' in user_answer or ' & ' in user_answer) and correct == False:
             answer_part_one = user_answer.split(' and ')[0].split(' & ')[0]
@@ -289,13 +293,12 @@ def game_finish():
 
         score = int(redis_client.hget(token, 'score').decode('utf-8'))
 
-        message = request.form.get('message')
-        message_check = validate_victory_message(message)
+        message_check = auth_validator.validate_victory_message()
         if message_check != True:
             return jsonify(success=False, error=message_check)
         high_score = HighScore(user_id=current_user.id, game=game_name_param, game_name=game_name,
                                 difficulty=difficulty, category=category_name, score=score,
-                                date=datetime.datetime.now(), message=message, likes=0)
+                                date=datetime.datetime.now(), message=request.form.get('message'), likes=0)
         db.session.add(high_score)
         db.session.commit()
 

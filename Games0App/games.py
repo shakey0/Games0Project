@@ -1,4 +1,4 @@
-from Games0App.game_play import GamePlay
+from Games0App.classes.game_play import GamePlay
 
 games = [
 

@@ -4,7 +4,8 @@ from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.scoreboard_functions import get_high_scores, get_user_scores, get_all_scores
-from Games0App.utils import validate_victory_message
+from Games0App.classes.auth_validator import AuthValidator
+auth_validator = AuthValidator()
 from sqlalchemy import update
 
 
@@ -91,17 +92,17 @@ def scoreboard_page():
 @login_required
 def amend_score():
 
-    score_id = request.form.get('score_id')
-    message = request.form.get('message')
-
-    message_check = validate_victory_message(message)
+    message_check = auth_validator.validate_victory_message()
     if message_check != True:
         return jsonify(success=False, error=message_check)
     
+    score_id = request.form.get('score_id')
     score = HighScore.query.filter_by(id=score_id, user_id=current_user.id).first()
 
     if score:
-        db.session.execute(update(HighScore).where(HighScore.id == score_id).values(message=message))
+        db.session.execute(
+            update(HighScore).where(HighScore.id == score_id).values(message=request.form.get('message'))
+        )
         db.session.commit()
         return jsonify(success=True)
     else:

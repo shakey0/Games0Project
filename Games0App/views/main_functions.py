@@ -2,7 +2,7 @@ from flask import request, flash
 from flask_login import current_user
 from Games0App.extensions import redis_client
 from Games0App.games import games
-from Games0App.user_question_tracker import UserQuestionTracker
+from Games0App.classes.user_question_tracker import UserQuestionTracker
 user_question_tracker = UserQuestionTracker()
 import json
 import random

@@ -2,11 +2,11 @@ from flask import Blueprint, render_template, redirect, request, session, jsonif
 from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
 from Games0App.models.user import User
-from Games0App.auth_token_manager import AuthTokenManager
-auth_token_manager = AuthTokenManager()
-from Games0App.auth_validator import AuthValidator
-auth_validator = AuthValidator()
 from Games0App.views.auth_functions import redirect_to_scoreboard, get_auth_types, get_stage, stage_1_validation
+from Games0App.classes.auth_token_manager import AuthTokenManager
+auth_token_manager = AuthTokenManager()
+from Games0App.classes.auth_validator import AuthValidator
+auth_validator = AuthValidator()
 from sqlalchemy.exc import IntegrityError
 import bcrypt
 

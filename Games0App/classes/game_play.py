@@ -1,7 +1,8 @@
 from Games0App.extensions import redis_client
-from Games0App.sort_questions import sort_fill_blank_facts_questions, sort_fill_blank_jokes_questions, \
-    sort_trivia_madness_questions, sort_trivia_mc_questions, sort_trivia_tf_questions
-from Games0App.sum_generator import create_sums_for_question
+from Games0App.classes.question_sorter import QuestionSorter
+question_sorter = QuestionSorter()
+from Games0App.classes.sum_generator import SumGenerator
+sum_generator = SumGenerator()
 import requests
 import json
 import csv
@@ -87,7 +88,7 @@ class GamePlay:
         valid_questions = []
         for _ in range(30):
             if self.load_route[1] == 'sum_generator':
-                question, answer, wrong_answers = create_sums_for_question(difficulty)
+                question, answer, wrong_answers = sum_generator.create_sums_for_question(difficulty)
                 if question and answer and wrong_answers:
                     valid_questions.append([0, question, answer, wrong_answers])
             # Currently sum_generator is the only function that generates questions
@@ -179,7 +180,7 @@ class GamePlay:
                 if not question_package:
                     continue
                 if "the-trivia-api.com" in self.load_route[1]:
-                    valid_questions = sort_trivia_mc_questions(question_package, self.load_route)
+                    valid_questions = question_sorter.sort_trivia_mc_questions(question_package, self.load_route)
                 else: # There are currently no other types of questions that come directly from APIs
                     continue
                 result = self.update_stored_questions(valid_questions, redis_group)
@@ -195,13 +196,13 @@ class GamePlay:
             print('Loading questions from file')
             question_package = self.get_questions_from_csv(category, difficulty)
             if self.load_route[1] == 'facts':
-                valid_questions = sort_fill_blank_facts_questions(question_package, self.load_route)
+                valid_questions = question_sorter.sort_fill_blank_facts_questions(question_package, self.load_route)
             elif self.load_route[1] == 'jokes':
-                valid_questions = sort_fill_blank_jokes_questions(question_package, self.load_route)
+                valid_questions = question_sorter.sort_fill_blank_jokes_questions(question_package, self.load_route)
             elif self.load_route[1] == 'trivia_madness':
-                valid_questions = sort_trivia_madness_questions(question_package, self.load_route)
+                valid_questions = question_sorter.sort_trivia_madness_questions(question_package, self.load_route)
             elif self.load_route[1] == 'true_or_false_trivia':
-                valid_questions = sort_trivia_tf_questions(question_package, self.load_route)
+                valid_questions = question_sorter.sort_trivia_tf_questions(question_package, self.load_route)
             else:
                 valid_questions = None
             result = self.update_stored_questions(valid_questions, redis_group)
