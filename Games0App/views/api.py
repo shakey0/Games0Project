@@ -79,7 +79,10 @@ def reveal_letter():
     if word_index != 0:
         random_position -= sum([len(word) + 1 for word in list(alphanumeric_positions.keys())[:word_index]])
 
-    message =  f"The {ordinal(random_position+1)} character in the {ordinal(word_index+1)} word is {random_char}."
+    if len(alphanumeric_positions) == 1:
+        message =  f"The {ordinal(random_position+1)} character is {random_char}."
+    else:
+        message =  f"The {ordinal(random_position+1)} character in the {ordinal(word_index+1)} word is {random_char}."
 
     if reveal_letter_ > 0:
         reveal_letter_ -= 1
