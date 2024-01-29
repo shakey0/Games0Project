@@ -43,7 +43,11 @@ def register():
     try:
         db.session.add(user)
         db.session.commit()
+
         login_user(user)
+
+        # send_email(user.email, user.username) # - DISABLED FOR NOW
+
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
     
     except IntegrityError as e:

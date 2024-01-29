@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user
+from Games0App.mailjet_api import send_email
 from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
 from Games0App.classes.auth_validator import AuthValidator
