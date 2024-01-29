@@ -53,6 +53,9 @@
             {% endwith %}
             <form action="/{{ auth_type['route'] }}" method="POST" id="authForm">
                 <!-- PUT CSRF TOKEN HERE -->
+                {% if 'Reset' in auth_type['title'] %}
+                    <input type="hidden" name="reset_token" value="{{ reset_token }}">
+                {% endif %}
                 <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
                 <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
                 {% if 'Password' in auth_type['title'] %}
@@ -80,7 +83,7 @@
             <h4 style="font-weight: 100;">{{ user.email }}</h4>
             {% endif %}
             <div class="return-btn-box">
-                {% if not 'Delete' in auth_type['title'] %}
+                {% if not 'Delete' in auth_type['title'] and not 'Reset' in auth_type['title'] %}
                     <a class="return-btn" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
                 {% endif %}
                 <a class="return-btn" href="{{ url_for('main.index') }}">Return to Home</a>

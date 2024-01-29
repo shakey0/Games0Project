@@ -16,13 +16,13 @@ def send_email(user_email, username, reset_token=None, not_user_token=None):
 	elif reset_token:
 		name_type = 'GamesZero Password Reset'
 		subject = 'Your Reset Password Link'
-		text_part = f'To reset your password, link on the following link and follow the instructions:\n\nhttps://games0-by-shakey0.onrender.com/{reset_token} \n\nIf you did not make this request, please ignore this email and no changes will be made.\n\nAll the best,\nshakey0'
-		html_part = f'<h3>To reset your password, link on the following link and follow the instructions:</h3><br /><a href="https://games0-by-shakey0.onrender.com/{reset_token}">games0-by-shakey0.onrender.com/{reset_token}</a><br /><br /><h3>If you did not make this request, please ignore this email and no changes will be made.</h3><br />All the best,<br />shakey0'
+		text_part = f'To reset your password, link on the following link and follow the instructions:\n\nhttps://games0-by-shakey0.onrender.com/reset_password/{reset_token} \n\nIf you did not make this request, please ignore this email and no changes will be made.\n\nAll the best,\nshakey0'
+		html_part = f'<h3>To reset your password, link on the following link and follow the instructions:</h3><br /><a href="https://games0-by-shakey0.onrender.com/reset_password/{reset_token}">games0-by-shakey0.onrender.com/reset_password/{reset_token}</a><br /><br /><h3>If you did not make this request, please ignore this email and no changes will be made.</h3><br />All the best,<br />shakey0'
 	else:
 		name_type = 'GamesZero Password Reset'
 		subject = 'Password Reset'
-		text_part = f'Hi {username},\n\nYour GamesZero password has been reset.\nIf you did this, that\'s fantastic and you don\'t need to do anything. However, if you didn\'t do this, please click on the link below and follow the instructions.\n\nhttps://games0-by-shakey0.onrender.com/{not_user_token} \n\nAll the best,\nshakey0'
-		html_part = f'<h3>Hi {username},</h3><br /><h3>Your GamesZero password has been reset.</h3><br /><h3>If you did this, that\'s fantastic and you don\'t need to do anything. However, if you didn\'t do this, please click on the link below and follow the instructions.</h3><br /><a href="https://games0-by-shakey0.onrender.com/{not_user_token}">games0-by-shakey0.onrender.com/{not_user_token}</a><br /><br />All the best,<br />shakey0'
+		text_part = f'Hi {username},\n\nYour GamesZero password has been reset.\nIf you did this, that\'s fantastic and you don\'t need to do anything. However, if you didn\'t do this, please click on the link below and follow the instructions.\n\nhttps://games0-by-shakey0.onrender.com/security/{not_user_token} \n\nAll the best,\nshakey0'
+		html_part = f'<h3>Hi {username},</h3><br /><h3>Your GamesZero password has been reset.</h3><br /><h3>If you did this, that\'s fantastic and you don\'t need to do anything. However, if you didn\'t do this, please click on the link below and follow the instructions.</h3><br /><a href="https://games0-by-shakey0.onrender.com/security/{not_user_token}">games0-by-shakey0.onrender.com/security/{not_user_token}</a><br /><br />All the best,<br />shakey0'
 
 	data = {
 		'Messages': [

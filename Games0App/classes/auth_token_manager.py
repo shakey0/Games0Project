@@ -58,26 +58,34 @@ class AuthTokenManager:
 
     def get_reset_password_link_token(self, user_id):
         redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
-        key_name = f'reset_password_link_token_{user_id}'
         token = os.urandom(16).hex()
-        redis_client.set(key_name, token, ex=redis_timeout)
+        redis_client.set(token, user_id, ex=redis_timeout)
         return token
     
 
-    def verify_reset_password_link_token(self, user_id, token):
-        pass
+    def verify_reset_password_link_token(self, token):
+        user_id = redis_client.get(token)
+        if user_id:
+            return int(user_id.decode('utf-8'))
+        return None
+    
+
+    def delete_reset_password_link_token(self, token):
+        redis_client.delete(token)
 
 
-    def get_new_change_token(self, auth_type, stage):
+    def get_new_change_token(self, auth_type, stage, parsed_user_id=None):
         redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
-        key_name = f'change_token_{auth_type}_{current_user.id}_{stage}'
+        user_id = current_user.id if not parsed_user_id else parsed_user_id
+        key_name = f'change_token_{auth_type}_{user_id}_{stage}'
         token = os.urandom(16).hex()
         redis_client.set(key_name, token, ex=redis_timeout)
         return token
 
 
-    def verify_change_token(self, auth_type, stage, token):
-        key_name = f'change_token_{auth_type}_{current_user.id}_{stage}'
+    def verify_change_token(self, auth_type, stage, token, parsed_user_id=None):
+        user_id = current_user.id if not parsed_user_id else parsed_user_id
+        key_name = f'change_token_{auth_type}_{user_id}_{stage}'
         key = redis_client.get(key_name)
         if key:
             if key.decode('utf-8') == token:
