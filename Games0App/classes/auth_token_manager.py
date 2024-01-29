@@ -56,17 +56,27 @@ class AuthTokenManager:
             return True
         
 
-    def get_reset_password_link_token(self, user_id):
-        redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
+    def get_reset_password_link_token(self, user_id, revert=False):
+        cache_time = 86400 if revert else 600
+        redis_timeout = os.environ.get('REDIS_TIMEOUT', cache_time)
         token = os.urandom(16).hex()
-        redis_client.set(token, user_id, ex=redis_timeout)
+        reset_type = 'revert' if revert else 'reset'
+        redis_client.set(token, f'{user_id}_{reset_type}', ex=redis_timeout)
         return token
     
 
-    def verify_reset_password_link_token(self, token):
-        user_id = redis_client.get(token)
-        if user_id:
-            return int(user_id.decode('utf-8'))
+    def verify_reset_password_link_token(self, token, revert=False):
+        result = redis_client.get(token)
+        if result:
+            user_id, reset_type = result.decode('utf-8').split('_')
+            if revert:
+                if reset_type == 'revert':
+                    return int(user_id)
+                return None
+            else:
+                if reset_type == 'reset':
+                    return int(user_id)
+                return None
         return None
     
 

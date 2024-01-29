@@ -3,7 +3,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
 from Games0App.mailjet_api import send_email
 from Games0App.models.user import User
-from Games0App.views.auth_functions import redirect_to_scoreboard, get_auth_types, get_stage, do_stage_1, do_stage_2
+from Games0App.views.auth_functions import redirect_to_scoreboard, get_auth_types, get_stage, \
+    do_stage_1, do_stage_2, do_stage_2_reset_password, complete_password_change
 from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
 from Games0App.classes.auth_validator import AuthValidator
@@ -175,14 +176,19 @@ def change_password():
     current_user.password_hashed = hashed_password
     db.session.commit()
 
-    return render_template('auth.html', auth_type=auth_type_3, user=current_user)
+    return complete_password_change(current_user, auth_type_3)
 
 
 @auth.route('/delete_account', methods=['GET', 'POST'])
 @login_required
 def delete_account():
 
-    if not auth_token_manager.attempt_check('route', 'change_password'):
+    if not auth_token_manager.attempt_check('route', 'delete_account'):
+        return redirect_to_scoreboard()
+    
+    if not auth_token_manager.check_reset_password_attempt():
+        flash('For security reasons, please wait 1 hour before attempting this action.', 'error')
+        print('DELETE ACCOUNT DENIED')
         return redirect_to_scoreboard()
     
     auth_type_0, auth_type_1, auth_type_2, auth_type_3 = get_auth_types('delete', 'account', start_from=0)
@@ -243,20 +249,26 @@ def send_reset_password_link():
     return jsonify(success=True, message="Reset password link sent.")
 
 
-@auth.route('/reset_password/<token>')
-def reset_password(token):
+@auth.route('/reset_password/<reset_token>')
+def reset_password(reset_token):
 
-    user_id = auth_token_manager.verify_reset_password_link_token(token)
+    user_id = auth_token_manager.verify_reset_password_link_token(reset_token)
     if not user_id:
         flash('Link expired.', 'error')
         return redirect('/')
     
-    auth_type_2, auth_type_3 = get_auth_types('reset', 'password', start_from=2)
-    stage_token_1 = auth_token_manager.get_new_change_token('reset_password', 1, parsed_user_id=user_id)
-    stage_token_2 = auth_token_manager.get_new_change_token('reset_password', 2, parsed_user_id=user_id)
+    return do_stage_2_reset_password(reset_token, user_id, revert=False)
 
-    return render_template('auth.html', reset_token=token, auth_type=auth_type_2, stage_token_1=stage_token_1,
-                            stage_token_2=stage_token_2)
+
+@auth.route('/security/<reset_token>')
+def reverse_reset_password(reset_token):
+
+    user_id = auth_token_manager.verify_reset_password_link_token(reset_token, revert=True)
+    if not user_id:
+        flash('Link expired.', 'error')
+        return redirect('/')
+    
+    return do_stage_2_reset_password(reset_token, user_id, revert=True)
 
 
 @auth.route('/reset_password', methods=['POST'])
@@ -267,7 +279,8 @@ def reset_password_():
     if not reset_token or choice != 'Confirm':
         return redirect('/')
     
-    user_id = auth_token_manager.verify_reset_password_link_token(reset_token)
+    revert = True if request.form.get('revert') == 'revert' else False
+    user_id = auth_token_manager.verify_reset_password_link_token(reset_token, revert=revert)
     if not user_id:
         flash('It looks like your link probably expired. Please try again.', 'error')
         return redirect('/')
@@ -286,7 +299,7 @@ def reset_password_():
     if password_check != True:
         flash(password_check[0], 'error')
         return render_template('auth.html', reset_token=reset_token, auth_type=auth_type_2,
-                                stage_token_1=stage_token_1, stage_token_2=stage_token_2)
+                                stage_token_1=stage_token_1, stage_token_2=stage_token_2, revert=revert)
     
     auth_token_manager.delete_reset_password_link_token(reset_token)
 
@@ -298,4 +311,4 @@ def reset_password_():
     user.password_hashed = hashed_password
     db.session.commit()
 
-    return render_template('auth.html', auth_type=auth_type_3, user=current_user)
+    return complete_password_change(user, auth_type_3)
