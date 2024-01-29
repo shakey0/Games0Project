@@ -115,7 +115,7 @@
               {% if score['user_id'] == user.id %}
                 <img class="edit-score-button" src="{{ url_for('static', filename='images/pencil.png') }}" alt="edit" data-amend-score-box-target="#amend-score-box-{{ score['score_id'] }}">
                 <div class="amend-score-box pop-up-box" id="amend-score-box-{{ score['score_id'] }}">
-                  <button data-cancel-button-over class="cancel-button">&times;</button>
+                  <button data-cancel-button class="cancel-button">&times;</button>
                   <form method="POST" action="/amend_score">
                     <!-- PUT CSRF TOKEN HERE -->
                     <input type="hidden" name="score_id" value="{{ score['score_id'] }}">

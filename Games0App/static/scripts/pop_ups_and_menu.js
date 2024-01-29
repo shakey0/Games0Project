@@ -1,36 +1,50 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const openBoxButtonsOver = document.querySelectorAll('[data-login-button-target], [data-register-button-target], [data-amend-score-box-target]');
-    const cancelBoxButtonsOver = document.querySelectorAll('[data-cancel-button-over]');
+    const openBoxButtons = document.querySelectorAll('[data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target]');
+    const cancelBoxButtons = document.querySelectorAll('[data-cancel-button]');
+    const cancelLoginBox = document.querySelectorAll('[data-cancel-login-box]');
     const overlay = document.getElementById('overlay');
 
-    openBoxButtonsOver.forEach(button => {
+    openBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const boxSelector = button.dataset.loginButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget;
+            const boxSelector = button.dataset.loginButtonTarget || button.dataset.forgottenPasswordButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget;
             const box = document.querySelector(boxSelector);
-            openBoxOver(box);
+            openBox(box);
         });
     });
 
-    cancelBoxButtonsOver.forEach(button => {
+    cancelBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const box = button.closest('.login-box, .register-box, .amend-score-box');
-            closeBoxOver(box);
+            const box = button.closest('.login-box, .forgotten-password-box, .register-box, .amend-score-box');
+            closeBox(box);
         });
     });
 
-    function openBoxOver(box) {
+    cancelLoginBox.forEach(button => {
+        button.addEventListener('click', () => {
+            const boxSelector = button.dataset.cancelLoginBox;
+            const box = document.querySelector(boxSelector);
+            closeLoginBox(box);
+        });
+    });
+
+    function openBox(box) {
         if (box == null) return;
         box.classList.add('active');
         overlay.classList.add('active');
         // toggleScrollLock(true);
     }
 
-    function closeBoxOver(box) {
+    function closeBox(box) {
         if (box == null) return;
         box.classList.remove('active');
         overlay.classList.remove('active');
         // toggleScrollLock(false);
+    }
+
+    function closeLoginBox(box) {
+        if (box == null) return;
+        box.classList.remove('active');
     }
 
     // function toggleScrollLock(isLocked) {

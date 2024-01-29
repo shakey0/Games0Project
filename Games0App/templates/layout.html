@@ -54,7 +54,7 @@
 
     {% if not user.is_authenticated %}
         <div class="login-box pop-up-box" id="login-box">
-            <button data-cancel-button-over class="cancel-button">&times;</button>
+            <button data-cancel-button class="cancel-button">&times;</button>
             <form method="POST" action="/login">
                 <!-- PUT CSRF TOKEN HERE -->
                 <div class="pop-up-header">
@@ -72,12 +72,33 @@
                     </div>
                 </div>
                 <div class="pop-up-footer">
-                    <input class="log-in-btn" type="submit" value="Login">
+                    <input class="login-btn" type="submit" value="Login">
+                </div>
+            </form>
+            <button class="forgot-password-btn clear-btn" data-forgotten-password-button-target="#forgotten-password-box" data-cancel-login-box="#login-box">Forgot password?</button>
+        </div>
+        <div class="forgotten-password-box pop-up-box" id="forgotten-password-box">
+            <button data-cancel-button class="cancel-button">&times;</button>
+            <form method="POST" action="/reset_password">
+                <!-- PUT CSRF TOKEN HERE -->
+                <div class="pop-up-header reset-password-header">
+                    <p>Reset Password</p>
+                </div>
+                <div class="pop-up-content">
+                    <div class="forgotten-password-box-item">
+                        <input type="text" name="email" placeholder="Email" autofocus>
+                    </div>
+                    <div class="forgotten-password-box-item">
+                        <div class="forgotten-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                    </div>
+                </div>
+                <div class="pop-up-footer">
+                    <input class="reset-password-btn" style="font-size: 20px;" type="submit" value="Send reset password link">
                 </div>
             </form>
         </div>
         <div class="register-box pop-up-box" id="register-box">
-            <button data-cancel-button-over class="cancel-button">&times;</button>
+            <button data-cancel-button class="cancel-button">&times;</button>
             <form id="registrationForm" method="POST" action="/register">
                 <!-- PUT CSRF TOKEN HERE -->
                 <div class="pop-up-header">

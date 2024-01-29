@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    $('.log-in-btn').on('click', function(event) {
+    $('.login-btn').on('click', function(event) {
         event.preventDefault();
     
         const $button = $(this);
