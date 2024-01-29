@@ -37,7 +37,7 @@ def register():
         return jsonify(success=False, errors=errors)
     
     hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
-    user = User(username=request.form.get('username'), email=request.form.get('email'),
+    user = User(username=request.form.get('username').lower(), email=request.form.get('email'),
                 password_hashed=hashed_password, last_50_questions={})
     
     try:
@@ -46,6 +46,7 @@ def register():
 
         login_user(user)
 
+        print('USER REGISTERED:', user.username)
         # send_email(user.email, user.username) # - DISABLED FOR NOW
 
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
