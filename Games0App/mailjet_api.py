@@ -2,7 +2,7 @@ from mailjet_rest import Client
 import os
 
 
-def send_email(user_email, reset_token=None):
+def send_email(user_email, username, reset_token=None):
 
 	api_key = os.environ.get('MAILJET_API_KEY')
 	api_secret = os.environ.get('MAILJET_SECRET_KEY')
@@ -11,8 +11,8 @@ def send_email(user_email, reset_token=None):
 	if not reset_token:
 		name_type = 'GamesZero Confirmation'
 		subject = 'Welcome to GamesZero!'
-		text_part = 'Hello Lovely Merry!\nWelcome to GamesZero!\n\nPlease enjoy these wonderful games/quizzes and have fun!\n\nAll the best,\nshakey0'
-		html_part = '<h3>Hello Lovely Merry!</h3><br />Welcome to GamesZero!<br /><br />Please enjoy these wonderful games/quizzes and have fun!<br /><br />All the best,<br />shakey0'
+		text_part = f'Hello {username},\n\nWelcome to GamesZero!\n\nPlease enjoy these wonderful games/quizzes and have fun!\n\nAll the best,\nshakey0'
+		html_part = f'<h3>Hello {username},</h3><br /><br /><h3>Welcome to GamesZero!</h3><br /><br /><h3>Please enjoy these wonderful games/quizzes and have fun!</h3><br /><br />All the best,<br />shakey0'
 	else:
 		name_type = 'GamesZero Password Reset'
 		subject = 'Reset Password'
