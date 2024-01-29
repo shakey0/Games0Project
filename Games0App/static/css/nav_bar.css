@@ -187,10 +187,7 @@
     .options-menu {
         flex-direction: column;
         height: auto;
-        padding: 20px 15px;
-        gap: 20px;
-    }
-    .options-btn {
-        font-size: 20px;
+        padding: 15px 10px;
+        gap: 15px;
     }
 }
