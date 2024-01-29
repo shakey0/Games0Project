@@ -50,6 +50,13 @@
         {% endif %}
     </div>
     <div class="top-space"></div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }} main-page-flash">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     {% block content %}{% endblock %}
 
     {% if not user.is_authenticated %}

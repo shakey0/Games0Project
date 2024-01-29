@@ -42,13 +42,13 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
     while True:
         count += 1
         if count > 100:
-            flash("Something went wrong.")
+            flash("Something went wrong.", "error")
             # Log error here !!!!!!!!!!!!!
             return None
         next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
         if not next_question:
-            flash("Something went wrong.")
+            flash("Something went wrong.", "error")
             # Log error here !!!!!!!!!!!!!
             return None
         

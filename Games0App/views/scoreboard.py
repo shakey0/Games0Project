@@ -22,7 +22,7 @@ def scoreboard_page():
     if token:
         game_type = redis_client.hget(token, 'game_type')
         if not game_type:
-            flash("Sorry, your game has expired. Please start again.")
+            flash("Sorry, your game has expired. Please start again.", "error")
             return redirect('/')
         else:
             game_type = game_type.decode('utf-8')
@@ -55,7 +55,7 @@ def scoreboard_page():
         try:
             game = next(item for item in games if item.param == game_type)
         except:
-            flash("Sorry, something went wrong!")
+            flash("Sorry, something went wrong!", "error")
             return redirect('/')
 
         if game.categories:
@@ -74,7 +74,7 @@ def scoreboard_page():
 
         high_scores = get_user_scores(username)
         if high_scores == None:
-            flash("Sorry, something went wrong!")
+            flash("Sorry, something went wrong!", "error")
             return redirect('/')
         
     else:

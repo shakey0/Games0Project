@@ -3,12 +3,6 @@
     padding: 0 10px;
 }
 
-.error {
-    color: rgb(255, 119, 0);
-    font-size: 20px;
-    font-weight: bold;
-}
-
 .main-box form {
     display: flex;
     flex-direction: column;
@@ -99,9 +93,6 @@
 }
 
 @media (max-width: 920px) {
-    .error {
-        font-size: 19px;
-    }
     .main-box form {
         padding: 18px 9px;
     }
@@ -128,9 +119,6 @@
     }
 }
 @media (max-width: 710px) {
-    .error {
-        font-size: 18px;
-    }
     .main-box form {
         padding: 16px 8px;
     }
@@ -157,9 +145,6 @@
     }
 }
 @media (max-width: 500px) {
-    .error {
-        font-size: 17px;
-    }
     .main-box form {
         padding: 14px 7px;
     }
@@ -191,9 +176,6 @@
     }
 }
 @media (max-width: 430px) {
-    .error {
-        font-size: 16px;
-    }
     .main-box form {
         padding: 12px 6px;
     }
@@ -213,9 +195,6 @@
     }
 }
 @media (max-width: 395px) {
-    .error {
-        font-size: 15px;
-    }
     .main-box form {
         padding: 10px 5px;
     }
