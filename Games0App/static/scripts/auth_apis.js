@@ -30,6 +30,38 @@ $(document).ready(function(){
         });
     });
 
+    $('.reset-password-btn').on('click', function(event) {
+        event.preventDefault();
+    
+        const $button = $(this);
+        $button.prop('disabled', true);
+        const $form = $button.closest('form');
+    
+        const formData = $form.serialize();
+    
+        $.ajax({
+            url: '/send_reset_password_link',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    $('.forgotten-password-error-message').addClass('hidden');
+                    $('.forgotten-password-success-message').text(response.message);
+                    $('.forgotten-password-success-message').removeClass('hidden');
+                } else {
+                    $('.forgotten-password-success-message').addClass('hidden');
+                    $('.forgotten-password-error-message').text(response.error);
+                    $('.forgotten-password-error-message').removeClass('hidden');
+                }
+                $button.prop('disabled', false);
+            },
+            error: function() {
+                $('.reset-password-error-message').text('An unexpected error occurred. Please try again later.');
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
     $('.sign-up-btn').on('click', function(event) {
         event.preventDefault();
     

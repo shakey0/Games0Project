@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, session, jsonify, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
+from Games0App.mailjet_api import send_email
 from Games0App.models.user import User
 from Games0App.views.auth_functions import redirect_to_scoreboard, get_auth_types, get_stage, stage_1_validation
 from Games0App.classes.auth_token_manager import AuthTokenManager
@@ -217,3 +218,31 @@ def delete_account():
         session.clear()
 
         return render_template('auth.html', auth_type=auth_type_3)
+
+
+@auth.route('/send_reset_password_link', methods=['GET', 'POST'])
+def send_reset_password_link():
+
+    if request.method == 'GET':
+        return redirect('/')
+    
+    email = request.form.get('email')
+    if not email:
+        return jsonify(success=False, error="Please enter your email address.")
+    
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        print('EMAIL NOT FOUND:', email)
+        return jsonify(success=False, error="This email address is not registered.")
+    
+    if not auth_token_manager.attempt_check('reset_password_email_first', user.id):
+        return jsonify(success=True, message="Please check your inbox.")
+    
+    if not auth_token_manager.attempt_check('reset_password_email', user.id):
+        return jsonify(success=False, error="Too many attempts! Please wait 10 minutes.")
+    
+    reset_password_link = auth_token_manager.get_reset_password_link_token(user.id)
+
+    # send_email(user.email, user.username, reset_token=reset_password_link) - DISABLED FOR NOW
+
+    return jsonify(success=True, message="Reset password link sent.")

@@ -79,17 +79,18 @@
         </div>
         <div class="forgotten-password-box pop-up-box" id="forgotten-password-box">
             <button data-cancel-button class="cancel-button">&times;</button>
-            <form method="POST" action="/reset_password">
+            <form method="POST" action="/send_reset_password_link">
                 <!-- PUT CSRF TOKEN HERE -->
                 <div class="pop-up-header reset-password-header">
                     <p>Reset Password</p>
                 </div>
                 <div class="pop-up-content">
                     <div class="forgotten-password-box-item">
-                        <input type="text" name="email" placeholder="Email" autofocus>
+                        <input type="text" name="email" placeholder="Email address" autofocus>
                     </div>
                     <div class="forgotten-password-box-item">
-                        <div class="forgotten-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                        <div class="forgotten-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-10px);"></div>
+                        <div class="forgotten-password-success-message" style="color: rgb(0, 149, 255); transform: translateY(-10px);"></div>
                     </div>
                 </div>
                 <div class="pop-up-footer">

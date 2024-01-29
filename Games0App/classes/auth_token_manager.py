@@ -7,9 +7,29 @@ import os
 class AuthTokenManager:
 
 
-    def attempt_check(self, type, marker):
+    def check_reset_password_attempt(self):
+        key_name = f'reset_password_attempt_{current_user.id}'
+        key = redis_client.get(key_name)
+        if not key:
+            return True
+        return False
 
-        if type == 'auth_password':
+
+    def attempt_check(self, type, marker):
+        
+        if type == 'reset_password':
+            redis_timeout = os.environ.get('REDIS_TIMEOUT', 3600)
+            key_name = f'reset_password_attempt_{marker}'
+            limit = 1
+        elif type == 'reset_password_email_first':
+            redis_timeout = os.environ.get('REDIS_TIMEOUT', 30)
+            key_name = f'reset_password_email_first_attempt_{marker}'
+            limit = 1
+        elif type == 'reset_password_email':
+            redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
+            key_name = f'reset_password_email_attempt_{marker}'
+            limit = 3
+        elif type == 'auth_password':
             redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
             key_name = f'auth_password_attempt_{marker}'
             limit = 3
@@ -27,11 +47,25 @@ class AuthTokenManager:
             redis_client.set(key_name, 1, ex=redis_timeout)
             return True
         elif int(key.decode('utf-8')) >= limit:
+            if type == 'reset_password_email':
+                redis_client.delete(f'reset_password_email_first_attempt_{marker}')
             return False
         else:
             redis_client.incr(key_name)
             redis_client.expire(key_name, redis_timeout)
             return True
+        
+
+    def get_reset_password_link_token(self, user_id):
+        redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
+        key_name = f'reset_password_link_token_{user_id}'
+        token = os.urandom(16).hex()
+        redis_client.set(key_name, token, ex=redis_timeout)
+        return token
+    
+
+    def verify_reset_password_link_token(self, user_id, token):
+        pass
 
 
     def get_new_change_token(self, auth_type, stage):
