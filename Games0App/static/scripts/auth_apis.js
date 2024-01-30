@@ -80,7 +80,7 @@ $(document).ready(function(){
                     localStorage.setItem('loginSuccessMessage', response.message);
                     window.location.reload();
                 } else {
-                    $('.register-box-item .clear_error').html('');
+                    $('.register-box-item .clear-error').html('');
                     const errorsArray = Object.entries(response.errors).map(([key, value]) => ({ field: key, message: value }));
                     errorsArray.sort((a, b) => a.field.localeCompare(b.field));
                     errorsArray.forEach(error => {

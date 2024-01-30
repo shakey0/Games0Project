@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeBox(box) {
         if (box == null) return;
+        clearInputFields(box);
+        clearTextContent(box);
         box.classList.remove('active');
         overlay.classList.remove('active');
         // toggleScrollLock(false);
@@ -44,7 +46,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closeLoginBox(box) {
         if (box == null) return;
+        clearInputFields(box);
+        clearTextContent(box);
         box.classList.remove('active');
+    }
+
+    function clearInputFields(box) {
+        if (box == null) return;
+        const inputFields = box.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
+        inputFields.forEach(field => {
+            field.value = '';
+        });
+    }
+
+    function clearTextContent(box) {
+        if (box == null) return;
+        const textElements = box.querySelectorAll('.clear-error, .close-clear');
+        textElements.forEach(element => {
+            element.textContent = '';
+        });
     }
 
     // function toggleScrollLock(isLocked) {
@@ -92,8 +112,12 @@ document.addEventListener('DOMContentLoaded', function() {
         button.addEventListener('click', handleOptionButtonClick);
     });
 
-    document.getElementById('username').addEventListener('input', function() {
-        this.value = this.value.toLowerCase();
-    });    
+    const usernameFields = document.querySelectorAll('.username-lower');
+
+    usernameFields.forEach(function(field) {
+        field.addEventListener('input', function() {
+            this.value = this.value.toLowerCase();
+        });
+    });
 
 });
