@@ -18,12 +18,26 @@
     <!-- Nav bar with website title, game title, and options menu -->
     <div class="nav-bar">
         <div class="nav-bar-left">
-            <a class="home-title-tag link-fmt" href="{{ url_for('main.index') }}">GamesZero</a>
+            {% if in_game == "yes" or in_game == "after" %}
+                <script>
+                    function storeUrl(url) {
+                        document.getElementById('destinationUrl').value = url;
+                    }
+                </script>
+                <a class="home-title-tag link-fmt" data-quit-game-target="#quit-game-box" onclick="storeUrl('{{ url_for('main.index') }}')">GamesZero</a>
+                <input type="hidden" id="destinationUrl" value="">
+            {% else %}
+                <a class="home-title-tag link-fmt" href="{{ url_for('main.index') }}">GamesZero</a>
+            {% endif %}
             <p class="game-title-tag">{% block game_title %}{% endblock %}</p>
             <p class="game-title-tag-small">{% block game_title_small %}{% endblock %}</p>
         </div>
         <div class="nav-bar-right">
-            <a class="nav-username-link link-fmt" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">{{ user.username }}</a>
+            {% if in_game == "yes" or in_game == "after" %}
+                <a class="nav-username-link link-fmt" data-quit-game-target="#quit-game-box" onclick="storeUrl('{{ url_for('scoreboard.scoreboard_page', username=user.username) }}')">{{ user.username }}</a>
+            {% else %}
+                <a class="nav-username-link link-fmt" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">{{ user.username }}</a>
+            {% endif %}
             {% if in_game == "yes" or in_game == "after" %}
                 <div class="bar-score-box">
                     <p class="score-mes">Score:</p><p class="score-tag" id="score">{{ score }}</p>
@@ -59,7 +73,7 @@
     {% endwith %}
     {% block content %}{% endblock %}
 
-    {% if not user.is_authenticated %}
+    {% if not user.is_authenticated and (in_game != "yes" and in_game != "after") %}
         <div class="login-box pop-up-box" id="login-box">
             <button data-cancel-button class="cancel-button">&times;</button>
             <form method="POST" action="/login">

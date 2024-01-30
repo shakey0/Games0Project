@@ -225,6 +225,19 @@
     </div>
 {% endif %}
 
+{% if in_game == "yes" or in_game == "after" %}
+    <div class="quit-game-box pop-up-box" id="quit-game-box">
+        <div class="pop-up-header">
+            <p>Quit game?</p>
+        </div>
+        <div class="pop-up-footer">
+            <p class="quit-game-message">Leaving this page will end your current game. Are you sure you want to do that?</p>
+            <button class="box-btn confirm-quit-btn" id="confirm-quit">Confirm</button>
+            <button class="box-btn cancel-quit-btn" data-cancel-button class="cancel-quit-game-button">Cancel</button>
+        </div>
+    </div>
+{% endif %}
+
 <script src="{{ url_for('static', filename='scripts/in_game_functions.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts/helper_apis.js') }}"></script>
 

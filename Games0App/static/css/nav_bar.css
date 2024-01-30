@@ -29,6 +29,7 @@
 .home-title-tag:hover {
     color: rgb(251, 223, 158);
     transform: scale(1.05);
+    cursor: pointer;
 }
 
 .game-title-tag-small {
@@ -66,6 +67,7 @@
 .nav-username-link:hover {
     transform: scale(1.05);
     color: rgb(251, 223, 158);
+    cursor: pointer;
 }
 
 .menu-btn {

@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const openBoxButtons = document.querySelectorAll('[data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target]');
+    const openBoxButtons = document.querySelectorAll('[data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target], [data-quit-game-target]');
     const cancelBoxButtons = document.querySelectorAll('[data-cancel-button]');
     const cancelLoginBox = document.querySelectorAll('[data-cancel-login-box]');
     const overlay = document.getElementById('overlay');
 
     openBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const boxSelector = button.dataset.loginButtonTarget || button.dataset.forgottenPasswordButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget;
+            const boxSelector = button.dataset.loginButtonTarget || button.dataset.forgottenPasswordButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget || button.dataset.quitGameTarget;
             const box = document.querySelector(boxSelector);
             openBox(box);
         });
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cancelBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const box = button.closest('.login-box, .forgotten-password-box, .register-box, .amend-score-box');
+            const box = button.closest('.login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box');
             closeBox(box);
         });
     });
@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const boxSelector = button.dataset.cancelLoginBox;
             const box = document.querySelector(boxSelector);
             closeLoginBox(box);
+        });
+    });
+
+    overlay.addEventListener('click', () => {
+        const boxes = document.querySelectorAll('.quit-game-box.active');
+        boxes.forEach(box => {
+            closeBox(box);
         });
     });
 
@@ -83,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //     }
     // }
 
+
     var menuButton = document.querySelector('.menu-btn');
     var optionsMenu = document.getElementById('options-menu');
     var optionsButtons = document.querySelectorAll('.options-btn');
@@ -120,4 +128,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    
+    var confirmQuitBtn = document.getElementById('confirm-quit');
+    if (confirmQuitBtn) {
+        confirmQuitBtn.addEventListener('click', function() {
+            var url = document.getElementById('destinationUrl').value;
+            window.location.href = url;
+        });
+    }
+    
 });

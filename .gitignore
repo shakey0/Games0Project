@@ -3,5 +3,6 @@ venv/
 .env
 .DS_Store
 **/.DS_Store
+.vscode/
 notes.md
 play.py
