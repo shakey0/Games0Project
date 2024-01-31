@@ -1,6 +1,10 @@
 from flask import flash
 from flask_login import current_user, logout_user
 from Games0App.extensions import redis_client
+from Games0App.mailjet_api import send_email
+from Games0App.models.user import User
+from Games0App.classes.logger import Logger
+logger = Logger()
 import os
 
 
@@ -11,6 +15,26 @@ class AuthTokenManager:
         key_name = f'reset_password_attempt_{current_user.id}'
         key = redis_client.get(key_name)
         if not key:
+            return True
+        return False
+    
+
+    def check_auth_password_attempt(self):
+        key_name = f'auth_password_attempt_{current_user.id}'
+        key = redis_client.get(key_name)
+        if not key:
+            return False
+        elif int(key.decode('utf-8')) < 3:
+            return True
+        return False
+    
+
+    def check_login_password_attempt(self, credential):
+        key_name = f'login_password_attempt_{credential}'
+        key = redis_client.get(key_name)
+        if not key:
+            return False
+        elif int(key.decode('utf-8')) < 5:
             return True
         return False
 
@@ -101,12 +125,26 @@ class AuthTokenManager:
             if key.decode('utf-8') == token:
                 return True
             else:
-                print('Invalid token - ALERT!')
-                logout_user()
+                json_log = {
+                    'user_id': user_id,
+                    'auth_type': auth_type,
+                    'stage': stage,
+                    'token': token,
+                    'cache_token': key.decode('utf-8')
+                }
+                unique_id = logger.log_event(json_log, 'verify_change_token', 'invalid_change_token')
+                print('INVALID TOKEN: ' + unique_id + ' - ALERT!')
                 flash("A security threat was detected. You've been logged out.", 'error')
-                # Log this event
+                flash(f'If you wish to contact me, please quote this case number: {unique_id}', 'error')
+                flash('An email has been sent to you regarding the issue. You may reply to it.', 'error')
+                flash('You may also consider changing your password.', 'error')
+                if current_user.is_authenticated:
+                    send_email(current_user.email, current_user.username, unique_id=unique_id)
+                    logout_user()
+                else:
+                    user = User.query.filter_by(id=user_id).first()
+                    if user:
+                        send_email(user.email, user.username, unique_id=unique_id)
                 return 'invalid_token'
         else:
-            print('Token expired.')
-            # Log this event
             return 'expired_token'

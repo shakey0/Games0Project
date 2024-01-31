@@ -64,7 +64,6 @@ class UserQuestionTracker:
 
         cached_questions_ids = redis_client.lrange(question_cache_key, 0, -1)
         if cached_questions_ids and question_id in [id.decode('utf-8') for id in cached_questions_ids if id]:
-            print("QUESTION IN CACHE FOR ID:", question_id)
             return False
 
         new_questions_value = func.coalesce(
@@ -99,7 +98,6 @@ class UserQuestionTracker:
 
         cached_questions_ids = redis_client.lrange(question_cache_key, 0, -1)
         if cached_questions_ids and question_id in [id.decode('utf-8') for id in cached_questions_ids if id]:
-            print("QUESTION IN CACHE FOR ID:", question_id)
             return False
         
         redis_client.rpush(question_cache_key, question_id)
@@ -124,8 +122,6 @@ class UserQuestionTracker:
                 for id in all_question_ids:
                     if id not in filtered_question_ids:
                         filtered_question_ids.append(id)
-                    else:
-                        print("DUPLICATE QUESTION ID:", id)
                 filtered_question_ids.reverse()
 
                 limit = self.get_question_storage_limit(game_string) # Temporary fix - See above

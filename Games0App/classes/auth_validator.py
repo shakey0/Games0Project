@@ -1,7 +1,10 @@
 from flask import request
 from flask_login import current_user
+from Games0App.mailjet_api import send_email
 from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
+from Games0App.classes.logger import Logger
+logger = Logger()
 import bcrypt
 from better_profanity import profanity
 
@@ -16,6 +19,14 @@ class AuthValidator:
         if not auth_token_manager.attempt_check('auth_password', current_user.id):
             return "This is not good! You'll have to wait 10 minutes."
         if not bcrypt.checkpw(password.encode('utf-8'), current_user.password_hashed):
+            if not auth_token_manager.check_auth_password_attempt():
+                json_log = {
+                    'user_id': current_user.id
+                }
+                unique_id = logger.log_event(json_log, 'validate_password_for_auth', 'max_auth_password_attempts')
+                print('ACCOUNT ALERT - Logged incorrect auth password attempt: ' + unique_id)
+                send_email(current_user.email, current_user.username, auth_password=True, unique_id=unique_id)
+                return "This is not good! You'll have to wait 10 minutes."
             return "Something didn\'t match! Please try again."
         return True
 
@@ -28,7 +39,7 @@ class AuthValidator:
             return 'Username must be at least 4 characters.'
         elif len(username) > 20:
             return 'Username must be max 20 characters.'
-        elif any(char not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for char in username):
+        elif any(char not in 'abcdefghijklmnopqrstuvwxyz0123456789_-' for char in username):
             return 'Username must only contain letters, numbers, underscores and hyphens.'
         return True
 

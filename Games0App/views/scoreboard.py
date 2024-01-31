@@ -6,6 +6,8 @@ from Games0App.models.high_score import HighScore
 from Games0App.views.scoreboard_functions import get_high_scores, get_user_scores, get_all_scores
 from Games0App.classes.auth_validator import AuthValidator
 auth_validator = AuthValidator()
+from Games0App.classes.logger import Logger
+logger = Logger()
 from sqlalchemy import update
 
 
@@ -22,7 +24,7 @@ def scoreboard_page():
     if token:
         game_type = redis_client.hget(token, 'game_type')
         if not game_type:
-            flash("Sorry, your game has expired. Please start again.", "error")
+            flash("Sorry! Your game has expired. Please start a new game.", "error")
             return redirect('/')
         else:
             game_type = game_type.decode('utf-8')
@@ -55,7 +57,12 @@ def scoreboard_page():
         try:
             game = next(item for item in games if item.param == game_type)
         except:
-            flash("Sorry, something went wrong!", "error")
+            json_log = {
+                'game_name_param': game_name_param
+            }
+            unique_id = logger.log_event(json_log, 'scoreboard_page', 'game_scoreboard_param_error')
+            print("GAME_NAME_PARAM_ERROR: " + unique_id)
+            flash("Sorry! Something went wrong.", "error")
             return redirect('/')
 
         if game.categories:
@@ -74,6 +81,14 @@ def scoreboard_page():
 
         high_scores = get_user_scores(username)
         if high_scores == None:
+            json_log = {
+                'username_of_scores': username
+            }
+            if current_user.is_authenticated:
+                json_log['user_id'] = current_user.id
+                json_log['username_of_current_user'] = current_user.username
+            unique_id = logger.log_event(json_log, 'scoreboard_page', 'user_scoreboard_retrieval_error')
+            print("USER_SCOREBOARD_RETRIEVAL_ERROR: " + unique_id)
             flash("Sorry, something went wrong!", "error")
             return redirect('/')
         
@@ -106,6 +121,12 @@ def amend_score():
         db.session.commit()
         return jsonify(success=True)
     else:
+        json_log = {
+            'score_id': score_id,
+            'user_id': current_user.id
+        }
+        unique_id = logger.log_event(json_log, 'amend_score', 'score_not_found')
+        print("SCORE_NOT_FOUND_ERROR: " + unique_id)
         return jsonify(success=False, message="Score not found or access denied"), 403
 
 
@@ -122,4 +143,10 @@ def delete_score():
         db.session.commit()
         return jsonify(success=True)
     else:
+        json_log = {
+            'score_id': score_id,
+            'user_id': current_user.id
+        }
+        unique_id = logger.log_event(json_log, 'delete_score', 'score_not_found')
+        print("SCORE_NOT_FOUND_ERROR: " + unique_id)
         return jsonify(success=False, message="Score not found or access denied"), 403

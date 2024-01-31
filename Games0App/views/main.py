@@ -71,17 +71,12 @@ def game_setup():
                             user=current_user, difficulty=difficulty)
 
 
-expired_message = "Either something went wrong, or you refreshed the page. Your game has expired."
-
-
 @main.route('/game_play', methods=['GET', 'POST'])
 def game_play():
 
     try:
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
-        print("GAME EXPIRED")
-        flash(expired_message, "error")
         return redirect('/')
     
     redis_client.hset(token, 'revealed_letter_string', '')
@@ -89,7 +84,8 @@ def game_play():
     if request.form.get('in_game') == "start":
 
         if redis_client.hget(token, 'question_no'):  # Check if the game has already started and stop cheating
-            flash(expired_message, "error")
+            flash("Sorry! Something didn't look right there. Please start a new game.", "error")
+            # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
             return redirect('/')
 
         redis_client.hset(token, 'question_no', 1)
@@ -149,7 +145,8 @@ def game_play():
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if question_no != int(request.form.get('question_no')):
-        flash(expired_message, "error")
+        flash("Sorry! Something didn't look right there. Please start a new game.", "error")
+        # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
         return redirect('/')
     redis_client.hset(token, 'question_no', question_no+1)
 
@@ -165,7 +162,6 @@ def game_play():
 
     next_question = get_next_question(game, token, question_tracker, category_name, difficulty)
     if not next_question:
-        flash("Something went wrong.", "error")
         return redirect('/')
     
     helpers = {}
@@ -200,13 +196,12 @@ def game_answer():
     try:
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
-        print("GAME EXPIRED")
-        flash(expired_message, "error")
         return redirect('/')
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if redis_client.hget(token, f'question_{question_no}'):
-        flash(expired_message, "error")
+        flash("Sorry! Something didn't look right there. Please start a new game.", "error")
+        # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
         return redirect('/')
     redis_client.hset(token, f'question_{question_no}', 'Completed')
 
@@ -276,8 +271,6 @@ def game_finish():
     try:
         token, game, category_name, game_name = get_key_game_data(request.method)
     except:
-        print("GAME EXPIRED")
-        flash(expired_message, "error")
         return redirect('/')
     
     game_name_param = game.param
@@ -296,6 +289,7 @@ def game_finish():
         message_check = auth_validator.validate_victory_message()
         if message_check != True:
             return jsonify(success=False, error=message_check)
+        
         high_score = HighScore(user_id=current_user.id, game=game_name_param, game_name=game_name,
                                 difficulty=difficulty, category=category_name, score=score,
                                 date=datetime.datetime.now(), message=request.form.get('message'), likes=0)

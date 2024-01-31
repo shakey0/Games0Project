@@ -9,6 +9,8 @@ from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
 from Games0App.classes.auth_validator import AuthValidator
 auth_validator = AuthValidator()
+from Games0App.classes.logger import Logger
+logger = Logger()
 from sqlalchemy.exc import IntegrityError
 import bcrypt
 
@@ -46,8 +48,7 @@ def register():
 
         login_user(user)
 
-        print('USER REGISTERED:', user.username)
-        # send_email(user.email, user.username) # - DISABLED FOR NOW
+        send_email(user.email, user.username)
 
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
     
@@ -57,7 +58,26 @@ def register():
             errors['email'] = 'An account with this email already exists.'
         elif 'username' in str(e.orig):
             errors['username'] = 'Username taken.'
+        else:
+            log_register_error('IntegrityError', str(e.orig))
+            errors['error'] = 'Something went wrong. Please try again.'
         return jsonify(success=False, errors=errors)
+    
+    except Exception as e:
+        db.session.rollback()
+        log_register_error('UnknownError', str(e))
+        return jsonify(success=False, errors={'error': 'Something went wrong. Please try again.'})
+
+def log_register_error(error_type, error):
+    json_log = {
+        'username': request.form.get('username'),
+        'email': request.form.get('email'),
+        'error_type': error_type,
+        'error': error
+    }
+    unique_id = logger.log_event(json_log, 'register', 'sign_up_error')
+    print("\n\n" + error_type + "\n\n" + error + "\n")
+    print('USER SIGN UP ERROR: ' + unique_id)
 
 
 @auth.route('/login', methods=['POST'])
@@ -76,15 +96,14 @@ def login():
 
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
     if user:
-        print('USER FOUND')
         if bcrypt.checkpw(password.encode('utf-8'), user.password_hashed):
-            print('PASSWORD MATCHED')
             login_user(user)
             return jsonify(success=True, message=f'Welcome, {user.username}!')
-        else:
-            return jsonify(success=False, error="Something didn\'t match! Please try again.")
-    else:
-        return jsonify(success=False, error="Something didn\'t match! Please try again.")
+        
+    if not auth_token_manager.check_login_password_attempt(credential):
+        return jsonify(success=False, error="Too many attempts! Please wait 2 minutes.")
+    
+    return jsonify(success=False, error="Something didn\'t match! Please try again.")
 
 
 @auth.route('/logout', methods=['POST'])
@@ -138,6 +157,8 @@ def change_email():
             flash('An account with this email already exists.', 'error')
             return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
                                     stage_token_2=stage_token_2)
+        
+    send_email(current_user.email, current_user.username)
 
     return render_template('auth.html', auth_type=auth_type_3, user=current_user)
 
@@ -193,7 +214,6 @@ def delete_account():
     
     if not auth_token_manager.check_reset_password_attempt():
         flash('For security reasons, please wait 1 hour before attempting this action.', 'error')
-        print('DELETE ACCOUNT DENIED')
         return redirect_to_scoreboard()
     
     auth_type_0, auth_type_1, auth_type_2, auth_type_3 = get_auth_types('delete', 'account', start_from=0)
@@ -218,7 +238,7 @@ def delete_account():
 
     if len(stage_data) == 1:
         return do_stage_2('delete_account', stage_data[0], auth_type_1, auth_type_2)
-            
+    
     db.session.delete(current_user)
     db.session.commit()
 
@@ -236,7 +256,6 @@ def send_reset_password_link():
     
     user = User.query.filter_by(email=email).first()
     if not user:
-        print('EMAIL NOT FOUND:', email)
         return jsonify(success=False, error="This email address is not registered.")
     
     if not auth_token_manager.attempt_check('reset_password_email_first', user.id):
@@ -248,8 +267,7 @@ def send_reset_password_link():
     reset_password_link = auth_token_manager.get_reset_password_link_token(user.id)
 
     print('RESET PASSWORD LINK:', f'localhost:5000/reset_password/{reset_password_link}')
-
-    # send_email(user.email, user.username, reset_token=reset_password_link) # - DISABLED FOR NOW
+    send_email(user.email, user.username, reset_token=reset_password_link)
 
     return jsonify(success=True, message="Reset password link sent.")
 
@@ -279,7 +297,7 @@ def reverse_reset_password(reset_token):
 @auth.route('/reset_password', methods=['POST'])
 def reset_password_():
 
-    reset_token = request.form.get('reset_token')
+    reset_token = request.form.get('reset_token') # AFTER TESTING CONSIDER WHETHER THIS SHOULD BE LOGGED
     choice = request.form.get('submit_button')
     if not reset_token or choice != 'Confirm':
         return redirect('/')
@@ -295,7 +313,8 @@ def reset_password_():
     result_1 = auth_token_manager.verify_change_token('reset_password', 1, stage_token_1, parsed_user_id=user_id)
     result_2 = auth_token_manager.verify_change_token('reset_password', 2, stage_token_2, parsed_user_id=user_id)
     if result_1 != True or result_2 != True:
-        flash('Something certainly didn\'t look right there.', 'error')
+        if result_1 == 'expired_token' or result_2 == 'expired_token':
+            flash('It looks like your link probably reached its expiry. Please try again.', 'error')
         return redirect('/')
     
     auth_type_2, auth_type_3 = get_auth_types('reset', 'password', start_from=2)
@@ -316,4 +335,4 @@ def reset_password_():
     user.password_hashed = hashed_password
     db.session.commit()
 
-    return complete_password_change(user, auth_type_3)
+    return complete_password_change(user, auth_type_3, revert=revert)

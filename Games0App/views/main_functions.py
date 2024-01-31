@@ -4,6 +4,8 @@ from Games0App.extensions import redis_client
 from Games0App.games import games
 from Games0App.classes.user_question_tracker import UserQuestionTracker
 user_question_tracker = UserQuestionTracker()
+from Games0App.classes.logger import Logger
+logger = Logger()
 import json
 import random
 
@@ -11,12 +13,14 @@ import random
 def get_key_game_data(request_type):
 
     if request_type == 'GET':
+        flash("Sorry! Either something went wrong, or you refreshed the page. Your game has expired. Please start a new game.", "error")
         return None
 
     token = request.form.get('token')
 
     game_type = redis_client.hget(token, 'game_type')
     if not game_type:
+        flash("Sorry! Your game has expired. Please start a new game.", "error")
         return None
     game_type = game_type.decode('utf-8')
     game = next(item for item in games if item.param == game_type)
@@ -42,14 +46,19 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
     while True:
         count += 1
         if count > 100:
-            flash("Something went wrong.", "error")
-            # Log error here !!!!!!!!!!!!!
+            error_type = 'unique_question_error'
+            flash_message = "It is likely that there are a lack of questions for this game/category/difficulty combination."
+            error_id = log_get_question_error(game, category_name, difficulty, error_type, flash_message)
+            print('UNIQUE QUESTION ERROR: ', error_id)
             return None
+        
         next_question = game.get_question(question_tracker, category=category_name, difficulty=difficulty)
         print('NEXT QUESTION: ', next_question)
         if not next_question:
-            flash("Something went wrong.", "error")
-            # Log error here !!!!!!!!!!!!!
+            error_type = 'no_question_returned'
+            flash_message = "An error occurred while retrieving your next question."
+            error_id = log_get_question_error(game, category_name, difficulty, error_type, flash_message)
+            print('NO QUESTION RETURNED: ', error_id)
             return None
         
         if current_user.is_authenticated and game.load_route[0] != 'function':
@@ -76,6 +85,21 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
         redis_client.hset(token, 'all_answers', json.dumps(next_question["all_answers"]))
     
     return next_question
+
+def log_get_question_error(game, category_name, difficulty, error_type, flash_message):
+    json_log = {
+        'game_type': game.param,
+        'category_name': category_name,
+        'difficulty': difficulty
+    }
+    if current_user.is_authenticated:
+        json_log['user_id'] = current_user.id
+    unique_id = logger.log_event(json_log, 'get_next_question', error_type)
+    flash("Sorry! Something went wrong!", "error")
+    flash(flash_message, "error")
+    flash("If you wish to contact me about this issue, please quote this case number: " + unique_id, "error")
+    flash("I am also aware of the issue and will be looking into it.", "error")
+    return unique_id
 
 
 def confirm_all_questions_deposited(game, token, category_name, difficulty):

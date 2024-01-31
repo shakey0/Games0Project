@@ -1,8 +1,11 @@
+from flask_login import current_user
 from Games0App.extensions import redis_client
 from Games0App.classes.question_sorter import QuestionSorter
 question_sorter = QuestionSorter()
 from Games0App.classes.sum_generator import SumGenerator
 sum_generator = SumGenerator()
+from Games0App.classes.logger import Logger
+logger = Logger()
 import requests
 import json
 import csv
@@ -34,29 +37,39 @@ class GamePlay:
             url = self.load_route[1].format(difficulty)
         else: # Currently not in use
             url = self.load_route[1]
-        print(url)
 
         try:
             response = requests.get(url)
             if response.status_code == requests.codes.ok:
-                print(response.text)
                 response = json.loads(response.text)
         except json.JSONDecodeError as e:
-            print(f"JSON decoding error: {e}")
+            self.log_api_error('JSONDecodeError', e, url)
             response = None
         except requests.exceptions.ConnectionError as e:
-            print(f"Connection error: {e}")
+            self.log_api_error('ConnectionError', e, url)
             response = None
         except requests.exceptions.Timeout as e:
-            print(f"Timeout error: {e}")
+            self.log_api_error('TimeoutError', e, url)
             response = None
         except:
-            print("Error:", response.status_code, response.text)
+            self.log_api_error('UnknownError', {'status_code': response.status_code, 'text': response.text}, url)
             response = None
 
         if response:
             return response
         return None
+    
+    def log_api_error(self, error_type, error, url):
+        json_log = {
+            'error_type': error_type,
+            'error': error,
+            'url': url
+        }
+        if current_user.is_authenticated:
+            json_log['user_id'] = current_user.id
+        unique_id = logger.log_event(json_log, 'get_questions_from_api', 'api_error')
+        print("\n\n" + error_type + "\n\n" + error + "\n\n" + "API URL used: " + url + "\n")
+        print(f'API ERROR LOGGED: {unique_id}')
     
 
     def get_questions_from_csv(self, category, difficulty):
@@ -98,7 +111,6 @@ class GamePlay:
     
     def update_stored_questions(self, questions, redis_group):
         if questions:
-            print('VALID QUESTIONS:\n', questions)
             serialized_questions = [json.dumps(question) for question in questions]
             redis_client.sadd(redis_group, *serialized_questions)
             print('Added questions to Redis set')

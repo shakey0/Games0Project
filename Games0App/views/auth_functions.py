@@ -28,9 +28,7 @@ def get_auth_types(word_1, word_2, start_from=1):
 def get_stage(route):
 
     stage_token_1 = request.form.get('stage_token_1')
-    if not stage_token_1:
-        print("No token sent with form - ALERT!")
-        return False, 'invalid_token'
+    
     token_check = auth_token_manager.verify_change_token(route, 1, stage_token_1)
     if token_check != True:
         return False, token_check
@@ -74,12 +72,13 @@ def do_stage_2_reset_password(reset_token, user_id, revert):
                             stage_token_1=stage_token_1, stage_token_2=stage_token_2, revert=revert)
 
 
-def complete_password_change(user, auth_type_3):
+def complete_password_change(user, auth_type_3, revert=False):
 
-    not_user_password_link = auth_token_manager.get_reset_password_link_token(user.id, revert=True)
+    if not revert:
+        not_user_password_link = auth_token_manager.get_reset_password_link_token(user.id, revert=True)
 
-    print('RESET PASSWORD LINK:', f'localhost:5000/security/{not_user_password_link}')
-    # send_email(user.email, user.username, not_user_token=not_user_password_link) # - DISABLED FOR NOW
+        print('RESET PASSWORD LINK:', f'localhost:5000/security/{not_user_password_link}')
+        send_email(user.email, user.username, not_user_token=not_user_password_link)
 
     auth_token_manager.attempt_check('reset_password', user.id)
 

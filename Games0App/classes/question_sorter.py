@@ -1,5 +1,7 @@
 from Games0App.classes.digit_to_word_converter import DigitToWordConverter
 digit_to_word_converter = DigitToWordConverter()
+from Games0App.classes.logger import Logger
+logger = Logger()
 import random
 
 
@@ -8,16 +10,20 @@ class QuestionSorter:
 
     def validate_blank_added(self, id, load_route, question):
         if not '____' in question:
-            print(f'ERROR: Blank not added for question ID {id} in {load_route}')
-            # LOG ERROR TO DATABASE !!!!!!!!!!!!!
+            error = f'ERROR: Blank not added for question ID {id} in {load_route}'
+            print(error)
+            json_log = {'error': error}
+            logger.log_event(json_log, 'validate_blank_added', 'blank_error')
             return False
         return True
 
 
     def validate_answer_has_no_numbers(self, id, load_route, answer):
         if any(char.isdigit() for char in answer):
-            print(f'ERROR: Answer contains numbers for question ID {id} in {load_route}')
-            # LOG ERROR TO DATABASE !!!!!!!!!!!!!
+            error = f'ERROR: Answer contains numbers for question ID {id} in {load_route}'
+            print(error)
+            json_log = {'error': error}
+            logger.log_event(json_log, 'validate_answer_has_no_numbers', 'number_in_answer')
             return False
         return True
 
@@ -92,13 +98,17 @@ class QuestionSorter:
             random_option = random.choice(item['options'])
             question = item['statement'].replace('____', random_option)
             if '____' in question:
-                print(f'ERROR: Option ({random_option}) not added for question ID {id} in {load_route}')
-                # LOG ERROR TO DATABASE !!!!!!!!!!!!!
+                error = f'ERROR: Option ({random_option}) not added for question ID {id} in {load_route}'
+                print(error)
+                json_log = {'error': error}
+                logger.log_event(json_log, 'sort_trivia_tf_questions', 'blank_not_added')
                 continue
             answer = item['statement'].replace('____', item['answer'])
             if '____' in answer:
-                print(f'ERROR: Answer not added for question ID {id} in {load_route}')
-                # LOG ERROR TO DATABASE !!!!!!!!!!!!!
+                error = f'ERROR: Answer not added for question ID {id} in {load_route}'
+                print(error)
+                json_log = {'error': error}
+                logger.log_event(json_log, 'sort_trivia_tf_questions', 'blank_not_added')
                 continue
             valid_questions.append([id, question, answer])
         return valid_questions

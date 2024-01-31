@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from Games0App.extensions import db, redis_client
 from Games0App.models.high_score import HighScore, scores_users
+from Games0App.classes.logger import Logger
+logger = Logger()
 from sqlalchemy import update, delete
 from sqlalchemy.exc import IntegrityError
 import json
@@ -221,8 +223,9 @@ def like_high_score():
                 )
                 result = db.session.execute(delete_statement)
                 if result.rowcount == 0:
-                    print("No rows deleted, score was previously not liked by user")
-                    # Log (error) here !!!!!!!!!!!!!
+                    action_type = "No rows deleted, score was previously not liked by user"
+                    print(action_type)
+                    log_like_error(score_id, '', '', 'dual_like', action_type=action_type)
                     return jsonify(success=False, error="previously not liked")
             else: # The user is liking the score, so the like is being added
                 try:
@@ -232,10 +235,11 @@ def like_high_score():
                     )
                     result = db.session.execute(insert_statement)
                 except IntegrityError as e:
-                    print("Not inserted, already liked by user")
-                    # Log error here !!!!!!!!!!!!!
-                    print(f"Integrity Error: {e}")
                     db.session.rollback()
+                    action_type = "Not inserted, already liked by user"
+                    print(action_type)
+                    print(f"Integrity Error: {e}")
+                    log_like_error(score_id, 'IntegrityError', e, 'dual_like', action_type=action_type)
                     return jsonify(success=False, error="already liked")
 
             update_statement = (
@@ -250,12 +254,23 @@ def like_high_score():
 
     except IntegrityError as e:
         print(f"Integrity Error: {e}")
-        # Log error here !!!!!!!!!!!!!
+        log_like_error(score_id, 'IntegrityError', e, 'unknown_like_error')
     except Exception as e:
         print(f"General Error: {e}")
-        # Log error here !!!!!!!!!!!!!
+        log_like_error(score_id, 'GeneralError', e, 'unknown_like_error')
 
     if new_likes_count is not None:
         return jsonify(success=True, newLikesCount=new_likes_count)
     else:
         return jsonify(success=False, error="Something wasn't right there...")
+
+def log_like_error(score_id, error_type, error, log_type, action_type=''):
+    json_log = {
+        'score_id': score_id,
+        'user_id': current_user.id,
+        'action_type': action_type,
+        'error_type': error_type,
+        'error': error
+    }
+    unique_id = logger.log_event(json_log, 'like_high_score', log_type)
+    print(f"LOGGED LIKE ERROR: {unique_id}")
