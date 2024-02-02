@@ -110,7 +110,6 @@ def game_play():
         next_question = get_next_question(game, token, cookied_question_number, category_name, difficulty,
                                             first_question=True)
         if not next_question:
-            flash("Something went wrong.", "error")
             return redirect('/')
 
         if "fill_blank" in game.param or "trivia_madness" in game.param:

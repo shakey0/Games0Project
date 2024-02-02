@@ -42,11 +42,6 @@
             {% if 'Delete' in auth_type['title'] %}
                 <h4 style="color: rgb(255, 119, 0); margin-bottom: -10px;">Are you absolutely sure you want to delete your account? This cannot be undone!</h4>
             {% else %}
-                {% if 'Reset' in auth_type['title'] %}
-                    {% if revert %}
-                        <h4 style="color: rgb(255, 119, 0); margin-bottom: 40px;">I looks like your account was compromised. Please reset your password to regain access to your account.</h4>
-                    {% endif %}
-                {% endif %}
                 <h4>{{ auth_type['message'] }}</h4>
             {% endif %}
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -60,9 +55,6 @@
                 <!-- PUT CSRF TOKEN HERE -->
                 {% if 'Reset' in auth_type['title'] %}
                     <input type="hidden" name="reset_token" value="{{ reset_token }}">
-                    {% if revert %}
-                        <input type="hidden" name="revert" value="revert">
-                    {% endif %}
                 {% endif %}
                 <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
                 <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">

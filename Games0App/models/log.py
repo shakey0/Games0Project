@@ -4,7 +4,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 class Log(db.Model):
     __tablename__ = 'logs'
     id = db.Column(db.Integer, primary_key=True)
-    unique_id = db.Column(db.String(50), index=True)
+    unique_id = db.Column(db.String(50), index=True, unique=True)
     user_id = db.Column(db.Integer, index=True)
     ip_address = db.Column(db.String(20))
     function_name = db.Column(db.String(50))

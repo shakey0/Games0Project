@@ -7,7 +7,7 @@ class EmailLog(db.Model):
     user_email = db.Column(db.String(120), index=True)
     username = db.Column(db.String(20))
     email_type = db.Column(db.String(50))
-    info = db.Column(db.String(100))
+    info = db.Column(JSONB)
     status_code = db.Column(db.Integer)
     json_response = db.Column(JSONB)
     timestamp = db.Column(db.DateTime)

@@ -5,7 +5,7 @@ logger = Logger()
 import random
 
 
-class QuestionSorter:
+class QuestionSorter: # WHEN TESTING THIS FILE, CHECK THAT CAPITAL LETTERS ARE NOT CAUSING ISSUES
 
 
     def validate_blank_added(self, id, load_route, question):

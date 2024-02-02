@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_defaults.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <title>Report Issue</title>
+</head>
+<body>
+    <div class="main-box">
+        {% if values['stage'] == 1 %}
+            <h1>Report Issue</h1>
+            <h4>What kind of issue are you reporting?</h4>
+            <form action="/report_issue" method="POST">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="auth_token" value="{{ token }}">
+                <div class="issue-selection-box">
+                    <div class="selector-class">
+                        <input type="radio" id="password_change" name="issue_type" value="password_change">
+                        <label for="password_change"><b style="color:cornflowerblue;">My password was changed and I did NOT do it.</b></label>
+                    </div>
+                    <div class="selector-class">
+                        <input type="radio" id="security_alert" name="issue_type" value="security_alert">
+                        <label for="security_alert"><b style="color:cornflowerblue;">I recieved an email from GamesZero Security and would like to report the issue and secure my account.</b></label>
+                    </div>
+                    <div class="selector-class">
+                        <input type="radio" id="other_issue" name="issue_type" value="other_problem">
+                        <label for="other_issue"><b style="color:cornflowerblue;">An error occurred and I'd like to report it.</b></label>
+                    </div>
+                </div>
+                <div class="submit-btns">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Next">
+                </div>
+            </form>
+        {% elif values['stage'] == 2 %}
+            <h1>Report {{ values['title'] }}</h1>
+            <h4>Details of {{ values['title'] }}:</h4>
+            <form action="/report_issue" method="POST">
+                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="auth_token" value="{{ token }}">
+                {% if values['issue_id'] %}
+                    <h4>Case number: {{ values['issue_id'] }}</h4>
+                    <h4>Date and time: {{ values['date_time'] }}</h4>
+                {% else %}
+                    <p>If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
+                    <input type="text" name="issue_id" placeholder="Case number">
+                {% endif %}
+                <h4>If you would like, you can provide more information about what happened.</h4>
+                <textarea class="auth-input" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
+                <div class="submit-btns">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Report Issue">
+                </div>
+            </form>
+        {% elif values['stage'] == 3 %}
+            <h1>{{ values['title'] }} Reported</h1>
+            <h4>Thank you for reporting this issue.</h4>
+            {% if values['title'] == 'Unauthorised Password Change' or values['title'] == 'Security Alert' %}
+                <!-- PUT A VISUAL LINE HERE -->
+                <h4>If you would like to reset your password, please click the button below.</h4>
+                <button data-forgotten-password-button-target="#forgotten-password-box">Reset Password</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

@@ -80,27 +80,17 @@ class AuthTokenManager:
             return True
         
 
-    def get_reset_password_link_token(self, user_id, revert=False):
-        cache_time = 86400 if revert else 600
-        redis_timeout = os.environ.get('REDIS_TIMEOUT', cache_time)
+    def get_reset_password_link_token(self, user_id):
+        redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
         token = os.urandom(16).hex()
-        reset_type = 'revert' if revert else 'reset'
-        redis_client.set(token, f'{user_id}_{reset_type}', ex=redis_timeout)
+        redis_client.set(token, user_id, ex=redis_timeout)
         return token
     
 
-    def verify_reset_password_link_token(self, token, revert=False):
-        result = redis_client.get(token)
-        if result:
-            user_id, reset_type = result.decode('utf-8').split('_')
-            if revert:
-                if reset_type == 'revert':
-                    return int(user_id)
-                return None
-            else:
-                if reset_type == 'reset':
-                    return int(user_id)
-                return None
+    def verify_reset_password_link_token(self, token):
+        user_id = redis_client.get(token)
+        if user_id:
+            return int(user_id.decode('utf-8'))
         return None
     
 
@@ -108,18 +98,41 @@ class AuthTokenManager:
         redis_client.delete(token)
 
 
-    def get_new_change_token(self, auth_type, stage, parsed_user_id=None):
+    def get_new_auth_token(self, values_to_add):
+        redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
+        token = os.urandom(16).hex()
+        redis_client.hmset(token, values_to_add)
+        redis_client.expire(token, redis_timeout)
+        return token
+    
+    def add_values_to_auth_token(self, token, values_to_add):
+        redis_client.hmset(token, values_to_add)
+    
+    def get_values_from_auth_token(self, token, value_names):
+        values = redis_client.hmget(token, value_names)
+        results = {}
+        for i in range(len(value_names)):
+            value = values[i]
+            if value:
+                results[value_names[i]] = value.decode('utf-8')
+        return results
+    
+    def delete_auth_token(self, token):
+        redis_client.delete(token)
+
+
+    def get_new_stage_token(self, auth_type, stage, parsed_user_id=None):
         redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
         user_id = current_user.id if not parsed_user_id else parsed_user_id
-        key_name = f'change_token_{auth_type}_{user_id}_{stage}'
+        key_name = f'stage_token_{auth_type}_{user_id}_{stage}'
         token = os.urandom(16).hex()
         redis_client.set(key_name, token, ex=redis_timeout)
         return token
 
 
-    def verify_change_token(self, auth_type, stage, token, parsed_user_id=None):
+    def verify_stage_token(self, auth_type, stage, token, parsed_user_id=None):
         user_id = current_user.id if not parsed_user_id else parsed_user_id
-        key_name = f'change_token_{auth_type}_{user_id}_{stage}'
+        key_name = f'stage_token_{auth_type}_{user_id}_{stage}'
         key = redis_client.get(key_name)
         if key:
             if key.decode('utf-8') == token:
@@ -135,16 +148,15 @@ class AuthTokenManager:
                 unique_id = logger.log_event(json_log, 'verify_change_token', 'invalid_change_token')
                 print('INVALID TOKEN: ' + unique_id + ' - ALERT!')
                 flash("A security threat was detected. You've been logged out.", 'error')
-                flash(f'If you wish to contact me, please quote this case number: {unique_id}', 'error')
-                flash('An email has been sent to you regarding the issue. You may reply to it.', 'error')
-                flash('You may also consider changing your password.', 'error')
+                flash('An email has been sent to you regarding the issue.', 'error')
+                flash('You may follow the link in the email to report the issue and reset your password.', 'error')
                 if current_user.is_authenticated:
-                    send_email(current_user.email, current_user.username, unique_id=unique_id)
+                    send_email(current_user.email, current_user.username, 'security_alert', unique_id=unique_id)
                     logout_user()
                 else:
                     user = User.query.filter_by(id=user_id).first()
                     if user:
-                        send_email(user.email, user.username, unique_id=unique_id)
+                        send_email(user.email, user.username, 'security_alert', unique_id=unique_id)
                 return 'invalid_token'
         else:
             return 'expired_token'

@@ -25,7 +25,7 @@ class AuthValidator:
                 }
                 unique_id = logger.log_event(json_log, 'validate_password_for_auth', 'max_auth_password_attempts')
                 print('ACCOUNT ALERT - Logged incorrect auth password attempt: ' + unique_id)
-                send_email(current_user.email, current_user.username, auth_password=True, unique_id=unique_id)
+                send_email(current_user.email, current_user.username, 'auth_password_max_attempts', unique_id=unique_id)
                 return "This is not good! You'll have to wait 10 minutes."
             return "Something didn\'t match! Please try again."
         return True
