@@ -17,7 +17,6 @@ class AuthTokenManager:
         if not key:
             return True
         return False
-    
 
     def check_auth_password_attempt(self):
         key_name = f'auth_password_attempt_{current_user.id}'
@@ -27,7 +26,6 @@ class AuthTokenManager:
         elif int(key.decode('utf-8')) < 3:
             return True
         return False
-    
 
     def check_login_password_attempt(self, credential):
         key_name = f'login_password_attempt_{credential}'
@@ -37,7 +35,6 @@ class AuthTokenManager:
         elif int(key.decode('utf-8')) < 5:
             return True
         return False
-
 
     def attempt_check(self, type, marker):
         
@@ -86,14 +83,12 @@ class AuthTokenManager:
         redis_client.set(token, user_id, ex=redis_timeout)
         return token
     
-
     def verify_reset_password_link_token(self, token):
         user_id = redis_client.get(token)
         if user_id:
             return int(user_id.decode('utf-8'))
         return None
     
-
     def delete_reset_password_link_token(self, token):
         redis_client.delete(token)
 
@@ -119,44 +114,3 @@ class AuthTokenManager:
     
     def delete_auth_token(self, token):
         redis_client.delete(token)
-
-
-    def get_new_stage_token(self, auth_type, stage, parsed_user_id=None):
-        redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
-        user_id = current_user.id if not parsed_user_id else parsed_user_id
-        key_name = f'stage_token_{auth_type}_{user_id}_{stage}'
-        token = os.urandom(16).hex()
-        redis_client.set(key_name, token, ex=redis_timeout)
-        return token
-
-
-    def verify_stage_token(self, auth_type, stage, token, parsed_user_id=None):
-        user_id = current_user.id if not parsed_user_id else parsed_user_id
-        key_name = f'stage_token_{auth_type}_{user_id}_{stage}'
-        key = redis_client.get(key_name)
-        if key:
-            if key.decode('utf-8') == token:
-                return True
-            else:
-                json_log = {
-                    'user_id': user_id,
-                    'auth_type': auth_type,
-                    'stage': stage,
-                    'token': token,
-                    'cache_token': key.decode('utf-8')
-                }
-                unique_id = logger.log_event(json_log, 'verify_change_token', 'invalid_change_token')
-                print('INVALID TOKEN: ' + unique_id + ' - ALERT!')
-                flash("A security threat was detected. You've been logged out.", 'error')
-                flash('An email has been sent to you regarding the issue.', 'error')
-                flash('You may follow the link in the email to report the issue and reset your password.', 'error')
-                if current_user.is_authenticated:
-                    send_email(current_user.email, current_user.username, 'security_alert', unique_id=unique_id)
-                    logout_user()
-                else:
-                    user = User.query.filter_by(id=user_id).first()
-                    if user:
-                        send_email(user.email, user.username, 'security_alert', unique_id=unique_id)
-                return 'invalid_token'
-        else:
-            return 'expired_token'

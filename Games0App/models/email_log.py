@@ -8,6 +8,7 @@ class EmailLog(db.Model):
     username = db.Column(db.String(20))
     email_type = db.Column(db.String(50))
     info = db.Column(JSONB)
+    unique_id = db.Column(db.String(10))
     status_code = db.Column(db.Integer)
     json_response = db.Column(JSONB)
     timestamp = db.Column(db.DateTime)

@@ -1,10 +1,8 @@
-from flask import Blueprint, render_template, redirect, request, session, jsonify, flash
+from flask import Blueprint, render_template, redirect, url_for, request, session, jsonify, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
 from Games0App.mailjet_api import send_email
 from Games0App.models.user import User
-from Games0App.views.auth_functions import redirect_to_scoreboard, get_auth_types, get_stage, \
-    do_stage_1, do_stage_2, complete_password_change
 from Games0App.classes.auth_token_manager import AuthTokenManager
 auth_token_manager = AuthTokenManager()
 from Games0App.classes.auth_validator import AuthValidator
@@ -113,142 +111,272 @@ def logout():
     return redirect('/')
 
 
+def redirect_to_scoreboard():
+    return redirect(url_for('scoreboard.scoreboard_page', username=current_user.username))
+
+
 @auth.route('/change_email', methods=['GET', 'POST'])
 @login_required
 def change_email():
-
     if not auth_token_manager.attempt_check('route', 'change_email'):
+        flash('Something seems odd here. Please wait 1 minute before trying again.', 'error')
         return redirect_to_scoreboard()
-    
     if not auth_token_manager.check_reset_password_attempt():
         flash('For security reasons, please wait 1 hour before attempting this action.', 'error')
         return redirect_to_scoreboard()
-    
-    auth_type_1, auth_type_2, auth_type_3 = get_auth_types('change', 'email')
 
     if request.method == 'GET':
-        return do_stage_1(auth_type_1, 'change_email')
+        
+        values = {
+            'user_id': current_user.id,
+            'username': current_user.username,
+            'current_email': current_user.email,
+            'stage': 1,
+            'route': 'change_email',
+            'title': 'Change Email',
+            'message': ''
+        }
+        auth_token = auth_token_manager.get_new_auth_token(values)
+
+        return render_template('auth.html', token=auth_token, values=values)
     
     if request.form.get('submit_button') != 'Confirm':
         return redirect_to_scoreboard()
     
-    result, stage_data = get_stage('change_email')
-
-    if stage_data == 'expired_token':
-        return redirect_to_scoreboard()
-    elif stage_data == 'invalid_token':
+    auth_token = request.form.get('auth_token')
+    if not auth_token:
         return redirect('/')
-    if result != True:
-        return redirect_to_scoreboard()
-
-    if len(stage_data) == 1:
-        return do_stage_2('change_email', stage_data[0], auth_type_1, auth_type_2)
-        
-    stage_token_1, stage_token_2 = stage_data
-        
-    email_check = auth_validator.validate_new_email()
-    if email_check != True:
-        flash(email_check, 'error')
-        return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                stage_token_2=stage_token_2)
     
-    try:
-        current_user.email = request.form.get('email')
-        db.session.commit()
-    except IntegrityError as e:
-        db.session.rollback()
-        if 'email' in str(e.orig):
-            flash('An account with this email already exists.', 'error')
-            return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                    stage_token_2=stage_token_2)
+    value_names = ['user_id', 'username', 'current_email', 'stage', 'route', 'title', 'message']
+    values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
+    if any(v is None for v in values.values()) or not values:
+        flash('Sorry! You took too long. Please try again.', 'error')
+        return redirect_to_scoreboard()
+    if int(values['user_id']) != current_user.id:
+        flash('Sorry! Something seems odd here.', 'error')
+        return redirect_to_scoreboard()
+    
+    if values['stage'] == '1':
+        values['stage'] = 1
         
-    send_email(current_user.email, current_user.username, 'change_email_confirmation')
+        password_validation = auth_validator.validate_password_for_auth()
+        if password_validation != True:
+            flash(password_validation, 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+        
+        values['stage'] = 2
+        values['message'] = 'Your new email address:'
+        auth_token_manager.add_values_to_auth_token(auth_token, values)
 
-    return render_template('auth.html', auth_type=auth_type_3, user=current_user)
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if values['stage'] == '2':
+        values['stage'] = 2
+        
+        email_check = auth_validator.validate_new_email()
+        if email_check != True:
+            flash(email_check, 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+
+        try:
+            current_user.email = request.form.get('email')
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'email' in str(e.orig):
+                flash('An account with this email already exists.', 'error')
+                return render_template('auth.html', token=auth_token, values=values)
+            
+        values['stage'] = 3
+        values['message'] = 'Email successfully changed!'
+        values['new_email'] = request.form.get('email')
+
+        json_log = {
+            'user_id': current_user.id,
+            'username': current_user.username,
+            'old_email': values['current_email'],
+            'new_email': values['new_email']
+        }
+        unique_id = logger.log_event(json_log, 'change_email', 'email_changed')
+        print('EMAIL CHANGED: ', unique_id)
+        send_email(values['new_email'], current_user.username, 'changed_email_confirmation',
+                    unique_id=unique_id)
+        send_email(values['current_email'], current_user.username, 'changed_email_notification',
+                    unique_id=unique_id, new_email=values['new_email'])
+
+        auth_token_manager.delete_auth_token(auth_token)
+
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    return redirect('/')
 
 
 @auth.route('/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
-
     if not auth_token_manager.attempt_check('route', 'change_password'):
+        flash('Something seems odd here. Please wait 1 minute before trying again.', 'error')
         return redirect_to_scoreboard()
-    
-    auth_type_1, auth_type_2, auth_type_3 = get_auth_types('change', 'password')
 
     if request.method == 'GET':
-        return do_stage_1(auth_type_1, 'change_password')
+        
+        values = {
+            'user_id': current_user.id,
+            'username': current_user.username,
+            'stage': 1,
+            'route': 'change_password',
+            'title': 'Change Password',
+            'message': ''
+        }
+        auth_token = auth_token_manager.get_new_auth_token(values)
+
+        return render_template('auth.html', token=auth_token, values=values)
     
     if request.form.get('submit_button') != 'Confirm':
         return redirect_to_scoreboard()
     
-    result, stage_data = get_stage('change_password')
-
-    if stage_data == 'expired_token':
-        return redirect_to_scoreboard()
-    elif stage_data == 'invalid_token':
+    auth_token = request.form.get('auth_token')
+    if not auth_token:
         return redirect('/')
-    if result != True:
-        return redirect_to_scoreboard()
-
-    if len(stage_data) == 1:
-        return do_stage_2('change_password', stage_data[0], auth_type_1, auth_type_2)
-        
-    stage_token_1, stage_token_2 = stage_data
-        
-    password_check = auth_validator.validate_new_password()
-    if password_check != True:
-        flash(password_check[0], 'error')
-        return render_template('auth.html', auth_type=auth_type_2, stage_token_1=stage_token_1,
-                                stage_token_2=stage_token_2)
     
-    hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
-    current_user.password_hashed = hashed_password
-    db.session.commit()
+    value_names = ['user_id', 'username', 'stage', 'route', 'title', 'message']
+    values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
+    if any(v is None for v in values.values()) or not values:
+        flash('Sorry! You took too long. Please try again.', 'error')
+        return redirect_to_scoreboard()
+    if int(values['user_id']) != current_user.id:
+        flash('Sorry! Something seems odd here.', 'error')
+        return redirect_to_scoreboard()
+    
+    if values['stage'] == '1':
+        values['stage'] = 1
+        
+        password_validation = auth_validator.validate_password_for_auth()
+        if password_validation != True:
+            flash(password_validation, 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+        
+        values['stage'] = 2
+        values['message'] = 'Your new password:'
+        auth_token_manager.add_values_to_auth_token(auth_token, values)
 
-    return complete_password_change(current_user, auth_type_3)
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if values['stage'] == '2':
+        values['stage'] = 2
+        
+        password_check = auth_validator.validate_new_password()
+        if password_check != True:
+            flash(password_check[0], 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+
+        hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
+        current_user.password_hashed = hashed_password
+        db.session.commit()
+
+        values['stage'] = 3
+        values['message'] = 'Password successfully changed!'
+        
+        json_log = {
+            'user_id': current_user.id,
+            'username': current_user.username
+        }
+        unique_id = logger.log_event(json_log, 'change_password', 'password_changed')
+        print('PASSWORD CHANGED: ', unique_id)
+        send_email(current_user.email, current_user.username, 'changed_password_confirmation',
+                    unique_id=unique_id)
+
+        auth_token_manager.attempt_check('reset_password', current_user.id)
+
+        auth_token_manager.delete_auth_token(auth_token)
+
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    return redirect('/')
 
 
 @auth.route('/delete_account', methods=['GET', 'POST'])
 @login_required
 def delete_account():
-
-    if not auth_token_manager.attempt_check('route', 'delete_account'):
+    if not auth_token_manager.attempt_check('route', 'change_email'):
+        flash('Something seems odd here. Please wait 1 minute before trying again.', 'error')
         return redirect_to_scoreboard()
-    
     if not auth_token_manager.check_reset_password_attempt():
         flash('For security reasons, please wait 1 hour before attempting this action.', 'error')
         return redirect_to_scoreboard()
     
-    auth_type_0, auth_type_1, auth_type_2, auth_type_3 = get_auth_types('delete', 'account', start_from=0)
-
     if request.method == 'GET':
-        return render_template('auth.html', auth_type=auth_type_0)
+            
+        values = {
+            'user_id': current_user.id,
+            'username': current_user.username,
+            'stage': 0,
+            'route': 'delete_account',
+            'title': 'Delete Account',
+            'message': ''
+        }
+        auth_token = auth_token_manager.get_new_auth_token(values)
 
-    choice = request.form.get('submit_button')
-    if choice == 'Yes':
-        return do_stage_1(auth_type_1, 'delete_account')
-    elif choice != 'Confirm':
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if request.form.get('submit_button') != 'Confirm':
         return redirect_to_scoreboard()
     
-    result, stage_data = get_stage('delete_account')
-
-    if stage_data == 'expired_token':
-        return redirect_to_scoreboard()
-    elif stage_data == 'invalid_token':
+    auth_token = request.form.get('auth_token')
+    if not auth_token:
         return redirect('/')
-    if result != True:
-        return redirect_to_scoreboard()
-
-    if len(stage_data) == 1:
-        return do_stage_2('delete_account', stage_data[0], auth_type_1, auth_type_2)
     
-    db.session.delete(current_user)
-    db.session.commit()
+    value_names = ['user_id', 'username', 'stage', 'route', 'title', 'message']
+    values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
+    if any(v is None for v in values.values()) or not values:
+        flash('Sorry! You took too long. Please try again.', 'error')
+        return redirect_to_scoreboard()
+    if int(values['user_id']) != current_user.id:
+        flash('Sorry! Something seems odd here.', 'error')
+        return redirect_to_scoreboard()
+    
+    if values['stage'] == '0':
+        values['stage'] = 1
 
-    session.clear()
+        auth_token_manager.add_values_to_auth_token(auth_token, values)
 
-    return render_template('auth.html', auth_type=auth_type_3)
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if values['stage'] == '1':
+        values['stage'] = 1
+
+        password_validation = auth_validator.validate_password_for_auth()
+        if password_validation != True:
+            flash(password_validation, 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+        
+        values['stage'] = 2
+        values['message'] = 'Are you absolutely sure you want to delete your account? This cannot be undone!'
+        auth_token_manager.add_values_to_auth_token(auth_token, values)
+
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if values['stage'] == '2':
+        values['stage'] = 3
+
+        db.session.delete(current_user)
+        db.session.commit()
+        session.clear()
+
+        values['message'] = 'Account successfully deleted!'
+
+        json_log = {
+            'user_id': values['user_id'],
+            'username': values['username']
+        }
+        unique_id = logger.log_event(json_log, 'delete_account', 'account_deleted')
+        print('ACCOUNT DELETED: ', unique_id)
+
+        auth_token_manager.delete_auth_token(auth_token)
+
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    return redirect('/')
 
 
 @auth.route('/send_reset_password_link', methods=['POST'])
@@ -276,68 +404,99 @@ def send_reset_password_link():
     return jsonify(success=True, message="Reset password link sent.")
 
 
-@auth.route('/reset_password/<reset_token>')
+@auth.route('/reset_password/<reset_token>', methods=['GET', 'POST'])
 def reset_password(reset_token):
 
     user_id = auth_token_manager.verify_reset_password_link_token(reset_token)
     if not user_id:
-        flash('Link expired.', 'error')
+        flash('Link expired. Please request a new link.', 'error')
+        return redirect('/')
+
+    if request.method == 'GET':
+            
+        username = User.query.filter_by(id=user_id).first().username
+        if not username:
+            flash('Something certainly didn\'t look right there.', 'error')
+            return redirect('/')
+        
+        values = {
+            'user_id': user_id,
+            'username': username,
+            'stage': 2,
+            'route': f'reset_password/{reset_token}',
+            'title': 'Reset Password',
+            'message': 'Your new password:'
+        }
+        auth_token = auth_token_manager.get_new_auth_token(values)
+
+        return render_template('auth.html', token=auth_token, values=values)
+    
+    if request.form.get('submit_button') != 'Confirm':
         return redirect('/')
     
-    auth_type_2, auth_type_3 = get_auth_types('reset', 'password', start_from=2)
-    stage_token_1 = auth_token_manager.get_new_stage_token('reset_password', 1, parsed_user_id=user_id)
-    stage_token_2 = auth_token_manager.get_new_stage_token('reset_password', 2, parsed_user_id=user_id)
-
-    return render_template('auth.html', reset_token=reset_token, auth_type=auth_type_2,
-                            stage_token_1=stage_token_1, stage_token_2=stage_token_2)
-
-
-@auth.route('/reset_password', methods=['POST'])
-def reset_password_():
-
-    reset_token = request.form.get('reset_token') # AFTER TESTING CONSIDER WHETHER AN ABSENCE OF THIS SHOULD BE LOGGED
-    choice = request.form.get('submit_button')
-    if not reset_token or choice != 'Confirm':
+    auth_token = request.form.get('auth_token')
+    if not auth_token:
         return redirect('/')
     
-    user_id = auth_token_manager.verify_reset_password_link_token(reset_token)
-    if not user_id:
-        flash('It looks like your link probably expired. Please try again.', 'error')
+    value_names = ['user_id', 'username', 'stage', 'route', 'title', 'message']
+    values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
+    if any(v is None for v in values.values()) or not values:
+        flash('Sorry! You took too long. Please try again.', 'error')
+        return redirect('/')
+    if int(values['user_id']) != user_id:
+        flash('Sorry! Something seems odd here.', 'error')
         return redirect('/')
     
-    stage_token_1 = request.form.get('stage_token_1')
-    stage_token_2 = request.form.get('stage_token_2')
-    result_1 = auth_token_manager.verify_stage_token('reset_password', 1, stage_token_1, parsed_user_id=user_id)
-    result_2 = auth_token_manager.verify_stage_token('reset_password', 2, stage_token_2, parsed_user_id=user_id)
-    if result_1 != True or result_2 != True:
-        if result_1 == 'expired_token' or result_2 == 'expired_token':
-            flash('It looks like your link probably reached its expiry. Please try again.', 'error')
-        return redirect('/')
+    if values['stage'] == '2':
+        values['stage'] = 2
+
+        password_check = auth_validator.validate_new_password()
+        if password_check != True:
+            flash(password_check[0], 'error')
+            return render_template('auth.html', token=auth_token, values=values)
+        
+        values['stage'] = 3
+        
+        auth_token_manager.delete_reset_password_link_token(reset_token)
+
+        hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            flash('Something certainly didn\'t look right there.', 'error')
+            return redirect('/')
+        user.password_hashed = hashed_password
+        db.session.commit()
+
+        values['message'] = 'Password successfully reset!'
+
+        json_log = {
+            'user_id': user.id,
+            'username': user.username,
+            'reset_token': reset_token
+        }
+        unique_id = logger.log_event(json_log, 'reset_password', 'password_reset')
+        print('PASSWORD RESET: ', unique_id)
+        send_email(user.email, user.username, 'reset_password_confirmation', unique_id=unique_id)
+
+        auth_token_manager.delete_auth_token(auth_token)
+
+        auth_token_manager.attempt_check('reset_password', user.id)
+
+        return render_template('auth.html', token=auth_token, values=values)
     
-    auth_type_2, auth_type_3 = get_auth_types('reset', 'password', start_from=2)
-
-    password_check = auth_validator.validate_new_password()
-    if password_check != True:
-        flash(password_check[0], 'error')
-        return render_template('auth.html', reset_token=reset_token, auth_type=auth_type_2,
-                                stage_token_1=stage_token_1, stage_token_2=stage_token_2)
-    
-    auth_token_manager.delete_reset_password_link_token(reset_token)
-
-    hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
-    user = User.query.filter_by(id=user_id).first()
-    if not user:
-        flash('Something certainly didn\'t look right there.', 'error')
-        return redirect('/')
-    user.password_hashed = hashed_password
-    db.session.commit()
-
-    return complete_password_change(user, auth_type_3)
+    return redirect('/')
 
 
 @auth.route('/report_issue', methods=['GET', 'POST'])
 def report_issue():
     
+    issues = {
+        'password_change': {'title': 'Unauthorised Password Change', 'message': 'My password was changed and I did NOT do it.'},
+        'email_change': {'title': 'Unauthorised Email Change', 'message': 'My email was changed and I did NOT do it.'},
+        'security_alert': {'title': 'Security Alert', 'message': 'I received a security alert via email.'},
+        'other_problem': {'title': 'Problem', 'message': 'An error occurred and I\'d like to report it.'}
+    }
+
     if request.method == 'GET':
 
         issue_id = request.args.get('issue_id')
@@ -351,55 +510,45 @@ def report_issue():
             flash('Please log in or follow a link sent via email to report an issue.', 'error')
             return redirect('/')
         
-        date_time = log.timestamp if log else ''
-        if date_time:
-            date_time = date_time.strftime('%Y-%m-%d %H:%M:%S')
+        date_time_issue_occurred = log.timestamp if log else ''
+        if date_time_issue_occurred:
+            date_time_issue_occurred = date_time_issue_occurred.strftime('%Y-%m-%d %H:%M:%S')
             # MAKE FUNCTION TO FORMAT DATE AND TIME APPROPRIATELY
             pass
 
         values = {
             'user_id': user_id,
             'issue_id': issue_id,
-            'date_time': date_time,
+            'issue': '',
+            'title': '',
+            'date_time_issue_occurred': date_time_issue_occurred,
             'stage': 1
         }
         auth_token = auth_token_manager.get_new_auth_token(values)
         
-        return render_template('report_issue.html', token=auth_token, values=values)
+        return render_template('report_issue.html', token=auth_token, values=values, issues=issues)
 
     auth_token = request.form.get('auth_token')
     if not auth_token:
         return redirect('/')
 
-    value_names = ['user_id', 'issue_id', 'date_time', 'stage']
+    value_names = ['user_id', 'issue_id', 'date_time_issue_occurred', 'stage', 'issue', 'title']
     values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
-    if any(v is None for v in values.values()):
+    if any(v is None for v in values.values()) or not values:
         return redirect('/')
     
     if values['stage'] == '1':
-
         values['stage'] = 2
 
         issue_type = request.form.get('issue_type')
         values['issue'] = issue_type
-        issue_titles = {
-            'password_change': 'Unauthorised Password Change',
-            'security_alert': 'Security Alert',
-            'other_problem': 'Problem'
-        }
-        values['title'] = issue_titles[issue_type]
+        values['title'] = issues[issue_type]['title']
 
         auth_token_manager.add_values_to_auth_token(auth_token, values)
 
         return render_template('report_issue.html', token=auth_token, values=values)
-    
-    value_names = ['user_id', 'issue_id', 'date_time', 'stage', 'issue', 'title']
-    values = auth_token_manager.get_values_from_auth_token(auth_token, value_names)
-    if any(v is None for v in values.values()):
-        return redirect('/')
 
     if values['stage'] == '2':
-
         values['stage'] = 3
 
         if not values['issue_id']:
@@ -409,7 +558,13 @@ def report_issue():
         description = request.form.get('description')
         values['description'] = description
 
-        unique_id = logger.log_event(values, 'report_issue', values['issue'] + '_ISSUE_REPORTED')
+        json_log = {
+            'user_id': values['user_id'],
+            'issue_id': values['issue_id'],
+            'date_time_issue_occurred': values['date_time_issue_occurred'],
+            'description': description
+        }
+        unique_id = logger.log_event(json_log, 'report_issue', values['issue'] + '_ISSUE_REPORTED')
         print(values['title'].upper() + ' REPORTED: ', unique_id)
 
         auth_token_manager.delete_auth_token(auth_token)

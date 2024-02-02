@@ -5,23 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_defaults.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
-    <title>{{ auth_type['title'] }}</title>
+    <title>{{ values['title'] }}</title>
 </head>
 <body>
-    <h1>{{ auth_type['title'] }} - Secure</h1>
+    <h1>{{ values['title'] }} - Secure</h1>
     <div class="main-box">
-        {% if auth_type['stage'] == 0 %}
+        {% if values['stage'] == 0 %}
             <h4 style="color: rgb(255, 119, 0);">Deleting your account is an irreversible action. Once you complete the steps your account will be immediately deleted and completely unrecoverable.</h4>
             <h4 style="padding-top: 20px;">Are you sure you want to delete your account?</h4>
-            <form style="padding-top: 0;" action="/delete_account" method="POST">
+            <form style="padding-top: 0;" action="/{{ values['route'] }}" method="POST">
                 <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="auth_token" value="{{ token }}">
                 <div class="submit-btns">
-                    <input class="confirm-btn" type="submit" name="submit_button" value="Yes">
-                    <input class="cancel-btn" type="submit" name="submit_button" value="No">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="cancel-btn" type="submit" name="submit_button" value="Cancel">
                 </div>
             </form>
-        {% elif auth_type['stage'] == 1 %}
-            <h4>Please enter your {% if 'Password' in auth_type['title'] %}current {% endif %}password to continue.</h4>
+        {% elif values['stage'] == 1 %}
+            <h4>Please enter your {% if 'Password' in values['title'] %}current {% endif %}password to continue.</h4>
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
@@ -29,20 +30,20 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <form action="/{{ auth_type['route'] }}" method="POST">
+            <form style="padding-top: 4px;" action="/{{ values['route'] }}" method="POST">
                 <!-- PUT CSRF TOKEN HERE -->
-                <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
+                <input type="hidden" name="auth_token" value="{{ token }}">
                 <input class="auth-input" type="password" name="password" placeholder="Password">
                 <div class="submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
                     <input class="cancel-btn" type="submit" name="submit_button" value="Cancel">
                 </div>
             </form>
-        {% elif auth_type['stage'] == 2 %}
-            {% if 'Delete' in auth_type['title'] %}
-                <h4 style="color: rgb(255, 119, 0); margin-bottom: -10px;">Are you absolutely sure you want to delete your account? This cannot be undone!</h4>
+        {% elif values['stage'] == 2 %}
+            {% if 'Delete' in values['title'] %}
+                <h4 style="color: rgb(255, 119, 0); margin-bottom: -10px;">{{ values['message'] }}</h4>
             {% else %}
-                <h4>{{ auth_type['message'] }}</h4>
+                <h4>{{ values['message'] }}</h4>
             {% endif %}
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
@@ -51,18 +52,14 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <form action="/{{ auth_type['route'] }}" method="POST" id="authForm">
+            <form style="padding-top: 4px;" action="/{{ values['route'] }}" method="POST" id="authForm">
                 <!-- PUT CSRF TOKEN HERE -->
-                {% if 'Reset' in auth_type['title'] %}
-                    <input type="hidden" name="reset_token" value="{{ reset_token }}">
-                {% endif %}
-                <input type="hidden" name="stage_token_1" value="{{ stage_token_1 }}">
-                <input type="hidden" name="stage_token_2" value="{{ stage_token_2 }}">
-                {% if 'Password' in auth_type['title'] %}
+                <input type="hidden" name="auth_token" value="{{ token }}">
+                {% if 'Password' in values['title'] %}
                     <input class="auth-input" type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password">
                     <div id="password-strength" class="password-strength"></div>
                     <input class="auth-input" style="margin-top: 10px;" type="password" name="confirm_password" placeholder="Confirm Password">
-                {% elif 'Email' in auth_type['title'] %}
+                {% elif 'Email' in values['title'] %}
                     <input class="auth-input email-input" type="email" name="email" placeholder="Email">
                 {% endif %}
                 <div class="submit-btns">
@@ -77,14 +74,14 @@
                     </script>
                 </div>
             </form>
-        {% elif auth_type['stage'] == 3 %}
-            <h4>{{ auth_type['message'] }}</h4>
-            {% if 'Email' in auth_type['title'] %}
-            <h4 style="font-weight: 100;">{{ user.email }}</h4>
+        {% elif values['stage'] == 3 %}
+            <h4>{{ values['message'] }}</h4>
+            {% if 'Email' in values['title'] %}
+            <h4 style="font-weight: 100;">{{ values['new_email'] }}</h4>
             {% endif %}
             <div class="return-btn-box">
-                {% if not 'Delete' in auth_type['title'] and not 'Reset' in auth_type['title'] %}
-                    <a class="return-btn" href="{{ url_for('scoreboard.scoreboard_page', username=user.username) }}">Return to Profile</a>
+                {% if not 'Delete' in values['title'] and not 'Reset' in values['title'] %}
+                    <a class="return-btn" href="{{ url_for('scoreboard.scoreboard_page', username=values['username']) }}">Return to Profile</a>
                 {% endif %}
                 <a class="return-btn" href="{{ url_for('main.index') }}">Return to Home</a>
             </div>

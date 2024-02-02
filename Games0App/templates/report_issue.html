@@ -16,18 +16,12 @@
                 <!-- PUT CSRF TOKEN HERE -->
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <div class="issue-selection-box">
-                    <div class="selector-class">
-                        <input type="radio" id="password_change" name="issue_type" value="password_change">
-                        <label for="password_change"><b style="color:cornflowerblue;">My password was changed and I did NOT do it.</b></label>
-                    </div>
-                    <div class="selector-class">
-                        <input type="radio" id="security_alert" name="issue_type" value="security_alert">
-                        <label for="security_alert"><b style="color:cornflowerblue;">I recieved an email from GamesZero Security and would like to report the issue and secure my account.</b></label>
-                    </div>
-                    <div class="selector-class">
-                        <input type="radio" id="other_issue" name="issue_type" value="other_problem">
-                        <label for="other_issue"><b style="color:cornflowerblue;">An error occurred and I'd like to report it.</b></label>
-                    </div>
+                    {% for issue in issues %}
+                        <div class="selector-class">
+                            <input type="radio" id="{{ issue }}" name="issue_type" value="{{ issue }}">
+                            <label for="{{ issue }}"><b style="color:cornflowerblue;">{{ issues[issue]['message'] }}</b></label>
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Next">
@@ -41,7 +35,7 @@
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 {% if values['issue_id'] %}
                     <h4>Case number: {{ values['issue_id'] }}</h4>
-                    <h4>Date and time: {{ values['date_time'] }}</h4>
+                    <h4>Date and time: {{ values['date_time_issue_occurred'] }}</h4>
                 {% else %}
                     <p>If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
                     <input type="text" name="issue_id" placeholder="Case number">
