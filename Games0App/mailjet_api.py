@@ -50,12 +50,6 @@ def send_email(user_email, username, email_type, reset_token='', unique_id='', n
 		subject = 'Security Alert'
 		text_part = f'Hi {username},\n\nAn incorrect password was recently entered 3 times while trying to make adjustments to your account. If you did not initiate this action, please click on the link below to report this.\n\nhttps://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id} \n\nAll the best,\nshakey0'
 		html_part = f'<h3>Hi {username},</h3><h3>An incorrect password was recently entered 3 times while trying to make adjustments to your account. If you did not initiate this action, please click on the link below to report this.</h3><a href="https://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}">games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}</a><br /><h3>All the best,</h3><h3>shakey0</h3>'
-	elif email_type == 'security_alert':
-		email_info = {}
-		name_type = 'GamesZero Security'
-		subject = 'Security Alert'
-		text_part = f'Hi {username},\n\nYou were recently logged out of your account due to a security issue. If you did not initiate this action, please click on the link below to report this.\n\nhttps://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id} \n\nAll the best,\nshakey0'
-		html_part = f'<h3>Hi {username},</h3><h3>You were recently logged out of your account due to a security issue. If you did not initiate this action, please click on the link below to report this.</h3><a href="https://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}">games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}</a><br /><h3>All the best,</h3><h3>shakey0</h3>'
 	else:
 		json_log = {
 			'user_email': user_email,
