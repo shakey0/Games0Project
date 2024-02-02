@@ -17,6 +17,14 @@ class Logger:
         else:
             user_id_ = 0
 
+        if 'issue_id' in json_log:
+            issue_id_ = json_log['issue_id']
+            json_log.pop('issue_id')
+            prefix = 'R'
+        else:
+            issue_id_ = ''
+            prefix = 'S'
+
         try:
             ip_address_ = request.remote_addr
         except:
@@ -24,7 +32,7 @@ class Logger:
 
         count = 0
         while count < 10:
-            unique_id_ = 'S' + os.urandom(4).hex().upper()
+            unique_id_ = prefix + os.urandom(4).hex().upper()
             try:
                 log = Log(
                     unique_id=unique_id_,
@@ -33,7 +41,8 @@ class Logger:
                     function_name=function_name,
                     log_type=log_type,
                     timestamp=datetime.utcnow(),
-                    data=json_log
+                    data=json_log,
+                    issue_id=issue_id_
                 )
                 db.session.add(log)
                 db.session.commit()

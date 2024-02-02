@@ -9,6 +9,7 @@ from Games0App.classes.auth_validator import AuthValidator
 auth_validator = AuthValidator()
 from Games0App.classes.logger import Logger
 logger = Logger()
+from Games0App.utils import format_datetime
 from sqlalchemy.exc import IntegrityError
 import bcrypt
 
@@ -512,9 +513,7 @@ def report_issue():
         
         date_time_issue_occurred = log.timestamp if log else ''
         if date_time_issue_occurred:
-            date_time_issue_occurred = date_time_issue_occurred.strftime('%Y-%m-%d %H:%M:%S')
-            # MAKE FUNCTION TO FORMAT DATE AND TIME APPROPRIATELY
-            pass
+            date_time_issue_occurred = format_datetime(date_time_issue_occurred)
 
         values = {
             'user_id': user_id,
@@ -555,7 +554,7 @@ def report_issue():
             issue_id = request.form.get('issue_id')
             values['issue_id'] = issue_id
 
-        description = request.form.get('description')
+        description = request.form.get('issue_description')
         values['description'] = description
 
         json_log = {

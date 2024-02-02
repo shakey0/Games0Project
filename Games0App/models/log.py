@@ -11,6 +11,7 @@ class Log(db.Model):
     log_type = db.Column(db.String(50))
     timestamp = db.Column(db.DateTime)
     data = db.Column(JSONB)
+    issue_id = db.Column(db.String(10))
 
     def __eq__(self, other):
         return self.id == other.id

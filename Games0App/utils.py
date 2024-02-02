@@ -49,6 +49,19 @@ def is_close_match(user_answer, real_answer):
     return True
 
 
+def format_datetime(dt):
+
+    suffixes = {1: 'ˢᵗ', 2: 'ⁿᵈ', 3: 'ʳᵈ'}
+    
+    day = dt.day
+    suffix = suffixes.get(day if 10 <= day % 100 <= 20 else day % 10, 'ᵗʰ')
+    
+    formatted_date_time = dt.strftime(f'%d{suffix} %b at %H:%M').replace(f'{day}{suffix}', f'{day}{suffix}')
+    formatted_date_time = formatted_date_time.lstrip("0")
+    
+    return formatted_date_time
+
+
 # from spellchecker import SpellChecker
 # spell = SpellChecker()
 # import os
