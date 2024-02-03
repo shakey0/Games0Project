@@ -562,6 +562,9 @@ def report_issue():
         }
         unique_id = logger.log_event(json_log, 'report_issue', values['issue'] + '_ISSUE_REPORTED')
         print(values['title'].upper() + ' REPORTED: ', unique_id)
+        user = User.query.filter_by(id=values['user_id']).first()
+        if user:
+            send_email(user.email, user.username, 'issue_report_confirmation', unique_id=unique_id, issue_title=values['title'])
 
         auth_token_manager.delete_auth_token(auth_token)
 

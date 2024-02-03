@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 
-def send_email(user_email, username, email_type, reset_token='', unique_id='', new_email=''):
+def send_email(user_email, username, email_type, reset_token='', new_email='', unique_id='', issue_title=''):
 
 	api_key = os.environ.get('MAILJET_API_KEY')
 	api_secret = os.environ.get('MAILJET_SECRET_KEY')
@@ -49,17 +49,25 @@ def send_email(user_email, username, email_type, reset_token='', unique_id='', n
 		subject = 'Security Alert'
 		text_part = f'Hi {username},\n\nAn incorrect password was recently entered 3 times while trying to make adjustments to your account. If you did not initiate this action, please click on the link below to report this.\n\nhttps://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id} \n\nAll the best,\nshakey0'
 		html_part = f'<h3>Hi {username},</h3><h3>An incorrect password was recently entered 3 times while trying to make adjustments to your account. If you did not initiate this action, please click on the link below to report this.</h3><a href="https://games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}">games0-by-shakey0.onrender.com/report_issue?issue_id={unique_id}</a><br /><h3>All the best,</h3><h3>shakey0</h3>'
+	elif email_type == 'issue_report_confirmation':
+		email_info = {'issue_title': issue_title}
+		name_type = 'GamesZero Security'
+		subject = 'Issue Reported'
+		after = 'you experienced' if issue_title == 'Problem' else 'on your account'
+		text_part = f'Hi {username},\n\nThanks for reporting the {issue_title.lower()} {after}. Your report ticket number is: {unique_id}\n\nI will investigate this issue and get back to you as soon as possible.\n\nAll the best,\nshakey0'
+		html_part = f'<h3>Hi {username},</h3><h3>Thanks for reporting the {issue_title.lower()} {after}. Your report ticket number is: {unique_id}</h3><h3>I will investigate this issue and get back to you as soon as possible.</h3><h3>All the best,</h3><h3>shakey0</h3>'
 	else:
 		json_log = {
 			'user_email': user_email,
 			'username': username,
 			'email_type': email_type,
 			'reset_token': reset_token,
+			'new_email': new_email,
 			'unique_id': unique_id,
-			'new_email': new_email
+			'issue_title': issue_title
 		}
 		unique_log_id = logger.log_event(json_log, 'send_email', 'email_failed_to_send')
-		print('Email failed to send: ', user_email, username, email_type, reset_token, unique_id, new_email)
+		print('Email failed to send: ', user_email, username, email_type, reset_token, new_email, unique_id, issue_title)
 		print('EMAIL ERROR: ' + unique_log_id)
 		return
 
