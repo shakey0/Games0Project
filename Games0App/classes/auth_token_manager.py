@@ -108,8 +108,7 @@ class AuthTokenManager:
         results = {}
         for i in range(len(value_names)):
             value = values[i]
-            if value:
-                results[value_names[i]] = value.decode('utf-8')
+            results[value_names[i]] = value.decode('utf-8')
         return results
     
     def delete_auth_token(self, token):
