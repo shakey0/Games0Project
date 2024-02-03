@@ -35,15 +35,16 @@
                 <!-- PUT CSRF TOKEN HERE -->
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <p class="report-issue-form-title2" style="color: rgb(255, 119, 0);">Details of issue:</p>
+                <p class="error-message" style="display: none; color: red;"></p>
                 {% if values['issue_id'] %}
                     <p>Case number: <b style="color:rgb(255, 119, 0);">{{ values['issue_id'] }}</b></p>
                     <p>Date and time: <b style="font-family:Arial; color:rgb(255, 119, 0);">{{ values['date_time_issue_occurred'] }}</b></p>
                 {% else %}
                     <p>If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
-                    <input class="auth-input" style="margin-top: 10px;" type="text" name="issue_id" placeholder="Case number">
+                    <input class="auth-input issue_id" id="issue_id" style="margin-top: 10px;" type="text" name="issue_id" placeholder="Case number">
                 {% endif %}
                 <p>If you would like, you can provide more information about what happened.</p>
-                <textarea class="issue-description" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
+                <textarea class="issue-description" id="issue-description" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
                 <div class="report-issue-submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Report Issue">
                 </div>
@@ -61,5 +62,6 @@
             </div>
         {% endif %}
     </div>
+    <script src="{{ url_for('static', filename='scripts/report_issue.js') }}"></script>
 </body>
 </html>
