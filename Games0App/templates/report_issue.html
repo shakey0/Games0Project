@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/body_and_defaults.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Report Issue</title>
 </head>
 <body>
@@ -55,7 +56,17 @@
             {% if values['title'] == 'Unauthorised Password Change' or values['title'] == 'Security Alert' %}
                 <!-- PUT A VISUAL LINE HERE -->
                 <h4 style="font-weight: 100;">If you would like to reset your password, please click the button below.</h4>
-                <button class="report-issue-reset-password-btn box-btn" data-forgotten-password-button-target="#forgotten-password-box">Reset Password</button>
+                <button class="report-issue-reset-password-btn box-btn">Reset Password</button>
+                <div id="forgotten-password-box" style="display: none;">
+                    <form action="/send_reset_password_link" method="POST">
+                        <!-- PUT CSRF TOKEN HERE -->
+                        <h4>Reset Password</h4>
+                        <input type="text" name="email" placeholder="Email address" autofocus>
+                        <p class="forgotten-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-10px);"></p>
+                        <p class="forgotten-password-success-message" style="color: rgb(0, 149, 255); transform: translateY(-10px);"></p>
+                        <input class="reset-password-btn" type="submit" value="Send reset password link">
+                    </form>
+                </div>
             {% endif %}
             <div class="return-btn-box">
                 <a class="return-btn" href="{{ url_for('main.index') }}">Return to Home</a>
@@ -63,5 +74,6 @@
         {% endif %}
     </div>
     <script src="{{ url_for('static', filename='scripts/report_issue.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/auth_apis.js') }}"></script>
 </body>
 </html>
