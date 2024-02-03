@@ -50,12 +50,15 @@
             </form>
         {% elif values['stage'] == 3 %}
             <h1>{{ values['title'] }} Reported</h1>
-            <h4>Thank you for reporting this issue.</h4>
+            <h4 style="font-weight: 100;">Thank you for reporting this issue.</h4>
             {% if values['title'] == 'Unauthorised Password Change' or values['title'] == 'Security Alert' %}
                 <!-- PUT A VISUAL LINE HERE -->
-                <h4>If you would like to reset your password, please click the button below.</h4>
-                <button data-forgotten-password-button-target="#forgotten-password-box">Reset Password</button>
+                <h4 style="font-weight: 100;">If you would like to reset your password, please click the button below.</h4>
+                <button class="report-issue-reset-password-btn box-btn" data-forgotten-password-button-target="#forgotten-password-box">Reset Password</button>
             {% endif %}
+            <div class="return-btn-box">
+                <a class="return-btn" href="{{ url_for('main.index') }}">Return to Home</a>
+            </div>
         {% endif %}
     </div>
 </body>
