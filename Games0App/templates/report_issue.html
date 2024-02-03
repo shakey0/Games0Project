@@ -35,16 +35,16 @@
             <form action="/report_issue" method="POST">
                 <!-- PUT CSRF TOKEN HERE -->
                 <input type="hidden" name="auth_token" value="{{ token }}">
-                <p class="report-issue-form-title2" style="color: rgb(255, 119, 0);">Details of issue:</p>
-                <p class="error-message" style="display: none; color: red;"></p>
+                <p class="report-issue-form-title2 report-issue-text" style="color: rgb(255, 119, 0);">Details of issue:</p>
+                <p class="error-message report-issue-text" style="display: none; color: red;"></p>
                 {% if values['issue_id'] %}
-                    <p>Case number: <b style="color:rgb(255, 119, 0);">{{ values['issue_id'] }}</b></p>
-                    <p>Date and time: <b style="font-family:Arial; color:rgb(255, 119, 0);">{{ values['date_time_issue_occurred'] }}</b></p>
+                    <p class="report-issue-text">Case number: <b style="color:rgb(255, 119, 0);">{{ values['issue_id'] }}</b></p>
+                    <p class="report-issue-text">Date and time: <b style="font-family:Arial; color:rgb(255, 119, 0);">{{ values['date_time_issue_occurred'] }}</b></p>
                 {% else %}
-                    <p>If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
+                    <p class="report-issue-text">If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
                     <input class="auth-input issue_id" id="issue_id" style="margin-top: 10px;" type="text" name="issue_id" placeholder="Case number">
                 {% endif %}
-                <p>If you would like, you can provide more information about what happened.</p>
+                <p class="report-issue-text">If you would like, you can provide more information about what happened.</p>
                 <textarea class="issue-description" id="issue-description" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
                 <div class="report-issue-submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Report Issue">
@@ -57,14 +57,13 @@
                 <!-- PUT A VISUAL LINE HERE -->
                 <h4 style="font-weight: 100;">If you would like to reset your password, please click the button below.</h4>
                 <button class="report-issue-reset-password-btn box-btn">Reset Password</button>
-                <div id="forgotten-password-box" style="display: none;">
+                <div class="report-issue-reset-password-box" id="forgotten-password-box" style="display: none;">
                     <form action="/send_reset_password_link" method="POST">
                         <!-- PUT CSRF TOKEN HERE -->
-                        <h4>Reset Password</h4>
-                        <input type="text" name="email" placeholder="Email address" autofocus>
-                        <p class="forgotten-password-error-message" style="color: rgb(255, 119, 0); transform: translateY(-10px);"></p>
-                        <p class="forgotten-password-success-message" style="color: rgb(0, 149, 255); transform: translateY(-10px);"></p>
-                        <input class="reset-password-btn" type="submit" value="Send reset password link">
+                        <input class="auth-input email-input" type="text" name="email" placeholder="Email address" autofocus>
+                        <p class="forgotten-password-error-message hidden" style="color: rgb(255, 119, 0);"></p>
+                        <p class="forgotten-password-success-message hidden" style="color: rgb(0, 149, 255);"></p>
+                        <input class="reset-password-btn send-link-btn" type="submit" value="Send reset password link">
                     </form>
                 </div>
             {% endif %}

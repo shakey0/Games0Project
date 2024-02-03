@@ -183,7 +183,7 @@
         padding: 6px;
     }
     .auth-input {
-        font-size: 16px;
+        font-size: 16.5px;
         padding: 8px;
     }
     .email-input {
@@ -203,7 +203,7 @@
         padding: 5px;
     }
     .auth-input {
-        font-size: 15px;
+        font-size: 16px;
         padding: 7.5px;
     }
     .email-input {
@@ -265,7 +265,7 @@
     align-items: center;
 }
 
-.report-issue-main-box form p {
+.report-issue-text {
     margin-top: 20px;
 }
 
@@ -381,5 +381,104 @@
     .report-issue-reset-password-btn {
         padding: 10px 20px;
         font-size: 18.5px;
+    }
+}
+
+.report-issue-reset-password-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 590px;
+}
+
+.report-issue-reset-password-box form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 30px 0 0;
+}
+
+.send-link-btn {
+    width: 360px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    background-color: #202124;
+    font-size: 24px;
+    color: rgb(232, 213, 203);
+    white-space: nowrap;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.send-link-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.forgotten-password-error-message, .forgotten-password-success-message {
+    margin-top: 20px;
+}
+
+@media (max-width: 920px) {
+    .send-link-btn {
+        font-size: 22px;
+        margin-top: 18px;
+    }
+    .forgotten-password-error-message, .forgotten-password-success-message {
+        margin-top: 18px;
+    }
+}
+@media (max-width: 710px) {
+    .send-link-btn {
+        font-size: 20px;
+        margin-top: 16px;
+    }
+    .forgotten-password-error-message, .forgotten-password-success-message {
+        margin-top: 16px;
+    }
+    .send-link-btn {
+        width: 330px;
+    }
+}
+@media (max-width: 500px) {
+    .send-link-btn {
+        font-size: 18px;
+        margin-top: 14px;
+        margin-bottom: 10px;
+    }
+    .report-issue-reset-password-box form {
+        padding: 10px 0 0;
+    }
+    .forgotten-password-error-message, .forgotten-password-success-message {
+        margin-top: 14px;
+    }
+    .send-link-btn {
+        width: 300px;
+    }
+}
+@media (max-width: 430px) {
+    .send-link-btn {
+        margin-top: 12px;
+    }
+    .forgotten-password-error-message, .forgotten-password-success-message {
+        margin-top: 12px;
+    }
+    .send-link-btn {
+        width: 270px;
+    }
+}
+@media (max-width: 395px) {
+    .send-link-btn {
+        margin-top: 10px;
+    }
+    .forgotten-password-error-message, .forgotten-password-success-message {
+        margin-top: 10px;
     }
 }
