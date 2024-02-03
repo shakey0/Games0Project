@@ -45,3 +45,6 @@ class DigitToWordConverter:
             text = text.replace(num, words)
         # print("TEXT: ", text)
         return text
+
+
+digit_to_word_converter = DigitToWordConverter()

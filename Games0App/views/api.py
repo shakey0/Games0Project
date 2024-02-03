@@ -2,8 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from Games0App.extensions import db, redis_client
 from Games0App.models.high_score import HighScore, scores_users
-from Games0App.classes.logger import Logger
-logger = Logger()
+from Games0App.classes.logger import logger
 from sqlalchemy import update, delete
 from sqlalchemy.exc import IntegrityError
 import json

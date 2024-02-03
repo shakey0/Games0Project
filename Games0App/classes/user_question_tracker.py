@@ -135,3 +135,6 @@ class UserQuestionTracker:
                 self.store_last_50_questions(game_string, question_bundle_ids)
         else:
             self.store_last_50_questions(game_string, question_bundle_ids)
+
+
+user_question_tracker = UserQuestionTracker()

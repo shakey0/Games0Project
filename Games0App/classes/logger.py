@@ -57,3 +57,6 @@ class Logger:
     def get_log_by_unique_id(self, unique_id):
         log = Log.query.filter_by(unique_id=unique_id).first()
         return log
+
+
+logger = Logger()

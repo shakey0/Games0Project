@@ -1,9 +1,7 @@
 from flask_login import current_user
 from Games0App.extensions import redis_client
-from Games0App.classes.question_sorter import QuestionSorter
-question_sorter = QuestionSorter()
-from Games0App.classes.sum_generator import SumGenerator
-sum_generator = SumGenerator()
+from Games0App.classes.question_sorter import question_sorter
+from Games0App.classes.sum_generator import sum_generator
 from Games0App.classes.logger import Logger
 logger = Logger()
 import requests

@@ -1,8 +1,7 @@
 from mailjet_rest import Client
 from Games0App.extensions import db
 from Games0App.models.email_log import EmailLog
-from Games0App.classes.logger import Logger
-logger = Logger()
+from Games0App.classes.logger import logger
 import os
 from datetime import datetime
 

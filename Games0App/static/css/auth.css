@@ -8,7 +8,7 @@
     flex-direction: column;
     text-align: center;
     margin: 0 auto;
-    padding: 4px 10px 20px;
+    padding: 10px;
 }
 
 .auth-input {
@@ -94,7 +94,7 @@
 
 @media (max-width: 920px) {
     .main-box form {
-        padding: 18px 9px;
+        padding: 9px;
     }
     .auth-input {
         font-size: 19px;
@@ -121,7 +121,7 @@
 }
 @media (max-width: 710px) {
     .main-box form {
-        padding: 16px 8px;
+        padding: 8px;
     }
     .auth-input {
         font-size: 18px;
@@ -148,7 +148,7 @@
 }
 @media (max-width: 500px) {
     .main-box form {
-        padding: 14px 7px;
+        padding: 7px;
     }
     .auth-input {
         font-size: 17px;
@@ -180,7 +180,7 @@
 }
 @media (max-width: 430px) {
     .main-box form {
-        padding: 12px 6px;
+        padding: 6px;
     }
     .auth-input {
         font-size: 16px;
@@ -200,7 +200,7 @@
 }
 @media (max-width: 395px) {
     .main-box form {
-        padding: 10px 5px;
+        padding: 5px;
     }
     .auth-input {
         font-size: 15px;

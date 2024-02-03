@@ -3,12 +3,9 @@ from flask_login import login_user, logout_user, current_user, login_required
 from Games0App.extensions import db
 from Games0App.mailjet_api import send_email
 from Games0App.models.user import User
-from Games0App.classes.auth_token_manager import AuthTokenManager
-auth_token_manager = AuthTokenManager()
-from Games0App.classes.auth_validator import AuthValidator
-auth_validator = AuthValidator()
-from Games0App.classes.logger import Logger
-logger = Logger()
+from Games0App.classes.auth_token_manager import auth_token_manager
+from Games0App.classes.auth_validator import auth_validator
+from Games0App.classes.logger import logger
 from Games0App.utils import format_datetime
 from sqlalchemy.exc import IntegrityError
 import bcrypt

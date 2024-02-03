@@ -4,10 +4,8 @@ from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.scoreboard_functions import get_high_scores, get_user_scores, get_all_scores
-from Games0App.classes.auth_validator import AuthValidator
-auth_validator = AuthValidator()
-from Games0App.classes.logger import Logger
-logger = Logger()
+from Games0App.classes.auth_validator import auth_validator
+from Games0App.classes.logger import logger
 from sqlalchemy import update
 
 

@@ -1,10 +1,8 @@
 from flask import request
 from flask_login import current_user
 from Games0App.mailjet_api import send_email
-from Games0App.classes.auth_token_manager import AuthTokenManager
-auth_token_manager = AuthTokenManager()
-from Games0App.classes.logger import Logger
-logger = Logger()
+from Games0App.classes.auth_token_manager import auth_token_manager
+from Games0App.classes.logger import logger
 import bcrypt
 from better_profanity import profanity
 
@@ -79,3 +77,6 @@ class AuthValidator:
         if profanity.contains_profanity(message):
             return "Contains bad language."
         return True
+
+
+auth_validator = AuthValidator()

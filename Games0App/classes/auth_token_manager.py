@@ -1,10 +1,5 @@
-from flask import flash
-from flask_login import current_user, logout_user
+from flask_login import current_user
 from Games0App.extensions import redis_client
-from Games0App.mailjet_api import send_email
-from Games0App.models.user import User
-from Games0App.classes.logger import Logger
-logger = Logger()
 import os
 
 
@@ -108,8 +103,14 @@ class AuthTokenManager:
         results = {}
         for i in range(len(value_names)):
             value = values[i]
-            results[value_names[i]] = value.decode('utf-8')
+            if value is not None:
+                results[value_names[i]] = value.decode('utf-8')
+            else:
+                results[value_names[i]] = None
         return results
     
     def delete_auth_token(self, token):
         redis_client.delete(token)
+
+
+auth_token_manager = AuthTokenManager()

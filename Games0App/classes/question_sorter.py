@@ -1,5 +1,4 @@
-from Games0App.classes.digit_to_word_converter import DigitToWordConverter
-digit_to_word_converter = DigitToWordConverter()
+from Games0App.classes.digit_to_word_converter import digit_to_word_converter
 from Games0App.classes.logger import Logger
 logger = Logger()
 import random
@@ -112,3 +111,6 @@ class QuestionSorter: # WHEN TESTING THIS FILE, CHECK THAT CAPITAL LETTERS ARE N
                 continue
             valid_questions.append([id, question, answer])
         return valid_questions
+
+
+question_sorter = QuestionSorter()

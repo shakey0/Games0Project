@@ -84,3 +84,6 @@ class SumGenerator:
         answer = selected_target[0]
         wrong_answers = [item[0] for item in all_choices if item[0] != answer]
         return [question, answer, wrong_answers]
+
+
+sum_generator = SumGenerator()

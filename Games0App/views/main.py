@@ -4,10 +4,8 @@ from Games0App.extensions import db, redis_client
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
-from Games0App.classes.auth_validator import AuthValidator
-auth_validator = AuthValidator()
-from Games0App.classes.digit_to_word_converter import DigitToWordConverter
-digit_to_word_converter = DigitToWordConverter()
+from Games0App.classes.auth_validator import auth_validator
+from Games0App.classes.digit_to_word_converter import digit_to_word_converter
 from Games0App.utils import normalise_answer, is_close_match
 import secrets
 import datetime
