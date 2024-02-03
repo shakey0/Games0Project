@@ -8,41 +8,43 @@
     <title>Report Issue</title>
 </head>
 <body>
-    <div class="main-box">
+    <div class="report-issue-main-box">
         {% if values['stage'] == 1 %}
             <h1>Report Issue</h1>
-            <h4>What kind of issue are you reporting?</h4>
             <form action="/report_issue" method="POST">
                 <!-- PUT CSRF TOKEN HERE -->
                 <input type="hidden" name="auth_token" value="{{ token }}">
+                <p class="report-issue-form-title1">What kind of issue are you reporting?</p>
                 <div class="issue-selection-box">
                     {% for issue in issues %}
-                        <div class="selector-class">
-                            <input type="radio" id="{{ issue }}" name="issue_type" value="{{ issue }}">
-                            <label for="{{ issue }}"><b style="color:cornflowerblue;">{{ issues[issue]['message'] }}</b></label>
+                        <div class="selector-class issue-selector">
+                            <div class="selector-div">
+                                <input type="radio" id="{{ issue }}" name="issue_type" value="{{ issue }}">
+                            </div>
+                            <label for="{{ issue }}"><b style="color:rgb(255, 119, 0);">{{ issues[issue]['message'] }}</b></label>
                         </div>
                     {% endfor %}
                 </div>
-                <div class="submit-btns">
+                <div class="report-issue-submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Next">
                 </div>
             </form>
         {% elif values['stage'] == 2 %}
             <h1>Report {{ values['title'] }}</h1>
-            <h4>Details of {{ values['title'] }}:</h4>
             <form action="/report_issue" method="POST">
                 <!-- PUT CSRF TOKEN HERE -->
                 <input type="hidden" name="auth_token" value="{{ token }}">
+                <p class="report-issue-form-title2" style="color: rgb(255, 119, 0);">Details of issue:</p>
                 {% if values['issue_id'] %}
-                    <p>Case number: {{ values['issue_id'] }}</p>
-                    <p>Date and time: <b style="font-family:Arial;">{{ values['date_time_issue_occurred'] }}</b></p>
+                    <p>Case number: <b style="color:rgb(255, 119, 0);">{{ values['issue_id'] }}</b></p>
+                    <p>Date and time: <b style="font-family:Arial; color:rgb(255, 119, 0);">{{ values['date_time_issue_occurred'] }}</b></p>
                 {% else %}
                     <p>If you have a 9 digit case number starting with S, please enter it here. It will help us know what happened.</p>
-                    <input type="text" name="issue_id" placeholder="Case number">
+                    <input class="auth-input" style="margin-top: 10px;" type="text" name="issue_id" placeholder="Case number">
                 {% endif %}
                 <p>If you would like, you can provide more information about what happened.</p>
-                <textarea class="auth-input" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
-                <div class="submit-btns">
+                <textarea class="issue-description" name="issue_description" placeholder="Describe the problem... (optional)"></textarea>
+                <div class="report-issue-submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Report Issue">
                 </div>
             </form>
