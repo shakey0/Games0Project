@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cancelBoxButtons = document.querySelectorAll('[data-cancel-button]');
     const cancelLoginBox = document.querySelectorAll('[data-cancel-login-box]');
     const overlay = document.getElementById('overlay');
+    const confirmLegalBox = document.querySelector('.confirm-legal-box');
 
     openBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -15,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cancelBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const box = button.closest('.legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box');
+            const box = button.closest('.confirm-legal-box, .legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box');
             closeBox(box);
         });
     });
@@ -47,7 +48,9 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInputFields(box);
         clearTextContent(box);
         box.classList.remove('active');
-        overlay.classList.remove('active');
+        if (!confirmLegalBox.classList.contains('active')) {
+            overlay.classList.remove('active');
+        }
         // toggleScrollLock(false);
     }
 

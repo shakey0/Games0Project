@@ -54,16 +54,21 @@
     color: rgb(255, 255, 255);
 }
 
-.legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
+.confirm-legal-box, .legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     border: 1px solid rgb(142, 114, 99);
     border-radius: 10px;
     background-color: #191c27;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
-.login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
+.confirm-legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     width: 300px;
     padding: 25px 30px;
+}
+
+.confirm-legal-box {
+    display: flex;
+    flex-direction: column;
 }
 
 .pop-up-content {
@@ -147,6 +152,45 @@
     .legal-content {
         height: 130px;
     }
+}
+
+.legal-link-btn {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    color: rgb(255, 162, 48);
+}
+
+.confirm-legal-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    font-size: 26px;
+    color: rgb(232, 213, 203);
+    background-color: #202124;
+    white-space: nowrap;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+@media (max-width: 395px) {
+    .confirm-legal-btn {
+        font-size: 24px;
+    }
+}
+@media (max-width: 360px) {
+    .confirm-legal-btn {
+        font-size: 22px;
+    }
+}
+
+.confirm-legal-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.legal-link-btn:hover {
+    color: rgb(255, 255, 255);
 }
 
 .legal-title {
