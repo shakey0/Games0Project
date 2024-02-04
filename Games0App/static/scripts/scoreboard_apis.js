@@ -52,11 +52,13 @@ $(document).ready(function(){
                         }
                     } else {
                         alert(response.error || 'An error occurred while processing your request.');
+                        window.location.reload();
                     }
                 }
             },
             error: function() {
                 alert('An unexpected error occurred. Please try again later.');
+                window.location.reload();
             }
         });
     }

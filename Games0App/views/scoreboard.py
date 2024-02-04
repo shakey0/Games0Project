@@ -73,7 +73,7 @@ def scoreboard_page():
         high_scores = get_high_scores(game_name_param)
 
     elif username:
-        game_name = f"{username}'s Scores" if username != current_user.username else "Your Profile & Scores"
+        game_name = f"{username}'s Scores" if not current_user.is_authenticated or username != current_user.username else "Your Profile & Scores"
 
         needs_high_score = False
 
