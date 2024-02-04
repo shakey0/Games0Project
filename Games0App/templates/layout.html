@@ -48,21 +48,41 @@
         </div>
     </div>
     <!-- Options menu -->
-    <div class="options-menu" id="options-menu" style="display: none;">
-        {% if not user.is_authenticated %}
-            <button class="options-btn clear-btn" data-login-button-target="#login-box">Log in</button>
-            <button class="options-btn clear-btn" data-register-button-target="#register-box">Sign up</button>
-        {% endif %}
-        <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Scoreboards</button></a>
-        <button class="options-btn clear-btn">About</button>
-        <a href=""><button class="options-btn clear-btn">Contact</button></a>
-        {% if user.is_authenticated %}
-            <form method="POST" action="/logout">
-                <!-- PUT CSRF TOKEN HERE -->
-                <input class="options-btn clear-btn" style="font-weight: 100;" type="submit" value="Log out">
-            </form>
-        {% endif %}
-    </div>
+    {% if in_game != "yes" and in_game != "after" %}
+        <div class="options-menu" id="options-menu" style="display: none;">
+            {% if not user.is_authenticated %}
+                <button class="options-btn clear-btn" data-login-button-target="#login-box">Log in</button>
+                <button class="options-btn clear-btn" data-register-button-target="#register-box">Sign up</button>
+            {% endif %}
+            <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Scoreboards</button></a>
+            <button class="options-btn clear-btn" data-legal-button-target="#legal-box">Legal</button>
+            <button class="options-btn clear-btn">About</button>
+            <a href=""><button class="options-btn clear-btn">Contact</button></a>
+            {% if user.is_authenticated %}
+                <form method="POST" action="/logout">
+                    <!-- PUT CSRF TOKEN HERE -->
+                    <input class="options-btn clear-btn" style="font-weight: 400;" type="submit" value="Log out">
+                </form>
+            {% endif %}
+        </div>
+        <div class="legal-box pop-up-box" id="legal-box">
+            <button data-cancel-button class="cancel-button">&times;</button>
+            <div class="pop-up-header">
+                <p>Legal</p>
+            </div>
+            <div class="top-fade-out"></div>
+            <div class="pop-up-content legal-content">
+                <p class="legal-title">Privacy Policy</p>
+                <p class="legal-text">In compliance with the law, this website collects certain data from all users who engage with it. This is solely for the purpose of ensuring online safety and security. This data may include the IP addresses of users, which are stored securely and will only be used if necessary to prevent any malicious activity. This data will never be shared with any third parties.</p>
+                <p class="legal-text">Users who sign up for an account with this website will provide their email address. This is used to contact the user when certain actions are performed on their account and also to alert the user of any security concerns relating to their account. Email addresses are stored securely and may be linked with any IP addresses the user uses when they perform certain actions on the website. This data will only be used if necessary to prevent any malicious activity and will never be shared with any third parties.</p>
+                <p class="legal-title">Cookie Policy</p>
+                <p class="legal-text">This website uses cookies to ensure that users have the best possible experience. By using this website, you agree to the use of cookies.</p>
+                <p class="legal-title">Terms of Service</p>
+                <p class="legal-text">By using this website, you agree to the terms of service. These terms include the use of cookies mentioned above and the collection of certain data mentioned above.</p>
+            </div>
+            <div class="bottom-fade-out"></div>
+        </div>
+    {% endif %}
     <div class="top-space"></div>
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -72,7 +92,7 @@
         {% endif %}
     {% endwith %}
     {% block content %}{% endblock %}
-
+    <!-- Auth pop-up boxes -->
     {% if not user.is_authenticated and (in_game != "yes" and in_game != "after") %}
         <div class="login-box pop-up-box" id="login-box">
             <button data-cancel-button class="cancel-button">&times;</button>

@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    const openBoxButtons = document.querySelectorAll('[data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target], [data-quit-game-target]');
+    const openBoxButtons = document.querySelectorAll('[data-legal-button-target], [data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target], [data-quit-game-target]');
     const cancelBoxButtons = document.querySelectorAll('[data-cancel-button]');
     const cancelLoginBox = document.querySelectorAll('[data-cancel-login-box]');
     const overlay = document.getElementById('overlay');
 
     openBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const boxSelector = button.dataset.loginButtonTarget || button.dataset.forgottenPasswordButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget || button.dataset.quitGameTarget;
+            const boxSelector = button.dataset.legalButtonTarget || button.dataset.loginButtonTarget || button.dataset.forgottenPasswordButtonTarget || button.dataset.registerButtonTarget || button.dataset.amendScoreBoxTarget || button.dataset.quitGameTarget;
             const box = document.querySelector(boxSelector);
             openBox(box);
         });
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     cancelBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
-            const box = button.closest('.login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box');
+            const box = button.closest('.legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box');
             closeBox(box);
         });
     });
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     overlay.addEventListener('click', () => {
-        const boxes = document.querySelectorAll('.quit-game-box.active');
+        const boxes = document.querySelectorAll('.legal-box.active, .quit-game-box.active');
         boxes.forEach(box => {
             closeBox(box);
         });

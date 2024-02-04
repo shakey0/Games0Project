@@ -54,7 +54,7 @@
     color: rgb(255, 255, 255);
 }
 
-.login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
+.legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     border: 1px solid rgb(142, 114, 99);
     border-radius: 10px;
     background-color: #191c27;
@@ -64,6 +64,100 @@
 .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     width: 300px;
     padding: 25px 30px;
+}
+
+.pop-up-content {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.legal-box {
+    height: 600px;
+    width: 80%;
+    max-width: 400px;
+    padding: 25px 30px;
+}
+.legal-content {
+    position: relative;
+    height: 530px;
+    overflow-y: auto;
+    padding: 5px 20px 10px 0;
+}
+@media (max-height: 650px) {
+    .legal-box {
+        height: 550px;
+    }
+    .legal-content {
+        height: 480px;
+    }
+}
+@media (max-height: 600px) {
+    .legal-box {
+        height: 500px;
+    }
+    .legal-content {
+        height: 430px;
+    }
+}
+@media (max-height: 550px) {
+    .legal-box {
+        height: 450px;
+    }
+    .legal-content {
+        height: 380px;
+    }
+}
+@media (max-height: 500px) {
+    .legal-box {
+        height: 400px;
+    }
+    .legal-content {
+        height: 330px;
+    }
+}
+@media (max-height: 450px) {
+    .legal-box {
+        height: 350px;
+    }
+    .legal-content {
+        height: 280px;
+    }
+}
+@media (max-height: 400px) {
+    .legal-box {
+        height: 300px;
+    }
+    .legal-content {
+        height: 230px;
+    }
+}
+@media (max-height: 350px) {
+    .legal-box {
+        height: 250px;
+    }
+    .legal-content {
+        height: 180px;
+    }
+}
+@media (max-height: 300px) {
+    .legal-box {
+        height: 200px;
+    }
+    .legal-content {
+        height: 130px;
+    }
+}
+
+.legal-title {
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(255, 119, 0);
+}
+
+.legal-text {
+    margin-bottom: 15px;
 }
 
 .pop-up-header {
@@ -85,12 +179,6 @@
     .reset-password-header {
         font-size: 29px;
     }
-}
-
-.pop-up-content {
-    margin-top: 20px;
-    margin-bottom: 5px;
-    font-size: 1.1em;
 }
 
 .pop-up-content input {
@@ -122,10 +210,21 @@
     -webkit-text-fill-color: white !important;
 }
 
-/* input::placeholder {
-    color: white;
-    opacity: 0.6;
-} */
+.top-fade-out {
+    position: relative;
+    height: 10px;
+    margin-bottom: -30px;
+    z-index: 20;
+    background: linear-gradient(to bottom, #191c27, #191c2700);
+}
+
+.bottom-fade-out {
+    position: relative;
+    height: 10px;
+    margin-top: -15px;
+    z-index: 20;
+    background: linear-gradient(to top, #191c27, #191c2700);
+}
 
 .pop-up-footer input {
     width: 100%;
