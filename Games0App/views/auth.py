@@ -82,6 +82,7 @@ def login():
     credential = request.form.get('username')
     if not credential:
         return jsonify(success=False, error="Please enter your email or username.")
+    credential = credential.strip()
     
     password = request.form.get('password')
     if not password:
