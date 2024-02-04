@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInputFields(box);
         clearTextContent(box);
         box.classList.remove('active');
-        if (!confirmLegalBox.classList.contains('active')) {
+        if (!confirmLegalBox || !confirmLegalBox.classList.contains('active')) {
             overlay.classList.remove('active');
         }
         // toggleScrollLock(false);

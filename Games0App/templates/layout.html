@@ -65,7 +65,7 @@
                 </form>
             {% endif %}
         </div>
-        <div class="confirm-legal-box pop-up-box active" id="confirm-legal-box">
+        <div class="confirm-legal-box pop-up-box{% if show_privacy_policy %} active{% endif %}" id="confirm-legal-box">
             <p style="font-size: 18px;">This website uses cookies and may collect certain data for security purposes in compliance with the law. By using this website you agree to the terms of service. For more information, <button class="legal-link-btn clear-btn" data-legal-button-target="#legal-box">click here</button>.</p>
             <button class="confirm-legal-btn box-btn" data-cancel-button>Continue to Website</button>
         </div>
@@ -178,7 +178,7 @@
             </form>
         </div>
     {% endif %}
-    <div id="overlay" class="active"></div>
+    <div id="overlay"{% if show_privacy_policy %} class="active"{% endif %}></div>
 
     <script src="{{ url_for('static', filename='scripts/pop_ups_and_menu.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/auth_apis.js') }}"></script>
