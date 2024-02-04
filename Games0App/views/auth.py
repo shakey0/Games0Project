@@ -35,7 +35,7 @@ def register():
         return jsonify(success=False, errors=errors)
     
     hashed_password = bcrypt.hashpw(request.form.get('password').encode('utf-8'), bcrypt.gensalt())
-    user = User(username=request.form.get('username').lower(), email=request.form.get('email'),
+    user = User(username=request.form.get('username').lower().strip(), email=request.form.get('email').strip(),
                 password_hashed=hashed_password, last_50_questions={})
     
     try:
@@ -66,8 +66,8 @@ def register():
 
 def log_register_error(error_type, error):
     json_log = {
-        'username': request.form.get('username'),
-        'email': request.form.get('email'),
+        'username': request.form.get('username').lower().strip(),
+        'email': request.form.get('email').strip(),
         'error_type': error_type,
         'error': error
     }
@@ -177,7 +177,7 @@ def change_email():
             return render_template('auth.html', token=auth_token, values=values)
 
         try:
-            current_user.email = request.form.get('email')
+            current_user.email = request.form.get('email').strip()
             db.session.commit()
         except IntegrityError as e:
             db.session.rollback()
@@ -187,7 +187,7 @@ def change_email():
             
         values['stage'] = 3
         values['message'] = 'Email successfully changed!'
-        values['new_email'] = request.form.get('email')
+        values['new_email'] = request.form.get('email').strip()
 
         json_log = {
             'user_id': current_user.id,
@@ -383,6 +383,7 @@ def send_reset_password_link():
     email = request.form.get('email')
     if not email:
         return jsonify(success=False, error="Please enter your email address.")
+    email = email.strip()
     
     user = User.query.filter_by(email=email).first()
     if not user:

@@ -33,7 +33,8 @@ class AuthValidator:
         username = request.form.get('username')
         if not username:
             return 'Please enter a username.'
-        elif len(username) < 3:
+        username = username.strip()
+        if len(username) < 3:
             return 'Username must be at least 4 characters.'
         elif len(username) > 20:
             return 'Username must be max 20 characters.'
@@ -46,9 +47,10 @@ class AuthValidator:
         email = request.form.get('email')
         if not email:
             return 'Please enter an email.'
-        elif len(email) < 3:
+        email = email.strip()
+        if len(email) < 3:
             return 'Email must be at least 3 characters.'
-        elif '@' not in email:
+        elif '@' not in email or ' ' in email or email.count('@') > 1:
             return 'Please enter a valid email.'
         return True
     
