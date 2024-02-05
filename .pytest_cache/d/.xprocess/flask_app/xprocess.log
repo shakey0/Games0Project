@@ -8,3 +8,75 @@
  * Debugger is active!
  * Debugger PIN: 239-127-246
 127.0.0.1 - - [30/Nov/2023 12:54:37] "GET / HTTP/1.1" 200 -
+@@__xproc_block_delimiter__@@
+ * Serving Flask app 'Games0App'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-829-842
+@@__xproc_block_delimiter__@@
+ * Serving Flask app 'Games0App'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-829-842
+@@__xproc_block_delimiter__@@
+ * Serving Flask app 'Games0App'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-829-842
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/buttons.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/index.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/pop_ups.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/body_and_defaults.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/game.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/nav_bar.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/category_selection.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/css/scoreboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/fillintheblankfacts.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/fillintheblankjokes.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/triviamadness.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/triviamultiplechoice.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/triviatrueorfalse.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/scripts/pop_ups_and_menu.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/scripts/auth_apis.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/scripts/password_checker.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:41:23] "GET /static/images/numbertoreach.png HTTP/1.1" 200 -
+@@__xproc_block_delimiter__@@
+ * Serving Flask app 'Games0App'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 124-829-842
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/nav_bar.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/body_and_defaults.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/game.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/index.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/pop_ups.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/buttons.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/scoreboard.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/css/category_selection.css HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/fillintheblankfacts.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/fillintheblankjokes.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/triviamadness.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/triviamultiplechoice.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/triviatrueorfalse.png HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/scripts/pop_ups_and_menu.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/scripts/auth_apis.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/scripts/password_checker.js HTTP/1.1" 200 -
+127.0.0.1 - - [05/Feb/2024 19:52:37] "GET /static/images/numbertoreach.png HTTP/1.1" 200 -

@@ -1,5 +1,24 @@
 [
   "tests/test_database.py::test_database_connection",
+  "tests/test_email_log.py::test_email_log_creation",
+  "tests/test_email_log.py::test_email_log_instances_are_equal",
+  "tests/test_email_log.py::test_email_log_instances_are_not_equal",
+  "tests/test_high_score.py::test_high_score_creation",
+  "tests/test_high_score.py::test_high_score_creation_fail_non_present_user_id",
+  "tests/test_high_score.py::test_high_score_instances_are_equal",
+  "tests/test_high_score.py::test_high_score_instances_are_not_equal",
   "tests/test_homepage.py::test_homepage_navbar",
-  "tests/test_user.py::test_user_creation"
+  "tests/test_log.py::test_log_creation",
+  "tests/test_log.py::test_log_creation_fail_non_unique_unique_id",
+  "tests/test_log.py::test_log_instances_are_equal",
+  "tests/test_log.py::test_log_instances_are_not_equal",
+  "tests/test_models.py::test_user_creation",
+  "tests/test_models.py::test_user_creation_fail",
+  "tests/test_models.py::test_user_creation_fail_non_unique_username",
+  "tests/test_user.py::test_user_creation",
+  "tests/test_user.py::test_user_creation_fail_non_unique_email",
+  "tests/test_user.py::test_user_creation_fail_non_unique_username",
+  "tests/test_user.py::test_user_creation_fail_non_unique_username_email",
+  "tests/test_user.py::test_user_instances_are_equal",
+  "tests/test_user.py::test_user_instances_are_not_equal"
 ]

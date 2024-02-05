@@ -3,7 +3,7 @@ from flask import Flask
 from Games0App import db
 from Games0App.config import TestingConfig
 from Games0App.models.test_table import RunTable
-from tests.seed_data import init_user
+# from tests.seed_data import init_user
 from playwright.sync_api import sync_playwright
 from xprocess import ProcessStarter
 
@@ -29,10 +29,10 @@ def seed_test_database_for_test(test_app):
         db.session.add(RunTable(name='first_record'))
         db.session.commit()
 
-@pytest.fixture(scope='function')
-def seed_test_database(test_app):
-    with test_app.app_context():
-        init_user(db)
+# @pytest.fixture(scope='function')
+# def seed_test_database(test_app):
+#     with test_app.app_context():
+#         init_user(db)
 
 @pytest.fixture
 def page():
