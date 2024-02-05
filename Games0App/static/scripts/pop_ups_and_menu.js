@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+    var legalInfoBtn = document.getElementById('legal-info-btn');
+    if (legalInfoBtn) {
+        legalInfoBtn.addEventListener('click', function(event) {
+            event.preventDefault();
+        });
+    }
+
     const openBoxButtons = document.querySelectorAll('[data-legal-button-target], [data-login-button-target], [data-forgotten-password-button-target], [data-register-button-target], [data-amend-score-box-target], [data-quit-game-target]');
     const cancelBoxButtons = document.querySelectorAll('[data-cancel-button]');
     const cancelLoginBox = document.querySelectorAll('[data-cancel-login-box]');
     const overlay = document.getElementById('overlay');
     const confirmLegalBox = document.querySelector('.confirm-legal-box');
+    const registerBox = document.querySelector('.register-box');
 
     openBoxButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -48,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInputFields(box);
         clearTextContent(box);
         box.classList.remove('active');
-        if (!confirmLegalBox || !confirmLegalBox.classList.contains('active')) {
+        if ((!confirmLegalBox || !confirmLegalBox.classList.contains('active')) && (!registerBox || !registerBox.classList.contains('active'))) {
             overlay.classList.remove('active');
         }
         // toggleScrollLock(false);
@@ -66,6 +74,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputFields = box.querySelectorAll('input[type="text"], input[type="email"], input[type="password"]');
         inputFields.forEach(field => {
             field.value = '';
+        });
+        const checkBoxes = box.querySelectorAll('input[type="checkbox"]');
+        checkBoxes.forEach(box => {
+            box.checked = false;
         });
     }
 

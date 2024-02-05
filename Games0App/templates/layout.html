@@ -99,32 +99,36 @@
     <!-- Auth pop-up boxes -->
     {% if not user.is_authenticated and (in_game != "yes" and in_game != "after") %}
         <div class="login-box pop-up-box" id="login-box">
-            <button data-cancel-button class="cancel-button">&times;</button>
-            <form method="POST" action="/login">
-                <!-- PUT CSRF TOKEN HERE -->
-                <div class="pop-up-header">
-                    <p>Login</p>
-                </div>
-                <div class="pop-up-content">
-                    <div class="login-box-item">
-                        <input type="text" class="username-lower" name="username" placeholder="Username or email" autofocus>
+            <div class="top-fade-out-auth"></div>
+            <div class="login-box-interior">
+                <button data-cancel-button class="cancel-button">&times;</button>
+                <form method="POST" action="/login">
+                    <!-- PUT CSRF TOKEN HERE -->
+                    <div class="pop-up-header">
+                        <p>Login</p>
                     </div>
-                    <div class="login-box-item">
-                        <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                    <div class="pop-up-content">
+                        <div class="login-box-item">
+                            <input type="text" class="username-lower" name="username" placeholder="Username or email" autofocus>
+                        </div>
+                        <div class="login-box-item">
+                            <input type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+                        </div>
+                        <div class="login-box-item">
+                            <div class="login-error-message close-clear" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                        </div>
                     </div>
-                    <div class="login-box-item">
-                        <div class="login-error-message close-clear" style="color: rgb(255, 119, 0); transform: translateY(-12px);"></div>
+                    <div class="pop-up-footer">
+                        <div class="checkbox-box">
+                            <input type="checkbox" id="remember-login" name="remember" value="yes">
+                            <label for="remember-login">Remember me</label>
+                        </div>
+                        <input class="login-btn" type="submit" value="Login">
                     </div>
-                </div>
-                <div class="pop-up-footer">
-                    <div class="checkbox-box">
-                        <input type="checkbox" id="remember-login" name="remember" value="yes">
-                        <label for="remember-login">Remember me</label>
-                    </div>
-                    <input class="login-btn" type="submit" value="Login">
-                </div>
-            </form>
-            <button class="forgot-password-btn clear-btn" data-forgotten-password-button-target="#forgotten-password-box" data-cancel-login-box="#login-box">Forgot password?</button>
+                </form>
+                <button class="forgot-password-btn clear-btn" data-forgotten-password-button-target="#forgotten-password-box" data-cancel-login-box="#login-box">Forgot password?</button>
+            </div>
+            <div class="bottom-fade-out-auth"></div>
         </div>
         <div class="forgotten-password-box pop-up-box" id="forgotten-password-box">
             <button data-cancel-button class="cancel-button">&times;</button>
@@ -148,38 +152,47 @@
             </form>
         </div>
         <div class="register-box pop-up-box" id="register-box">
-            <button data-cancel-button class="cancel-button">&times;</button>
-            <form id="registrationForm" method="POST" action="/register">
-                <!-- PUT CSRF TOKEN HERE -->
-                <div class="pop-up-header">
-                    <p>Register</p>
-                </div>
-                <div class="pop-up-content">
-                    <div class="register-box-item">
-                        <div class="register-username-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                        <input type="text" class="username-lower" name="username" placeholder="Username" autofocus>
+            <div class="top-fade-out-auth"></div>
+            <div class="register-box-interior">
+                <button data-cancel-button class="cancel-button">&times;</button>
+                <form id="registrationForm" method="POST" action="/register">
+                    <!-- PUT CSRF TOKEN HERE -->
+                    <div class="pop-up-header">
+                        <p>Register</p>
                     </div>
-                    <div class="register-box-item">
-                        <div class="register-email-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                        <input type="text" name="email" placeholder="Email" autofocus>
+                    <div class="pop-up-content">
+                        <div class="register-box-item">
+                            <div class="register-username-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                            <input type="text" class="username-lower" name="username" placeholder="Username" autofocus>
+                        </div>
+                        <div class="register-box-item">
+                            <div class="register-email-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                            <input type="text" name="email" placeholder="Email" autofocus>
+                        </div>
+                        <div class="register-box-item">
+                            <div class="register-password-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                            <input type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password" autocomplete="off" autofocus>
+                            <div id="password-strength" class="close-clear" style="color: rgb(0, 149, 255); transform: translateY(-17px);"></div>
+                        </div>
+                        <div class="register-box-item">
+                            <div class="register-confirm_password-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
+                            <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
+                        </div>
+                        <div class="register-box-item">
+                            <div class="register-general-error-message clear-error" style="color: rgb(255, 119, 0);"></div>
+                        </div>
                     </div>
-                    <div class="register-box-item">
-                        <div class="register-password-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                        <input type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password" autocomplete="off" autofocus>
-                        <div id="password-strength" class="close-clear" style="color: rgb(0, 149, 255); transform: translateY(-17px);"></div>
+                    <div class="pop-up-footer">
+                        <p style="margin-top: 15px; font-size: 18px; transform: translateY(-12px);">By creating an account with this website you accept the collection of certain data for security purposes. For more information, <button class="legal-link-btn clear-btn" id="legal-info-btn" data-legal-button-target="#legal-box">click here</button>.</p>
+                        <div class="checkbox-box">
+                            <input type="checkbox" id="agree-to-policy" name="agree_to_policy" value="yes">
+                            <label for="agree-to-policy">I accept the Terms of Service.</label>
+                        </div>
+                        <input class="sign-up-btn" type="submit" value="Register">
                     </div>
-                    <div class="register-box-item">
-                        <div class="register-confirm_password-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-5px);"></div>
-                        <input type="password" name="confirm_password" placeholder="Confirm password" autocomplete="off" autofocus>
-                    </div>
-                    <div class="register-box-item">
-                        <div class="register-error-message clear-error" style="color: rgb(255, 119, 0); transform: translateY(-9px);"></div>
-                    </div>
-                </div>
-                <div class="pop-up-footer">
-                    <input class="sign-up-btn" type="submit" value="Register">
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="bottom-fade-out-auth"></div>
         </div>
     {% endif %}
     <div id="overlay"{% if show_privacy_policy %} class="active"{% endif %}></div>

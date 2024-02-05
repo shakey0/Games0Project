@@ -30,6 +30,9 @@ def register():
     password_check = auth_validator.validate_new_password()
     if password_check != True:
         errors[password_check[1]] = password_check[0]
+
+    if request.form.get('agree_to_policy') != 'yes':
+        errors['general'] = 'Please agree to the Terms of Service.'
     
     if errors:
         return jsonify(success=False, errors=errors)

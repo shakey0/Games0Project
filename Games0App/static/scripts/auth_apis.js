@@ -1,19 +1,14 @@
 $(document).ready(function(){
 
     $('.confirm-legal-btn').click(function(event){
-        // Prevent the default button action if it's a form submit button
-        
-        // Make AJAX GET request
+
         $.ajax({
             url: '/acknowledge_privacy_policy',
             type: 'GET',
             success: function(response) {
-                // Handle the response here. E.g., display a message, redirect, etc.
-                console.log(response.message); // Log the message from the server
-                // Example: alert("Privacy policy acknowledged");
+                console.log(response.message);
             },
             error: function(xhr, status, error) {
-                // Handle any error here
                 console.error("Error acknowledging privacy policy", error);
             }
         });
