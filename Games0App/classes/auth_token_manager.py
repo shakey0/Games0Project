@@ -1,5 +1,6 @@
 from flask_login import current_user
 from Games0App.extensions import redis_client
+from Games0App.classes.logger import logger
 import os
 
 
@@ -89,6 +90,16 @@ class AuthTokenManager:
 
 
     def get_new_auth_token(self, values_to_add):
+
+        if 'route' in values_to_add:
+            json_log = {
+                'user_id': values_to_add['user_id'],
+                'username': values_to_add['username'],
+                'route': values_to_add['route']
+            }
+            unique_id = logger.log_event(json_log, 'get_new_auth_token', f'init_{values_to_add["route"]}')
+            print(f'INIT {values_to_add["title"].upper()}: ' + unique_id)
+
         redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
         token = os.urandom(16).hex()
         redis_client.hmset(token, values_to_add)

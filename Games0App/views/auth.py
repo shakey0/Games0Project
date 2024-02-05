@@ -47,6 +47,9 @@ def register():
 
         login_user(user)
 
+        unique_id = logger.log_event({'user_id': user.id}, 'register', 'account_created')
+        print('ACCOUNT CREATED: ', unique_id)
+
         send_email(user.email, user.username, 'sign_up_confirmation')
 
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
@@ -99,9 +102,18 @@ def login():
         if bcrypt.checkpw(password.encode('utf-8'), user.password_hashed):
             remember = request.form.get('remember') == 'yes'
             login_user(user, remember=remember)
+            unique_id = logger.log_event({'user_id': user.id}, 'login', 'successful_login')
+            print('LOGIN SUCCESSFUL: ', unique_id)
             return jsonify(success=True, message=f'Welcome, {user.username}!')
         
     if not auth_token_manager.check_login_password_attempt(credential):
+        json_log = {
+            'username': credential
+        }
+        unique_id = logger.log_event(json_log, 'login', 'max_login_password_attempts')
+        print('ACCOUNT ALERT - Logged incorrect login password attempt: ' + unique_id)
+        if user:
+            send_email(user.email, user.username, 'login_password_max_attempts', unique_id=unique_id)
         return jsonify(success=False, error="Too many attempts! Please wait 2 minutes.")
     
     return jsonify(success=False, error="Something didn\'t match! Please try again.")
@@ -398,12 +410,25 @@ def send_reset_password_link():
         return jsonify(success=True, message="Please check your inbox.")
     
     if not auth_token_manager.attempt_check('reset_password_email', user.id):
+        json_log = {
+            'user_id': user.id
+        }
+        unique_id = logger.log_event(json_log, 'send_reset_password_link', 'max_reset_password_email_attempts')
+        print('ACCOUNT ALERT - Logged reset password email attempt: ' + unique_id)
+        send_email(user.email, user.username, 'reset_password_max_email_attempts', unique_id=unique_id)
         return jsonify(success=False, error="Too many attempts! Please wait 10 minutes.")
     
     reset_password_link = auth_token_manager.get_reset_password_link_token(user.id)
 
     print('RESET PASSWORD LINK:', f'localhost:5000/reset_password/{reset_password_link}')
     send_email(user.email, user.username, 'reset_password_link', reset_token=reset_password_link)
+    json_log = {
+        'user_id': user.id,
+        'username': user.username,
+        'reset_token': reset_password_link
+    }
+    unique_id = logger.log_event(json_log, 'send_reset_password_link', 'reset_password_email_sent')
+    print('RESET PASSWORD LINK SENT: ', unique_id)
 
     return jsonify(success=True, message="Reset password link sent.")
 

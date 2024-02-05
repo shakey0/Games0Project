@@ -25,10 +25,17 @@ class Logger:
             issue_id_ = ''
             prefix = 'S'
 
-        try:
-            ip_address_ = request.remote_addr
-        except:
-            ip_address_ = 'unknown'
+        log_ip = ['max_auth_password_attempts', 'max_login_password_attempts', 'account_created',
+                'successful_login', 'init_change_email', 'email_changed', 'init_change_password',
+                'password_changed', 'init_delete_account', 'account_deleted', 'reset_password_email_sent',
+                'password_reset', 'max_reset_password_email_attempts']
+        if log_type in log_ip or 'init_reset_password' in log_type:
+            try:
+                ip_address_ = request.remote_addr
+            except:
+                ip_address_ = 'unknown'
+        else:
+            ip_address_ = ''
 
         count = 0
         while count < 10:

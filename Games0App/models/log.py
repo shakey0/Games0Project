@@ -8,7 +8,7 @@ class Log(db.Model):
     user_id = db.Column(db.Integer, index=True)
     ip_address = db.Column(db.String(20))
     function_name = db.Column(db.String(50))
-    log_type = db.Column(db.String(50))
+    log_type = db.Column(db.String(100))
     timestamp = db.Column(db.DateTime)
     data = db.Column(JSONB)
     issue_id = db.Column(db.String(10))
