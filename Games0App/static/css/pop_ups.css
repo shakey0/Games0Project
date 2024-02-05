@@ -270,7 +270,26 @@
     background: linear-gradient(to top, #191c27, #191c2700);
 }
 
-.pop-up-footer input {
+.checkbox-box {
+    display: flex;
+}
+
+.pop-up-footer input[type="checkbox"] {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    transform: translateY(-8px);
+}
+
+.pop-up-footer label {
+    margin-left: 3px;
+    font-size: 18px;
+    color: rgb(232, 213, 203);
+    cursor: pointer;
+    transform: translateY(-4px);
+}
+
+.pop-up-footer input[type="submit"] {
     width: 100%;
     height: 44px;
     border: 1px solid rgb(142, 114, 99);
@@ -282,7 +301,7 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.pop-up-footer input:hover {
+.pop-up-footer input[type="submit"]:hover {
     transform: scale(1.05);
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }

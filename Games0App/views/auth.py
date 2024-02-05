@@ -94,7 +94,8 @@ def login():
     user = User.query.filter((User.email == credential) | (User.username == credential)).first()
     if user:
         if bcrypt.checkpw(password.encode('utf-8'), user.password_hashed):
-            login_user(user)
+            remember = request.form.get('remember') == 'yes'
+            login_user(user, remember=remember)
             return jsonify(success=True, message=f'Welcome, {user.username}!')
         
     if not auth_token_manager.check_login_password_attempt(credential):
