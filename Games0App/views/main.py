@@ -97,8 +97,9 @@ def game_play():
         if game.has_difficulty:
             difficulty = request.form.get('difficulty')
             redis_client.hset(token, 'difficulty', difficulty)
-        
-        cookied_question_number = request.cookies.get(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'))
+
+        cookie_name = game.create_base_string(category_name, difficulty)
+        cookied_question_number = request.cookies.get(cookie_name)
         if cookied_question_number:
             cookied_question_number = int(cookied_question_number)
         else:
@@ -135,8 +136,7 @@ def game_play():
                                                 game_name=game_name, next_question=next_question,
                                                 question_no=1, timer=timer, score=0, user=current_user,
                                                 helpers=helpers))
-        response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
-                            str(next_question["last_question_no"]))
+        response.set_cookie(cookie_name, str(next_question["last_question_no"]), max_age=3600)
         
         return response if response else redirect('/')
     
@@ -181,8 +181,8 @@ def game_play():
                                             game_name=game_name, next_question=next_question,
                                             question_no=question_no+1, timer=timer, score=score,
                                             user=current_user, helpers=helpers))
-    response.set_cookie(game_name.lower().replace(' ', '_').replace('&', '_').replace('-', '_'),
-                        str(next_question["last_question_no"]))
+    cookie_name = game.create_base_string(category_name, difficulty)
+    response.set_cookie(cookie_name, str(next_question["last_question_no"]), max_age=3600)
         
     return response if response else redirect('/')
 
