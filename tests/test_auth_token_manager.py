@@ -1,5 +1,5 @@
 from unittest.mock import patch
-from Games0App.extensions import db, redis_client
+from Games0App.extensions import redis_client
 from Games0App.models.log import Log
 from Games0App.classes.auth_token_manager import auth_token_manager
 
