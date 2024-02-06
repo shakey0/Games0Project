@@ -1,3 +1,4 @@
 {
-  "tests/test_homepage.py::test_homepage_navbar": true
+  "tests/test_homepage.py::test_homepage_navbar": true,
+  "Games0App/classes/auth_validator.py": true
 }
