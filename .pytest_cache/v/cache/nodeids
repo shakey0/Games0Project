@@ -1,4 +1,13 @@
 [
+  "tests/test_auth_token_manager.py::test_attempt_check",
+  "tests/test_auth_token_manager.py::test_check_auth_password_attempt",
+  "tests/test_auth_token_manager.py::test_check_login_password_attempt",
+  "tests/test_auth_token_manager.py::test_check_reset_password_attempt",
+  "tests/test_auth_token_manager.py::test_get_new_add_values_to_get_values_from_delete_auth_token",
+  "tests/test_auth_token_manager.py::test_get_new_auth_token",
+  "tests/test_auth_token_manager.py::test_get_reset_password_link_token",
+  "tests/test_auth_token_manager.py::test_get_verify_delete_reset_password_link_token",
+  "tests/test_auth_token_manager.py::test_get_verify_reset_password_link_token",
   "tests/test_database.py::test_database_connection",
   "tests/test_email_log.py::test_email_log_creation",
   "tests/test_email_log.py::test_email_log_instances_are_equal",

@@ -98,16 +98,17 @@ class AuthTokenManager:
                 'route': values_to_add['route']
             }
             unique_id = logger.log_event(json_log, 'get_new_auth_token', f'init_{values_to_add["route"]}')
-            print(f'INIT {values_to_add["title"].upper()}: ' + unique_id)
+            if 'title' in values_to_add:
+                print(f'INIT {values_to_add["title"].upper()}: ' + unique_id)
 
         redis_timeout = os.environ.get('REDIS_TIMEOUT', 600)
         token = os.urandom(16).hex()
-        redis_client.hmset(token, values_to_add)
+        redis_client.hset(token, mapping=values_to_add)
         redis_client.expire(token, redis_timeout)
         return token
     
     def add_values_to_auth_token(self, token, values_to_add):
-        redis_client.hmset(token, values_to_add)
+        redis_client.hset(token, mapping=values_to_add)
     
     def get_values_from_auth_token(self, token, value_names):
         values = redis_client.hmget(token, value_names)
