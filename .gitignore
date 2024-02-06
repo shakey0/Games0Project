@@ -4,5 +4,6 @@ venv/
 .DS_Store
 **/.DS_Store
 .vscode/
+.pytest_cache/
 notes.md
 play.py
