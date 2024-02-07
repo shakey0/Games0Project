@@ -96,18 +96,18 @@ class QuestionSorter: # WHEN TESTING THIS FILE, CHECK THAT CAPITAL LETTERS ARE N
             id = item['ID']
             random_option = random.choice(item['options'])
             question = item['statement'].replace('____', random_option)
-            if '____' in question:
+            if random_option not in question:
                 error = f'ERROR: Option ({random_option}) not added for question ID {id} in {load_route}'
                 print(error)
                 json_log = {'error': error}
-                logger.log_event(json_log, 'sort_trivia_tf_questions', 'blank_not_added')
+                logger.log_event(json_log, 'sort_trivia_tf_questions', 'option_not_added')
                 continue
             answer = item['statement'].replace('____', item['answer'])
-            if '____' in answer:
+            if item['answer'] not in answer:
                 error = f'ERROR: Answer not added for question ID {id} in {load_route}'
                 print(error)
                 json_log = {'error': error}
-                logger.log_event(json_log, 'sort_trivia_tf_questions', 'blank_not_added')
+                logger.log_event(json_log, 'sort_trivia_tf_questions', 'option_not_added')
                 continue
             valid_questions.append([id, question, answer])
         return valid_questions
