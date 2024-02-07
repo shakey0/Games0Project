@@ -2,6 +2,7 @@ from Games0App import db
 from Games0App.models.email_log import EmailLog
 from datetime import datetime
 
+
 def test_email_log_creation(test_app):
             
     test_email_log = EmailLog(
@@ -29,6 +30,7 @@ def test_email_log_creation(test_app):
     assert email_log.json_response == {'test_response': 'test_response'}
     assert email_log.timestamp == datetime(2021, 1, 1, 0, 0, 0)
 
+
 def test_email_log_instances_are_equal(test_app):
     email_log1 = EmailLog(
         id=1,
@@ -53,6 +55,7 @@ def test_email_log_instances_are_equal(test_app):
         timestamp=datetime(2021, 1, 1, 0, 0, 0)
     )
     assert email_log1 == email_log2
+
 
 def test_email_log_instances_are_not_equal(test_app):
     email_log1 = EmailLog(

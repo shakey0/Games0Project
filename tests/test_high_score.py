@@ -5,6 +5,7 @@ from datetime import datetime
 import pytest
 from sqlalchemy.exc import IntegrityError
 
+
 def test_high_score_creation(test_app):
         
     test_user = User(
@@ -43,6 +44,7 @@ def test_high_score_creation(test_app):
     assert score.message == 'test message'
     assert score.likes == 0
 
+
 def test_high_score_creation_fail_non_present_user_id(test_app):
 
     test_score = HighScore(
@@ -59,6 +61,7 @@ def test_high_score_creation_fail_non_present_user_id(test_app):
     db.session.add(test_score)
     with pytest.raises(IntegrityError):
         db.session.commit()
+
 
 def test_high_score_instances_are_equal(test_app):
         
@@ -87,6 +90,7 @@ def test_high_score_instances_are_equal(test_app):
             likes=0
         )
         assert score1 == score2
+
 
 def test_high_score_instances_are_not_equal(test_app):
         

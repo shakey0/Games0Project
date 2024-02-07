@@ -4,6 +4,7 @@ from datetime import datetime
 import pytest
 from sqlalchemy.exc import IntegrityError
 
+
 def test_log_creation(test_app):
         
     test_log = Log(
@@ -30,6 +31,7 @@ def test_log_creation(test_app):
     assert log.timestamp == datetime(2021, 1, 1, 0, 0, 0)
     assert log.data == {'test_data': 'test_data'}
     assert log.issue_id == 'issue_id'
+
 
 def test_log_creation_fail_non_unique_unique_id(test_app):
         
@@ -60,6 +62,7 @@ def test_log_creation_fail_non_unique_unique_id(test_app):
     with pytest.raises(IntegrityError):
         db.session.commit()
 
+
 def test_log_instances_are_equal(test_app):
         
     log1 = Log(
@@ -85,6 +88,7 @@ def test_log_instances_are_equal(test_app):
         issue_id='issue_id'
     )
     assert log1 == log2
+
 
 def test_log_instances_are_not_equal(test_app):
         
