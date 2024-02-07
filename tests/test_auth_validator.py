@@ -2,6 +2,7 @@ from unittest.mock import patch, MagicMock
 from Games0App.__init__ import create_app
 from Games0App.extensions import redis_client
 from Games0App.models.log import Log
+from Games0App.models.email_log import EmailLog
 from Games0App.classes.auth_validator import auth_validator
 import os
 
@@ -12,8 +13,7 @@ def test_validate_password_for_auth(test_app):
     with app.app_context(), app.test_request_context():
         with patch('Games0App.classes.auth_validator.request') as mock_request, \
                 patch('Games0App.classes.auth_validator.current_user') as mock_current_user, \
-                patch('Games0App.classes.auth_token_manager.current_user') as mock_current_user_2, \
-                patch('Games0App.classes.auth_validator.send_email') as mock_send_email:
+                patch('Games0App.classes.auth_token_manager.current_user') as mock_current_user_2:
             
             redis_client.flushall()
             mock_request.form.get = MagicMock(return_value='password')
@@ -23,12 +23,13 @@ def test_validate_password_for_auth(test_app):
             mock_request.form.get = MagicMock(return_value='')
             assert auth_validator.validate_password_for_auth() == "Please enter your password." # Bypasses attempt check
             mock_current_user_2.id = 1
-            mock_current_user_2.password_hashed = b'$2b$12$/yCwu3uKdkdzKKN/ek.KCOJpdyrMhVxXyFI.39havwIpCFKWD4YI6'
             mock_request.form.get = MagicMock(return_value='wrong_password')
             assert auth_validator.validate_password_for_auth() == "Something didn't match! Please try again." # Second attempt
             redis_client.flushall()
             for _ in range(2):
                 assert auth_validator.validate_password_for_auth() == "Something didn't match! Please try again."
+            mock_current_user.email = 'user@example.com'
+            mock_current_user.username = 'username'
             for _ in range(11):
                 assert auth_validator.validate_password_for_auth() == "This is not good! You'll have to wait 10 minutes."
             
@@ -43,6 +44,18 @@ def test_validate_password_for_auth(test_app):
             assert logs[0].timestamp != None
             assert not logs[0].data
             assert not logs[0].issue_id
+
+            email_logs = EmailLog.query.all()
+            assert len(email_logs) == 1
+            assert email_logs[0].id == 1
+            assert email_logs[0].user_email == 'user@example.com'
+            assert email_logs[0].username == 'username'
+            assert email_logs[0].email_type == 'auth_password_max_attempts'
+            assert email_logs[0].info == {}
+            assert email_logs[0].unique_id[0] == 'S'
+            assert email_logs[0].status_code == 200
+            assert email_logs[0].json_response == {'success': True}
+            assert email_logs[0].timestamp != None
 
 def test_validate_new_user_name(test_app):
     os.environ['FLASK_ENV'] = 'testing'
