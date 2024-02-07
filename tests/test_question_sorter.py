@@ -1,6 +1,7 @@
 from Games0App.models.log import Log
 from Games0App.classes.question_sorter import question_sorter
 
+
 def test_validate_blank_added(test_app):
     assert question_sorter.validate_blank_added('8a92jj2', ['test', 'test'], 'This is a test ____') == True
     assert question_sorter.validate_blank_added('8a92jj2', ['test', 'test'], 'This is a test') == False
@@ -15,6 +16,7 @@ def test_validate_blank_added(test_app):
     assert logs[0].timestamp != None
     assert logs[0].data == {'error': "ERROR: Blank not added for question ID 8a92jj2 in ['test', 'test']"}
     assert not logs[0].issue_id
+
 
 def test_validate_answer_has_no_numbers(test_app):
     assert question_sorter.validate_answer_has_no_numbers('8a92jj2', ['test', 'test'], 'test') == True
@@ -35,8 +37,10 @@ def test_validate_answer_has_no_numbers(test_app):
     assert logs[0].data == {'error': "ERROR: Answer contains numbers for question ID 8a92jj2 in ['test', 'test']"}
     assert not logs[0].issue_id
 
+
 def test_sort_fill_blank_facts_questions(test_app):
 
+    # Test with all valid blanks
     question_package = [
         {'ID': '8a92jj2', 'fact': 'This is a test', 'blanks': ['This']},
         {'ID': '8a92jj3', 'fact': 'This is a test', 'blanks': ['test']},
@@ -55,6 +59,7 @@ def test_sort_fill_blank_facts_questions(test_app):
     logs = Log.query.all()
     assert len(logs) == 0
 
+    # Test with an invalid blank (capitalisation error)
     question_package = [
         {'ID': '8a92jj2', 'fact': 'This is a test', 'blanks': ['this']},
         {'ID': '8a92jj3', 'fact': 'This is a test', 'blanks': ['test']},
@@ -76,6 +81,7 @@ def test_sort_fill_blank_facts_questions(test_app):
     assert logs[0].data == {'error': "ERROR: Blank not added for question ID 8a92jj2 in ['test', 'test']"}
     assert not logs[0].issue_id
 
+    # Test with an invalid blank for the answer (contains numbers)
     question_package = [
         {'ID': '8a92jj2', 'fact': 'This is a test 2000', 'blanks': ['2000']},
         {'ID': '8a92jj3', 'fact': 'This is a test', 'blanks': ['test']},
@@ -97,8 +103,10 @@ def test_sort_fill_blank_facts_questions(test_app):
     assert logs[1].data == {'error': "ERROR: Answer contains numbers for question ID 8a92jj2 in ['test', 'test']"}
     assert not logs[1].issue_id
 
+
 def test_sort_fill_blank_jokes_questions(test_app):
 
+    # Test with all valid blanks
     question_package = [
         {'ID': '8a92jj2', 'joke': 'This is a test?', 'punchline': 'You fell for it', 'blanks': ['This']},
         {'ID': '8a92jj3', 'joke': 'This is a test?', 'punchline': 'Fooled you!', 'blanks': ['Fooled']},
@@ -117,6 +125,7 @@ def test_sort_fill_blank_jokes_questions(test_app):
     logs = Log.query.all()
     assert len(logs) == 0
 
+    # Test with an invalid blank (capitalisation error)
     question_package = [
         {'ID': '8a92jj2', 'joke': 'This is a test?', 'punchline': 'You fell for it', 'blanks': ['This']},
         {'ID': '8a92jj3', 'joke': 'This is a test?', 'punchline': 'Fooled you!', 'blanks': ['fooled']},
@@ -138,6 +147,7 @@ def test_sort_fill_blank_jokes_questions(test_app):
     assert logs[0].data == {'error': "ERROR: Blank not added for question ID 8a92jj3 in ['test', 'test']"}
     assert not logs[0].issue_id
 
+    # Test with 2 invalid blanks for the answers (capitalisation error and contains numbers)
     question_package = [
         {'ID': '8a92jj2', 'joke': 'This is a test 2000?', 'punchline': 'You fell for it', 'blanks': ['2000']},
         {'ID': '8a92jj3', 'joke': 'This is a test?', 'punchline': 'Fooled you!', 'blanks': ['fooled']},
@@ -167,7 +177,10 @@ def test_sort_fill_blank_jokes_questions(test_app):
     assert logs[2].data == {'error': "ERROR: Blank not added for question ID 8a92jj3 in ['test', 'test']"}
     assert not logs[2].issue_id
 
+
 def test_sort_trivia_madness_questions(test_app):
+
+    # Test with all valid questions and that numbers are converted to words in the answers
     question_package = [
         {'ID': '8a92jj2', 'question': 'What is the capital of France?', 'answer': 'Paris'},
         {'ID': '8a92jj3', 'question': 'What is the capital of Germany?', 'answer': 'Berlin'},
@@ -179,8 +192,10 @@ def test_sort_trivia_madness_questions(test_app):
         ['8a92jj4', 'About how many people live in the United Kingdom?', 'sixty six million']
     ]
 
+
 def test_sort_mc_questions(test_app):
     
+    # Test with all valid questions
     question_package = [
         {'id': '8a92jj2', 'question': 'What is the capital of France?', 'correctAnswer': 'Paris', 'incorrectAnswers': ['London', 'Berlin', 'Madrid']},
         {'id': '8a92jj3', 'question': 'What is the capital of Germany?', 'correctAnswer': 'Berlin', 'incorrectAnswers': ['London', 'Paris', 'Madrid']},
@@ -192,6 +207,7 @@ def test_sort_mc_questions(test_app):
         ['8a92jj4', 'About how many people live in the United Kingdom?', '66 million', ['60 million', '70 million', '80 million']]
     ]
 
+    # Test with an invalid questions (correctAnswer too long or incorrectAnswer too long)
     question_package = [
         {'id': '8a92jj2', 'question': 'What is the capital of France?', 'correctAnswer': 'Paris', 'incorrectAnswers': ['London', 'Berlin', 'Madrid']},
         {'id': '8a92jj3', 'question': 'What is the capital of Germany?', 'correctAnswer': 'Berlin', 'incorrectAnswers': ['London', 'Paris', 'Madrid']},
@@ -205,8 +221,10 @@ def test_sort_mc_questions(test_app):
         ['8a92jj4', 'About how many people live in the United Kingdom?', '66 million', ['60 million', '70 million', '80 million']]
     ]
 
+
 def test_sort_trivia_tf_questions(test_app):
 
+    # Test with all valid questions
     question_package = [
         {'ID': '8a92jj2', 'statement': 'The capital of France is ____.', 'answer': 'Paris', 'options': ['Paris', 'London']}
     ]
@@ -218,6 +236,7 @@ def test_sort_trivia_tf_questions(test_app):
     logs = Log.query.all()
     assert len(logs) == 0
 
+    # Test with an invalid question (option not added because the blank space is not the correct length)
     question_package = [
         {'ID': '8a92jj2', 'statement': 'The capital of France is ___.', 'answer': 'Paris', 'options': ['Paris', 'London']}
     ]
@@ -232,8 +251,8 @@ def test_sort_trivia_tf_questions(test_app):
     assert logs[0].log_type == 'option_not_added'
     assert logs[0].timestamp != None
     possible_results = [
-        {'error': 'ERROR: Option (London) not added for question ID 8a92jj2 in [\'test\', \'test\']'},
-        {'error': 'ERROR: Option (Paris) not added for question ID 8a92jj2 in [\'test\', \'test\']'}
+        {'error': "ERROR: Option (London) not added for question ID 8a92jj2 in ['test', 'test']"},
+        {'error': "ERROR: Option (Paris) not added for question ID 8a92jj2 in ['test', 'test']"}
     ]
     assert logs[0].data in possible_results
     assert not logs[0].issue_id
