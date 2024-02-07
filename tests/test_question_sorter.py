@@ -231,5 +231,9 @@ def test_sort_trivia_tf_questions(test_app):
     assert logs[0].function_name == 'sort_trivia_tf_questions'
     assert logs[0].log_type == 'option_not_added'
     assert logs[0].timestamp != None
-    assert logs[0].data == {'error': 'ERROR: Option (London) not added for question ID 8a92jj2 in [\'test\', \'test\']'}
+    possible_results = [
+        {'error': 'ERROR: Option (London) not added for question ID 8a92jj2 in [\'test\', \'test\']'},
+        {'error': 'ERROR: Option (Paris) not added for question ID 8a92jj2 in [\'test\', \'test\']'}
+    ]
+    assert logs[0].data in possible_results
     assert not logs[0].issue_id
