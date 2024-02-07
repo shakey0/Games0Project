@@ -40,6 +40,9 @@ class GamePlay:
             response = requests.get(url)
             if response.status_code == requests.codes.ok:
                 response = json.loads(response.text)
+            else:
+                self.log_api_error('BadStatusCode', {'status_code': response.status_code, 'text': response.text}, url)
+                response = None
         except json.JSONDecodeError as e:
             self.log_api_error('JSONDecodeError', e, url)
             response = None
@@ -66,7 +69,7 @@ class GamePlay:
         if current_user.is_authenticated:
             json_log['user_id'] = current_user.id
         unique_id = logger.log_event(json_log, 'get_questions_from_api', 'api_error')
-        print("\n\n" + error_type + "\n\n" + error + "\n\n" + "API URL used: " + url + "\n")
+        print(f"\n\n{error_type}\n\n{error}\n\nAPI URL used: {url}\n")
         print(f'API ERROR LOGGED: {unique_id}')
     
 
