@@ -45,9 +45,8 @@ class SumGenerator:
 
             while True:
                 sum_numbers, ops, target_number = self.generate_numbers_and_ops(difficulty)
-                for item in all_choices:
-                    if target_number == item[1]: # MUST TEST FOR DUPLICATE TARGET NUMBERS
-                        continue
+                if any(item[1] == target_number for item in all_choices):
+                    continue
                 exp_part1 = f"({sum_numbers[0]} {ops[0]} {sum_numbers[1]})".replace("÷", "/")
                 exp_part2 = f"({sum_numbers[2]} {ops[1]} {sum_numbers[3]})".replace("÷", "/")
                 if difficulty == "easy" or difficulty == "medium":
@@ -78,7 +77,6 @@ class SumGenerator:
 
             all_choices.append([corrected_sum, target_number])
 
-        # print('ALL TARGET NUMBERS:\n', [item[1] for item in all_choices])
         selected_target = random.choice(all_choices)
         question = f"Which of the following sums equates to {selected_target[1]}?"
         answer = selected_target[0]
