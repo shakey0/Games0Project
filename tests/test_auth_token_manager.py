@@ -64,19 +64,27 @@ def test_get_verify_delete_reset_password_link_token(test_app):
     assert auth_token_manager.verify_reset_password_link_token(token) == None
 
 def test_get_new_add_values_to_get_values_from_delete_auth_token(test_app):
+    
     redis_client.flushall()
-    token = auth_token_manager.get_new_auth_token({'user_id': 1, 'username': 'test', 'route': 'test', 'stage': 1})
+    token = auth_token_manager.get_new_auth_token({'user_id': 1, 'username': 'test', 'route': 'change_password', 'stage': 1})
+    
     logs = Log.query.all()
     assert len(logs) == 1
+    assert logs[0].id == 1
+    assert logs[0].unique_id[0] == 'S'
     assert logs[0].user_id == 1
+    assert logs[0].ip_address == 'unknown'
     assert logs[0].function_name == 'get_new_auth_token'
-    assert logs[0].log_type == 'init_test'
+    assert logs[0].log_type == 'init_change_password'
+    assert logs[0].timestamp != None
     assert logs[0].data['username'] == 'test'
-    assert logs[0].data['route'] == 'test'
+    assert logs[0].data['route'] == 'change_password'
+    assert not logs[0].issue_id
+    
     assert len(token) == 32
-    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage']) == {'user_id': '1', 'username': 'test', 'route': 'test', 'stage': '1'}
-    auth_token_manager.add_values_to_auth_token(token, {'user_id': '1', 'username': 'test', 'route': 'test', 'stage': 2, 'new': 'new'})
-    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage', 'new']) == {'user_id': '1', 'username': 'test', 'route': 'test', 'stage': '2', 'new': 'new'}
-    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage', 'new', 'another']) == {'user_id': '1', 'username': 'test', 'route': 'test', 'stage': '2', 'new': 'new', 'another': None}
+    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage']) == {'user_id': '1', 'username': 'test', 'route': 'change_password', 'stage': '1'}
+    auth_token_manager.add_values_to_auth_token(token, {'user_id': '1', 'username': 'test', 'route': 'change_password', 'stage': 2, 'new': 'new'})
+    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage', 'new']) == {'user_id': '1', 'username': 'test', 'route': 'change_password', 'stage': '2', 'new': 'new'}
+    assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage', 'new', 'another']) == {'user_id': '1', 'username': 'test', 'route': 'change_password', 'stage': '2', 'new': 'new', 'another': None}
     auth_token_manager.delete_auth_token(token)
     assert auth_token_manager.get_values_from_auth_token(token, ['user_id', 'username', 'route', 'stage', 'new', 'another']) == {'user_id': None, 'username': None, 'route': None, 'stage': None, 'new': None, 'another': None}

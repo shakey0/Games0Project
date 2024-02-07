@@ -6,6 +6,7 @@ from Games0App.classes.auth_validator import auth_validator
 import os
 
 def test_validate_password_for_auth(test_app):
+    
     os.environ['FLASK_ENV'] = 'testing'
     app = create_app()
     with app.app_context(), app.test_request_context():
@@ -13,6 +14,7 @@ def test_validate_password_for_auth(test_app):
                 patch('Games0App.classes.auth_validator.current_user') as mock_current_user, \
                 patch('Games0App.classes.auth_token_manager.current_user') as mock_current_user_2, \
                 patch('Games0App.classes.auth_validator.send_email') as mock_send_email:
+            
             redis_client.flushall()
             mock_request.form.get = MagicMock(return_value='password')
             mock_current_user.id = 1
@@ -29,12 +31,18 @@ def test_validate_password_for_auth(test_app):
                 assert auth_validator.validate_password_for_auth() == "Something didn't match! Please try again."
             for _ in range(11):
                 assert auth_validator.validate_password_for_auth() == "This is not good! You'll have to wait 10 minutes."
+            
             logs = Log.query.all()
             assert len(logs) == 1
+            assert logs[0].id == 1
+            assert logs[0].unique_id[0] == 'S'
             assert logs[0].user_id == 1
+            assert logs[0].ip_address == None # This is a mock request
             assert logs[0].function_name == 'validate_password_for_auth'
             assert logs[0].log_type == 'max_auth_password_attempts'
+            assert logs[0].timestamp != None
             assert not logs[0].data
+            assert not logs[0].issue_id
 
 def test_validate_new_user_name(test_app):
     os.environ['FLASK_ENV'] = 'testing'

@@ -85,13 +85,16 @@ def test_log_api_error(mock_current_user, test_app):
     game.get_questions_from_api("music", "easy")
     logs = Log.query.all()
     assert len(logs) == 1
+    assert logs[0].id == 1
+    assert logs[0].unique_id[0] == 'S'
     assert logs[0].user_id == None
+    assert logs[0].ip_address == ''
     assert logs[0].function_name == "get_questions_from_api"
     assert logs[0].log_type == "api_error"
+    assert logs[0].timestamp != None
     assert logs[0].data['error_type'] == 'BadStatusCode'
     assert logs[0].data['url'] == 'https://the-trivia-api.com/api/questionz?limit=50&categories=music&difficulty=easy'
-
-    
+    assert not logs[0].issue_id
 
 def test_get_questions_from_csv(test_app):
     
