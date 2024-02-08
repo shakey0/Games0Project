@@ -4,6 +4,7 @@ from Games0App.extensions import db, redis_client
 
 def test_index_route(page, flask_server):
     page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
     title = page.locator("h1")
     expect(title).to_have_text('What game do you want to play?')
     game_names = page.locator('.game-name')
@@ -16,6 +17,7 @@ def test_index_route(page, flask_server):
 
 def test_game_setup_route(page, flask_server):
     page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
     page.dispatch_event(".t-fill_blank_facts", "click")
     title = page.locator("h1")
     expect(title).to_have_text('Fill in the Blank - Facts')
@@ -26,8 +28,9 @@ def test_game_setup_route(page, flask_server):
     page.dispatch_event(".submit-game-btn", "click")
 
 
-def test_game_setup_with_categories(page, flask_server):
+def test_game_setup_route_with_categories(page, flask_server):
     page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
     page.dispatch_event(".t-trivia_madness_categories", "click")
     title = page.locator("h1")
     expect(title).to_have_text('Welcome to Trivia Madness!')
@@ -35,4 +38,58 @@ def test_game_setup_with_categories(page, flask_server):
     title = page.locator("h1")
     expect(title).to_have_text('Trivia Madness - Showbiz - HARD')
     page.dispatch_event(".submit-game-btn", "click")
+    
+
+def test_game_setup_route_with_difficulty(page, flask_server):
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.dispatch_event(".t-trivia_mc_categories", "click")
+    title = page.locator("h1")
+    expect(title).to_have_text('Welcome to Trivia - Multiple Choice!')
+    page.dispatch_event(".t-science", "click")
+    title = page.locator("h1")
+    expect(title).to_have_text('Trivia - Multiple Choice - Science')
+    page.dispatch_event("#easy", "click")
+    page.dispatch_event("#hard2", "click")
+    page.dispatch_event(".submit-game-btn", "click")
+
+
+def test_game_play_route(page, flask_server):
+    redis_client.flushall()
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.dispatch_event(".t-fill_blank_jokes", "click")
+    page.dispatch_event("#hard", "click")
+    # page.screenshot(path="tests/screenshots/fill_blank_jokes-before.png")
+    page.wait_for_timeout(1000)
+    page.dispatch_event(".submit-game-btn", "click")
+    page.wait_for_timeout(6000)
+    page.screenshot(path="tests/screenshots/fill_blank_jokes.png")
+    import os
+
+    # Your current working directory
+    cwd = os.getcwd()
+    print("Current working directory:", cwd)
+
+    # The expected relative path to the file
+    relative_path = 'Games0App/static/quiz_data/jokes.csv'
+
+    # The expected absolute path to the file
+    absolute_path = os.path.join(cwd, relative_path)
+    print("Expected absolute path to the file:", absolute_path)
+
+    # Check if the file exists at the expected absolute path
+    file_exists = os.path.exists(absolute_path)
+    print("Does the file exist at the expected path?", file_exists)
+    
+    with open(absolute_path, 'r') as file:
+        for i in range(5):
+            print(file.readline())
+
+    file_permissions = os.access(absolute_path, os.R_OK)
+    print("Can the file be read?", file_permissions)
+    
+    # question_text = page.locator(".func-in").text_content()
+    # print(question_text)
+    
     
