@@ -1,17 +1,13 @@
 from unittest.mock import patch, MagicMock
-from Games0App.__init__ import create_app
 from Games0App.extensions import redis_client
 from Games0App.models.log import Log
 from Games0App.models.email_log import EmailLog
 from Games0App.classes.auth_validator import auth_validator
-import os
 
 
 def test_validate_password_for_auth(test_app):
     
-    os.environ['FLASK_ENV'] = 'testing'
-    app = create_app()
-    with app.app_context(), app.test_request_context():
+    with test_app.test_request_context():
         with patch('Games0App.classes.auth_validator.request') as mock_request, \
             patch('Games0App.classes.auth_validator.current_user') as mock_current_user, \
             patch('Games0App.classes.auth_token_manager.current_user') as mock_current_user_2:
@@ -81,9 +77,7 @@ def test_validate_password_for_auth(test_app):
 
 def test_validate_new_user_name(test_app):
 
-    os.environ['FLASK_ENV'] = 'testing'
-    app = create_app()
-    with app.app_context(), app.test_request_context():
+    with test_app.test_request_context():
         with patch('Games0App.classes.auth_validator.request') as mock_request:
 
             # Test the function with a valid username
@@ -109,9 +103,7 @@ def test_validate_new_user_name(test_app):
 
 def test_validate_new_email(test_app):
 
-    os.environ['FLASK_ENV'] = 'testing'
-    app = create_app()
-    with app.app_context(), app.test_request_context():
+    with test_app.test_request_context():
         with patch('Games0App.classes.auth_validator.request') as mock_request:
 
             # Test the function with a valid email
@@ -141,9 +133,7 @@ def test_validate_new_email(test_app):
 
 def test_validate_new_password(test_app):
 
-    os.environ['FLASK_ENV'] = 'testing'
-    app = create_app()
-    with app.app_context(), app.test_request_context():
+    with test_app.test_request_context():
 
         def custom_form_get_1(key):
             if key == 'password':
@@ -184,9 +174,7 @@ def test_validate_new_password(test_app):
 
 def test_validate_victory_message(test_app):
 
-    os.environ['FLASK_ENV'] = 'testing'
-    app = create_app()
-    with app.app_context(), app.test_request_context():
+    with test_app.test_request_context():
         with patch('Games0App.classes.auth_validator.request') as mock_request:
 
             # Test the function with a valid victory message

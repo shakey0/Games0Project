@@ -7,7 +7,7 @@
     {% for game in games if game.default %}
     <div class="game">
         <div class="game-content absolute-box">
-            <a href="{{ url_for('main.game_setup', game_type=game.param) }}">
+            <a class="t-{{ game.param }}" href="{{ url_for('main.game_setup', game_type=game.param) }}">
                 <img class="game-image" src="{{ url_for('static', filename='images/' + game.image) }}" alt="{{ game.name }}">
                 <p class="game-name">{{ game.name }}</p>
             </a>

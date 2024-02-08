@@ -1,6 +1,6 @@
 from Games0App.models.test_table import RunTable, db
 
-def test_database_connection(test_app, test_client, seed_test_database_for_test):
+def test_database_connection(test_app, seed_test_database_for_test):
     db.session.add(RunTable(name='second_record'))
     db.session.commit()
 

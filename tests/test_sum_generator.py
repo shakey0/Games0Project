@@ -1,7 +1,7 @@
 from Games0App.classes.sum_generator import sum_generator
 
 
-def test_sum_generator(test_app):
+def test_sum_generator():
 
     for _ in range(300):
 

@@ -149,7 +149,7 @@ def test_deposit_question(test_app):
             ]
 
 
-def test_deposit_question_unauth(test_app):
+def test_deposit_question_unauth():
     
     # Cache the "last 50 questions" for game2
     redis_client.flushall() # Clear the cache

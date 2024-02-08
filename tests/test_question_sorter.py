@@ -178,7 +178,7 @@ def test_sort_fill_blank_jokes_questions(test_app):
     assert not logs[2].issue_id
 
 
-def test_sort_trivia_madness_questions(test_app):
+def test_sort_trivia_madness_questions():
 
     # Test with all valid questions and that numbers are converted to words in the answers
     question_package = [
@@ -193,7 +193,7 @@ def test_sort_trivia_madness_questions(test_app):
     ]
 
 
-def test_sort_mc_questions(test_app):
+def test_sort_mc_questions():
     
     # Test with all valid questions
     question_package = [

@@ -5,7 +5,7 @@ from Games0App.models.log import Log
 import json
 
 
-def test_init_game_play(test_app):
+def test_init_game_play():
 
     game = GamePlay(
         name="Test - Game",
@@ -57,7 +57,7 @@ def test_init_game_play(test_app):
     assert game3.has_difficulty == True
 
 
-def test_get_questions_from_api(test_app):
+def test_get_questions_from_api():
 
     game = GamePlay(
         name="Test - Game",
@@ -110,7 +110,7 @@ def test_log_api_error(mock_current_user, test_app):
     assert not logs[0].issue_id
 
 
-def test_get_questions_from_csv(test_app):
+def test_get_questions_from_csv():
     
     game = GamePlay(
         name="Test - Game",
@@ -148,7 +148,7 @@ def test_get_questions_from_csv(test_app):
     assert all(len(question['options']) == 2 for question in result2)
 
 
-def test_get_questions_from_function(test_app):
+def test_get_questions_from_function():
 
     game = GamePlay(
         name="Test - Game",
@@ -186,7 +186,7 @@ questions_as_dicts_mc = [
     {'ID': '131', 'question': 'What is the capital of Australia?', 'answer': 'Canberra', 'wrong_answers': ['Sydney', 'Melbourne', 'Brisbane']}
 ]
 
-def test_update_stored_questions(test_app):
+def test_update_stored_questions():
     
     game = GamePlay(
         name="Test - Game",
@@ -210,7 +210,7 @@ def test_update_stored_questions(test_app):
     assert all(question in questions_as_lists for question in questions)
 
 
-def test_get_question_from_redis_set(test_app):
+def test_get_question_from_redis_set():
 
     game = GamePlay(
         name="Test - Game",

@@ -24,7 +24,7 @@
                     <input type="hidden" name="in_game" value="intro">
                     <input type="hidden" name="category" value="{{ category }}">
                     <input type="hidden" name="game_type" value="{{ game_type }}">
-                    <input class="category-name absolute-box" type="submit" value="{{ category }}">
+                    <input class="t-{{ category | replace(' ', '') | lower }} category-name absolute-box" type="submit" value="{{ category }}">
                 </form>
             </div>
         {% endfor %}

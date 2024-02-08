@@ -5,7 +5,7 @@ from Games0App.classes.auth_token_manager import auth_token_manager
 
 
 @patch('Games0App.classes.auth_token_manager.current_user')
-def test_check_reset_password_attempt(mock_current_user, test_app):
+def test_check_reset_password_attempt(mock_current_user):
 
     redis_client.flushall()
     mock_current_user.id = 1
@@ -17,7 +17,7 @@ def test_check_reset_password_attempt(mock_current_user, test_app):
 
 
 @patch('Games0App.classes.auth_token_manager.current_user')
-def test_check_auth_password_attempt(mock_current_user, test_app):
+def test_check_auth_password_attempt(mock_current_user):
 
     redis_client.flushall()
     mock_current_user.id = 1
@@ -33,7 +33,7 @@ def test_check_auth_password_attempt(mock_current_user, test_app):
     assert auth_token_manager.check_auth_password_attempt() == False
 
 
-def test_check_login_password_attempt(test_app):
+def test_check_login_password_attempt():
 
     redis_client.flushall()
 
@@ -49,7 +49,7 @@ def test_check_login_password_attempt(test_app):
 
 
 @patch('Games0App.classes.auth_token_manager.current_user')
-def test_attempt_check(mock_current_user, test_app):
+def test_attempt_check(mock_current_user):
 
     redis_client.flushall()
     mock_current_user.id = 1
@@ -87,7 +87,7 @@ def test_attempt_check(mock_current_user, test_app):
     assert auth_token_manager.attempt_check('route', 1) == False
 
 
-def test_get_verify_delete_reset_password_link_token(test_app):
+def test_get_verify_delete_reset_password_link_token():
     
     redis_client.flushall()
 
