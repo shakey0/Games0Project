@@ -55,41 +55,12 @@ def test_game_setup_route_with_difficulty(page, flask_server):
 
 
 def test_game_play_route(page, flask_server):
+    import os
     redis_client.flushall()
     page.goto("http://localhost:5000/")
     page.click("text='Continue to Website'")
     page.dispatch_event(".t-fill_blank_jokes", "click")
     page.dispatch_event("#hard", "click")
-    # page.screenshot(path="tests/screenshots/fill_blank_jokes-before.png")
-    page.wait_for_timeout(1000)
     page.dispatch_event(".submit-game-btn", "click")
-    page.wait_for_timeout(6000)
-    page.screenshot(path="tests/screenshots/fill_blank_jokes.png")
-    import os
-
-    # Your current working directory
-    cwd = os.getcwd()
-    print("Current working directory:", cwd)
-
-    # The expected relative path to the file
-    relative_path = 'Games0App/static/quiz_data/jokes.csv'
-
-    # The expected absolute path to the file
-    absolute_path = os.path.join(cwd, relative_path)
-    print("Expected absolute path to the file:", absolute_path)
-
-    # Check if the file exists at the expected absolute path
-    file_exists = os.path.exists(absolute_path)
-    print("Does the file exist at the expected path?", file_exists)
-    
-    with open(absolute_path, 'r') as file:
-        for i in range(5):
-            print(file.readline())
-
-    file_permissions = os.access(absolute_path, os.R_OK)
-    print("Can the file be read?", file_permissions)
-    
-    # question_text = page.locator(".func-in").text_content()
-    # print(question_text)
-    
-    
+    page.wait_for_timeout(5000)
+    page.screenshot(path="tests/screenshots/capture.png")

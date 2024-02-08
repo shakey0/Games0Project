@@ -4,10 +4,7 @@ from Games0App.classes.question_sorter import question_sorter
 from Games0App.classes.sum_generator import sum_generator
 from Games0App.classes.logger import Logger
 logger = Logger()
-import requests
-import json
-import csv
-import random
+import os, requests, json, csv, random
 
 
 class GamePlay:
@@ -78,7 +75,10 @@ class GamePlay:
             category = category.replace('_and_', '_')
 
         all_items = []
-        with open(f"Games0App/static/quiz_data/{self.load_route[1]}.csv", newline='') as csvfile:
+        
+        base_dir = os.path.dirname(os.path.dirname(__file__))
+        file_path = os.path.join(base_dir, "static/quiz_data", f"{self.load_route[1]}.csv")
+        with open(file_path, newline='') as csvfile:
 
             reader = csv.DictReader(csvfile, delimiter=';')
             headers = reader.fieldnames
