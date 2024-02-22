@@ -15,7 +15,8 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 **Nav Bar & Menu**
 - Universally accessible from most pages.
 - It adapts its content based on the user's authentication status and whether or not the user is playing a game.
-- The menu includes options such as log in, sign up, view scoreboards, legal text, etc. While in game, displays the score instead of the menu.
+- The menu includes options such as log in, sign up, view scoreboards, legal text, etc.
+- While in game, displays the score instead of the menu.
 - See [layout.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/layout.html)
 
 **Game Page**
