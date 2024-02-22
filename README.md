@@ -42,7 +42,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - This page is for a user to report an issue.
 - It can either be accessed via the contact option in the menu from the top bar, or via a link sent by email if the user's email address or password is changed.
 - If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem.
-- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L604)
+- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L604)
 
 ## Key Technologies
 
@@ -55,14 +55,14 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 **Main Tables** - The id in each of these tables is the primary key.
 
 - **users** (id, username, email, password_hashed, last_50_questions) - <em>one-to-many with high_scores through user_id, many-to-many with high_scores through scores_users</em>
-- **high_scores** (id, user_id, game, game_name, category, difficulty, score, date, message, likes) - FK(user_id) connects high_score to user
+- **high_scores** (id, user_id, game, game_name, category, difficulty, score, date, message, likes) - FK(user_id) connects high_score to user - <em>many-to-many with users through scores_users</em>
 - **logs** (id, unique_id, user_id, ip_address, function_name, log_type, timestamp, data, issue_id)
 - **email_logs** (id, user_email, username, email_type, info, unique_id, status_code, json_response, timestamp)
 - **user_answer_logs** TO BE IMPLEMENTED
 
 **Join Tables** - The values here all reference the main tables.
 
-- **users_scores** (score_id, user_id) - To keep track of which users like which high_scores
+- **scores_users** (score_id, user_id) - To keep track of which users like which high_scores.
 
 ## Installation & Setup
 
