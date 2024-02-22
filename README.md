@@ -21,7 +21,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 
 **Game Page**
 - Uses JavaScript for counting down the seconds while playing a game ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/in_game_functions.js#L32-L92)).
-- Displays the question and helper buttons that the user can use to reveal a random letter in the answer, reveal the length of the answer, or (in a multiple choice style game) remove a wrong answer - these buttons fetch an api response from the server (see [helper_apis.js](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/helper_apis.js) and [api.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py)).
+- Displays the question as well as helper buttons that the user can use to reveal a random letter in the answer, reveal the length of the answer, or (in a multiple choice style game) remove a wrong answer - these buttons fetch an api response from the server (see [helper_apis.js](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/helper_apis.js) and [api.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py)).
 - Displays whether or not the user is correct answer submitting their answer, the correct answer, and the number of points they have gained.
 - See [game.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/game.html)
 
