@@ -12,15 +12,36 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 
 ### Main Features
 
-**Nav Bar & Menu** - Universally accessible from most pages. It adapts its content based on the user's authentication status and whether or not the user is playing a game. The menu includes options such as log in, sign up, view scoreboards, legal text, etc. While in game, displays the score instead of the menu. (See [layout.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/layout.html))
+**Nav Bar & Menu**
+- Universally accessible from most pages.
+- It adapts its content based on the user's authentication status and whether or not the user is playing a game.
+- The menu includes options such as log in, sign up, view scoreboards, legal text, etc. While in game, displays the score instead of the menu.
+- See [layout.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/layout.html)
 
-**Game Page** - Uses JavaScript for counting down the second while playing a game ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/in_game_functions.js#L32-L92)). Displays the question and helper button that the user can user to reveal a random letter in the answer, reveal the length of the answer, or (in a multiple choice style game) remove wrong answer - these buttons fetch an api response from the server (see [helper_apis.js](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/helper_apis.js) and [api.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py)). Displays whether or not the user is correct answer submitting their answer, the correct answer, and the number of points they have gained. (See [game.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/game.html))
+**Game Page**
+- Uses JavaScript for counting down the seconds while playing a game ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/in_game_functions.js#L32-L92)).
+- Displays the question and helper buttons that the user can use to reveal a random letter in the answer, reveal the length of the answer, or (in a multiple choice style game) remove a wrong answer - these buttons fetch an api response from the server (see [helper_apis.js](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/helper_apis.js) and [api.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py)).
+- Displays whether or not the user is correct answer submitting their answer, the correct answer, and the number of points they have gained.
+- See [game.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/game.html)
 
-**Scoreboard Page** - Displays the scores of all games played by all users. Has a like feature so that users can like other user's scores ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py#L207-L275)). Has an option next to each score that belongs to the current user to amend the score message or remove the score entry. Has direct links to play each game listed, which will automatically select the difficulty level if the game has a difficulty level. Has links to see the scoreboard for each game individually as well as see all the scoreboards for each specific user. (See [scoreboard.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/scoreboard.html) and [scoreboard.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/scoreboard.py) and [scoreboard_functions.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/scoreboard_functions.py))
+**Scoreboard Page**
+- Displays the scores of all games played by all users.
+- Has a like feature so that users can like other user's scores ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py#L207-L275)).
+- Has an option next to each score that belongs to the current user to amend the score message or remove the score entry.
+- Has direct links to play each game listed, which will automatically select the difficulty level if the game has a difficulty level.
+- Has links to see the scoreboard for each game individually as well as see all the scoreboards for each specific user.
+- See [scoreboard.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/scoreboard.html) and [scoreboard.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/scoreboard.py) and [scoreboard_functions.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/scoreboard_functions.py)
 
-**Auth Page** - This is for a user to change their email address or password, reset their password in the case they forgot it, or delete their account. The content is rendered dynamically depending on which route is being accessed. (See [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516))
+**Auth Page**
+- This is for a user to change their email address or password, reset their password in the case they forgot it, or delete their account.
+- The content is rendered dynamically depending on which route is being accessed.
+- See [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)
 
-**Report Issue Page** - This page is for a user to report an issue. It can either be accessed via the contact option in the menu from the top bar, or via a link sent by email if the user's email address or password is changed. If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem. (See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L604))
+**Report Issue Page**
+- This page is for a user to report an issue.
+- It can either be accessed via the contact option in the menu from the top bar, or via a link sent by email if the user's email address or password is changed.
+- If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem.
+- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L604)
 
 ## Key Technologies
 
