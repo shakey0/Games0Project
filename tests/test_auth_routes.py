@@ -1,6 +1,7 @@
 from playwright.sync_api import expect
 from Games0App.extensions import redis_client
 from Games0App.models.user import User
+from Games0App.models.log import Log
 
 
 def test_register_route(page, flask_server, test_app):
@@ -261,3 +262,81 @@ def test_delete_account_route(page, flask_server, test_app):
     page.click("text='Return to Home'")
     all_users = User.query.all()
     assert len(all_users) == 0
+
+
+def test_reset_password_route(page, flask_server, test_app):
+    redis_client.flushall()
+    
+    # Create a user
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.click("text='Menu'")
+    page.click("text='Sign up'")
+    page.wait_for_timeout(1000)
+    page.fill('#register-box input[name="username"]', "testuser")
+    page.fill('#register-box input[name="email"]', "testemail@email.com")
+    page.fill('#register-box input[name="password"]', "testpassword")
+    page.fill('#register-box input[name="confirm_password"]', "testpassword")
+    page.click("text='I accept the Terms of Service.'")
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(1000)
+    username_link = page.locator(".nav-username-link")
+    expect(username_link).to_have_text("testuser")
+    
+    # Log out
+    page.click("text='Menu'")
+    page.click("text='Log out'")
+    page.wait_for_timeout(1000)
+    
+    # Go to reset password box
+    page.goto("http://localhost:5000/")
+    page.click("text='Menu'")
+    page.click("text='Log in'")
+    page.click("text='Forgot password?'")
+    page.wait_for_timeout(1000)
+    
+    # Send reset password link with no email
+    page.click("text='Send reset password link'")
+    message = page.locator(".forgotten-password-error-message")
+    expect(message).to_have_text("Please enter your email address.")
+    
+    # Send reset password link
+    page.fill('input[name="email"]', "testemail@email.com")
+    page.click("text='Send reset password link'")
+    message = page.locator(".forgotten-password-success-message")
+    expect(message).to_have_text("Reset password link sent.")
+    page.click("text='Send reset password link'")
+    message = page.locator(".forgotten-password-success-message")
+    expect(message).to_have_text("Please check your inbox.")
+    
+    # Check and get the logs
+    logs = Log.query.all()
+    assert len(logs) == 2
+    assert logs[0].log_type == 'account_created'
+    assert logs[1].log_type == 'reset_password_email_sent'
+    reset_token = logs[1].data['reset_token']
+    
+    page.goto(f"http://localhost:5000/reset_password/{reset_token}")
+    
+    # Enter invalid password
+    page.fill('input[name="password"]', "new")
+    page.fill('input[name="confirm_password"]', "new")
+    page.click("text='Confirm'")
+    error = page.locator(".error")
+    expect(error).to_have_text("Password must be at least 8 characters.")
+    
+    # Enter valid password and assert that it works
+    page.fill('input[name="password"]', "newpassword")
+    page.fill('input[name="confirm_password"]', "newpassword")
+    page.click("text='Confirm'")
+    page.click("text='Return to Home'")
+    page.goto("http://localhost:5000/")
+    page.click("text='Menu'")
+    page.click("text='Log in'")
+    page.wait_for_timeout(1000)
+    page.fill('#login-box input[name="username"]', "testemail@email.com")
+    page.fill('#login-box input[name="password"]', "newpassword")
+    page.dispatch_event(".login-btn", "click")
+    page.wait_for_timeout(1000)
+    username_link = page.locator(".nav-username-link")
+    expect(username_link).to_have_text("testuser")
