@@ -569,7 +569,10 @@ def report_issue():
 
         issue_type = request.form.get('issue_type')
         values['issue'] = issue_type
-        values['title'] = issues[issue_type]['title']
+        try:
+            values['title'] = issues[issue_type]['title']
+        except KeyError:
+            return redirect(url_for('auth.report_issue', issue_id=values['issue_id']))
 
         auth_token_manager.add_values_to_auth_token(auth_token, values)
 
