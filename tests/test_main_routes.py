@@ -1,5 +1,5 @@
 from playwright.sync_api import expect
-from Games0App.extensions import db, redis_client
+from Games0App.extensions import redis_client
 import json
 
 
