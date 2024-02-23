@@ -54,7 +54,7 @@
     color: rgb(255, 255, 255);
 }
 
-.confirm-legal-box, .legal-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
+.confirm-legal-box, .legal-box, .about-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     border: 1px solid rgb(142, 114, 99);
     border-radius: 10px;
     background-color: #191c27;
@@ -137,80 +137,80 @@
     font-size: 1.1em;
 }
 
-.legal-box {
+.legal-box, .about-box {
     height: 600px;
     width: 80%;
     max-width: 400px;
     padding: 25px 30px;
     z-index: 21;
 }
-.legal-content {
+.legal-content, .about-content {
     position: relative;
     height: 530px;
     overflow-y: auto;
     padding: 5px 20px 10px 0;
 }
 @media (max-height: 650px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 550px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 480px;
     }
 }
 @media (max-height: 600px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 500px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 430px;
     }
 }
 @media (max-height: 550px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 450px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 380px;
     }
 }
 @media (max-height: 500px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 400px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 330px;
     }
 }
 @media (max-height: 450px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 350px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 280px;
     }
 }
 @media (max-height: 400px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 300px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 230px;
     }
 }
 @media (max-height: 350px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 250px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 180px;
     }
 }
 @media (max-height: 300px) {
-    .legal-box {
+    .legal-box, .about-box {
         height: 200px;
     }
-    .legal-content {
+    .legal-content, .about-content {
         height: 130px;
     }
 }
@@ -254,15 +254,44 @@
     color: rgb(255, 255, 255);
 }
 
-.legal-title {
+.legal-title, .about-title {
     margin-bottom: 10px;
     font-size: 24px;
     font-weight: bold;
     color: rgb(255, 119, 0);
 }
 
-.legal-text {
+.legal-text, .about-text {
     margin-bottom: 15px;
+}
+
+.personal-box {
+    display: flex;
+}
+
+.personal-link {
+    height: 30px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+    margin-bottom: -6px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.personal-link:hover {
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+}
+
+@media (max-width: 430px) {
+    .personal-box {
+        display: block;
+    }
+    .personal-link {
+        margin: 0 5px 5px 0;
+    }
 }
 
 .pop-up-header {

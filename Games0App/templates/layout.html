@@ -56,7 +56,7 @@
             {% endif %}
             <a href="{{ url_for('scoreboard.scoreboard_page') }}"><button class="options-btn clear-btn">Scoreboards</button></a>
             <button class="options-btn clear-btn" data-legal-button-target="#legal-box">Legal</button>
-            <button class="options-btn clear-btn">About</button>
+            <button class="options-btn clear-btn" data-about-button-target="#about-box">About</button>
             <a href=""><button class="options-btn clear-btn">Contact</button></a>
             {% if user.is_authenticated %}
                 <form method="POST" action="/logout">
@@ -83,6 +83,35 @@
                 <p class="legal-text">This website uses cookies to ensure that users have the best possible experience. By using this website, you agree to the use of cookies.</p>
                 <p class="legal-title">Terms of Service</p>
                 <p class="legal-text">By using this website, you agree to the terms of service. These terms include the use of cookies mentioned above and the collection of certain data mentioned above.</p>
+            </div>
+            <div class="bottom-fade-out"></div>
+        </div>
+        <div class="about-box pop-up-box" id="about-box">
+            <button data-cancel-button class="cancel-button">&times;</button>
+            <div class="pop-up-header">
+                <p>About</p>
+            </div>
+            <div class="top-fade-out"></div>
+            <div class="pop-up-content about-content">
+                <p class="about-title">About GamesZero</p>
+                <p class="about-text">GamesZero is a quiz/games website where you can test your quick thinking skills by answering fill in the blank questions, test your knowledge by taking a trivia quiz, or dare to take an arithmetic test.</p>
+                <p class="about-text">Each quiz/game is comprised of 10 questions. Some quizzes/games have categories so you can truly enjoy challenging yourself on what you're best at. Some also have difficulty levels to make the game just right for you.</p>
+                <p class="about-text">You can also create an account to keep track of your scores and see how you compare to other users on the scoreboard.</p>
+                <div class="personal-box">
+                    <p class="about-title">About the Creator</p>
+                    <a href="https://github.com/shakey0" target="_blank">
+                        <img class="personal-link" src="{{ url_for('static', filename='images/github_logo.png') }}" alt="github">
+                    </a>
+                    <a href="https://www.linkedin.com/in/shakey0/" target="_blank">
+                        <img class="personal-link" src="{{ url_for('static', filename='images/linkedin_logo.png') }}" alt="linkedin">
+                    </a>
+                </div>
+                <p class="about-text">GamesZero was created by an enthusiatic software developer, Andrew Shakespeare (shakey0), who wanted to create a fun and challenging website for people to enjoy as well as gain experience with the fundamental technologies required in backend app development.</p>
+                <p class="about-text">Andrew has recently completed the Makers Academy Software Development and Cloud Engineering Bootcamp which did a fantastic job at teaching him how to go about creating a web app, how to write maintainable code, how to self study in order to learn new technologies, and very importantly how to deploy the app online.</p>
+                <p class="about-text">Andrew is currently in search of a job in backend development and hopes that by creating this intricate web app, potential employers will be able to recognise his motivation and passion for coding.</p>
+                <p class="about-title">Technical Brief</p>
+                <p class="about-text">The website was created using Python, Flask, Redis, and PostgresSQL for the backend and HTML, CSS, and JavaScript for the frontend. The website using an extensive caching system for a variety of features that ensure a smooth user experience while saving on resources.</p>
+                <p class="about-text">The website also uses a secure authentication system that ensures the safety of user data. The website also uses a secure password hashing system that ensures the safety of user passwords.</p>
             </div>
             <div class="bottom-fade-out"></div>
         </div>

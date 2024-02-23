@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to GamesZero! This is a project I began about a month after finishing the Makers Academy Software Engineering Bootcamp. I took up this project for a number of reasons.<br><br>
+Welcome to GamesZero! This is a project I began about a month after finishing the Makers Academy Software Engineering Bootcamp. I took up this project for a number of reasons. Let's dive into it.<br><br>
 Firstly, I wanted to get more experience with APIs, and this project has been fantastic for that. I've written two scripts ([create_CSV_contents_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_CSV_contents_from_API.py) and [create_trivia_CSV_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_trivia_CSV_from_API.py)) which I have used to retrieve and sort hundreds of quiz questions from various different API sources. I also have one game in this web app (Trivia - Multiple Choice) that takes the questions from the API while the app is running ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L25-L58)).<br><br>
 Secondly, I wanted to learn more about caching with Redis. I have used Redis in this webapp for extensive caching of the game data when a user is doing a quiz (see [main.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py) and [main_functions.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main_functions.py)). This is a brilliant way to robustly store the game data on the backend and eliminate any potentiality for it to be manipulated. I have also used Redis to cache the questions sent out to users, to avoid the same question being sent in the same game or, if the user is logged in, to avoid the same question being sent within the next 5 games (see [user_question_tracker.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/user_question_tracker.py)). I have used it to store bulks of questions recieved from an API and CSV files too ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L113-L167)).<br><br>
 Thirdly, I wanted to gain more experience around creating secure authentication routes (see [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)). Again, I've used Redis here in the AuthTokenManager class to cache tokens for various auth processes (see [auth_token_manager.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/auth_token_manager.py)).<br><br>
@@ -42,7 +42,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - This page is for a user to report an issue.
 - It can either be accessed via the contact option in the menu from the top bar, or via a link sent by email if the user's email address or password is changed.
 - If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem.
-- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L604)
+- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L607)
 
 ## Key Technologies
 
@@ -112,11 +112,8 @@ python run.py
 
 ## Tickets Awaiting Completion
 
-- Make the 'About' pop up box with links to my GitHub, Linkedin, and contact pop up box.
 - Make the 'Contact' pop up box with a form to send me an email and link to report an issue.
 - Add testing, testing_in_actions, and production conditional blocks for features that need different values during these environments.
 - Add CSRF tokens.
 - Add AnswerLog class and table to track user answers.
 - Create seed data to fill the dev database.
-- FIX: Disable the 'Next' button on the report_issue page when nothing is selected.
-- FIX: Correct high_scores table name in database.
