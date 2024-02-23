@@ -29,7 +29,7 @@ ID;fact;blanks
 28;Some species of dolphin sleep with one eye open.;species, dolphin, open
 29;On average, Americans move to a new place eleven times in their lifetime.;average, move
 30;The patent number of the telephone is 174465.;number
-31;Women smile more than men do.;women, more, men
+31;Women smile more than men do.;Women, more, men
 32;"The total number of episodes for the sitcom ""I Love Lucy"" was 180.";number, episodes
 33;In Canada, the most productive day of the workweek is Tuesday.;most, productive, Tuesday
 34;The Pentagon cost $49,600,000 to build in 1941.;build
@@ -71,7 +71,7 @@ ID;fact;blanks
 70;Americans consumed more than twenty billion hot dogs in 2000.;consumed, dogs
 71;In 1657, the first chocolate house was opened in London, England.;first, London
 72;When Burger King introduced the Whopper Sandwich in 1957, it cost only thirty-seven cents.;Burger, cents
-73;Orcas (killer whales), when travelling in groups, breathe in unison.;orcas
+73;Orcas (killer whales), when travelling in groups, breathe in unison.;Orcas
 74;Princess Anne from the British royal family competed in the 1976 Summer Olympics.;Princess, royal, family, competed, Olympics
 75;The largest earthworm on record was found in South Africa and measured 22 feet.;measured
 76;A Canadian Tour company offers a two-day course in igloo building.;building
@@ -105,7 +105,7 @@ ID;fact;blanks
 104;A squash ball moving at 150 kilometers per hour has the same impact of a .22 bullet.;ball, same, bullet
 105;Dolphins can swim and sleep at the same time.;sleep
 106;Close to 80% of people who watch the Super Bowl on television, only do so to view the commercials.;watch, Super, Bowl
-107;Wild Flamingos are pink because they consume vast quantities of algae and brine shrimp.;flamingos
+107;Wild flamingos are pink because they consume vast quantities of algae and brine shrimp.;flamingos, pink
 108;Tug of war was an Olympic event from 1900-1920.;Olympic
 109;Men in their early twenties shave an average of four times a week.;four, week
 110;The wheelbarrow was invented by the Chinese.;barrow
@@ -142,7 +142,7 @@ ID;fact;blanks
 141;A group of crows is called a murder.;crows, murder
 142;The giant squid has the largest eyes in the world.;squid, eyes
 143;Sales of antacids increase by as much as 20% the day after the Superbowl.;increase
-144;Bank robber John Dillinger played professional baseball.;robber
+144;Bank robber John Dillinger played professional baseball.;robber, baseball
 145;A honey bee has four wings.;wings
 146;Nintendo was first establish in 1889 and they started out making special playing cards.;cards
 147;An orca (killer whale) can hold its breath for up to 15 minutes.;orca, minutes
@@ -156,7 +156,7 @@ ID;fact;blanks
 155;The average number of bridesmaids at a wedding is four.;four
 156;Every year, kids in North America spend close to half a billion dollars on chewing gum.;spend, chewing
 157;Found in Argentina, the ornate horned frog can eat an entire mouse with one swallow.;frog
-158;Coffee has about five times the amount of caffeine as a can of Coke.;coffee, caffeine
+158;Coffee has about five times the amount of caffeine as a can of Coke.;Coffee, caffeine
 159;"DC-10, the name of an airplane stands for ""Douglas Commercial"".";airplane
 160;More twins are born in the Western world than in the Eastern world.;Western, Eastern
 161;The world's termites outweigh the world's humans 10 to 1.;humans
@@ -170,7 +170,7 @@ ID;fact;blanks
 169;The highest recorded speed of a sneeze is 165 km per hour.;speed
 170;Pigs have no sweat glands, which is why they stay in water or mud to keep cool.;sweat, cool
 171;The United States has paved enough roads to circle the Earth over 150 times.;circle
-172;Every continent begins and ends in the same letter. eg AfricA, EuropE.;continent
+172;Every continent begins and ends in the same letter. eg AfricA, EuropE.;continent, letter
 173;Talc was used by cavemen 15,000 years ago as an ingredient added to make paint.;ingredient
 174;The adult electric eel can produce a five hundred volt shock, which is enough to stun a horse.;electric, volt
 175;It takes 12 honeybees to make one teaspoon of honey.;honeybees
@@ -199,7 +199,7 @@ ID;fact;blanks
 198;Of all the countries, Brazil has the most plant species, with over 56,000.;species
 199;The full name of the Titanic ship is R.M.S. Titanic, which stands for Royal Mail Steamship.;Titanic, Royal
 200;The triangular shape that Toblerone chocolates are packaged in, is protected by law.;triangular, Toblerone, law
-201;Retail sales for soft drinks in the United States in 2001 were more than sixty billion dollars.;drinks
+201;Retail sales for soft drinks in the United States in 2001 were more than sixty billion dollars.;drinks, billion
 202;500,000 tons of dog excrement are dumped annually on the streets of Paris.;streets
 203;The average person spends two weeks of their life kissing.;weeks
 204;The USA bought Alaska from Russia for 2 cents an acre.;Alaska, Russia, cents
@@ -246,12 +246,12 @@ ID;fact;blanks
 245;The first lighthouse built in the USA was in Boston, MA in 1716.;Boston
 246;"The longest one-syllable word in the English language is ""screeched"".";syllable
 247;Eating eight strawberries will provide you with more Vitamin C than an orange.;provide, orange
-248;Queen Victoria used marijuana, to help relieve menstrual cramp pain.;Victoria
+248;Queen Victoria used marijuana to help relieve menstrual cramp pain.;Victoria
 249;There are over 2,000 different species of cactuses.;species
 250;American Airlines saved $40,000 in 1987 by eliminating 1 olive from each salad served in first-class.;Airlines, eliminating, olive, first
 251;To lose one pound of fat, a person has to burn approximately 3,500 calories.;fat, calories
-252;Americans on the average eat 18 acres of pizza every day.;day
-253;Ancient Egyptians used the spice thyme to help preserve mummies.;thyme, preserve
+252;Americans eat on average 18 acres of pizza every day.;day
+253;Ancient Egyptians used the spice thyme to help preserve mummies.;Egyptians, thyme, preserve
 254;In approximately 18 months, a papaya tree can grow to be 20 feet tall.;months
 255;Pound for pound, hamburgers cost more than new cars.;cars
 256;The only desert in Canada is located in Osoyoos, British Columbia.;desert
