@@ -157,3 +157,30 @@ def test_game_play_route_difficulty_function(page, flask_server, test_app):
         expect(result).to_have_text("You are right!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+
+
+def test_game_play_route_wrong_answers(page, flask_server, test_app):
+    redis_client.flushall()
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.dispatch_event(".t-trivia_tf_categories", "click")
+    page.dispatch_event(".all-categories-btn", "click")
+    page.dispatch_event("#easy", "click")
+    page.dispatch_event(".submit-game-btn", "click")
+    game_title = page.locator(".game-title-tag")
+    expect(game_title).to_have_text("Trivia - True or False")
+    for num in range(10):
+        page.wait_for_timeout(100)
+        question_value = redis_client.hget("triviatrueorfalse_hash", "triviatrueorfalse_{}".format(num+1))
+        question = json.loads(question_value.decode("utf-8"))
+        question_text = page.locator(".func-in")
+        expect(question_text).to_have_text(question[1])
+        if question[1] == question[2]:
+            page.dispatch_event("#False", "click")
+        else:
+            page.dispatch_event("#True", "click")
+        page.dispatch_event(".submit-game-btn", "click")
+        result = page.locator(".t-answer-result")
+        expect(result).to_have_text("Sorry!")
+        page.dispatch_event(".submit-game-btn", "click")
+        # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
