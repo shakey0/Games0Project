@@ -20,7 +20,34 @@ def test_register_route(page, flask_server, test_app):
     expect(username_link).to_have_text("testuser")
 
 
-def test_logout_login_routes(page, flask_server, test_app):
+def test_register_route_errors(page, flask_server, test_app):
+    redis_client.flushall()
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.click("text='Menu'")
+    page.click("text='Sign up'")
+    page.wait_for_timeout(1000)
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(100)
+    username_error = page.locator(".register-username-error-message")
+    email_error = page.locator(".register-email-error-message")
+    password_error = page.locator(".register-password-error-message")
+    policy_error = page.locator(".register-general-error-message")
+    expect(username_error).to_have_text("Please enter a username.")
+    expect(email_error).to_have_text("Please enter an email.")
+    expect(password_error).to_have_text("Please enter a password.")
+    expect(policy_error).to_have_text("Please agree to the Terms of Service.")
+    page.fill('#register-box input[name="username"]', "testuser")
+    page.fill('#register-box input[name="email"]', "testemail@email.com")
+    page.fill('#register-box input[name="password"]', "testpassword")
+    page.fill('#register-box input[name="confirm_password"]', "password")
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(100)
+    confirm_password_error = page.locator(".register-confirm_password-error-message")
+    expect(confirm_password_error).to_have_text("Passwords do not match.")
+    
+
+def test_logout_login_routes_with_errors(page, flask_server, test_app):
     redis_client.flushall()
     
     page.goto("http://localhost:5000/")
@@ -52,6 +79,25 @@ def test_logout_login_routes(page, flask_server, test_app):
     page.wait_for_timeout(1000)
     username_link = page.locator(".nav-username-link")
     expect(username_link).to_have_text("testuser")
+    
+    page.click("text='Menu'")
+    page.click("text='Log out'")
+    page.wait_for_timeout(1000)
+    
+    page.goto("http://localhost:5000/")
+    page.click("text='Menu'")
+    page.click("text='Log in'")
+    page.wait_for_timeout(1000)
+    page.dispatch_event(".login-btn", "click")
+    page.wait_for_timeout(100)
+    login_error = page.locator(".login-error-message")
+    expect(login_error).to_have_text("Please enter your email or username.")
+    page.fill('#login-box input[name="username"]', "testemail@email.com")
+    page.fill('#login-box input[name="password"]', "password")
+    page.dispatch_event(".login-btn", "click")
+    page.wait_for_timeout(100)
+    login_error = page.locator(".login-error-message")
+    expect(login_error).to_have_text("Something didn't match! Please try again.")
 
 
 def test_change_email_route(page, flask_server, test_app):
