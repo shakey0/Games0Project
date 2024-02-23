@@ -61,7 +61,7 @@ def test_game_setup_route_with_difficulty(page, flask_server, test_app):
     expect(game_title).to_have_text("Trivia - Multiple Choice - Science")
 
 
-def test_game_play_route(page, flask_server, test_app):
+def test_game_play_route_csv(page, flask_server, test_app):
     redis_client.flushall()
     page.goto("http://localhost:5000/")
     page.click("text='Continue to Website'")
@@ -84,7 +84,7 @@ def test_game_play_route(page, flask_server, test_app):
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
 
 
-def test_game_play_route_categories(page, flask_server, test_app):
+def test_game_play_route_categories_csv(page, flask_server, test_app):
     redis_client.flushall()
     page.goto("http://localhost:5000/")
     page.click("text='Continue to Website'")
@@ -104,6 +104,54 @@ def test_game_play_route_categories(page, flask_server, test_app):
             page.dispatch_event("#True", "click")
         else:
             page.dispatch_event("#False", "click")
+        page.dispatch_event(".submit-game-btn", "click")
+        result = page.locator(".t-answer-result")
+        expect(result).to_have_text("You are right!")
+        page.dispatch_event(".submit-game-btn", "click")
+        # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+
+
+def test_game_play_route_categories_difficulty_api(page, flask_server, test_app):
+    redis_client.flushall()
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.dispatch_event(".t-trivia_mc_categories", "click")
+    page.dispatch_event(".t-film\\&tv", "click")
+    page.dispatch_event("#medium", "click")
+    page.dispatch_event("#easy2", "click")
+    page.dispatch_event(".submit-game-btn", "click")
+    game_title = page.locator(".game-title-tag")
+    expect(game_title).to_have_text("Trivia - Multiple Choice - Film & TV")
+    for num in range(10):
+        page.wait_for_timeout(100)
+        question_value = redis_client.hget("triviamultiplechoice_film_and_tv_easy_hash", "triviamultiplechoice_film_and_tv_easy_{}".format(num+1))
+        question = json.loads(question_value.decode("utf-8"))
+        question_text = page.locator(".func-in")
+        expect(question_text).to_have_text(question[1])
+        page.click(f"text='{question[2]}'")
+        page.dispatch_event(".submit-game-btn", "click")
+        result = page.locator(".t-answer-result")
+        expect(result).to_have_text("You are right!")
+        page.dispatch_event(".submit-game-btn", "click")
+        # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+        
+
+def test_game_play_route_difficulty_function(page, flask_server, test_app):
+    redis_client.flushall()
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.dispatch_event(".t-number_to_reach_mc", "click")
+    page.dispatch_event("#easy2", "click")
+    page.dispatch_event(".submit-game-btn", "click")
+    game_title = page.locator(".game-title-tag")
+    expect(game_title).to_have_text("Number to Reach")
+    for num in range(10):
+        page.wait_for_timeout(100)
+        question_value = redis_client.hget("numbertoreach_easy_hash", "numbertoreach_easy_{}".format(num+1))
+        question = json.loads(question_value.decode("utf-8"))
+        question_text = page.locator(".func-in")
+        expect(question_text).to_have_text(question[1])
+        page.click(f"text='{question[2]}'")
         page.dispatch_event(".submit-game-btn", "click")
         result = page.locator(".t-answer-result")
         expect(result).to_have_text("You are right!")

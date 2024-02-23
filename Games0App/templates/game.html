@@ -90,7 +90,7 @@
                 <div class="answer-selection-box">
                     {% for answer in next_question["all_answers"] %}
                         <div class="selector-class answer-selector" id="{{ answer | replace(" ", "_") }}_box">
-                            <input class="answer-radio" type="radio" id="{{ answer | replace(" ", "_") }}" name="answer" value="{{ answer }}">
+                            <input class="answer-radio answer-{{ loop.index }}" type="radio" id="{{ answer | replace(" ", "_") }}" name="answer" value="{{ answer }}">
                             <label for="{{ answer | replace(" ", "_") }}">{{ answer }}</label>
                         </div>
                     {% endfor %}
