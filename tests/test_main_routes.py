@@ -14,6 +14,56 @@ def test_index_route(page, flask_server, test_app):
         "Trivia Madness", "Trivia - Multiple Choice",
         "Trivia - True or False", "Number to Reach"
     ])
+    
+    
+def test_send_contact_message(page, flask_server, test_app):
+    redis_client.flushall()
+    
+    # Create a user
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.click("text='Menu'")
+    page.click("text='Sign up'")
+    page.wait_for_timeout(1000)
+    page.fill('#register-box input[name="username"]', "testuser")
+    page.fill('#register-box input[name="email"]', "testemail@email.com")
+    page.fill('#register-box input[name="password"]', "testpassword")
+    page.fill('#register-box input[name="confirm_password"]', "testpassword")
+    page.click("text='I accept the Terms of Service.'")
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(1000)
+    username_link = page.locator(".nav-username-link")
+    expect(username_link).to_have_text("testuser")
+    
+    # Send a contact message with no text
+    page.click("text='Menu'")
+    page.click("text='Contact'")
+    page.fill('.contact-message', "")
+    page.dispatch_event(".contact-send-message-btn", "click")
+    error = page.locator(".contact-error-message")
+    expect(error).to_have_text("Please type something!")
+    
+    # Send a contact message that is too short
+    page.fill('.contact-message', "Hi")
+    page.dispatch_event(".contact-send-message-btn", "click")
+    error = page.locator(".contact-error-message")
+    expect(error).to_have_text("Please type a little more.")
+    
+    # Send a contact message that is too long
+    page.fill('.contact-message', "Hi " * 200)
+    page.dispatch_event(".contact-send-message-btn", "click")
+    error = page.locator(".contact-error-message")
+    expect(error).to_have_text("Please keep your message under 500 characters.")
+    
+    # Send a valid contact message
+    page.fill('.contact-message', "Hi " * 100)
+    page.dispatch_event(".contact-send-message-btn", "click")
+    success = page.locator(".contact-success-message")
+    expect(success).to_have_text("Your message has been sent. I'll get back to you as soon as I can.")
+    page.wait_for_timeout(100)
+    page.dispatch_event(".contact-send-message-btn", "click")
+    success = page.locator(".contact-success-message")
+    expect(success).to_have_text("You've already sent me a message. Please wait a minute before sending another.")
 
 
 def test_game_setup_route(page, flask_server, test_app):
