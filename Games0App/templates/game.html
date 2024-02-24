@@ -208,7 +208,7 @@
             <form method="POST" action="/game_finish">
                 <input type="hidden" name="token" value="{{ token }}">
                 {% if user.is_authenticated %}
-                    <div class="victory-message-error" style="transform: translateY(15px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
+                    <div class="victory-message-error" style="transform: translateY(-10px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
                     <input class="message-input" type="text" name="message" placeholder="Victory message..." autocomplete="off" autofocus>
                     <input class="submit-game-btn go-to-scoreboard" style="margin-top: 35px;" type="submit" value="Scoreboard">
                 {% else %}
