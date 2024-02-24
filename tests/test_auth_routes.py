@@ -340,3 +340,165 @@ def test_reset_password_route(page, flask_server, test_app):
     page.wait_for_timeout(1000)
     username_link = page.locator(".nav-username-link")
     expect(username_link).to_have_text("testuser")
+
+
+def test_report_issue_route_from_contact(page, flask_server, test_app):
+    redis_client.flushall()
+    
+    # Create a user
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.click("text='Menu'")
+    page.click("text='Sign up'")
+    page.wait_for_timeout(1000)
+    page.fill('#register-box input[name="username"]', "testuser")
+    page.fill('#register-box input[name="email"]', "testemail@email.com")
+    page.fill('#register-box input[name="password"]', "testpassword")
+    page.fill('#register-box input[name="confirm_password"]', "testpassword")
+    page.click("text='I accept the Terms of Service.'")
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(1000)
+    username_link = page.locator(".nav-username-link")
+    expect(username_link).to_have_text("testuser")
+    
+    # Go to report_issue route
+    page.click("text='Menu'")
+    page.click("text='Contact'")
+    page.click("text='Report an Issue'")
+    title = page.locator("h1")
+    expect(title).to_have_text('Report Issue')
+    stage_title = page.locator(".report-issue-form-title1")
+    expect(stage_title).to_have_text('What kind of issue are you reporting?')
+    
+    # Click Next without selecting an issue
+    page.click("text='Next'")
+    stage_title = page.locator(".report-issue-form-title1")
+    expect(stage_title).to_have_text('What kind of issue are you reporting?')
+    
+    # Select an issue and click Next
+    page.click("text='An error occurred and I'd like to report it.'")
+    page.click("text='Next'")
+    stage_title = page.locator(".report-issue-form-title2")
+    expect(stage_title).to_have_text('Details of issue:')
+    
+    # Click Report Issue without entering any details
+    page.click("text='Report Issue'")
+    error = page.locator(".error-message")
+    expect(error).to_have_text("Please include a case number or a description.")
+    
+    # Enter a case number and click Report Issue
+    page.fill('input[name="issue_id"]', "123")
+    page.click("text='Report Issue'")
+    reported_message = page.locator(".t-reported-message")
+    expect(reported_message).to_have_text("Thank you for reporting this issue.")
+    page.click("text='Return to Home'")
+    
+    # Enter a description and click Report Issue
+    page.click("text='Menu'")
+    page.click("text='Contact'")
+    page.click("text='Report an Issue'")
+    page.click("text='An error occurred and I'd like to report it.'")
+    page.click("text='Next'")
+    page.fill('.issue-description', "123")
+    page.click("text='Report Issue'")
+    reported_message = page.locator(".t-reported-message")
+    expect(reported_message).to_have_text("Thank you for reporting this issue.")
+    page.click("text='Return to Home'")
+    
+    # Enter a case number and a description and click Report Issue
+    page.click("text='Menu'")
+    page.click("text='Contact'")
+    page.click("text='Report an Issue'")
+    page.click("text='An error occurred and I'd like to report it.'")
+    page.click("text='Next'")
+    page.fill('input[name="issue_id"]', "123")
+    page.fill('.issue-description', "123")
+    page.click("text='Report Issue'")
+    reported_message = page.locator(".t-reported-message")
+    expect(reported_message).to_have_text("Thank you for reporting this issue.")
+    page.click("text='Return to Home'")
+    
+    # Check the logs
+    logs = Log.query.all()
+    assert len(logs) == 4
+    assert logs[0].log_type == 'account_created'
+    assert logs[1].log_type == 'other_problem_ISSUE_REPORTED'
+    assert logs[2].log_type == 'other_problem_ISSUE_REPORTED'
+    assert logs[3].log_type == 'other_problem_ISSUE_REPORTED'
+
+
+def test_report_issue_route_after_password_change(page, flask_server, test_app):
+    redis_client.flushall()
+    
+    # Create a user
+    page.goto("http://localhost:5000/")
+    page.click("text='Continue to Website'")
+    page.click("text='Menu'")
+    page.click("text='Sign up'")
+    page.wait_for_timeout(1000)
+    page.fill('#register-box input[name="username"]', "testuser")
+    page.fill('#register-box input[name="email"]', "testemail@email.com")
+    page.fill('#register-box input[name="password"]', "testpassword")
+    page.fill('#register-box input[name="confirm_password"]', "testpassword")
+    page.click("text='I accept the Terms of Service.'")
+    page.dispatch_event(".sign-up-btn", "click")
+    page.wait_for_timeout(1000)
+    username_link = page.locator(".nav-username-link")
+    expect(username_link).to_have_text("testuser")
+    
+    # Change password
+    page.click("text='testuser'")
+    title = page.locator("h1")
+    expect(title).to_have_text('Account Management')
+    page.click("text='Change Password'")
+    page.fill('input[name="password"]', "testpassword")
+    page.click("text='Confirm'")
+    page.fill('input[name="password"]', "newpassword")
+    page.fill('input[name="confirm_password"]', "newpassword")
+    page.click("text='Confirm'")
+    page.click("text='Return to Profile'")
+    page.click("text='Menu'")
+    page.click("text='Log out'")
+    
+    # Check and get the logs
+    logs = Log.query.all()
+    assert len(logs) == 3
+    assert logs[0].log_type == 'account_created'
+    assert logs[1].log_type == 'init_change_password'
+    assert logs[2].log_type == 'password_changed'
+    unique_id = logs[2].unique_id
+    
+    # Go to report_issue route
+    page.goto("http://localhost:5000/report_issue?issue_id=" + unique_id)
+    title = page.locator("h1")
+    expect(title).to_have_text('Report Issue')
+    stage_title = page.locator(".report-issue-form-title1")
+    expect(stage_title).to_have_text('What kind of issue are you reporting?')
+    
+    # Click Next without selecting an issue
+    page.click("text='Next'")
+    stage_title = page.locator(".report-issue-form-title1")
+    expect(stage_title).to_have_text('What kind of issue are you reporting?')
+    
+    # Select an issue and click Next
+    page.click("text='My password was changed and I did NOT do it.'")
+    page.click("text='Next'")
+    stage_title = page.locator(".report-issue-form-title2")
+    expect(stage_title).to_have_text('Details of issue:')
+    
+    # Click Report Issue
+    page.click("text='Report Issue'")
+    reported_message = page.locator(".t-reported-message")
+    expect(reported_message).to_have_text("Thank you for reporting this issue.")
+    
+    # Send reset password link
+    page.click("text='Reset Password'")
+    page.fill('input[name="email"]', "testemail@email.com")
+    page.click("text='Send reset password link'")
+    page.wait_for_timeout(100)
+    
+    # Check the logs
+    logs = Log.query.all()
+    assert len(logs) == 5
+    assert logs[3].log_type == 'password_change_ISSUE_REPORTED'
+    assert logs[4].log_type == 'reset_password_email_sent'

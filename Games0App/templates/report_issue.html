@@ -52,7 +52,7 @@
             </form>
         {% elif values['stage'] == 3 %}
             <h1>{{ values['title'] }} Reported</h1>
-            <h4 style="font-weight: 100;">Thank you for reporting this issue.</h4>
+            <h4 class="t-reported-message" style="font-weight: 100;">Thank you for reporting this issue.</h4>
             {% if values['title'] == 'Unauthorised Password Change' or values['title'] == 'Security Alert' %}
                 <!-- PUT A VISUAL LINE HERE -->
                 <h4 style="font-weight: 100;">If you would like to reset your password, please click the button below.</h4>
