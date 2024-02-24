@@ -112,7 +112,6 @@ python run.py
 
 ## Tickets Awaiting Completion
 
-- Make the 'Contact' pop up box with a form to send me an email and link to report an issue.
 - Add testing, testing_in_actions, and production conditional blocks for features that need different values during these environments.
 - Add CSRF tokens.
 - Add AnswerLog class and table to track user answers.
