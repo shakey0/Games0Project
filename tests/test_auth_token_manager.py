@@ -58,6 +58,10 @@ def test_attempt_check(mock_current_user):
     assert auth_token_manager.attempt_check('reset_password', 1) == True
     assert auth_token_manager.attempt_check('reset_password', 1) == False
 
+    # Test attempt_check for send_contact_message (only 1 attempt allowed)
+    assert auth_token_manager.attempt_check('send_contact_message', 1) == True
+    assert auth_token_manager.attempt_check('send_contact_message', 1) == False
+
     # Test attempt_check for reset_password_email_first (only 1 attempt allowed)
     assert auth_token_manager.attempt_check('reset_password_email_first', 1) == True
     assert auth_token_manager.attempt_check('reset_password_email_first', 1) == False

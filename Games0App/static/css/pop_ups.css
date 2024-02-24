@@ -54,7 +54,7 @@
     color: rgb(255, 255, 255);
 }
 
-.confirm-legal-box, .legal-box, .about-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
+.confirm-legal-box, .legal-box, .about-box, .contact-box, .login-box, .forgotten-password-box, .register-box, .amend-score-box, .quit-game-box {
     border: 1px solid rgb(142, 114, 99);
     border-radius: 10px;
     background-color: #191c27;
@@ -144,9 +144,22 @@
     padding: 25px 30px;
     z-index: 21;
 }
+.contact-box {
+    height: 500px;
+    width: 80%;
+    max-width: 400px;
+    padding: 25px 30px;
+    z-index: 21;
+}
 .legal-content, .about-content {
     position: relative;
     height: 530px;
+    overflow-y: auto;
+    padding: 5px 20px 10px 0;
+}
+.contact-content {
+    position: relative;
+    height: 430px;
     overflow-y: auto;
     padding: 5px 20px 10px 0;
 }
@@ -167,50 +180,50 @@
     }
 }
 @media (max-height: 550px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 450px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 380px;
     }
 }
 @media (max-height: 500px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 400px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 330px;
     }
 }
 @media (max-height: 450px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 350px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 280px;
     }
 }
 @media (max-height: 400px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 300px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 230px;
     }
 }
 @media (max-height: 350px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 250px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 180px;
     }
 }
 @media (max-height: 300px) {
-    .legal-box, .about-box {
+    .legal-box, .about-box, .contact-box {
         height: 200px;
     }
-    .legal-content, .about-content {
+    .legal-content, .about-content, .contact-content {
         height: 130px;
     }
 }
@@ -254,19 +267,52 @@
     color: rgb(255, 255, 255);
 }
 
-.legal-title, .about-title {
+.legal-title, .about-title, .contact-title {
     margin-bottom: 10px;
     font-size: 24px;
     font-weight: bold;
     color: rgb(255, 119, 0);
 }
 
-.legal-text, .about-text {
+.legal-text, .about-text, .contact-text {
     margin-bottom: 15px;
 }
 
 .personal-box {
     display: flex;
+}
+
+.contact-message {
+    width: 95%;
+    height: 140px;
+    margin: 0;
+    padding: 10px;
+    outline: none;
+    font-size: 16px;
+    border: black 1px solid;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    resize: none;
+}
+
+.report-link-btn {
+    width: 100%;
+    height: 44px;
+    margin: 10px auto 7px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    background-color: white;
+    font-weight: bold;
+    font-size: 24px;
+    white-space: nowrap;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.report-link-btn:hover {
+    background-color: rgb(253, 255, 191);
+    box-shadow: 0 0 12px rgba(191, 191, 191, 0.6);
 }
 
 .personal-link {
@@ -333,6 +379,25 @@
 
 .pop-up-content input:hover {
     border: 1px solid rgb(232, 213, 203);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.pop-up-content input[type="submit"] {
+    width: 100%;
+    height: 44px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(142, 114, 99);
+    border-radius: 10px;
+    background-color: #202124;
+    font-size: 24px;
+    color: rgb(232, 213, 203);
+    white-space: nowrap;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pop-up-content input[type="submit"]:hover {
+    background-color: #30343e;
     box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 

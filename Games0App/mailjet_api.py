@@ -6,13 +6,21 @@ import os
 from datetime import datetime
 
 
-def send_email(user_email, username, email_type, reset_token='', new_email='', unique_id='', issue_title=''):
+def send_email(user_email, username, email_type, contact_message='', email_of_user='', reset_token='',
+                new_email='', unique_id='', issue_title=''):
 
 	api_key = os.environ.get('MAILJET_API_KEY')
 	api_secret = os.environ.get('MAILJET_SECRET_KEY')
 	mailjet = Client(auth=(api_key, api_secret), version='v3.1')
 
-	if email_type == 'sign_up_confirmation':
+	if email_type == 'contact':
+		email_info = {'contact_message': contact_message}
+		name_type = 'GamesZero User Contact'
+		subject = 'Message from GamesZero User'
+		text_part = f'Hi shakey0,\n\nYou have a new message from {username}:\n\n{contact_message}\n\nReply to: {email_of_user}'
+		html_part = f'<h3>Hi shakey0,</h3><h3>You have a new message from {username}:</h3><h3>{contact_message}</h3><h3>Reply to: {email_of_user}</h3>'
+
+	elif email_type == 'sign_up_confirmation':
 		email_info = {}
 		name_type = 'GamesZero Confirmation'
 		subject = 'Welcome to GamesZero!'

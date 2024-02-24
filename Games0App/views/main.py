@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, redirect, request, make_response, flash, jsonify
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
+from Games0App.mailjet_api import send_email
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
 from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
+from Games0App.classes.auth_token_manager import auth_token_manager
 from Games0App.classes.auth_validator import auth_validator
 from Games0App.classes.digit_to_word_converter import digit_to_word_converter
 from Games0App.utils import normalise_answer, is_close_match
-import secrets
-import datetime
+import os, secrets, datetime
 
 
 main = Blueprint('main', __name__)
@@ -17,6 +18,29 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     return render_template('index.html', games=games, token=None, user=current_user)
+
+
+@main.route('/contact', methods=['POST'])
+def contact():
+    
+    if not current_user.is_authenticated:
+        return jsonify(success=False, error="Please log in to send me a message.")
+    
+    contact_message = request.form.get('contact_message')
+    if not contact_message:
+        return jsonify(success=False, error="Please type something!")
+    if len(contact_message) < 50:
+        return jsonify(success=False, error="Please type a little more.")
+    if len(contact_message) > 500:
+        return jsonify(success=False, error="Please keep your message under 500 characters.")
+    
+    if not auth_token_manager.attempt_check('send_contact_message', current_user.id):
+        return jsonify(success=True, message="You've already sent me a message. Please wait a minute before sending another.")
+    
+    my_email = os.environ.get('MY_EMAIL_ADDRESS')
+    send_email(my_email, current_user.username, 'contact', contact_message=contact_message, email_of_user=current_user.email)
+    
+    return jsonify(success=True, message="Your message has been sent. I'll get back to you as soon as I can.")
 
 
 @main.route('/game_setup')

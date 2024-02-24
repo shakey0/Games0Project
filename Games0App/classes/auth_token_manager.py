@@ -38,6 +38,10 @@ class AuthTokenManager:
             redis_timeout = os.environ.get('REDIS_TIMEOUT', 3600)
             key_name = f'reset_password_attempt_{marker}'
             limit = 1
+        elif type == 'send_contact_message':
+            redis_timeout = os.environ.get('REDIS_TIMEOUT', 60)
+            key_name = f'send_contact_message_attempt_{marker}'
+            limit = 1
         elif type == 'reset_password_email_first':
             redis_timeout = os.environ.get('REDIS_TIMEOUT', 30)
             key_name = f'reset_password_email_first_attempt_{marker}'

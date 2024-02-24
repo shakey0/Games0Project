@@ -14,6 +14,38 @@ $(document).ready(function(){
         });
     });
 
+    $('.contact-send-message-btn').on('click', function(event) {
+        event.preventDefault();
+
+        const $button = $(this);
+        $button.prop('disabled', true);
+        const $form = $button.closest('form');
+
+        const formData = $form.serialize();
+
+        $.ajax({
+            url: '/contact',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    $('.contact-error-message').addClass('hidden');
+                    $('.contact-success-message').text(response.message);
+                    $('.contact-success-message').removeClass('hidden');
+                } else {
+                    $('.contact-success-message').addClass('hidden');
+                    $('.contact-error-message').text(response.error);
+                    $('.contact-error-message').removeClass('hidden');
+                }
+                $button.prop('disabled', false);
+            },
+            error: function() {
+                $('.contact-error-message').text('An unexpected error occurred. Please try again later.');
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
     $('.login-btn').on('click', function(event) {
         event.preventDefault();
     
