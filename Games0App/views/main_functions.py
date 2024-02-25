@@ -77,6 +77,7 @@ def get_next_question(game, token, question_tracker, category_name, difficulty, 
     redis_client.hset(token, 'question_tracker', next_question["last_question_no"])
     redis_client.hset(token, 'question', next_question["question"])
     redis_client.hset(token, 'answer', next_question["answer"])
+    redis_client.hset(token, 'ID', next_question["ID"])
 
     if "wrong_answers" in next_question:
         next_question["all_answers"] = [next_question["answer"]] + next_question["wrong_answers"]

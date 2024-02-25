@@ -4,6 +4,7 @@ from Games0App.extensions import db, redis_client
 from Games0App.mailjet_api import send_email
 from Games0App.games import games
 from Games0App.models.high_score import HighScore
+from Games0App.models.answer_log import AnswerLog
 from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
 from Games0App.classes.auth_token_manager import auth_token_manager
 from Games0App.classes.auth_validator import auth_validator
@@ -257,6 +258,7 @@ def game_answer():
             correct, statement = True, False
         elif user_answer == "True" and set_question != real_answer:
             correct, statement = False, False
+            user_answer = set_question
         elif user_answer == "False" and set_question == real_answer:
             correct, statement = False, True
         else:
@@ -279,6 +281,15 @@ def game_answer():
     else:
         new_points = 0
         seconds = seconds_to_answer_left
+    
+    difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if game.has_difficulty else ""
+    question_id = redis_client.hget(token, 'ID').decode('utf-8')
+    seconds_to_answer = timer - seconds_to_answer_left
+    answer_log = AnswerLog(game_name=game_name, difficulty=difficulty, question_id=question_id,
+                            real_answer=real_answer, user_answer=user_answer, correct=correct,
+                            seconds_to_answer=seconds_to_answer, timestamp=datetime.datetime.now())
+    db.session.add(answer_log)
+    db.session.commit()
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, statement=statement, seconds=seconds,

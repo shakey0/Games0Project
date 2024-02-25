@@ -38,7 +38,7 @@ ID;category;statement;answer;options
 37;animals;The bird known for its distinctive laughing call is the ____.;kookaburra;kookaburra, parrot
 38;animals;The smallest breed of horse is the ____.;Falabella;Falabella, Shetland pony
 39;animals;The fastest land bird is the ____.;ostrich;ostrich, emu
-40;animals;The venomous snake native to North America with a distinctive red, yellow, and black pattern is the ____.;coral snake;coral snake, rattlesnake
+40;animals;The venomous snake native to North America with a red, yellow, and black pattern is the ____.;coral snake;coral snake, rattlesnake
 41;animals;The flightless bird native to New Zealand is the ____.;kiwi;kiwi, emu
 42;animals;The smallest species of owl is the ____.;elf owl;elf owl, Eurasian pygmy owl
 43;animals;The largest species of octopus is the ____.;giant Pacific octopus;giant Pacific octopus, blue-ringed octopus
@@ -368,7 +368,7 @@ ID;category;statement;answer;options
 367;food;The original color or Coca-Cola was ____.;green;green, blue
 368;food;Pineapple contains a protein-digesting enzyme called ____.;bromelain;bromelain, papain
 369;food;The oldest known winery is located in ____, believed to be around 6,000 years old.;Armenia;Armenia, Georgia
-370;food;It would take a honeybee the equivalent of ____ trips around the world to make one kilogram of honey.;seven;seven, eleven
+370;food;It would take a honeybee the equivalent of ____ trips around the world to make a kilogram of honey.;seven;seven, eleven
 371;food;The miracle berry is known for ____.;making sour things taste sweet;making sour things taste sweet, causing a quick rush of endorphins
 372;food;Fish is an essential part of the ____ diet.;Inuit;Inuit, Maasai
 373;food;Margarine was originally made from ____.;beef fat;beef fat, pork fat

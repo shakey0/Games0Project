@@ -1,5 +1,6 @@
 from playwright.sync_api import expect
 from Games0App.extensions import redis_client
+from Games0App.models.answer_log import AnswerLog
 import json
 
 
@@ -132,6 +133,10 @@ def test_game_play_route_csv(page, flask_server, test_app):
         expect(result).to_have_text("You are right!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+    page.wait_for_timeout(100)
+    
+    answer_logs = AnswerLog.query.all()
+    assert len(answer_logs) == 10
 
 
 def test_game_play_route_categories_csv(page, flask_server, test_app):
@@ -159,6 +164,10 @@ def test_game_play_route_categories_csv(page, flask_server, test_app):
         expect(result).to_have_text("You are right!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+    page.wait_for_timeout(100)
+    
+    answer_logs = AnswerLog.query.all()
+    assert len(answer_logs) == 10
 
 
 def test_game_play_route_categories_difficulty_api(page, flask_server, test_app):
@@ -184,6 +193,10 @@ def test_game_play_route_categories_difficulty_api(page, flask_server, test_app)
         expect(result).to_have_text("You are right!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+    page.wait_for_timeout(100)
+    
+    answer_logs = AnswerLog.query.all()
+    assert len(answer_logs) == 10
         
 
 def test_game_play_route_difficulty_function(page, flask_server, test_app):
@@ -207,6 +220,10 @@ def test_game_play_route_difficulty_function(page, flask_server, test_app):
         expect(result).to_have_text("You are right!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+    page.wait_for_timeout(100)
+    
+    answer_logs = AnswerLog.query.all()
+    assert len(answer_logs) == 10
 
 
 def test_game_play_route_wrong_answers(page, flask_server, test_app):
@@ -234,3 +251,7 @@ def test_game_play_route_wrong_answers(page, flask_server, test_app):
         expect(result).to_have_text("Sorry!")
         page.dispatch_event(".submit-game-btn", "click")
         # page.screenshot(path="tests/screenshots/capture_{}.png".format(num+1))
+    page.wait_for_timeout(100)
+    
+    answer_logs = AnswerLog.query.all()
+    assert len(answer_logs) == 10
