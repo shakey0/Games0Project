@@ -63,3 +63,55 @@ def test_reveal_length_route(page, flask_server, test_app):
                 break
         assert len(question[2]) == int(length)
         # page.screenshot(path="tests/screenshots/capture.png")
+
+
+def test_remove_higher_route(page, flask_server, test_app):
+    for num in range(30):
+        redis_client.flushall()
+        
+        # Start a game and click the remove higher button
+        page.goto("http://localhost:5000/")
+        if num == 0:
+            page.click("text='Continue to Website'")
+        page.dispatch_event(".t-trivia_mc_categories", "click")
+        page.dispatch_event(".t-generalknowledge", "click")
+        page.dispatch_event("#hard", "click")
+        page.dispatch_event("#medium2", "click")
+        page.dispatch_event(".submit-game-btn", "click")
+        game_title = page.locator(".game-title-tag")
+        expect(game_title).to_have_text("Trivia - Multiple Choice - General Knowledge")
+        page.dispatch_event(".remove-higher-btn", "click")
+        page.wait_for_timeout(100)
+        
+        # Get the answers and check if one of the higher answers has been removed (display: none)
+        answers = page.locator(".answer-selector")
+        first_element_display = answers.nth(0).evaluate("element => getComputedStyle(element).display")
+        second_element_display = answers.nth(1).evaluate("element => getComputedStyle(element).display")
+        assert first_element_display == 'none' or second_element_display == 'none'
+        # page.screenshot(path="tests/screenshots/capture.png")
+        
+
+def test_remove_lower_route(page, flask_server, test_app):
+    for num in range(30):
+        redis_client.flushall()
+        
+        # Start a game and click the remove lower button
+        page.goto("http://localhost:5000/")
+        if num == 0:
+            page.click("text='Continue to Website'")
+        page.dispatch_event(".t-trivia_mc_categories", "click")
+        page.dispatch_event(".t-generalknowledge", "click")
+        page.dispatch_event("#hard", "click")
+        page.dispatch_event("#medium2", "click")
+        page.dispatch_event(".submit-game-btn", "click")
+        game_title = page.locator(".game-title-tag")
+        expect(game_title).to_have_text("Trivia - Multiple Choice - General Knowledge")
+        page.dispatch_event(".remove-lower-btn", "click")
+        page.wait_for_timeout(100)
+        
+        # Get the answers and check if one of the lower answers has been removed (display: none)
+        answers = page.locator(".answer-selector")
+        third_element_display = answers.nth(2).evaluate("element => getComputedStyle(element).display")
+        fourth_element_display = answers.nth(3).evaluate("element => getComputedStyle(element).display")
+        assert third_element_display == 'none' or fourth_element_display == 'none'
+        # page.screenshot(path="tests/screenshots/capture.png")
