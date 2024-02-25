@@ -114,14 +114,15 @@ def send_email(user_email, username, email_type, contact_message='', email_of_us
 		]
 	}
 
-	class Result: # FOR TESTING PURPOSES
-		def __init__(self, status_code, json):
-			self.status_code = status_code
-			self.json = json
-	result = Result(200, {'success': True})
-	# result = mailjet.send.create(data=data) # DISABLED TO PREVENT EMAILS BEING SENT
-	# print(result.status_code)
-	# print(result.json())
+	production = os.environ.get('FLASK_ENV', 'development')
+	if production == 'production':
+		result = mailjet.send.create(data=data)
+	else:
+		class Result: # FOR DEV AND TESTING PURPOSES
+			def __init__(self, status_code, json):
+				self.status_code = status_code
+				self.json = json
+		result = Result(200, {'success': True})
 	
 	email_log = EmailLog(
 		user_email=user_email,

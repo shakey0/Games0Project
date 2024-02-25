@@ -7,8 +7,8 @@ import redis
 db = SQLAlchemy()
 migrate = Migrate()
 
-production = os.environ.get('PRODUCTION', False)
-if production:
+production = os.environ.get('FLASK_ENV', 'development')
+if production == 'production' or production == 'testing_in_actions':
     redis_client = redis.Redis(host='localhost', port=6379, db=0)
 else:
     REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
