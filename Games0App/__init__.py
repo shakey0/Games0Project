@@ -2,6 +2,7 @@ from flask import Flask, g, request, make_response, jsonify
 from flask_login import LoginManager
 from Games0App.extensions import db, migrate, count_words, format_date
 from .config import load_config
+from flask_wtf.csrf import CSRFProtect
 import os
 
 def create_app():
@@ -15,6 +16,9 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    
+    csrf = CSRFProtect()
+    csrf.init_app(app)
 
     login_manager = LoginManager()
     login_manager.init_app(app)

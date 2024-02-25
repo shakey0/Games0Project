@@ -14,7 +14,7 @@
             <h4 style="color: rgb(255, 119, 0);">Deleting your account is an irreversible action. Once you complete the steps your account will be immediately deleted and completely unrecoverable.</h4>
             <h4 style="padding-top: 20px;">Are you sure you want to delete your account?</h4>
             <form action="/{{ values['route'] }}" method="POST">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <div class="submit-btns">
                     <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
@@ -31,7 +31,7 @@
                 {% endif %}
             {% endwith %}
             <form action="/{{ values['route'] }}" method="POST">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <input class="auth-input" type="password" name="password" placeholder="Password">
                 <div class="submit-btns">
@@ -53,7 +53,7 @@
                 {% endif %}
             {% endwith %}
             <form action="/{{ values['route'] }}" method="POST" id="authForm">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 {% if 'Password' in values['title'] %}
                     <input class="auth-input" type="password" id="password" onkeyup="checkPasswordStrength()" name="password" placeholder="Password">

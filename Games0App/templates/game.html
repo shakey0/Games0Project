@@ -42,6 +42,7 @@
     <div class="pre-game-box">
         <p class="instruction-text">{{ game.intro_message }} The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
         <form method="POST" action="/game_play">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <h2>Speed level (time to answer):</h2>
             <div class="pre-selection-box">
                 <div class="selector-class">
@@ -86,6 +87,7 @@
     <h4 id="hint-message" class="hint-messages"></h4>
     <div class="in-game-box" style="display: none;">
         <form method="POST" action="/game_answer" data-selection-choice="{% if "_mc" in game.param or "_tf" in game.param %}true{% else %}false{% endif %}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             {% if "_mc" in game.param %}
                 <div class="answer-selection-box">
                     {% for answer in next_question["all_answers"] %}
@@ -120,10 +122,12 @@
             {% if "_mc" in game.param %}
                 <div class="helper-buttons">
                     <form class="remove-higher-form" method="POST" action="/remove_higher">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="token" value="{{ token }}">
                         <button class="box-btn remove-higher-btn">Remove higher wrong answer</button>
                     </form>
                     <form class="remove-lower-form" method="POST" action="/remove_lower">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="token" value="{{ token }}">
                         <button class="box-btn remove-lower-btn">Remove lower wrong answer</button>
                     </form>
@@ -135,10 +139,12 @@
             {% elif "fill_blank" in game.param or "trivia_madness" in game.param %}
                 <div class="helper-buttons">
                     <form class="reveal-letter-form" method="POST" action="/reveal_letter">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="token" value="{{ token }}">
                         <button class="box-btn reveal-letter-btn">Reveal a letter</button>
                     </form>
                     <form class="reveal-length-form" method="POST" action="/reveal_length">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input type="hidden" name="token" value="{{ token }}">
                         <button class="box-btn reveal-length-btn">Reveal length</button>
                     </form>
@@ -206,6 +212,7 @@
     <div class="after-answer">
         {% if question_no >= 10 %}
             <form method="POST" action="/game_finish">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="token" value="{{ token }}">
                 {% if user.is_authenticated %}
                     <div class="victory-message-error" style="transform: translateY(-10px); font-size: 1.4em; color: rgb(255, 119, 0);"></div>
@@ -217,6 +224,7 @@
             </form>
         {% else %}
             <form method="POST" action="/game_play">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="token" value="{{ token }}">
                 <input type="hidden" name="question_no" value="{{ question_no }}">
                 <input class="submit-game-btn" style="margin-top: 10px;" type="submit" value="Next Question">

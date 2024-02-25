@@ -114,6 +114,4 @@ python run.py
 ## Tickets Awaiting Completion
 
 - Add testing, testing_in_actions, and production conditional blocks for features that need different values during these environments.
-- Add CSRF tokens.
-- Add AnswerLog class and table to track user answers.
 - Create seed data to fill the dev database.

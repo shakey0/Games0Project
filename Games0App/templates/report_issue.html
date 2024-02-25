@@ -13,7 +13,7 @@
         {% if values['stage'] == 1 %}
             <h1>Report Issue</h1>
             <form action="/report_issue" method="POST">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <p class="report-issue-form-title1">What kind of issue are you reporting?</p>
                 <div class="issue-selection-box">
@@ -33,7 +33,7 @@
         {% elif values['stage'] == 2 %}
             <h1>Report {{ values['title'] }}</h1>
             <form action="/report_issue" method="POST">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <p class="report-issue-form-title2 report-issue-text" style="color: rgb(255, 119, 0);">Details of issue:</p>
                 <p class="error-message report-issue-text" style="display: none; color: red;"></p>
@@ -59,7 +59,7 @@
                 <button class="report-issue-reset-password-btn box-btn">Reset Password</button>
                 <div class="report-issue-reset-password-box" id="forgotten-password-box" style="display: none;">
                     <form action="/send_reset_password_link" method="POST">
-                        <!-- PUT CSRF TOKEN HERE -->
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <input class="auth-input email-input" type="text" name="email" placeholder="Email address" autofocus>
                         <p class="forgotten-password-error-message hidden" style="color: rgb(255, 119, 0);"></p>
                         <p class="forgotten-password-success-message hidden" style="color: rgb(0, 149, 255);"></p>

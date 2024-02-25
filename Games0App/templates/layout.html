@@ -60,7 +60,7 @@
             {% if user.is_authenticated %}
                 <button class="options-btn clear-btn" data-contact-button-target="#contact-box">Contact</button>
                 <form method="POST" action="/logout">
-                    <!-- PUT CSRF TOKEN HERE -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input class="options-btn clear-btn" style="font-weight: 400;" type="submit" value="Log out">
                 </form>
             {% endif %}
@@ -125,6 +125,7 @@
                 <p class="contact-title">Contact Me</p>
                 <p class="contact-text">If you have any questions and would like to contact me, please do so below.</p>
                 <form method="POST" action="/contact">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <textarea class="contact-message" name="contact_message" placeholder="Type away..."></textarea>
                     <div class="contact-error-message close-clear" style="color: rgb(255, 119, 0);"></div>
                     <div class="contact-success-message close-clear" style="color: rgb(0, 149, 255);"></div>
@@ -152,7 +153,7 @@
             <div class="login-box-interior">
                 <button data-cancel-button class="cancel-button">&times;</button>
                 <form method="POST" action="/login">
-                    <!-- PUT CSRF TOKEN HERE -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div class="pop-up-header">
                         <p>Login</p>
                     </div>
@@ -182,7 +183,7 @@
         <div class="forgotten-password-box pop-up-box" id="forgotten-password-box">
             <button data-cancel-button class="cancel-button">&times;</button>
             <form method="POST" action="/send_reset_password_link">
-                <!-- PUT CSRF TOKEN HERE -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <div class="pop-up-header reset-password-header">
                     <p>Reset Password</p>
                 </div>
@@ -205,7 +206,7 @@
             <div class="register-box-interior">
                 <button data-cancel-button class="cancel-button">&times;</button>
                 <form id="registrationForm" method="POST" action="/register">
-                    <!-- PUT CSRF TOKEN HERE -->
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <div class="pop-up-header">
                         <p>Register</p>
                     </div>
