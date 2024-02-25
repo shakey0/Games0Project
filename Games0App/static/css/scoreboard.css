@@ -146,8 +146,14 @@
 .score-table-separator {
     width: 1000px;
     max-width: 98%;
-    margin: 0px auto 20px;
-    border-bottom: 2px solid #64594c;
+    margin: 40px auto;
+    border-bottom: 2px solid #aa9f91;
+}
+
+@media (max-width: 815px) {
+    .score-table-separator {
+        margin: 30px auto;
+    }
 }
 
 .scoreboard-table {

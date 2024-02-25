@@ -65,7 +65,11 @@
 
 {% for game_scores in all_games_scores %}
   <div style="margin: 0 10px;">
-    <div class="score-table-separator"></div>
+    {% if loop.index != 1 %}
+      <div class="score-table-separator"></div>
+    {% else %}
+      <div style="height: 20px;"></div>
+    {% endif %}
     <h4><a href="{{ url_for('main.game_setup', game_type=all_games_scores[game_scores][0]['game'], category=all_games_scores[game_scores][0]['category']) }}" class="quick-game-link-btn clear-btn" style="font-weight: 100;">{{ all_games_scores[game_scores][0]['game_name'] }}</a>
       <br><a href="{{ url_for('scoreboard.scoreboard_page', game_name_param=all_games_scores[game_scores][0]['game'], category=all_games_scores[game_scores][0]['category']) }}" class="game-score-btn clear-btn"><b>Scoreboard{% if all_games_scores[game_scores][0]['difficulty'] %} - Level: {{ all_games_scores[game_scores][0]['difficulty'] | capitalize }}{% endif %}</b></a></h4>
     <table class="scoreboard-table">
