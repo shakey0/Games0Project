@@ -46,7 +46,8 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 
 ## Key Technologies
 
-- **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt
+- **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt, better-profanity
+- **API Sources** Mailjet, API Ninjas, Open Trivia Api, The Trivia API, Official Joke API
 - **Frontend:** JavaScript, AJAX, CSS, HTML
 - **Testing:** Pytest, Playwright
 
