@@ -152,4 +152,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    function adjustOptionsMenuPosition() {
+        const optionsMenu = document.querySelector('.options-menu');
+        if (window.innerWidth < document.body.offsetWidth) {
+            // Adjust based on the difference between the viewport and the document width
+            optionsMenu.style.right = (document.body.offsetWidth - window.innerWidth) + 'px';
+        } else {
+            optionsMenu.style.right = '0px';
+        }
+    }
+    
+    // Adjust on resize and document load
+    window.addEventListener('resize', adjustOptionsMenuPosition);
+    document.addEventListener('DOMContentLoaded', adjustOptionsMenuPosition);
+    
 });
