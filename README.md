@@ -6,7 +6,7 @@ Welcome to GamesZero! This is a project I began about a month after finishing th
 Firstly, I wanted to get more experience with APIs, and this project has been fantastic for that. I've written two scripts ([create_CSV_contents_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_CSV_contents_from_API.py) and [create_trivia_CSV_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_trivia_CSV_from_API.py)) which I have used to retrieve and sort hundreds of quiz questions from various different API sources. I also have one game in this web app (Trivia - Multiple Choice) that takes the questions from the API while the app is running ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L25-L58)).<br><br>
 Secondly, I wanted to learn more about caching with Redis. I have used Redis in this webapp for extensive caching of the game data when a user is doing a quiz (see [main.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py) and [main_functions.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main_functions.py)). This is a brilliant way to robustly store the game data on the backend and eliminate any potentiality for it to be manipulated. I have also used Redis to cache the questions sent out to users, to avoid the same question being sent in the same game or, if the user is logged in, to avoid the same question being sent within the next 5 games (see [user_question_tracker.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/user_question_tracker.py)). I have used it to store bulks of questions recieved from an API and CSV files too ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L113-L167)).<br><br>
 Thirdly, I wanted to gain more experience around creating secure authentication routes (see [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)). Again, I've used Redis here in the AuthTokenManager class to cache tokens for various auth processes (see [auth_token_manager.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/auth_token_manager.py)).<br><br>
-Lastly, I wanted to create a logging system and thought that making a games/quiz web app would be a great opportunity to do this, since there will always be room for errors in any game. I implemented a Logger class in this web app (see [logger.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/logger.py)) to sort the log information and add the logs to the database accordingly. I have also implemented a database table called user_answer_logger, which logs the answers that users give to each question and whether they are right or wrong. This allows monitoring to see if any questions are too hard, too easy, or perhaps confusing, and should be amended or removed.
+Lastly, I wanted to create a logging system and thought that making a games/quiz web app would be a great opportunity to do this, since there will always be room for errors in any game. I implemented a Logger class in this web app (see [logger.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/logger.py)) to sort the log information and add the logs to the database accordingly. I have also implemented a database table called answer_logs, which logs the answers that users give to each question and whether they are right or wrong. This allows monitoring to see if any questions are too hard, too easy, or perhaps confusing, and should be amended or removed.
 
 ## Key Technologies
 
@@ -72,7 +72,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - Logs the status code and json response received after sending the email.
 - If something goes wrong while sending an email, a log will be created in the General Logs.
 
-**Answer Logs (Tablename: user_answer_logs)**
+**Answer Logs (Tablename: answer_logs)**
 - Logs answers to all questions answered by users.
 - Logs all the game data and question_ids for each answer given.
 - Logs the real answer, user's answer, true or false as to whether the user's answer was correct, and the amount of time it took the user to answer.
@@ -85,7 +85,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - **high_scores** (id, user_id, game, game_name, category, difficulty, score, date, message, likes) - FK(user_id) connects high_score to user - <em>many-to-many with users through scores_users</em>
 - **logs** (id, unique_id, user_id, ip_address, function_name, log_type, timestamp, data, issue_id)
 - **email_logs** (id, user_email, username, email_type, info, unique_id, status_code, json_response, timestamp)
-- **user_answer_logs** (id, game_name, difficulty, question_id, real_answer, user_answer, correct, seconds_to_answer, timestamp)
+- **answer_logs** (id, game_name, difficulty, question_id, real_answer, user_answer, correct, seconds_to_answer, timestamp)
 
 **Join Tables** - The values here all reference the main tables.
 
