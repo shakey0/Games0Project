@@ -158,7 +158,7 @@
 
 .options-menu {
     position: fixed;
-    top: 81px; right: 0;
+    top: 80px; right: 0;
     z-index: 8;
     display: flex;
     align-items: center;
@@ -184,7 +184,7 @@
 
 @media (max-width: 815px) {
     .options-menu {
-        top: 91px;
+        top: 90px;
     }
 }
 
