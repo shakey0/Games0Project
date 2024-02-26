@@ -62,6 +62,7 @@ jobs:
           PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO runner;"
           PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO runner;"
           PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT USAGE, CREATE ON SCHEMA public TO runner;"
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON SCHEMA public TO runner;"
         env:
           PGPASSWORD: postgres
 
