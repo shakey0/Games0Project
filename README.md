@@ -44,6 +44,12 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem.
 - See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L607)
 
+## Process for Caching and Retrieving Questions
+
+<p align="center">
+    <img alt="CachingProcess" src="CachingDiagram.png" width="90%"/>
+</p>
+
 ## Key Technologies
 
 - **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt, better-profanity

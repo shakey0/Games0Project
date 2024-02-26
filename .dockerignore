@@ -7,6 +7,7 @@ venv/
 .env
 .gitattributes
 .gitignore
+CachingDiagram.png
 create_CSV_contents_from_API.py
 create_trivia_CSV_from_API.py
 play.py
