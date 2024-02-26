@@ -55,6 +55,14 @@ jobs:
         env:
           PGPASSWORD: postgres
 
+      - name: Grant Role Permissions
+        run: |
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE games_0_data_test TO runner;"
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO runner;"
+          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO runner;"
+        env:
+          PGPASSWORD: postgres
+
       - name: Install CITEXT extension
         run: |
           PGPASSWORD=postgres psql -h localhost -U postgres -d games_0_data_test -c 'CREATE EXTENSION IF NOT EXISTS citext;'
