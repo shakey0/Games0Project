@@ -8,7 +8,7 @@ jobs:
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
       FLASK_ENV: testing
-      SQLALCHEMY_TEST_DATABASE_URI: postgresql://runner:runner@localhost:5432/games_0_data_test
+      SQLALCHEMY_TEST_DATABASE_URI: postgresql://postgres:postgres@localhost:5432/games_0_data_test
 
     services:
       postgres:
@@ -50,23 +50,6 @@ jobs:
       - name: Set up Playwright
         run: playwright install
 
-      - name: Create PostgreSQL Role
-        run: |
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "CREATE ROLE runner LOGIN PASSWORD 'runner';"
-        env:
-          PGPASSWORD: postgres
-
-      - name: Grant Role Permissions
-        run: |
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE games_0_data_test TO runner;"
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO runner;"
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO runner;"
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON ALL RELATIONS IN SCHEMA public TO runner;"
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT USAGE, CREATE ON SCHEMA public TO runner;"
-          PGPASSWORD=postgres psql -h localhost -U postgres -c "GRANT ALL PRIVILEGES ON SCHEMA public TO runner;"
-        env:
-          PGPASSWORD: postgres
-
       - name: Install CITEXT extension
         run: |
           PGPASSWORD=postgres psql -h localhost -U postgres -d games_0_data_test -c 'CREATE EXTENSION IF NOT EXISTS citext;'
@@ -82,19 +65,12 @@ jobs:
         env:
           PGPASSWORD: postgres
 
-      - name: Test Runner Role Permissions Directly
-        run: |
-          PGPASSWORD=runner psql -h localhost -U runner -d games_0_data_test -c "CREATE TABLE test_permission_check (id SERIAL PRIMARY KEY);"
-          PGPASSWORD=runner psql -h localhost -U runner -d games_0_data_test -c "DROP TABLE test_permission_check;"
-        env:
-          PGPASSWORD: runner
-
       - name: Run Tests
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-          POSTGRES_USER: runner
-          POSTGRES_PASSWORD: runner
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           REDIS_HOST: localhost
           REDIS_PORT: 6379
         run: pytest
