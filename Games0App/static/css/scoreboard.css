@@ -152,7 +152,7 @@
 .score-table-separator {
     width: 1000px;
     max-width: 98%;
-    margin: 40px auto;
+    margin: 20px auto;
     border-bottom: 2px solid #aa9f91;
 }
 
@@ -161,8 +161,17 @@
         margin: 10px auto 0;
     }
     .score-table-separator {
-        margin: 30px auto;
+        margin: 10px auto;
     }
+}
+
+.scoreboard-table-container {
+    margin: 0 10px;
+    width: 100%; /* Ensures the container fits within its parent element */
+    max-width: 100%; /* Optional, to ensure it doesn't exceed the viewport width */
+    overflow-x: auto; /* Allows horizontal scrolling within the div */
+    overflow-y: hidden; /* Prevents vertical scrolling within the div */
+    -webkit-overflow-scrolling: touch; /* Improves scrolling on iOS devices */
 }
 
 .scoreboard-table {
