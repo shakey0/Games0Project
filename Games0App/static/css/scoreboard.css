@@ -166,7 +166,8 @@
 }
 
 .scoreboard-table-container {
-    margin: 0 10px;
+    margin: 0;
+    box-sizing: border-box;
     width: 100%; /* Ensures the container fits within its parent element */
     max-width: 100%; /* Optional, to ensure it doesn't exceed the viewport width */
     overflow-x: auto; /* Allows horizontal scrolling within the div */
