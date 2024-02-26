@@ -71,12 +71,21 @@ jobs:
         env:
           PGPASSWORD: postgres
 
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          for i in {1..10}; do
+            PGPASSWORD=postgres psql -h localhost -U postgres -c "\q" && break
+            sleep 5
+          done
+        env:
+          PGPASSWORD: postgres
+
       - name: Run Tests
         env:
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: runner
+          POSTGRES_PASSWORD: runner
           REDIS_HOST: localhost
           REDIS_PORT: 6379
         run: pytest
