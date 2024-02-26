@@ -81,6 +81,13 @@ jobs:
         env:
           PGPASSWORD: postgres
 
+      - name: Test Runner Role Permissions Directly
+        run: |
+          PGPASSWORD=runner psql -h localhost -U runner -d games_0_data_test -c "CREATE TABLE test_permission_check (id SERIAL PRIMARY KEY);"
+          PGPASSWORD=runner psql -h localhost -U runner -d games_0_data_test -c "DROP TABLE test_permission_check;"
+        env:
+          PGPASSWORD: runner
+
       - name: Run Tests
         env:
           POSTGRES_HOST: localhost
