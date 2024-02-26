@@ -47,7 +47,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 ## Process for Caching and Retrieving Questions
 
 <p align="center">
-    <img alt="CachingProcess" src="CachingDiagram.png" width="90%"/>
+    <img alt="CachingProcess" src="CachingDiagram.png" width="100%"/>
 </p>
 
 ## Key Technologies
