@@ -170,7 +170,7 @@
     max-width: 90%;
     margin: 0 auto 30px;
     font-size: 1.3em;
-    overflow-x: auto;
+    overflow-x: scroll;
 }
 
 @media (max-width: 1025px) {
@@ -191,7 +191,7 @@
 @media (max-width: 815px) {
     .scoreboard-table {
         min-width: 730px;
-        overflow-y: auto;
+        overflow-y: scroll;
     }
 }
 
