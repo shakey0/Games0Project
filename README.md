@@ -8,6 +8,14 @@ Secondly, I wanted to learn more about caching with Redis. I have used Redis in 
 Thirdly, I wanted to gain more experience around creating secure authentication routes (see [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)). Again, I've used Redis here in the AuthTokenManager class to cache tokens for various auth processes (see [auth_token_manager.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/auth_token_manager.py)).<br><br>
 Lastly, I wanted to create a logging system and thought that making a games/quiz web app would be a great opportunity to do this, since there will always be room for errors in any game. I implemented a Logger class in this web app (see [logger.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/logger.py)) to sort the log information and add the logs to the database accordingly. As one of my very last ticket on this web app, I will implement another logging class called AnswerLogger, which will log the answers that users give to each question and whether they are right or wrong. This will allow monitoring to see if any questions are too hard or easy and should be amended or removed.
 
+## Key Technologies
+
+- **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt, better-profanity
+- **API Sources** Mailjet, API Ninjas, Open Trivia Api, The Trivia API, Official Joke API
+- **Frontend:** JavaScript, AJAX, CSS, HTML
+- **Testing:** Pytest, unittest.mock, Playwright
+- **Deployment:** Docker, ElephantSQL, GitHub Actions, Render
+
 ## Features
 
 ### Main Features
@@ -50,14 +58,6 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
     <img alt="CachingProcess" src="CachingDiagram.png" width="100%"/>
 </p>
 
-## Key Technologies
-
-- **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt, better-profanity
-- **API Sources** Mailjet, API Ninjas, Open Trivia Api, The Trivia API, Official Joke API
-- **Frontend:** JavaScript, AJAX, CSS, HTML
-- **Testing:** Pytest, unittest.mock, Playwright
-- **Deployment:** Docker, ElephantSQL, GitHub Actions, Render
-
 ## Database Tables
 
 **Main Tables** - The id in each of these tables is the primary key.
@@ -71,6 +71,16 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 **Join Tables** - The values here all reference the main tables.
 
 - **scores_users** (score_id, user_id) - To keep track of which users like which high_scores.
+
+## Deployment & CI/CD Pipeline Process
+
+1. Used Docker to containerise the app along with Redis (in the same container) on my local machine.
+    - See [Dockerfile](https://github.com/shakey0/Games0Project/blob/main/Dockerfile)
+2. Connected the app inside the Docker container to the PostgreSQL database instance on ElephantSQL.
+3. Created a script - deploy.yml - to build and test the app in GitHub Actions.
+    - See [deploy.yml](https://github.com/shakey0/Games0Project/blob/main/.github/workflows/deploy.yml)
+4. Created a new Web Service in Render and set all the necessary environment variables (secrets).
+5. Configured GitHub to give Render the necessary permissions on this repository, so each time a new push is made to the main branch, and the tests pass, the latest version of the app will be deployed to Render.
 
 ## Installation & Setup
 
