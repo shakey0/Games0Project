@@ -49,7 +49,8 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - **Backend:** Python, Flask, Redis, PostgreSQL, SQLAlchemy, Bcrypt, better-profanity
 - **API Sources** Mailjet, API Ninjas, Open Trivia Api, The Trivia API, Official Joke API
 - **Frontend:** JavaScript, AJAX, CSS, HTML
-- **Testing:** Pytest, Playwright
+- **Testing:** Pytest, unittest.mock, Playwright
+- **Deployment:** Docker, ElephantSQL, GitHub Actions, Render
 
 ## Database Tables
 
@@ -110,8 +111,3 @@ Start the server:
 ```bash
 python run.py
 ```
-
-## Tickets Awaiting Completion
-
-- Add testing, testing_in_actions, and production conditional blocks for features that need different values during these environments.
-- Create seed data to fill the dev database.
