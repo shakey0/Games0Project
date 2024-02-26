@@ -82,7 +82,7 @@
     </div>
 {% elif in_game == "yes" %}
     <h1 class="func-pre">Your {{ game.question_numbers[question_no] }} question will be revealed in <b class="before-countdown">3</b> seconds.</h1>
-    <h1 class="func-in" style="display: none; font-weight: 100;">{{ next_question["question"] }}</h1>
+    <h1 class="func-in" style="display: none; font-weight: 400;">{{ next_question["question"] }}</h1>
     <h1 class="in-countdown" style="display: none;">{{ timer }}</h1>
     <h4 id="hint-message" class="hint-messages"></h4>
     <div class="in-game-box" style="display: none;">
@@ -162,15 +162,15 @@
             <h2 class="t-answer-result">You are right!</h2>
             {% if "_tf" in game.param %}
                 {% if statement %}
-                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                    <h2 style="font-weight: 400;">{{ real_answer }}</h2>
                 {% else %}
                     <h3>Here's the correction:</h3>
-                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                    <h2 style="font-weight: 400;">{{ real_answer }}</h2>
                 {% endif %}
             {% elif "number" in game.param %}
-                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                <h2 style="font-weight: 400;">{{ real_answer }}</h2>
             {% else %}
-                <h2><p style="font-weight: 100;">'{{ real_answer }}'</p> is the correct answer!</h2>
+                <h2><p style="font-weight: 400;">'{{ real_answer }}'</p> is the correct answer!</h2>
             {% endif %}
             <h3>You answered in <b class="score">{{ seconds }} seconds.</b></h3>
             <h3><b class="score">+{{ new_points }} points</b></h3>
@@ -189,18 +189,18 @@
             {% if "_tf" in game.param %}
                 {% if statement %}
                     <h3>True was the correct answer.</h3>
-                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                    <h2 style="font-weight: 400;">{{ real_answer }}</h2>
                 {% else %}
                     <h3>False was the correct answer.</h3>
                     <h3>Here's the correction:</h3>
-                    <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                    <h2 style="font-weight: 400;">{{ real_answer }}</h2>
                 {% endif %}
             {% elif "number" in game.param %}
                 <h3>It was actually this:</h3>
-                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                <h2 style="font-weight: 400;">{{ real_answer }}</h2>
             {% else %}
                 <h3>The correct answer was:</h3>
-                <h2 style="font-weight: 100;">{{ real_answer }}</h2>
+                <h2 style="font-weight: 400;">{{ real_answer }}</h2>
             {% endif %}
             {% if question_no >= 10 %}
                 <h2>Your final score is <b class="score">{{ score }} points</b>.</h2>

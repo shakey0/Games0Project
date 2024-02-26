@@ -78,7 +78,7 @@
         {% elif values['stage'] == 3 %}
             <h4>{{ values['message'] }}</h4>
             {% if 'Email' in values['title'] %}
-            <h4 style="font-weight: 100;">{{ values['new_email'] }}</h4>
+            <h4 style="font-weight: 400;">{{ values['new_email'] }}</h4>
             {% endif %}
             <div class="return-btn-box">
                 {% if not 'Delete' in values['title'] and not 'Reset' in values['title'] %}

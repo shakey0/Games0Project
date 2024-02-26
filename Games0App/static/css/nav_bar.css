@@ -5,6 +5,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    box-sizing: border-box;
     height: 80px;
     padding: 0 20px;
     background-color: #191c27;
@@ -112,7 +114,7 @@
 
 @media (max-width: 815px) {
     .nav-bar {
-        height: 70px;
+        height: 90px;
         padding: 10px 20px;
     }
     .nav-bar-left, .nav-bar-right {
