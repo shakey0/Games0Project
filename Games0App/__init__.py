@@ -10,13 +10,6 @@ def create_app():
 
     env = os.getenv('FLASK_ENV', 'development')
     app.config.from_object(load_config(env))
-    
-    # Check if SQLALCHEMY_DATABASE_URI is loaded successfully
-    db_uri = app.config.get('SQLALCHEMY_DATABASE_URI')
-    if db_uri:
-        print(f"Database URI Loaded: {db_uri}")
-    else:
-        print("Error: Database URI not loaded. Check your configuration and environment variables.")
 
     app.jinja_env.filters['count_words'] = count_words
     app.jinja_env.filters['format_date'] = format_date
