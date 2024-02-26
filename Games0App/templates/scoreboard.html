@@ -53,6 +53,7 @@
       </form>
     </div>
   {% endif %}
+  <div class="score-table-separator-first"></div>
 {% elif not user.is_authenticated %}
   <div class="high-score-login">
     <p>
@@ -62,6 +63,7 @@
       to like scores!
     </p>
   </div>
+  <div class="score-table-separator-first"></div>
 {% endif %}
 
 {% for game_scores in all_games_scores %}

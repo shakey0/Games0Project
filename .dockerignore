@@ -2,7 +2,6 @@
 *.DS_Store
 .pytest_cache/
 .vscode/
-*.pyc
 tests/
 venv/
 .env

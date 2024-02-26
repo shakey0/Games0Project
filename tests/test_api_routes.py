@@ -99,13 +99,11 @@ def test_remove_lower_route(page, flask_server, test_app):
         page.goto("http://localhost:5000/")
         if num == 0:
             page.click("text='Continue to Website'")
-        page.dispatch_event(".t-trivia_mc_categories", "click")
-        page.dispatch_event(".t-generalknowledge", "click")
-        page.dispatch_event("#hard", "click")
-        page.dispatch_event("#medium2", "click")
+        page.dispatch_event(".t-number_to_reach_mc", "click")
+        page.dispatch_event("#hard2", "click")
         page.dispatch_event(".submit-game-btn", "click")
         game_title = page.locator(".game-title-tag")
-        expect(game_title).to_have_text("Trivia - Multiple Choice - General Knowledge")
+        expect(game_title).to_have_text("Number to Reach")
         page.dispatch_event(".remove-lower-btn", "click")
         page.wait_for_timeout(100)
         

@@ -117,22 +117,31 @@ def send_email(user_email, username, email_type, contact_message='', email_of_us
 	production = os.environ.get('FLASK_ENV', 'development')
 	if production == 'production':
 		result = mailjet.send.create(data=data)
+		email_log = EmailLog(
+			user_email=user_email,
+			username=username,
+			email_type=email_type,
+			info=email_info,
+			unique_id=unique_id,
+			status_code=result.status_code,
+			json_response=result.json(),
+			timestamp=datetime.utcnow()
+		)
 	else:
 		class Result: # FOR DEV AND TESTING PURPOSES
 			def __init__(self, status_code, json):
 				self.status_code = status_code
 				self.json = json
 		result = Result(200, {'success': True})
-	
-	email_log = EmailLog(
-		user_email=user_email,
-		username=username,
-		email_type=email_type,
-		info=email_info,
-		unique_id=unique_id,
-		status_code=result.status_code,
-		json_response=result.json,
-		timestamp=datetime.utcnow()
-	)
+		email_log = EmailLog(
+			user_email=user_email,
+			username=username,
+			email_type=email_type,
+			info=email_info,
+			unique_id=unique_id,
+			status_code=result.status_code,
+			json_response=result.json,
+			timestamp=datetime.utcnow()
+		)
 	db.session.add(email_log)
 	db.session.commit()

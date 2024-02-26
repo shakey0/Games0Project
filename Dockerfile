@@ -14,4 +14,6 @@ RUN chmod +x /app/start.sh
 
 EXPOSE 5000
 
+ENV FLASK_APP=run.py
+
 CMD ["/app/start.sh"]
