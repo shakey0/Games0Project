@@ -30,7 +30,7 @@ def reveal_letter():
 
     if reveal_letter_ == 0:
         if score < 60:
-            return jsonify(success=False, message='You need at least 60 points to reveal a letter!')
+            return jsonify(success=False, reason='no_points')
     
     revealed_letter_string = redis_client.hget(token, 'revealed_letter_string').decode('utf-8')
 
@@ -107,7 +107,7 @@ def reveal_length():
 
     if reveal_length_ == 0:
         if score < 90:
-            return jsonify(success=False, message='You need at least 90 points to reveal the length of the answer!')
+            return jsonify(success=False, reason='no_points')
 
     answer = redis_client.hget(token, 'answer').decode('utf-8')
 
@@ -144,7 +144,7 @@ def remove_higher():
 
     if higher_card == 0:
         if score < 90:
-            return jsonify(success=False, message='You need at least 90 points to remove a wrong answer!')
+            return jsonify(success=False, reason='no_points')
         
     answer = redis_client.hget(token, 'answer').decode('utf-8')
     all_answers = json.loads(redis_client.hget(token, 'all_answers').decode('utf-8'))
@@ -179,7 +179,7 @@ def remove_lower():
 
     if lower_card == 0:
         if score < 90:
-            return jsonify(success=False, message='You need at least 90 points to remove a wrong answer!')
+            return jsonify(success=False, reason='no_points')
         
     answer = redis_client.hget(token, 'answer').decode('utf-8')
     all_answers = json.loads(redis_client.hget(token, 'all_answers').decode('utf-8'))

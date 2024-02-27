@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         revealLetterBtn.addEventListener('click', function (event) {
             event.preventDefault();
 
-            clickCount++;
-            totalHints++;
-
             var form = this.closest('.reveal-letter-form');
 
             if (form) {
@@ -34,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         var messageElement = document.getElementById('hint-message');
                         var textElement = document.getElementById('reveal-letter-text');
                         scoreElement.textContent = data.score;
+                        totalHints++;
                         if (totalHints === 1) {
                             messageElement.textContent = data.message;
                             messageElement.style.marginBottom = "10px";
@@ -41,21 +39,19 @@ document.addEventListener('DOMContentLoaded', function() {
                             messageElement.innerHTML += '<br>' + data.message;
                         }
                         textElement.textContent = data.reveal_card_text;
-                    } else {
-                        var messageElement = document.getElementById('hint-message');
-                        if (totalHints === 1) {
-                            messageElement.textContent = data.message;
-                        } else {
-                            messageElement.innerHTML += '<br>' + data.message;
+                        clickCount++;
+                        if (clickCount >= 2) {
+                            revealLetterBtn.disabled = true;
                         }
-                        revealLetterBtn.disabled = true;
-                    }
-                    if (clickCount >= 2) {
-                        revealLetterBtn.disabled = true;
+                    } else {
+                        if (data.reason === 'no_points') {
+                            revealLetterBtn.disabled = true;
+                        } else {
+                            console.error('data.reason not in response object');
+                        }
                     }
                 })
                 .catch(function(error) {
-                    // Handle network errors or other exceptions here
                     console.error('Fetch error:', error);
                 });
             }
@@ -67,8 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (revealLengthBtn) {
         revealLengthBtn.addEventListener('click', function (event) {
             event.preventDefault();
-
-            totalHints++;
 
             var form = this.closest('.reveal-length-form');
 
@@ -88,12 +82,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 .then(function(data) {
                     var revealLengthBtn = document.querySelector('.reveal-length-btn');
-                    revealLengthBtn.disabled = true;
                     if (data.success) {
                         var scoreElement = document.getElementById('score');
                         var messageElement = document.getElementById('hint-message');
                         var textElement = document.getElementById('reveal-length-text');
                         scoreElement.textContent = data.score;
+                        totalHints++;
                         if (totalHints === 1) {
                             messageElement.textContent = data.message;
                             messageElement.style.marginBottom = "10px";
@@ -101,17 +95,16 @@ document.addEventListener('DOMContentLoaded', function() {
                             messageElement.innerHTML += '<br>' + data.message;
                         }
                         textElement.textContent = data.length_card_text;
+                        revealLengthBtn.disabled = true;
                     } else {
-                        var messageElement = document.getElementById('hint-message');
-                        if (totalHints === 1) {
-                            messageElement.textContent = data.message;
+                        if (data.reason === 'no_points') {
+                            revealLengthBtn.disabled = true;
                         } else {
-                            messageElement.innerHTML += '<br>' + data.message;
+                            console.error('data.reason not in response object');
                         }
                     }
                 })
                 .catch(function(error) {
-                    // Handle network errors or other exceptions here
                     console.error('Fetch error:', error);
                 });
             }
@@ -152,8 +145,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             wrongAnswerElement.style.display = 'none';
                         }
                         textElement.textContent = data.higher_card_text;
+                        removeHigherBtn.disabled = true;
+                    } else {
+                        if (data.reason === 'no_points') {
+                            removeHigherBtn.disabled = true;
+                        } else {
+                            console.error('data.reason not in response object');
+                        }
                     }
-                    removeHigherBtn.disabled = true;
                 })
                 .catch(function(error) {
                     console.error('Fetch error:', error);
@@ -196,8 +195,14 @@ document.addEventListener('DOMContentLoaded', function() {
                             wrongAnswerElement.style.display = 'none';
                         }
                         textElement.textContent = data.lower_card_text;
+                        removeLowerBtn.disabled = true;
+                    } else {
+                        if (data.reason === 'no_points') {
+                            removeLowerBtn.disabled = true;
+                        } else {
+                            console.error('data.reason not in response object');
+                        }
                     }
-                    removeLowerBtn.disabled = true;
                 })
                 .catch(function(error) {
                     console.error('Fetch error:', error);

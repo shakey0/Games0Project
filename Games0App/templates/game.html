@@ -41,7 +41,7 @@
     <h1>{{ game_name }}</h1>
     <div class="pre-game-box">
         <p class="instruction-text">{{ game.intro_message }} The quicker you answer, the more points you'll get.<br><b>Good luck!</b></p>
-        <form method="POST" action="/game_play">
+        <form id="gameForm" method="POST" action="/game_play">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
             <h2>Speed level (time to answer):</h2>
             <div class="pre-selection-box">
@@ -77,7 +77,7 @@
             {% endif %}
             <input type="hidden" name="in_game" value="start">
             <input type="hidden" name="token" value="{{ token }}">
-            <input class="submit-game-btn" type="submit" value="Start Game">
+            <input class="submit-game-btn" type="submit" value="Start Game" onclick="disableBtn(this)">
         </form>
     </div>
 {% elif in_game == "yes" %}
@@ -116,7 +116,7 @@
             {% endif %}
             <input type="hidden" name="token" value="{{ token }}">
             <input type="hidden" name="countdown_timer" id="countdown-timer" value="10">
-            <input type="submit" class="submit-game-btn" value="Submit Answer">
+            <input type="submit" class="submit-game-btn submit-answer-btn" value="Submit Answer">
         </form>
         <div class="helper-box">
             {% if "_mc" in game.param %}
@@ -223,11 +223,11 @@
                 {% endif %}
             </form>
         {% else %}
-            <form method="POST" action="/game_play">
+            <form id="gameForm" method="POST" action="/game_play">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="token" value="{{ token }}">
                 <input type="hidden" name="question_no" value="{{ question_no }}">
-                <input class="submit-game-btn" style="margin-top: 10px;" type="submit" value="Next Question">
+                <input class="submit-game-btn" style="margin-top: 10px;" type="submit" value="Next Question" onclick="disableBtn(this)">
             </form>
         {% endif %}
     </div>
@@ -246,6 +246,12 @@
     </div>
 {% endif %}
 
+<script>
+    function disableBtn(clickedBtn) {
+        document.getElementById('gameForm').submit();
+        clickedBtn.disabled = true;
+    }
+</script>
 <script src="{{ url_for('static', filename='scripts/in_game_functions.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts/helper_apis.js') }}"></script>
 

@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (!isValid) {
                 event.preventDefault();
+            } else {
+                var submitButton = document.querySelector('.submit-answer-btn');
+                submitButton.disabled = true;
             }
         });
     }
