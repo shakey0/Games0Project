@@ -18,7 +18,7 @@
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <div class="submit-btns">
-                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm" onclick="disableBtn(this)">
                     <input class="cancel-btn" type="submit" name="submit_button" value="Cancel">
                 </div>
             </form>
@@ -36,7 +36,7 @@
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <input class="auth-input" type="password" name="password" placeholder="Password">
                 <div class="submit-btns">
-                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm" onclick="disableBtn(this)">
                     <input class="cancel-btn" type="submit" name="submit_button" value="Cancel">
                 </div>
             </form>
@@ -64,7 +64,7 @@
                     <input class="auth-input email-input" type="email" name="email" placeholder="Email">
                 {% endif %}
                 <div class="submit-btns">
-                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm">
+                    <input class="confirm-btn" type="submit" name="submit_button" value="Confirm" onclick="disableBtn(this)">
                     <input class="cancel-btn" type="submit" name="submit_button" value="Cancel" onclick="cancelForm()">
                     <script>
                         function cancelForm() {
@@ -88,6 +88,12 @@
             </div>
         {% endif %}
     </div>
+    <script>
+        function disableBtn(clickedBtn) {
+            document.getElementById('gameForm').submit();
+            clickedBtn.disabled = true;
+        }
+    </script>
     <script src="{{ url_for('static', filename='scripts/password_checker.js') }}"></script>
 </body>
 </html>

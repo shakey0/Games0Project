@@ -17,6 +17,10 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
     
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db.session.remove()
+    
     csrf = CSRFProtect()
     csrf.init_app(app)
 
