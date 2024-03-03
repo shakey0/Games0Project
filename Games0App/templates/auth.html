@@ -14,7 +14,7 @@
         {% if values['stage'] == 0 %}
             <h4 style="color: rgb(255, 119, 0);">Deleting your account is an irreversible action. Once you complete the steps your account will be immediately deleted and completely unrecoverable.</h4>
             <h4 style="padding-top: 20px;">Are you sure you want to delete your account?</h4>
-            <form action="/{{ values['route'] }}" method="POST">
+            <form id="authForm" action="/{{ values['route'] }}" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <div class="submit-btns">
@@ -31,7 +31,7 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <form action="/{{ values['route'] }}" method="POST">
+            <form id="authForm" action="/{{ values['route'] }}" method="POST">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                 <input type="hidden" name="auth_token" value="{{ token }}">
                 <input class="auth-input" type="password" name="password" placeholder="Password">
@@ -90,8 +90,14 @@
     </div>
     <script>
         function disableBtn(clickedBtn) {
-            document.getElementById('gameForm').submit();
+            var input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "submit_button");
+            input.setAttribute("value", clickedBtn.value);
+            var form = document.getElementById('authForm');
+            form.appendChild(input);
             clickedBtn.disabled = true;
+            form.submit();
         }
     </script>
     <script src="{{ url_for('static', filename='scripts/password_checker.js') }}"></script>
