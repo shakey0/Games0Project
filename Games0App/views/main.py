@@ -104,12 +104,7 @@ def game_play():
     
     redis_client.hset(token, 'revealed_letter_string', '')
 
-    if request.form.get('in_game') == "start":
-
-        if redis_client.hget(token, 'question_no'):  # Check if the game has already started and stop cheating
-            flash("Sorry! Something didn't look right there. Please start a new game.", "error")
-            # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
-            return redirect('/')
+    if request.form.get('in_game') == "start" and not redis_client.hget(token, 'question_no'):
 
         redis_client.hset(token, 'question_no', 1)
 
@@ -166,11 +161,8 @@ def game_play():
         return response if response else redirect('/')
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
-    if question_no != int(request.form.get('question_no')):
-        flash("Sorry! Something didn't look right there. Please start a new game.", "error")
-        # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
-        return redirect('/')
-    redis_client.hset(token, 'question_no', question_no+1)
+    if question_no == int(request.form.get('question_no')):
+        redis_client.hset(token, 'question_no', question_no+1)
 
     in_game = "yes"
 
@@ -222,10 +214,10 @@ def game_answer():
     
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if redis_client.hget(token, f'question_{question_no}'):
-        flash("Sorry! Something didn't look right there. Please start a new game.", "error")
-        # TEST THIS AND CONSIDER WHETHER A LOG IS NEEDED
-        return redirect('/')
-    redis_client.hset(token, f'question_{question_no}', 'Completed')
+        repeat_request = True
+    else:
+        redis_client.hset(token, f'question_{question_no}', 'Completed')
+        repeat_request = False
 
     in_game = "after"
 
@@ -275,21 +267,23 @@ def game_answer():
     if correct:
         new_points = 100
         new_points += (seconds_to_answer_left + (60-timer)) * 5
-        score += new_points
-        redis_client.hset(token, 'score', score)
+        if not repeat_request:
+            score += new_points
+            redis_client.hset(token, 'score', score)
         seconds = timer - seconds_to_answer_left
     else:
         new_points = 0
         seconds = seconds_to_answer_left
     
-    difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if game.has_difficulty else ""
-    question_id = redis_client.hget(token, 'ID').decode('utf-8')
-    seconds_to_answer = timer - seconds_to_answer_left
-    answer_log = AnswerLog(game_name=game_name, difficulty=difficulty, question_id=question_id,
-                            real_answer=real_answer, user_answer=user_answer, correct=correct,
-                            seconds_to_answer=seconds_to_answer, timestamp=datetime.datetime.now())
-    db.session.add(answer_log)
-    db.session.commit()
+    if not repeat_request:
+        difficulty = redis_client.hget(token, 'difficulty').decode('utf-8') if game.has_difficulty else ""
+        question_id = redis_client.hget(token, 'ID').decode('utf-8')
+        seconds_to_answer = timer - seconds_to_answer_left
+        answer_log = AnswerLog(game_name=game_name, difficulty=difficulty, question_id=question_id,
+                                real_answer=real_answer, user_answer=user_answer, correct=correct,
+                                seconds_to_answer=seconds_to_answer, timestamp=datetime.datetime.now())
+        db.session.add(answer_log)
+        db.session.commit()
 
     return render_template('game.html', in_game=in_game, game=game, token=token, game_name=game_name,
                             timer=timer, score=score, correct=correct, statement=statement, seconds=seconds,
