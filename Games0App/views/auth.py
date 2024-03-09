@@ -45,12 +45,15 @@ def register():
         db.session.add(user)
         db.session.commit()
 
-        login_user(user)
-
         unique_id = logger.log_event({'user_id': user.id}, 'register', 'account_created')
         print('ACCOUNT CREATED: ', unique_id)
 
         send_email(user.email, user.username, 'sign_up_confirmation')
+        
+        remember = request.form.get('remember') == 'yes'
+        login_user(user, remember=remember)
+        unique_id = logger.log_event({'user_id': user.id}, 'register', 'successful_login')
+        print('LOGIN SUCCESSFUL: ', unique_id)
 
         return jsonify(success=True, message=f'Account created! Welcome, {user.username}!')
     

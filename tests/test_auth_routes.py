@@ -311,10 +311,11 @@ def test_reset_password_route(page, flask_server, test_app):
     
     # Check and get the logs
     logs = Log.query.all()
-    assert len(logs) == 2
+    assert len(logs) == 3
     assert logs[0].log_type == 'account_created'
-    assert logs[1].log_type == 'reset_password_email_sent'
-    reset_token = logs[1].data['reset_token']
+    assert logs[1].log_type == 'successful_login'
+    assert logs[2].log_type == 'reset_password_email_sent'
+    reset_token = logs[2].data['reset_token']
     
     page.goto(f"http://localhost:5000/reset_password/{reset_token}")
     
@@ -420,11 +421,12 @@ def test_report_issue_route_from_contact(page, flask_server, test_app):
     
     # Check the logs
     logs = Log.query.all()
-    assert len(logs) == 4
+    assert len(logs) == 5
     assert logs[0].log_type == 'account_created'
-    assert logs[1].log_type == 'other_problem_ISSUE_REPORTED'
+    assert logs[1].log_type == 'successful_login'
     assert logs[2].log_type == 'other_problem_ISSUE_REPORTED'
     assert logs[3].log_type == 'other_problem_ISSUE_REPORTED'
+    assert logs[4].log_type == 'other_problem_ISSUE_REPORTED'
 
 
 def test_report_issue_route_after_password_change(page, flask_server, test_app):
@@ -462,11 +464,12 @@ def test_report_issue_route_after_password_change(page, flask_server, test_app):
     
     # Check and get the logs
     logs = Log.query.all()
-    assert len(logs) == 3
+    assert len(logs) == 4
     assert logs[0].log_type == 'account_created'
-    assert logs[1].log_type == 'init_change_password'
-    assert logs[2].log_type == 'password_changed'
-    unique_id = logs[2].unique_id
+    assert logs[1].log_type == 'successful_login'
+    assert logs[2].log_type == 'init_change_password'
+    assert logs[3].log_type == 'password_changed'
+    unique_id = logs[3].unique_id
     
     # Go to report_issue route
     page.goto("http://localhost:5000/report_issue?issue_id=" + unique_id)
@@ -499,6 +502,6 @@ def test_report_issue_route_after_password_change(page, flask_server, test_app):
     
     # Check the logs
     logs = Log.query.all()
-    assert len(logs) == 5
-    assert logs[3].log_type == 'password_change_ISSUE_REPORTED'
-    assert logs[4].log_type == 'reset_password_email_sent'
+    assert len(logs) == 6
+    assert logs[4].log_type == 'password_change_ISSUE_REPORTED'
+    assert logs[5].log_type == 'reset_password_email_sent'

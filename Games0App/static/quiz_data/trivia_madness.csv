@@ -469,13 +469,13 @@ ID;category;question;answer
 468;geography;What is the capital of France?;Paris
 469;geography;Which river is the longest in the world?;The Nile
 470;geography;What is the largest continent by land area?;Asia
-471;geography;What is the name of the world's largest ocean?;The Pacific Ocean
-472;geography;Which desert is the largest in the world?;Sahara Desert
+471;geography;What is the name of the world's largest ocean?;The Pacific
+472;geography;Which desert is the largest in the world?;The Sahara
 473;geography;What is the capital of Australia?;Canberra
-474;geography;Which mountain is the highest in the world?;Mount Everest
+474;geography;Which mountain is the highest in the world?;Everest
 475;geography;What is the smallest country in the world?;Vatican City
 476;geography;Which country is known as the land of the rising sun?;Japan
-477;geography;What is the longest river in the United States?;The Mississippi River
+477;geography;What is the longest river in the United States?;The Mississippi
 478;geography;Which country has the most natural lakes?;Canada
 479;geography;What is the capital city of Spain?;Madrid
 480;geography;Which country is also known as the Hellenic Republic?;Greece
@@ -485,15 +485,15 @@ ID;category;question;answer
 484;geography;Which country is home to the Great Barrier Reef?;Australia
 485;geography;What country is the city of Dubai located in?;United Arab Emirates
 486;geography;What is the capital of Canada?;Ottawa
-487;geography;Which river flows through London?;The River Thames
+487;geography;Which river flows through London?;The Thames
 488;geography;What is the largest country in the world by area?;Russia
 489;geography;Which country is known for having a maple leaf on its national flag?;Canada
 490;geography;What city is the Statue of Liberty located near?;New York
 491;geography;In which country are the Pyramids of Giza found?;Egypt
 492;geography;What is the capital of Italy?;Rome
-493;geography;Which sea separates Australia and New Zealand?;Tasman Sea
+493;geography;Which sea separates Australia and New Zealand?;The Tasman
 494;geography;Which African country was formerly known as Abyssinia?;Ethiopia
-495;geography;What is the name of the highest mountain in Africa?;Mount Kilimanjaro
+495;geography;What is the name of the highest mountain in Africa?;Kilimanjaro
 496;geography;What river runs through Baghdad?;The Tigris
 497;geography;Which country is the largest by size in Africa?;Algeria
 498;geography;What is the capital of Brazil?;Brasília
@@ -504,7 +504,7 @@ ID;category;question;answer
 503;geography;What is the capital of Mexico?;Mexico City
 504;geography;Which European city is known for its canals and is sometimes called the 'Venice of the North'?;Amsterdam
 505;geography;What is the capital of Japan?;Tokyo
-506;geography;Which ocean lies on the east coast of the United States?;Atlantic Ocean
+506;geography;Which ocean lies on the east coast of the United States?;The Atlantic
 507;geography;Which country is home to the Amazon rainforest?;Brazil
 508;geography;Which city is known as the 'Eternal City'?;Rome
 509;geography;Which European country is known for its fjords?;Norway
@@ -522,7 +522,7 @@ ID;category;question;answer
 521;geography;What is the capital of Argentina?;Buenos Aires
 522;geography;What is the capital of Egypt?;Cairo
 523;geography;Which country is known as the 'Land of the Long White Cloud'?;New Zealand
-524;geography;What is the deepest ocean in the world?;The Pacific Ocean
+524;geography;What is the deepest ocean in the world?;The Pacific
 525;geography;What is the capital city of Sweden?;Stockholm
 526;geography;Which river flows through Paris?;The Seine
 527;geography;What is the capital of Kenya?;Nairobi
@@ -531,7 +531,7 @@ ID;category;question;answer
 530;geography;What is the capital of Indonesia?;Jakarta
 531;geography;Which U.S. state is known for its volcanoes, including Mauna Loa and Kilauea?;Hawaii
 532;geography;Which city is known as the 'City of Love'?;Paris
-533;geography;What is the longest river in Asia?;The Yangtze River
+533;geography;What is the longest river in Asia?;The Yangtze
 534;geography;What is the capital of Scotland?;Edinburgh
 535;geography;Which country is the Colosseum located in?;Italy
 536;geography;What is the name of the sea separating Florida and Cuba?;Straits of Florida
@@ -541,7 +541,7 @@ ID;category;question;answer
 540;geography;What is the capital of Turkey?;Ankara
 541;geography;Which city is known as the 'Pearl of the Orient'?;Hong Kong
 542;geography;What is the capital of Norway?;Oslo
-543;geography;What ocean lies to the west of the United States?;The Pacific Ocean
+543;geography;What ocean lies to the west of the United States?;The Pacific
 544;geography;Which African country has the largest economy?;Nigeria
 545;geography;What is the capital of Portugal?;Lisbon
 546;geography;What is the largest desert in the world?;The Antarctic Desert
@@ -550,7 +550,7 @@ ID;category;question;answer
 549;geography;What is the capital city of Switzerland?;Bern
 550;geography;Which country is known for the Great Wall?;China
 551;geography;What is the capital of New Zealand?;Wellington
-552;geography;Which river flows through the Grand Canyon?;The Colorado River
+552;geography;Which river flows through the Grand Canyon?;The Colorado
 553;geography;What is the smallest state in the USA?;Rhode Island
 554;geography;What is the name of the mountain range in western North America?;The Rocky Mountains
 555;geography;Which country is the Serengeti National Park located in?;Tanzania
@@ -560,7 +560,7 @@ ID;category;question;answer
 559;geography;Which country is the largest in the Middle East?;Saudi Arabia
 560;geography;What is the largest lake in Africa?;Lake Victoria
 561;geography;What is the name of the famous waterfall located on the border of Zambia and Zimbabwe?;Victoria Falls
-562;geography;Which ocean lies to the east of Africa?;The Indian Ocean
+562;geography;Which ocean lies to the east of Africa?;The Indian
 563;geography;What is the name of the world's largest coral reef system?;The Great Barrier Reef
 564;geography;Which country is Mount Fuji located in?;Japan
 565;geography;What is the capital of Greece?;Athens
@@ -983,7 +983,7 @@ ID;category;question;answer
 982;science_nature;What is the term for a baby horse?;Foal
 983;science_nature;What metal is liquid at room temperature?;Mercury
 984;science_nature;What do you call an animal that eats both plants and animals?;Omnivore
-985;science_nature;What is the name of the deepest known location in the Earth's oceans?;Mariana Trench
+985;science_nature;What is the name of the deepest known location in the Earth's oceans?;The Mariana Trench
 986;science_nature;What do you call molten rock after it has erupted from a volcano?;Lava
 987;science_nature;Which planet in our solar system is known for having a red color?;Mars
 988;science_nature;What type of animal is a python?;Snake
@@ -1653,7 +1653,7 @@ ID;category;question;answer
 1652;world_culture;What is the capital of India?;New Delhi
 1653;world_culture;What is the capital of Hungary?;Budapest
 1654;world_culture;This Greek mythological figure is the god/goddess of battle strategy (among other things).;Athena
-1655;world_culture;What is the tallest mountain in Canada?;Mount Logan
+1655;world_culture;What is the tallest mountain in Canada?;Logan
 1656;world_culture;What was Manfred von Richthofen's nickname?;The Red Baron
 1657;world_culture;Who led the Communist Revolution of Russia?;Vladimir Lenin
 1658;world_culture;How many countries are larger than Australia?;5
@@ -1675,7 +1675,7 @@ ID;category;question;answer
 1674;world_culture;Who tutored Alexander the Great?;Aristotle
 1675;world_culture;What is the historical name of Sri Lanka?;Ceylon
 1676;world_culture;Which UK country features a dragon on their flag?;Wales
-1677;world_culture;Which ocean borders the west coast of the United States?;The Pacific Ocean
+1677;world_culture;Which ocean borders the west coast of the United States?;The Pacific
 1678;world_culture;What is the capital of Wisconsin, USA?;Madison
 1679;world_culture;Who was the first man to travel into outer space twice?;Gus Grissom
 1680;world_culture;During the Mongolian invasions of Japan, what were the Mongol boats mostly stopped by?;Typhoons
@@ -1696,7 +1696,7 @@ ID;category;question;answer
 1695;world_culture;How many countries does Mexico border?;3
 1696;world_culture;What is the name of the Canadian national anthem?;O Canada
 1697;world_culture;What was the first sport to have been played on the moon?;Golf
-1698;world_culture;Which naval battle was considered the turning point of the Pacific Ocean Theater during World War 2?;Battle of Midway
+1698;world_culture;Which naval battle was considered the turning point of the Pacific Ocean Theater during World War 2?;The Battle of Midway
 1699;world_culture;What is the capital of Seychelles?;Victoria
 1700;world_culture;The Andaman and Nicobar Islands in South East Asia are controlled by which country?;India
 1701;world_culture;How many countries does Spain have a land border with?;5
@@ -1710,7 +1710,7 @@ ID;category;question;answer
 1709;world_culture;Which Canadian province has Charlottetown as its capital?;Prince Edward Island
 1710;world_culture;Who in Greek mythology, who led the Argonauts in search of the Golden Fleece?;Jason
 1711;world_culture;What immense structure is referred to in Norse Mythology as the Yggdrasil.;Tree
-1712;world_culture;How many rivers are in Saudi Arabia?;0
+1712;world_culture;How many rivers are there in Egypt?;1
 1713;world_culture;The body of the Egyptian Sphinx was based on which animal?;Lion
 1714;world_culture;Which of the following United States Presidents served the shortest term in office?;William Henry Harrison
 1715;world_culture;King Henry VIII was the second monarch of which European royal house?;Tudor

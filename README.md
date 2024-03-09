@@ -66,6 +66,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - Logs various authentication actions such as signing up, logging in, etc.
 - Logs anything that could be a potential security threat such as accessing the change_password or change_email route, or requesting a reset password link.
 - Logs various events that could be potential errors.
+- Logs duplicate POST requests on the game_play and game_answer routes ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py#L301-L319)).
 - Logs IP addresses from any actions coming from auth routes.
 - Is used when a user reports an issue - if the user follows a security alert or password change notification link from their email, the unique_id is taken from the log and added to the new log for reporting the issue.
 

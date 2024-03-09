@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, make_response, flash, jsonify
+from flask import Blueprint, render_template, redirect, request, make_response, jsonify
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.mailjet_api import send_email
@@ -9,6 +9,7 @@ from Games0App.views.main_functions import get_key_game_data, get_next_question,
 from Games0App.classes.auth_token_manager import auth_token_manager
 from Games0App.classes.auth_validator import auth_validator
 from Games0App.classes.digit_to_word_converter import digit_to_word_converter
+from Games0App.classes.logger import logger
 from Games0App.utils import normalise_answer, is_close_match
 import os, secrets, datetime
 
@@ -160,9 +161,14 @@ def game_play():
         
         return response if response else redirect('/')
     
+    elif request.form.get('in_game') == "start" and redis_client.hget(token, 'question_no'):
+        log_duplicate_error(game_name, category_name, token, 'game_play', 'duplicate_question_request_start')
+    
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if question_no == int(request.form.get('question_no')):
         redis_client.hset(token, 'question_no', question_no+1)
+    else:
+        log_duplicate_error(game_name, category_name, token, 'game_play', 'duplicate_question_request')
 
     in_game = "yes"
 
@@ -215,6 +221,7 @@ def game_answer():
     question_no = int(redis_client.hget(token, 'question_no').decode('utf-8'))
     if redis_client.hget(token, f'question_{question_no}'):
         repeat_request = True
+        log_duplicate_error(game_name, category_name, token, 'game_answer', 'duplicate_answer_request')
     else:
         redis_client.hset(token, f'question_{question_no}', 'Completed')
         repeat_request = False
@@ -289,6 +296,27 @@ def game_answer():
                             timer=timer, score=score, correct=correct, statement=statement, seconds=seconds,
                             new_points=new_points, question_no=question_no, real_answer=real_answer,
                             user=current_user)
+
+
+def log_duplicate_error(game_name, category_name, token, function, duplicate_request):
+    user_id = current_user.id if current_user.is_authenticated else 0
+    difficulty = redis_client.hget(token, 'difficulty')
+    if difficulty:
+        difficulty = difficulty.decode('utf-8')
+    cached_question_no = redis_client.hget(token, 'question_no')
+    if cached_question_no:
+        cached_question_no = cached_question_no.decode('utf-8')
+    request_question_no = request.form.get('question_no')
+    json_log = {
+        "user_id": user_id,
+        "game_name": game_name,
+        "category_name": category_name,
+        "difficulty": difficulty,
+        "cached_question_no": cached_question_no,
+        "request_question_no": request_question_no
+    }
+    unique_id = logger.log_event(json_log, function, duplicate_request)
+    print('DUPLICATE QUESTION REQUEST: ' + unique_id)
 
 
 @main.route('/game_finish', methods=['GET', 'POST'])
