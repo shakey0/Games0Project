@@ -32,7 +32,8 @@ def organise_score_data(score_data):
     for score in high_scores_list:
         if score['game'] not in all_games_scores:
             all_games_scores[score['game']] = []
-        all_games_scores[score['game']].append(score)
+        if len(all_games_scores[score['game']]) < 10:
+            all_games_scores[score['game']].append(score)
 
     sorted_games_scores = {}
 

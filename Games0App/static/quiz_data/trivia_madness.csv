@@ -470,7 +470,7 @@ ID;category;question;answer
 469;geography;Which river is the longest in the world?;The Nile
 470;geography;What is the largest continent by land area?;Asia
 471;geography;What is the name of the world's largest ocean?;The Pacific
-472;geography;Which desert is the largest in the world?;The Sahara
+472;geography;Which country has the most active volcanoes?;Indonesia
 473;geography;What is the capital of Australia?;Canberra
 474;geography;Which mountain is the highest in the world?;Everest
 475;geography;What is the smallest country in the world?;Vatican City
@@ -480,7 +480,7 @@ ID;category;question;answer
 479;geography;What is the capital city of Spain?;Madrid
 480;geography;Which country is also known as the Hellenic Republic?;Greece
 481;geography;What is the largest island in the world?;Greenland
-482;geography;In which continent is the Sahara Desert located?;Africa
+482;geography;In which continent is the Kalahari Desert located?;Africa
 483;geography;What is the capital of Germany?;Berlin
 484;geography;Which country is home to the Great Barrier Reef?;Australia
 485;geography;What country is the city of Dubai located in?;United Arab Emirates
@@ -544,7 +544,7 @@ ID;category;question;answer
 543;geography;What ocean lies to the west of the United States?;The Pacific
 544;geography;Which African country has the largest economy?;Nigeria
 545;geography;What is the capital of Portugal?;Lisbon
-546;geography;What is the largest desert in the world?;The Antarctic Desert
+546;geography;Which continent holds the largest desert in the world?;Antarctica
 547;geography;What is the capital of Ireland?;Dublin
 548;geography;Which body of water separates Saudi Arabia from Africa?;The Red Sea
 549;geography;What is the capital city of Switzerland?;Bern
@@ -565,7 +565,7 @@ ID;category;question;answer
 564;geography;Which country is Mount Fuji located in?;Japan
 565;geography;What is the capital of Greece?;Athens
 566;geography;Which European river flows through Budapest, Vienna, and Belgrade?;The Danube
-567;geography;What is the name of the desert located in Southern California and Nevada?;The Mojave Desert
+567;geography;What is the name of the desert located in Southern California and Nevada?;The Mojave
 568;geography;What is the name of the sea located between Italy and the Balkans?;The Adriatic Sea
 569;geography;Which African country was formerly known as Rhodesia?;Zimbabwe
 570;geography;What is the name of the sea that borders eastern Russia and Alaska?;The Bering Sea
@@ -935,7 +935,7 @@ ID;category;question;answer
 934;science_nature;What type of animal is a spider?;Arachnid
 935;science_nature;What do you call molten rock before it has erupted from a volcano?;Magma
 936;science_nature;What is the name of the galaxy that contains our Solar System?;The Milky Way
-937;science_nature;What is the main gas found in the air we breathe?;Oxygen
+937;science_nature;What is the main gas found in the air we breathe?;Nitrogen
 938;science_nature;Which bird is known for its colorful tail and impressive courtship display?;Peacock
 939;science_nature;What type of tree do acorns come from?;Oak
 940;science_nature;How many hearts does an octopus have?;Three
@@ -958,7 +958,7 @@ ID;category;question;answer
 957;science_nature;What is the name of the layer of the Earth's atmosphere where weather phenomena occur?;Troposphere
 958;science_nature;Which bird is often associated with delivering babies in popular culture?;Stork
 959;science_nature;What type of animal is a seahorse?;Fish
-960;science_nature;What is the largest reptile in the world?;Saltwater Crocodile
+960;science_nature;What is the largest reptile in the world?;Crocodile
 961;science_nature;What is the most abundant element in the Earth's crust?;Oxygen
 962;science_nature;Which planet is known for having the most moons?;Jupiter
 963;science_nature;What kind of animal is a penguin?;Bird
@@ -967,7 +967,7 @@ ID;category;question;answer
 966;science_nature;Which bird is known for its ability to mimic sounds?;Lyrebird
 967;science_nature;What is the name of the galaxy that contains our Solar System?;The Milky Way
 968;science_nature;Which planet in our solar system is known as the 'Blue Planet'?;Earth
-969;science_nature;What is the largest land animal?;African Elephant
+969;science_nature;What is the largest land animal?;Elephant
 970;science_nature;What is the name of the layer of the Earth where we live?;The Crust
 971;science_nature;What is the largest type of deer in the world?;Moose
 972;science_nature;What type of animal is a barracuda?;Fish
