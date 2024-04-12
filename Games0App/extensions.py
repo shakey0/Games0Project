@@ -1,18 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import os
 import redis
 
 
 db = SQLAlchemy()
 migrate = Migrate()
 
-production = os.environ.get('FLASK_ENV', 'development')
-if production == 'production' or production == 'testing_in_actions':
-    redis_client = redis.Redis(host='localhost', port=6379, db=0)
-else:
-    REDIS_PASSWORD = os.environ.get('REDIS_PASSWORD')
-    redis_client = redis.Redis(host='localhost', port=6379, db=0, password=REDIS_PASSWORD)
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
 
 
 def count_words(s):

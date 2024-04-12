@@ -213,6 +213,9 @@ body {
     text-align: center;
     padding: 30px 20px 0;
 }
+.success {
+    color: rgb(0, 255, 0);
+}
 @media (max-width: 920px) {
     .error, .main-page-flash {
         font-size: 19px;

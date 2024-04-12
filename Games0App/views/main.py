@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, make_response, jsonify
+from flask import Blueprint, render_template, redirect, request, make_response, jsonify, flash
 from flask_login import current_user
 from Games0App.extensions import db, redis_client
 from Games0App.mailjet_api import send_email
@@ -20,6 +20,34 @@ main = Blueprint('main', __name__)
 @main.route('/')
 def index():
     return render_template('index.html', games=games, token=None, user=current_user)
+
+
+@main.route('/from_cv')
+def index_from_cv():
+    unique_id = logger.log_event({}, 'index_from_cv', 'from_cv')
+    print('FROM CV: ' + unique_id)
+    send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_cv', 'cv_link')
+    flash('Thank you for reading my CV and visiting my website! It means a lot!', 'success')
+    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    return redirect('/')
+
+@main.route('/from_github_cv')
+def index_from_github_cv():
+    unique_id = logger.log_event({}, 'index_from_github_cv', 'from_github_cv')
+    print('FROM GITHUB CV: ' + unique_id)
+    send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_github_cv', 'cv_link')
+    flash('Thank you for reading my GitHub CV and visiting my website! It means a lot!', 'success')
+    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    return redirect('/')
+
+@main.route('/from_github')
+def index_from_github():
+    unique_id = logger.log_event({}, 'index_from_github', 'from_github')
+    print('FROM GITHUB: ' + unique_id)
+    send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_github', 'cv_link')
+    flash('Thank you for checking out this GitHub repository and visiting my website! It means a lot!', 'success')
+    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    return redirect('/')
 
 
 @main.route('/contact', methods=['POST'])

@@ -20,6 +20,13 @@ def send_email(user_email, username, email_type, contact_message='', email_of_us
 		text_part = f'Hi shakey0,\n\nYou have a new message from {username}:\n\n{contact_message}\n\nReply to: {email_of_user}'
 		html_part = f'<h3>Hi shakey0,</h3><h3>You have a new message from {username}:</h3><h3>{contact_message}</h3><h3>Reply to: {email_of_user}</h3>'
 
+	elif email_type == 'cv_link':
+		email_info = {}
+		name_type = 'GamesZero CV'
+		subject = 'shakey0 CV'
+		text_part = f'Someone clicked the link in my {username}.'
+		html_part = f'<h3>Someone clicked the link in my {username}.</h3>'
+
 	elif email_type == 'sign_up_confirmation':
 		email_info = {}
 		name_type = 'GamesZero Confirmation'
