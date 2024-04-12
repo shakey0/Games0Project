@@ -62,6 +62,24 @@ def format_datetime(dt):
     return formatted_date_time
 
 
+conversion_dict = {
+    'A': 'n', 'B': '1', 'C': 'Y', 'D': 'g', 'E': '5', 'F': 'L', 'G': 'b', 'H': '9', 'I': 'r', 'J': 'w',
+    'K': '0', 'L': 'Q', 'M': 'u', 'N': 'D', 'O': '2', 'P': 'z', 'Q': 'H', 'R': 'S', 'S': 'e', 'T': 'T',
+    'U': 'o', 'V': '3', 'W': 'm', 'X': 'F', 'Y': 'k', 'Z': 'A', 
+    'a': 'V', 'b': 'j', 'c': 'X', 'd': 'E', 'e': '6', 'f': 'M', 'g': 'i', 'h': 'P', 'i': 't', 'j': 's',
+    'k': 'G', 'l': 'J', 'm': '8', 'n': 'l', 'o': '4', 'p': 'B', 'q': 'Z', 'r': 'C', 's': 'q', 't': 'W',
+    'u': 'd', 'v': 'I', 'w': 'K', 'x': 'R', 'y': 'p', 'z': 'v',
+    '0': 'h', '1': 'c', '2': 'x', '3': 'N', '4': 'O', '5': '7', '6': 'U', '7': 'y', '8': 'a', '9': 'f'
+}
+
+def convert_scrambled_name(scrambled_name):
+    unscrambled_name = ""
+    scrambled_name = scrambled_name.replace("%20", " ")
+    for char in scrambled_name:
+        unscrambled_name += [key for key, value in conversion_dict.items() if value == char][0] if char != " " else " "
+    return unscrambled_name
+
+
 # from spellchecker import SpellChecker
 # spell = SpellChecker()
 # import os

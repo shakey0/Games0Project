@@ -23,9 +23,16 @@ def send_email(user_email, username, email_type, contact_message='', email_of_us
 	elif email_type == 'cv_link':
 		email_info = {}
 		name_type = 'GamesZero CV'
-		subject = 'shakey0 CV'
+		subject = 'CV Link Clicked'
 		text_part = f'Someone clicked the link in my {username}.'
 		html_part = f'<h3>Someone clicked the link in my {username}.</h3>'
+
+	elif email_type == 'company_link':
+		email_info = {}
+		name_type = 'GamesZero Company'
+		subject = f'{username} Link Clicked'
+		text_part = f'Someone clicked the link I shared for {username}.'
+		html_part = f'<h3>Someone clicked the link I shared for {username}.</h3>'
 
 	elif email_type == 'sign_up_confirmation':
 		email_info = {}

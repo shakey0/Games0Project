@@ -10,7 +10,7 @@ from Games0App.classes.auth_token_manager import auth_token_manager
 from Games0App.classes.auth_validator import auth_validator
 from Games0App.classes.digit_to_word_converter import digit_to_word_converter
 from Games0App.classes.logger import logger
-from Games0App.utils import normalise_answer, is_close_match
+from Games0App.utils import normalise_answer, is_close_match, convert_scrambled_name
 import os, secrets, datetime
 
 
@@ -22,13 +22,16 @@ def index():
     return render_template('index.html', games=games, token=None, user=current_user)
 
 
+thanks = "Thank you for {} and visiting my website! It means a lot!"
+recommendation = "For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!"
+
 @main.route('/from_cv')
 def index_from_cv():
     unique_id = logger.log_event({}, 'index_from_cv', 'from_cv')
     print('FROM CV: ' + unique_id)
     send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_cv', 'cv_link')
-    flash('Thank you for reading my CV and visiting my website! It means a lot!', 'success')
-    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    flash(thanks.format('reading my CV'), 'success')
+    flash(recommendation, 'success')
     return redirect('/')
 
 @main.route('/from_github_cv')
@@ -36,8 +39,8 @@ def index_from_github_cv():
     unique_id = logger.log_event({}, 'index_from_github_cv', 'from_github_cv')
     print('FROM GITHUB CV: ' + unique_id)
     send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_github_cv', 'cv_link')
-    flash('Thank you for reading my GitHub CV and visiting my website! It means a lot!', 'success')
-    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    flash(thanks.format('reading my GitHub CV'), 'success')
+    flash(recommendation, 'success')
     return redirect('/')
 
 @main.route('/from_github')
@@ -45,8 +48,25 @@ def index_from_github():
     unique_id = logger.log_event({}, 'index_from_github', 'from_github')
     print('FROM GITHUB: ' + unique_id)
     send_email(os.environ.get('MY_EMAIL_ADDRESS'), 'from_github', 'cv_link')
-    flash('Thank you for checking out this GitHub repository and visiting my website! It means a lot!', 'success')
-    flash("For a quick and easy experience, I recommend trying one of the 'Trivia - Multiple Choice' quizzes. Enjoy!", 'success')
+    flash(thanks.format('checking out this GitHub repository'), 'success')
+    flash(recommendation, 'success')
+    return redirect('/')
+
+@main.route('/p/<scrambled_name>')
+def index_p(scrambled_name):
+    unscrambled_name = convert_scrambled_name(scrambled_name)
+    unique_id = logger.log_event({}, 'index_p', unscrambled_name)
+    print(f'From {unscrambled_name}: ' + unique_id)
+    send_email(os.environ.get('MY_EMAIL_ADDRESS'), unscrambled_name, 'company_link')
+    flash(f'Thank you for visiting my website, {unscrambled_name}! It means a lot!', 'success')
+    flash(recommendation, 'success')
+    return redirect('/')
+
+@main.route('/t/<scrambled_name>')
+def index_t(scrambled_name):
+    unscrambled_name = convert_scrambled_name(scrambled_name)
+    flash(f'Thank you for visiting my website, {unscrambled_name}! It means a lot!', 'success')
+    flash(recommendation, 'success')
     return redirect('/')
 
 
