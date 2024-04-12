@@ -1,6 +1,6 @@
 # GamesZero
 
-https://games0-by-shakey0.onrender.com/
+https://games0-by-shakey0.onrender.com/from_github
 
 ## Introduction
 
