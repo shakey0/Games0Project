@@ -58,14 +58,16 @@ def index_p(scrambled_name):
     unique_id = logger.log_event({}, 'index_p', unscrambled_name)
     print(f'From {unscrambled_name}: ' + unique_id)
     send_email(os.environ.get('MY_EMAIL_ADDRESS'), unscrambled_name, 'company_link')
-    flash(f'Thank you for visiting my website, {unscrambled_name}! It means a lot!', 'success')
+    flash(f'Hello, {unscrambled_name}! Thank you for visiting my website! It means a lot!', 'success')
     flash(recommendation, 'success')
     return redirect('/')
 
 @main.route('/t/<scrambled_name>')
 def index_t(scrambled_name):
     unscrambled_name = convert_scrambled_name(scrambled_name)
-    flash(f'Thank you for visiting my website, {unscrambled_name}! It means a lot!', 'success')
+    unique_id = logger.log_event({}, 'index_t', unscrambled_name)
+    print(f'From {unscrambled_name}: ' + unique_id)
+    flash(f'Hello, {unscrambled_name}! Thank you for visiting my website! It means a lot!', 'success')
     flash(recommendation, 'success')
     return redirect('/')
 
