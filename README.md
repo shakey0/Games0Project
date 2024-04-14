@@ -7,7 +7,7 @@ https://games0-by-shakey0.onrender.com/from_github
 Welcome to GamesZero! This is a project I began about a month after finishing the Makers Academy Software Engineering Bootcamp. I took up this project for a number of reasons. Let's dive into it.<br><br>
 Firstly, I wanted to get more experience with APIs, and this project has been fantastic for that. I've written two scripts ([create_CSV_contents_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_CSV_contents_from_API.py) and [create_trivia_CSV_from_API.py](https://github.com/shakey0/Games0Project/blob/main/create_trivia_CSV_from_API.py)) which I have used to retrieve and sort hundreds of quiz questions from various different API sources. I also have one game in this web app (Trivia - Multiple Choice) that takes the questions from the API while the app is running ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L25-L58)).<br><br>
 Secondly, I wanted to learn more about caching with Redis. I have used Redis in this webapp for extensive caching of the game data when a user is doing a quiz (see [main.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py) and [main_functions.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main_functions.py)). This is a brilliant way to robustly store the game data on the backend and eliminate any potentiality for it to be manipulated. I have also used Redis to cache the questions sent out to users, to avoid the same question being sent in the same game or, if the user is logged in, to avoid the same question being sent within the next 5 games (see [user_question_tracker.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/user_question_tracker.py)). I have used it to store bulks of questions recieved from an API and CSV files too ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/game_play.py#L113-L167)).<br><br>
-Thirdly, I wanted to gain more experience around creating secure authentication routes (see [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)). Again, I've used Redis here in the AuthTokenManager class to cache tokens for various auth processes (see [auth_token_manager.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/auth_token_manager.py)).<br><br>
+Thirdly, I wanted to gain more experience around creating secure authentication routes (see [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L136-L519)). Again, I've used Redis here in the AuthTokenManager class to cache tokens for various auth processes (see [auth_token_manager.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/auth_token_manager.py)).<br><br>
 Lastly, I wanted to create a logging system and thought that making a games/quiz web app would be a great opportunity to do this, since there will always be room for errors in any game. I implemented a Logger class in this web app (see [logger.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/classes/logger.py)) to sort the log information and add the logs to the database accordingly. I have also implemented a database table called answer_logs, which logs the answers that users give to each question and whether they are right or wrong. This allows monitoring to see if any questions are too hard, too easy, or perhaps confusing, and should be amended or removed.
 
 ## Key Technologies
@@ -30,7 +30,7 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 - See [layout.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/layout.html)
 
 **Game Page**
-- Uses JavaScript for counting down the seconds while playing a game ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/in_game_functions.js#L32-L92)).
+- Uses JavaScript for counting down the seconds while playing a game ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/in_game_functions.js#L35-L96)).
 - Displays the question as well as helper buttons that the user can use to reveal a random letter in the answer, reveal the length of the answer, or (in a multiple choice style game) remove a wrong answer - these buttons fetch an api response from the server (see [helper_apis.js](https://github.com/shakey0/Games0Project/blob/main/Games0App/static/scripts/helper_apis.js) and [api.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/api.py)).
 - Displays whether or not the user is correct after submitting their answer, the correct answer, and the number of points the user has gained.
 - See [game.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/game.html)
@@ -46,13 +46,13 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
 **Auth Page**
 - This is for a user to change their email address or password, reset their password in the case they forgot it, or delete their account.
 - The content is rendered dynamically depending on which route is being accessed.
-- See [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L133-L516)
+- See [auth.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/auth.html) and [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L136-L519)
 
 **Report Issue Page**
 - This page is for a user to report an issue.
 - It can either be accessed via the contact option in the menu from the top bar, or via a link sent by email if the user's email address or password is changed.
 - If accessed via email, the issue ID number starting with S will be automatically included in the form, otherwise, the user must either provide an issue ID or a description of the problem.
-- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L519-L607)
+- See [report_issue.html](https://github.com/shakey0/Games0Project/blob/main/Games0App/templates/report_issue.html) and the report_issue route in [auth.py](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/auth.py#L522-L610)
 
 ## Process for Caching and Retrieving Questions
 
@@ -60,13 +60,20 @@ Lastly, I wanted to create a logging system and thought that making a games/quiz
     <img alt="CachingProcess" src="CachingDiagram.png" width="100%"/>
 </p>
 
+## Testing
+- Uses Playwright for extensive end-to-end testing.
+- Playwright tests cover user journeys such as entering the website and playing a game through to the end, creating an account, and finally adding the score from the game just played to the scoreboard.
+- Has extensive Class tests to ensure robust functionality in all kinds of situations.
+- Uses patch and MagicMock from unittest.mock for testing of individual classes.
+- [See here](https://github.com/shakey0/Games0Project/tree/main/tests) to explore the tests I've written.
+
 ## Logging
 
 **General Logs (Tablename: logs)**
 - Logs various authentication actions such as signing up, logging in, etc.
 - Logs anything that could be a potential security threat such as accessing the change_password or change_email route, or requesting a reset password link.
 - Logs various events that could be potential errors.
-- Logs duplicate POST requests on the game_play and game_answer routes ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py#L301-L319)).
+- Logs duplicate POST requests on the game_play and game_answer routes ([see here](https://github.com/shakey0/Games0Project/blob/main/Games0App/views/main.py#L314-L332)).
 - Logs IP addresses from any actions coming from auth routes.
 - Is used when a user reports an issue - if the user follows a security alert or password change notification link from their email, the unique_id is taken from the log and added to the new log for reporting the issue.
 

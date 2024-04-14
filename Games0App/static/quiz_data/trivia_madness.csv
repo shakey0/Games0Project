@@ -231,7 +231,7 @@ ID;category;question;answer
 230;film;What is the name of the main character in 'Finding Nemo'?;Nemo
 231;film;Which movie features the song 'Hakuna Matata'?;The Lion King
 232;film;Who directed the original 'Star Wars' movie?;George Lucas
-233;film;In which movie did Scarlett Johansson play a character named Natasha Romanoff?;Iron Man 2
+233;film;Which character did Scarlett Johansson play in Iron Man 2?;Natasha Romanoff/Black Widow
 234;film;What is the name of the island in 'Jurassic Park'?;Isla Nublar
 235;film;Who played the character of Rocky Balboa?;Sylvester Stallone
 236;film;What is Indiana Jones' real first name?;Henry
@@ -608,7 +608,7 @@ ID;category;question;answer
 607;history;What was the name of the alliance formed by England, France, and Russia in the early 20th century?;The Triple Entente
 608;history;What ancient empire was based in modern-day Mexico and known for its stepped pyramids?;The Aztecs
 609;history;Who was known as the 'Iron Lady' of British politics?;Margaret Thatcher
-610;history;Which famous Italian explorer discovered the New World in the service of Spain?;Christopher Columbus
+610;history;Which famous Italian explorer discovered the New World in the service of Spain?;Christopher Columbus/Chris Columbus
 611;history;Who wrote the Declaration of Independence?;Thomas Jefferson
 612;history;Which American President is famous for the Emancipation Proclamation?;Abraham Lincoln
 613;history;Who was the first Emperor of Rome?;Augustus Caesar
@@ -923,7 +923,7 @@ ID;category;question;answer
 922;science_nature;What force keeps us on the ground?;Gravity
 923;science_nature;What do you call a baby kangaroo?;Joey
 924;science_nature;What is the largest mammal in the world?;Blue Whale
-925;science_nature;What part of the plant conducts photosynthesis?;Leaves
+925;science_nature;What part of the plant conducts photosynthesis?;Leaves/Leaf
 926;science_nature;What type of animal is a frog?;Amphibian
 927;science_nature;What natural satellite orbits the Earth?;The Moon
 928;science_nature;What is the most abundant gas in the Earth's atmosphere?;Nitrogen
@@ -950,8 +950,8 @@ ID;category;question;answer
 949;science_nature;What is the scientific name for the study of plants?;Botany
 950;science_nature;What is the only continent on earth where Giraffes live in the wild?;Africa
 951;science_nature;What is the name given to the study of earthquakes?;Seismology
-952;science_nature;Which animal is known to have the most powerful bite in the animal kingdom?;Saltwater Crocodile
-953;science_nature;What is the largest type of ‘big cat’ in the world?;Siberian Tiger
+952;science_nature;Which animal is known to have the most powerful bite in the animal kingdom?;Crocodile/Saltwater Crocodile
+953;science_nature;What is the largest type of ‘big cat’ in the world?;Tiger/Siberian Tiger
 954;science_nature;What is the name of the element with the atomic number 1?;Hydrogen
 955;science_nature;Which planet is closest in size to Earth?;Venus
 956;science_nature;In what type of biome would you find cacti?;Desert
@@ -979,20 +979,20 @@ ID;category;question;answer
 978;science_nature;What type of animal is a 'Portuguese man o' war'?;Jellyfish
 979;science_nature;What is the most common type of tree in the world?;Pine
 980;science_nature;What is the term for an animal that is active during the night?;Nocturnal
-981;science_nature;What is the hardest substance in the human body?;Tooth enamel
+981;science_nature;What is the hardest substance in the human body?;Tooth enamel/Enamel
 982;science_nature;What is the term for a baby horse?;Foal
 983;science_nature;What metal is liquid at room temperature?;Mercury
-984;science_nature;What do you call an animal that eats both plants and animals?;Omnivore
+984;science_nature;What do you call an animal that eats both plants and animals?;Omnivore/Omnivorous
 985;science_nature;What is the name of the deepest known location in the Earth's oceans?;The Mariana Trench
 986;science_nature;What do you call molten rock after it has erupted from a volcano?;Lava
 987;science_nature;Which planet in our solar system is known for having a red color?;Mars
 988;science_nature;What type of animal is a python?;Snake
 989;science_nature;What are the two main metals in the earth's core?;Iron and Nickel
-990;science_nature;What is the term for animals that only eat plants?;Herbivore
+990;science_nature;What is the term for animals that only eat plants?;Herbivore/Herbivorous
 991;science_nature;Which mammal is known to be the largest primate?;Gorilla
 992;science_nature;Which planet in our solar system is known for its Great Red Spot?;Jupiter
 993;science_nature;Which nutrient is obtained from sunlight?;Vitamin D
-994;science_nature;What is the name of the largest rainforest in the world?;The Amazon Rainforest
+994;science_nature;What is the name of the largest rainforest in the world?;The Amazon
 995;science_nature;Which bird is known as a symbol of peace?;Dove
 996;science_nature;What is the name given to the study of earthquakes?;Seismology
 997;science_nature;Which planet is known as the 'Evening Star'?;Venus
@@ -1132,7 +1132,7 @@ ID;category;question;answer
 1131;showbiz;Who is the main protagonist in, the 1985 film, Back to the Future?;Marty McFly
 1132;showbiz;What was the name of the rock band that Nobuo Uematsu formed that played songs from various Final Fantasy games?;The Black Mages
 1133;showbiz;Alan Reed is known for providing the voice of which character?;Fred Flintstone
-1134;showbiz;Whose albums included "Back in Black" and "Ballbreaker"?;AC/DC
+1134;showbiz;Which Canadian rock musician wrote the album "Reckless"?;Bryan Adams
 1135;showbiz;In Macbeth, the eyes of what animals were used in the Witches' cauldron?;Newts
 1136;showbiz;This movie contains the quote, "I love the smell of napalm in the morning!";Apocalypse Now
 1137;showbiz;Which American family band had a 1986 top 10 hit with the song 'Crush On You'?;The Jets

@@ -8,9 +8,9 @@ from Games0App.models.answer_log import AnswerLog
 from Games0App.views.main_functions import get_key_game_data, get_next_question, confirm_all_questions_deposited
 from Games0App.classes.auth_token_manager import auth_token_manager
 from Games0App.classes.auth_validator import auth_validator
-from Games0App.classes.digit_to_word_converter import digit_to_word_converter
+from Games0App.classes.answer_checker import answer_checker
 from Games0App.classes.logger import logger
-from Games0App.utils import normalise_answer, is_close_match, convert_scrambled_name
+from Games0App.utils import convert_scrambled_name
 import os, secrets, datetime
 
 
@@ -278,44 +278,7 @@ def game_answer():
 
     in_game = "after"
 
-    user_answer = request.form.get('answer')
-    real_answer = redis_client.hget(token, 'answer').decode('utf-8')
-    statement = False
-
-    if user_answer and ("fill_blank" in game.param or "trivia_madness" in game.param):
-        user_answer = digit_to_word_converter.find_and_convert_numbers(user_answer)
-        correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
-        if (' and ' in user_answer or ' & ' in user_answer) and correct == False:
-            answer_part_one = user_answer.split(' and ')[0].split(' & ')[0]
-            answer_part_two = user_answer.split(' and ')[1].split(' & ')[1]
-            user_answer = answer_part_two + ' and ' + answer_part_one
-            correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
-
-    elif "number" in game.param:
-        correct = user_answer == real_answer
-        set_question = redis_client.hget(token, 'question').decode('utf-8')
-        real_answer = f"{real_answer} = {set_question[39:-1]}"
-        
-    elif user_answer and "_mc" in game.param:
-        correct = is_close_match(normalise_answer(user_answer), normalise_answer(real_answer))
-
-    elif "_tf" in game.param:
-        set_question = redis_client.hget(token, 'question').decode('utf-8')
-        if user_answer == "True" and set_question == real_answer:
-            correct, statement = True, True
-        elif user_answer == "False" and set_question != real_answer:
-            correct, statement = True, False
-        elif user_answer == "True" and set_question != real_answer:
-            correct, statement = False, False
-            user_answer = set_question
-        elif user_answer == "False" and set_question == real_answer:
-            correct, statement = False, True
-        else:
-            correct, statement = False, set_question == real_answer
-
-    else:
-        user_answer = "No answer given"
-        correct = False
+    correct, statement, real_answer, user_answer = answer_checker.check_answer(token, game)
 
     seconds_to_answer_left = int(request.form.get('countdown_timer'))
     timer = int(redis_client.hget(token, 'timer').decode('utf-8'))

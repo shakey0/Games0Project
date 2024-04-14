@@ -269,7 +269,7 @@ def log_like_error(score_id, error_type, error, log_type, action_type=''):
         'user_id': current_user.id,
         'action_type': action_type,
         'error_type': error_type,
-        'error': error
+        'error': str(error)
     }
     unique_id = logger.log_event(json_log, 'like_high_score', log_type)
     print(f"LOGGED LIKE ERROR: {unique_id}")
