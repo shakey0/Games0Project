@@ -137,11 +137,29 @@ createdb games_0_data
 createdb games_0_data_test
 ```
 
+Add the citext extentions to the databases:
+```bash
+psql games_0_data
+```
+```sql
+CREATE EXTENSION IF NOT EXISTS citext;
+```
+```bash
+psql games_0_data_test
+```
+```sql
+CREATE EXTENSION IF NOT EXISTS citext;
+```
+
+Upgrade the database (essentially create all tables in the database):
+```bash
+flask db upgrade
+```
+
 Create a .env file with the following:
 (If you haven't, install and setup Redis on your machine.)
 ```bash
 SECRET_KEY=<YOUR_SECRET_KEY>
-REDIS_PASSWORD=<YOUR_REDIS_PASSWORD(if you set one)>
 MAILJET_API_KEY=<YOUR_MAILJET_API_KEY(if you change the code to allow emails to be sent)>
 MAILJET_SECRET_KEY=<YOUR_MAILJET_SECRET_KEY(if you change the code to allow emails to be sent)>
 MY_EMAIL_ADDRESS=<YOUR_EMAIL_ADDRESS>

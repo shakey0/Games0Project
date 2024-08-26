@@ -36,7 +36,7 @@
 .cancel-button {
     position: absolute;
     display: block;
-    top: -9px; right: 15px;
+    top: 2px; right: 15px;
     padding: 0;
     border: none;
     outline: none;
